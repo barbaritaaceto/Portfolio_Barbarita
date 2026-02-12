@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="600">
+  <rect width="100%" height="100%" fill="#1f3b2e" />
+  <g fill="#163826" opacity="0.8">
+    <rect x="0" y="0" width="1600" height="600" />
+  </g>
+  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#cde7d0" font-size="36">Hero jungle placeholder</text>
+</svg>
