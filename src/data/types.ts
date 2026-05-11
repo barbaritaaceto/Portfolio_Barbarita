@@ -6,7 +6,15 @@ export type Project = {
   tech: string[]
   featured?: boolean
   images?: string[]
-  links?: { demo?: string, repo?: string }
+  links?: { demo?: string, repo?: string, posts?: string[] }
+  duration?: string
+  roles?: {
+    title: string
+    period: string
+    responsibilities: string[]
+    focus: string
+  }[]
+  talks?: string[]
 }
 
 export type Note = {
@@ -17,6 +25,8 @@ export type Note = {
   readingTime: number
   tags: string[]
   content: string
+  image?: string
+  url?: string
 }
 
 export type PressItem = {

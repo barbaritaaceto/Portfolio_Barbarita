@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import notesData from '../data/notes'
 import NoteCard from '../components/NoteCard'
@@ -6,23 +6,106 @@ import Input from '../components/ui/Input'
 import Card from '../components/ui/Card'
 
 export default function Notes(){
+  const [isEnglish, setIsEnglish] = useState(() => {
+    if (typeof window === 'undefined') return false
+    return window.localStorage.getItem('lang') === 'en'
+  })
+
+  useEffect(() => {
+    const syncLanguage = () => {
+      if (typeof window === 'undefined') return
+      setIsEnglish(window.localStorage.getItem('lang') === 'en')
+    }
+
+    window.addEventListener('storage', syncLanguage)
+    window.addEventListener('app-language-change', syncLanguage as EventListener)
+    return () => {
+      window.removeEventListener('storage', syncLanguage)
+      window.removeEventListener('app-language-change', syncLanguage as EventListener)
+    }
+  }, [])
+
   const [q, setQ] = useState('')
   const [tag, setTag] = useState<string | null>(null)
 
-  const tags = useMemo(()=> Array.from(new Set(notesData.flatMap(n=>n.tags))), [])
+  const uiText = isEnglish
+    ? {
+        pageTitle: 'Notes',
+        searchPlaceholder: 'Search notes…',
+        noMatches: 'No notes match your filters.',
+        minuteLabel: 'min',
+        ariaLanguage: 'Language toggle',
+      }
+    : {
+        pageTitle: 'Notas',
+        searchPlaceholder: 'Buscar notas…',
+        noMatches: 'No hay notas que coincidan con tus filtros.',
+        minuteLabel: 'min',
+        ariaLanguage: 'Selector de idioma',
+      }
 
-  const filtered = useMemo(()=> notesData.filter(n=>{
+  const esBySlug: Record<string, { title: string; excerpt: string; content: string }> = {
+    'product-ops': {
+      title: 'Product ops para equipos de IA',
+      excerpt: 'Patrones operativos para gestionar productos de IA.',
+      content: 'Contenido completo de referencia.',
+    },
+    'design-systems': {
+      title: 'Design systems en 2026',
+      excerpt: 'Sistemas de diseño que escalan en múltiples plataformas.',
+      content: 'Contenido completo de referencia.',
+    },
+    'metrics': {
+      title: 'Resultados vs actividad',
+      excerpt: 'Medir impacto en lugar de actividad.',
+      content: 'Contenido completo de referencia.',
+    },
+    'ai-principles': {
+      title: 'Humano + IA: principios',
+      excerpt: 'Principios guía para una IA centrada en las personas.',
+      content: 'Contenido completo de referencia.',
+    },
+    'scaling-teams': {
+      title: 'Escalar equipos de producto',
+      excerpt: 'Patrones organizacionales que funcionan.',
+      content: 'Contenido completo de referencia.',
+    },
+    'research-practices': {
+      title: 'Prácticas de research',
+      excerpt: 'Cómo convertir research en roadmaps.',
+      content: 'Contenido completo de referencia.',
+    },
+    'roadmaps': {
+      title: 'Roadmaps que avanzan',
+      excerpt: 'Roadmapping orientado a resultados.',
+      content: 'Contenido completo de referencia.',
+    },
+    'data-strategy': {
+      title: 'Fundamentos de estrategia de datos',
+      excerpt: 'Construir datos como producto.',
+      content: 'Contenido completo de referencia.',
+    },
+  }
+
+  const localizedNotes = useMemo(
+    () => notesData.map((note) => (isEnglish ? note : { ...note, ...(esBySlug[note.slug] || {}) })),
+    [isEnglish],
+  )
+
+  const tags = useMemo(()=> Array.from(new Set(localizedNotes.flatMap(n=>n.tags))), [localizedNotes])
+
+  const filtered = useMemo(()=> localizedNotes.filter(n=>{
     const matchesQ = q ? (n.title + n.excerpt + n.content).toLowerCase().includes(q.toLowerCase()) : true
     const matchesTag = tag ? n.tags.includes(tag) : true
     return matchesQ && matchesTag
-  }), [q, tag])
+  }), [localizedNotes, q, tag])
 
   return (
     <div>
-      <Helmet><title>Notes — Barbara Aceto</title></Helmet>
+      <Helmet><title>{uiText.pageTitle} — Barbara Aceto</title></Helmet>
       <div className="mb-4 flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">Notes</h1>
-        <div className="w-1/3"><Input placeholder="Search notes…" value={q} onChange={e=>setQ(e.target.value)} /></div>
+        <h1 className="text-2xl font-semibold">{uiText.pageTitle}</h1>
+        <div className="w-1/3"><Input placeholder={uiText.searchPlaceholder} value={q} onChange={e=>setQ(e.target.value)} /></div>
       </div>
       <Card>
         <div className="mb-3 flex gap-2 flex-wrap">
@@ -32,10 +115,10 @@ export default function Notes(){
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {filtered.map(n=> <NoteCard key={n.slug} note={n} />)}
+          {filtered.map(n=> <NoteCard key={n.slug} note={n} minuteLabel={uiText.minuteLabel} locale={isEnglish ? 'en-US' : 'es-AR'} />)}
         </div>
 
-        {filtered.length===0 && <div className="text-sm text-gray-600 mt-4">No notes match your filters.</div>}
+        {filtered.length===0 && <div className="text-sm text-gray-600 mt-4">{uiText.noMatches}</div>}
       </Card>
     </div>
   )

@@ -21,7 +21,7 @@ export default function ProfileCard(){
           <div className="flex flex-col sm:flex-row gap-3 w-full justify-center mt-2">
             <Link to="/projects"><Button className="rounded-full px-5 py-2 bg-[var(--primary)] text-white hover:brightness-95">View Projects</Button></Link>
             <a href="mailto:hello@placeholder.com"><Button variant="ghost" className="rounded-full px-5 py-2 border-[var(--card-border)]" style={{borderColor:'var(--primary)'}}>Get in touch</Button></a>
-            <a href="/cv.pdf" className="self-center text-sm text-gray-600 underline">Download CV</a>
+            <a href="/one-sheet?pdf=1" target="_blank" rel="noopener noreferrer" className="self-center text-sm text-gray-600 underline">Download CV</a>
           </div>
         </div>
       </Card>

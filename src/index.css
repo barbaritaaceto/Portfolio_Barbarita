@@ -4,11 +4,26 @@
 @tailwind utilities;
 
 :root{
-  --bg: #faf7f5; /* off-white paper feel */
-  --muted: #6b7280;
-  --border: #e6e9ef;
-  --primary: #E46B8C; /* soft coral */
-  --card-border: #F6D6DC; /* very light coral border */
+  --bg: #FAF8F5;
+  --bg-alt: #F2EEE9;
+  --card-bg: #FFFFFF;
+
+  --text-primary: #1F2E2A;
+  --text-secondary: #4A5552;
+  --text-muted: #6B6F6A;
+
+  --accent-primary: #4A7F79;
+  --accent-primary-hover: #3E6D68;
+  --editorial-line: #4A7F79;
+  --accent-soft: #C76A5A;
+  --accent-soft-bg: #F6E8EA;
+
+  --sage: #8FAE9D;
+  --green-deep: #2F4F46;
+  --mustard: #C8A24C;
+
+  --border-base: #E6E2DD;
+  --border-accent: rgba(216, 138, 148, 0.35);
 }
 
 html,body,#root{height:100%;}
@@ -16,8 +31,18 @@ html,body,#root{height:100%;}
 
 body{
   background: var(--bg);
-  color: #0f172a;
+  color: var(--text-primary);
   font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+}
+
+a{
+  color: var(--accent-primary);
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+a:hover{
+  color: var(--accent-primary-hover);
+  text-decoration: underline;
 }
 
 /* Headline serif for editorial feel */
@@ -27,21 +52,132 @@ h1,h2,h3,.serif-heading{
   letter-spacing: -0.01em;
 }
 
-.muted-foreground{ color: rgba(15,23,42,0.6); }
+.muted-foreground{ color: var(--text-muted); }
+
+.text-secondary { color: var(--text-secondary); }
 
 .hero-text{
   text-wrap: balance;
 }
 
 .card{
-  @apply bg-white rounded-2xl shadow-sm border p-6;
-  border-color: var(--card-border);
+  @apply rounded-2xl shadow-sm border p-6;
+  background-color: var(--card-bg);
+  border-color: var(--border-base);
+  transition: box-shadow 0.2s ease;
+}
+
+.card:hover{
+  @apply shadow-md;
 }
 
 .stationery-sep{
   height: 1px;
-  background: rgba(0,0,0,0.06);
+  background: linear-gradient(90deg, rgba(230,226,221,1), rgba(230,226,221,0.65), transparent);
+  width: 100%;
+  max-width: 360px;
 }
 
-.muted-foreground{ color: rgba(15,23,42,0.6); }
+/* Button helpers */
+.btn-primary{ 
+  background-color: var(--accent-primary); 
+  color: white; 
+  border: none;
+  border-radius: 9999px;
+  padding: 0.5rem 1.15rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-primary-hover);
+}
+
+.btn-ghost{ 
+  border: 1.5px solid var(--accent-primary); 
+  color: var(--accent-primary);
+  background: transparent;
+  border-radius: 9999px;
+  padding: 0.5rem 1.15rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-ghost:hover {
+  background-color: rgba(47,127,120,0.08);
+}
+
+.btn-link {
+  background: transparent;
+  border: none;
+  color: var(--accent-primary);
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.btn-link:hover {
+  color: var(--accent-primary-hover);
+  text-decoration: underline;
+}
+
+/* Headline tweaks */
+h1, h2, h3, .serif-heading{ 
+  font-family: 'Playfair Display', Georgia, serif; 
+  font-weight: 600; 
+  letter-spacing: -0.01em; 
+  color: var(--text-primary);
+}
+
+p { color: var(--text-secondary); }
+
+h1{ font-size: 2.25rem; line-height: 1.2; }
+h2{ font-size: 1.75rem; line-height: 1.3; }
+h3{ font-size: 1.25rem; line-height: 1.4; }
+
+/* Floral decorative utilities */
+.floral-frame {
+  position: absolute;
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hummingbird {
+  position: relative;
+  opacity: 0.35;
+  display: inline-block;
+}
+
+.decorative-bubble {
+  position: absolute;
+  opacity: 0.15;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* 70/20/10 composition: whitespace/text/illustration */
+@layer components {
+  .featured-note {
+    @apply rounded-2xl p-8 shadow-sm border;
+    background-color: var(--card-bg);
+    border-color: var(--border-base);
+    transition: box-shadow 0.2s ease;
+  }
+
+  .featured-note:hover {
+    @apply shadow-md;
+  }
+
+  .accent-coral-bg {
+    background-color: var(--accent-soft-bg);
+  }
+}
+
 
