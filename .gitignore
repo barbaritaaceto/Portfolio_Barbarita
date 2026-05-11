@@ -5,6 +5,8 @@ dist/
 .DS_Store
 .vite
 coverage/
+*.mov
+/public/*.mov
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
