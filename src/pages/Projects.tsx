@@ -404,7 +404,7 @@ export default function Projects(){
     <>
       <Helmet><title>Projects — Barbara Aceto</title></Helmet>
       
-      <div className="w-full min-h-screen py-20 px-4" style={{ backgroundColor: 'var(--bg)' }}>
+      <div className="w-full min-h-screen py-10 md:py-20 px-4" style={{ backgroundColor: 'var(--bg)' }}>
         <div className="max-w-6xl mx-auto">
           <Link 
             to="/" 
@@ -466,7 +466,7 @@ export default function Projects(){
               </button>
             )}
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:flex lg:justify-center lg:items-center gap-4 mb-8 lg:min-h-[220px]">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:flex lg:justify-center lg:items-center gap-3 md:gap-4 mb-4 lg:min-h-[220px]">
             {visibleProjects.map((project) => {
               const initialCard = projectInitialCards[project.slug]
               const isSelected = selectedProject === project.slug
@@ -507,10 +507,29 @@ export default function Projects(){
           </div>
         </div>
 
-          {localizedProjectData && (
-            <div className="bg-white mt-8 p-4 md:p-8 animate-in fade-in slide-in-from-top-4 duration-500 mx-auto border rounded-2xl shadow-sm" style={{ maxWidth: `${carouselTotalWidth}px`, borderColor: 'var(--border-base)' }}>
+          {/* Mobile pagination buttons */}
+          <div className="flex lg:hidden justify-between items-center mb-6 mt-2">
+            <button
+              onClick={(e) => { e.stopPropagation(); prevPage(); }}
+              disabled={pageIndex === 0}
+              className="flex items-center gap-1 px-4 py-2 rounded-full text-sm border transition-colors disabled:opacity-30"
+              style={{ borderColor: 'var(--border-base)', color: 'var(--text-secondary)', backgroundColor: '#FFFFFF' }}
+            >
+              ← {isEnglish ? 'Prev' : 'Ant.'}
+            </button>
+            <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{pageIndex + 1} / {totalPages}</span>
+            <button
+              onClick={(e) => { e.stopPropagation(); nextPage(); }}
+              disabled={pageIndex >= totalPages - 1}
+              className="flex items-center gap-1 px-4 py-2 rounded-full text-sm border transition-colors disabled:opacity-30"
+              style={{ borderColor: 'var(--border-base)', color: 'var(--text-secondary)', backgroundColor: '#FFFFFF' }}
+            >
+              {isEnglish ? 'Next' : 'Sig.'} →
+            </button>
+          </div>
+            <div className="bg-white mt-4 md:mt-8 p-4 md:p-8 animate-in fade-in slide-in-from-top-4 duration-500 w-full mx-auto border rounded-2xl shadow-sm" style={{ maxWidth: `${carouselTotalWidth}px`, borderColor: 'var(--border-base)' }}>
               <div className="flex items-center gap-3 mb-4">
-                <h2 className="text-3xl font-serif font-semibold text-slate-900">
+                <h2 className="text-2xl md:text-3xl font-serif font-semibold text-slate-900">
                   {localizedProjectData.title}
                 </h2>
               </div>
@@ -596,7 +615,7 @@ export default function Projects(){
                           href={postUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="font-serif text-2xl leading-tight transition-colors"
+                          className="font-serif text-lg md:text-2xl leading-tight transition-colors"
                           style={{ color: 'var(--accent-primary)' }}
                         >
                           {linkMeta.heading} ↗
@@ -616,7 +635,7 @@ export default function Projects(){
                               href={localizedProjectData.links?.demo}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="font-serif text-2xl leading-tight transition-colors"
+                              className="font-serif text-lg md:text-2xl leading-tight transition-colors"
                               style={{ color: 'var(--accent-primary)' }}
                             >
                               {linkMeta.heading} ↗
@@ -637,7 +656,7 @@ export default function Projects(){
                               href={localizedProjectData.links?.repo}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="font-serif text-2xl leading-tight transition-colors"
+                              className="font-serif text-lg md:text-2xl leading-tight transition-colors"
                               style={{ color: 'var(--accent-primary)' }}
                             >
                               {linkMeta.heading} ↗
