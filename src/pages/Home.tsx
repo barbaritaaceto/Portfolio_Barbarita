@@ -167,7 +167,7 @@ export default function Home() {
         heroLine1: 'Between humans and algorithms,',
         heroLine2: 'I build what truly matters.',
         descLine1: '+10 years building digital products, supporting teams',
-        descLine2: 'and connecting strategy with execution.',,
+        descLine2: 'and connecting strategy with execution.',
         role: 'Product Leader · AI & Digital Strategy',
         projectsCta: 'View Projects',
         contactCta: 'Get in touch',
