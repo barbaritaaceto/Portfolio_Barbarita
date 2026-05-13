@@ -88,44 +88,44 @@ export default function Home() {
         {
           number: '01',
           title: 'Discover',
-          description: 'Understand context before\ndefining direction.',
+          description: 'I don't just research users: I align business, technology and operations.',
         },
         {
           number: '02',
           title: 'Define',
-          description: 'Align priorities and\nmeasurable goals.',
+          description: 'I turn ambiguity into actionable roadmaps.',
         },
         {
           number: '03',
           title: 'Build',
-          description: 'Execute with focus\nand cross-functional teams.',
+          description: 'I work close to real teams, not from PowerPoints.',
         },
         {
           number: '04',
           title: 'Measure',
-          description: 'Track impact and\niterate deliberately.',
+          description: 'Metrics, feedback and continuous learning.',
         },
       ]
     : [
         {
           number: '01',
           title: 'Descubrir',
-          description: 'Entender el contexto antes\nde definir dirección.',
+          description: 'No investigo solo usuarios: alineo negocio, tecnología y operación.',
         },
         {
           number: '02',
           title: 'Definir',
-          description: 'Alinear prioridades y\nobjetivos medibles.',
+          description: 'Transformo ambigüedad en roadmaps accionables.',
         },
         {
           number: '03',
           title: 'Construir',
-          description: 'Ejecutar con foco\ny equipos cross-funcionales.',
+          description: 'Trabajo cerca de equipos reales, no desde PowerPoints.',
         },
         {
           number: '04',
           title: 'Medir',
-          description: 'Medir impacto e\niterar con intención.',
+          description: 'Métricas, feedback y aprendizaje continuo.',
         },
       ];
 
