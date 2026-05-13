@@ -466,7 +466,7 @@ export default function Projects(){
               </button>
             )}
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:flex lg:justify-center lg:items-center gap-3 md:gap-4 mb-4 lg:min-h-[220px]">
+            <div className="flex flex-row gap-2 md:gap-4 mb-4 items-stretch">
             {visibleProjects.map((project) => {
               const initialCard = projectInitialCards[project.slug]
               const isSelected = selectedProject === project.slug
@@ -476,7 +476,7 @@ export default function Projects(){
               return (
                 <div 
                   key={project.slug}
-                  className="cursor-pointer transition-all duration-300 w-full h-44 lg:flex-shrink-0 lg:w-[220px] lg:h-[220px]"
+                  className="cursor-pointer transition-all duration-300 flex-1 min-w-0 h-32 sm:h-40 lg:h-[220px]"
                   style={{ 
                     position: 'relative',
                     zIndex: isSelected ? 5 : 1
