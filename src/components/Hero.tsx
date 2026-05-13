@@ -17,8 +17,7 @@ export default function Hero(){
             </h1>
 
             <p className="mt-4 text-base md:text-xl muted-foreground max-w-3xl mx-auto">
-              Products that understand people
-              <br />and services that make them feel better.
+              +10 años construyendo productos digitales, acompañando equipos y conectando estrategia con ejecución.
             </p>
 
             <div className="mt-6 w-full md:w-1/2 mx-auto">
