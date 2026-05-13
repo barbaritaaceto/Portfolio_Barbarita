@@ -15,7 +15,8 @@ const Layout: React.FC = () => {
 
   const uiText = isEnglish
     ? {
-        chatbotAria: 'Chatbot',
+        chatbotAria: 'Barbara\'s AI Assistant',
+        chatbotTooltip: 'Ask me about product, AI or strategy',
         closeDialogAria: 'Close dialog',
         title: 'Do you have feedback about this page?',
         subtitle: 'I would love to read you to keep improving it.',
@@ -28,7 +29,8 @@ const Layout: React.FC = () => {
         thanks: 'Thank you! Your feedback was submitted.',
       }
     : {
-        chatbotAria: 'Chatbot',
+        chatbotAria: 'AI Assistant de Barbara',
+        chatbotTooltip: 'Preguntame sobre producto, AI o estrategia',
         closeDialogAria: 'Cerrar diálogo',
         title: '¿Tenés feedback sobre esta página?',
         subtitle: 'Me encantaría leerte para seguir mejorándola.',
@@ -127,25 +129,48 @@ const Layout: React.FC = () => {
         </div>
       </div>
 
-      <button
-        type="button"
-        aria-label={uiText.chatbotAria}
-        onClick={() => setIsDialogOpen(true)}
-        className="fixed top-20 right-6 md:top-24 md:right-8 w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden z-50"
-        style={{
-          border: '4px solid #FFFFFF',
-          boxShadow: '0 6px 18px rgba(30, 42, 56, 0.22)',
-          backgroundColor: '#FFFFFF',
-          animation: 'colibriFloat 2.8s ease-in-out infinite',
-        }}
-      >
-        <img
-          src="/colibri3.jpeg"
-          alt=""
-          aria-hidden="true"
-          className="w-full h-full object-cover"
-        />
-      </button>
+      <div className="fixed top-20 right-6 md:top-24 md:right-8 z-50 group flex flex-col items-end gap-2">
+        <button
+          type="button"
+          aria-label={uiText.chatbotAria}
+          onClick={() => setIsDialogOpen(true)}
+          className="w-14 h-14 rounded-full flex items-center justify-center ai-btn-float"
+          style={{
+            backgroundColor: '#FFFFFF',
+            border: '1.5px solid rgba(58, 125, 107, 0.3)',
+            boxShadow: '0 4px 14px rgba(30, 42, 56, 0.10)',
+          }}
+        >
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            {/* Hub central */}
+            <circle cx="13" cy="7" r="3" fill="var(--accent-primary)" />
+            {/* Nodos secundarios */}
+            <circle cx="6" cy="20" r="2" fill="var(--accent-primary)" opacity="0.65" />
+            <circle cx="20" cy="20" r="2" fill="var(--accent-primary)" opacity="0.65" />
+            {/* Líneas de conexión */}
+            <line x1="13" y1="7" x2="6" y2="20" stroke="var(--accent-primary)" strokeWidth="1.5" strokeLinecap="round" opacity="0.45" />
+            <line x1="13" y1="7" x2="20" y2="20" stroke="var(--accent-primary)" strokeWidth="1.5" strokeLinecap="round" opacity="0.45" />
+            <line x1="6" y1="20" x2="20" y2="20" stroke="var(--accent-primary)" strokeWidth="1.2" strokeLinecap="round" opacity="0.35" />
+          </svg>
+        </button>
+        {/* Tooltip */}
+        <div
+          role="tooltip"
+          className="ai-btn-tooltip pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-200 mr-1"
+          style={{ whiteSpace: 'nowrap' }}
+        >
+          <span
+            className="text-xs font-medium px-3 py-1.5 rounded-full block"
+            style={{
+              backgroundColor: '#1E2A38',
+              color: '#F5F2EC',
+              letterSpacing: '0.01em',
+            }}
+          >
+            {uiText.chatbotTooltip}
+          </span>
+        </div>
+      </div>
 
       {isDialogOpen && (
         <div className="fixed inset-0 z-[60] flex items-end justify-end p-4 md:p-6">
@@ -259,9 +284,15 @@ const Layout: React.FC = () => {
       )}
 
       <style>{`
-        @keyframes colibriFloat {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-6px); }
+        .ai-btn-float {
+          transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .ai-btn-float:hover {
+          transform: scale(1.08);
+          box-shadow: 0 6px 20px rgba(30, 42, 56, 0.20) !important;
+        }
+        .ai-btn-tooltip {
+          transition: opacity 0.2s ease;
         }
       `}</style>
     </div>
