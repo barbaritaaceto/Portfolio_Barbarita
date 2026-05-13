@@ -88,7 +88,7 @@ export default function Home() {
         {
           number: '01',
           title: 'Discover',
-          description: 'I don't just research users: I align business, technology and operations.',
+          description: "I don't just research users: I align business, technology and operations.",
         },
         {
           number: '02',
