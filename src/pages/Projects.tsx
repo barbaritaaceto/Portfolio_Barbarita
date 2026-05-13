@@ -18,7 +18,7 @@ const projectInitialCards: Record<string, { emoji: string; title: string; titleE
     title: 'Santander Argentina',
     titleEs: 'Santander Argentina',
     text: 'Building the future of digital banking across Collections & Payments.',
-    textEs: 'Construyendo el futuro de la banca digital en Cobranzas y Pagos.',
+    textEs: 'Lideré iniciativas de digitalización bancaria enfocadas en cobranzas, pagos y experiencia empresarial, conectando estrategia, tecnología y operación para reducir fricción en procesos críticos.',
     borderColor: '#DC2626',
     textColor: '#DC2626'
   },
@@ -27,7 +27,7 @@ const projectInitialCards: Record<string, { emoji: string; title: string; titleE
     title: 'Mercado Libre',
     titleEs: 'Mercado Libre',
     text: 'AI-powered discovery for 80M+ users across Latin America.',
-    textEs: 'Descubrimiento potenciado por IA para más de 80M de usuarios en Latinoamérica.',
+    textEs: 'Diseño de experiencias de descubrimiento inteligente para millones de usuarios en LATAM, combinando IA, experiencia de usuario y decisiones basadas en datos.',
     borderColor: '#FACC15',
     textColor: '#FACC15'
   },
