@@ -11,6 +11,7 @@ const Layout: React.FC = () => {
   const [email, setEmail] = useState('')
   const [feedback, setFeedback] = useState('')
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [submitError, setSubmitError] = useState(false)
 
   const uiText = isEnglish
     ? {
@@ -64,6 +65,7 @@ const Layout: React.FC = () => {
     setEmail('')
     setFeedback('')
     setIsSubmitted(false)
+    setSubmitError(false)
   }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -80,9 +82,11 @@ const Layout: React.FC = () => {
         page_url: window.location.href,
       },
       import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-    )
-
-    setIsSubmitted(true)
+    ).then(() => {
+      setIsSubmitted(true)
+    }).catch(() => {
+      setSubmitError(true)
+    })
   }
 
   return (
@@ -210,6 +214,12 @@ const Layout: React.FC = () => {
                     placeholder={uiText.feedbackPlaceholder}
                   />
                 </div>
+
+                {submitError && (
+                  <p className="text-xs" style={{ color: '#e53e3e' }}>
+                    {isEnglish ? 'Something went wrong. Please try again.' : 'Hubo un error al enviar. Intentá de nuevo.'}
+                  </p>
+                )}
 
                 <div className="flex items-center gap-3 pt-1">
                   <button
