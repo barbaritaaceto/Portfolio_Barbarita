@@ -443,7 +443,7 @@ export default function Projects(){
             {pageIndex > 0 && (
               <button
                 onClick={(e) => { e.stopPropagation(); prevPage(); }}
-                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-10 md:-translate-x-20 lg:-translate-x-28 w-10 h-10 rounded-full bg-white/90 border shadow-sm hover:bg-white transition-colors duration-200 z-10 flex items-center justify-center"
+                className="hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-28 w-10 h-10 rounded-full bg-white/90 border shadow-sm hover:bg-white transition-colors duration-200 z-10 items-center justify-center"
                 style={{ borderColor: 'var(--border-base)', color: 'var(--text-muted)' }}
                 aria-label={isEnglish ? 'Previous projects' : uiText.previousProjects}
               >
@@ -456,7 +456,7 @@ export default function Projects(){
             {pageIndex < totalPages - 1 && (
               <button
                 onClick={(e) => { e.stopPropagation(); nextPage(); }}
-                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-10 md:translate-x-20 lg:translate-x-28 w-10 h-10 rounded-full bg-white/90 border shadow-sm hover:bg-white transition-colors duration-200 z-10 flex items-center justify-center"
+                className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-28 w-10 h-10 rounded-full bg-white/90 border shadow-sm hover:bg-white transition-colors duration-200 z-10 items-center justify-center"
                 style={{ borderColor: 'var(--border-base)', color: 'var(--text-muted)' }}
                 aria-label={isEnglish ? 'Next projects' : uiText.nextProjects}
               >
@@ -466,7 +466,7 @@ export default function Projects(){
               </button>
             )}
 
-            <div className="flex justify-center items-center gap-4 mb-8 min-h-[220px]">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:flex lg:justify-center lg:items-center gap-4 mb-8 lg:min-h-[220px]">
             {visibleProjects.map((project) => {
               const initialCard = projectInitialCards[project.slug]
               const isSelected = selectedProject === project.slug
@@ -476,10 +476,8 @@ export default function Projects(){
               return (
                 <div 
                   key={project.slug}
-                  className="cursor-pointer transition-all duration-300 flex-shrink-0"
+                  className="cursor-pointer transition-all duration-300 w-full h-44 lg:flex-shrink-0 lg:w-[220px] lg:h-[220px]"
                   style={{ 
-                    width: `${carouselCardWidth}px`, 
-                    height: '220px',
                     position: 'relative',
                     zIndex: isSelected ? 5 : 1
                   }}
@@ -510,7 +508,7 @@ export default function Projects(){
         </div>
 
           {localizedProjectData && (
-            <div className="bg-white mt-8 p-8 animate-in fade-in slide-in-from-top-4 duration-500 mx-auto border rounded-2xl shadow-sm" style={{ maxWidth: `${carouselTotalWidth}px`, borderColor: 'var(--border-base)' }}>
+            <div className="bg-white mt-8 p-4 md:p-8 animate-in fade-in slide-in-from-top-4 duration-500 mx-auto border rounded-2xl shadow-sm" style={{ maxWidth: `${carouselTotalWidth}px`, borderColor: 'var(--border-base)' }}>
               <div className="flex items-center gap-3 mb-4">
                 <h2 className="text-3xl font-serif font-semibold text-slate-900">
                   {localizedProjectData.title}
