@@ -222,67 +222,68 @@ export default function Home() {
         <section className="w-full px-4 py-16 md:py-20 relative z-40" style={{ marginTop: '-16rem' }}>
           <div className="max-w-6xl mx-auto">
           <div className="card w-full max-w-xl relative overflow-hidden mx-auto">
-            <div className="relative z-10 flex flex-col items-center text-center">
+            <div className="relative z-10 flex flex-row gap-5 items-stretch">
 
-              <div className="w-full mb-6 rounded-xl px-4 py-4" style={{ backgroundColor: 'rgba(255,255,255,0.9)' }}>
-                <h2 className="font-serif text-xl md:text-2xl leading-tight" style={{ color: '#1E2A38' }}>
-                  {profileContent.heroLine1}
-                  <br />
-                  {profileContent.heroLine2}
-                </h2>
-                <p className="text-sm md:text-base leading-relaxed mt-3" style={{ color: '#4A5552' }}>
-                  {profileContent.descLine1}
-                  <br />
-                  {profileContent.descLine2}
-                </p>
-              </div>
-
-              {/* Avatar */}
-              <div className="w-24 h-24 rounded-full overflow-hidden border-2 shadow-sm" style={{ borderColor: 'var(--border-base)' }}>
+              {/* Foto izquierda */}
+              <div className="w-2/5 flex-shrink-0 -m-6 mr-0">
                 <img 
-                  src="/barbi.png" 
+                  src="/barbi con saco.png" 
                   alt="Barbara Aceto" 
-                  className="w-full h-full object-cover" 
+                  className="w-full h-full object-cover object-top rounded-l-2xl"
+                  style={{ minHeight: '280px' }}
                 />
               </div>
 
-              {/* Name & title */}
-              <p className="text-lg mb-1 mt-4 font-bold" style={{ color: 'var(--accent-primary)' }}>
-                Barbara Tamara Aceto
-              </p>
-              <p className="text-sm font-medium mb-1" style={{ color: 'var(--text-secondary)' }}>
-                {profileContent.role}
-              </p>
-              <p className="text-xs mb-6" style={{ color: 'var(--text-muted)' }}>
-                Buenos Aires, Argentina
-              </p>
+              {/* Contenido derecha */}
+              <div className="flex-1 flex flex-col justify-center text-left py-2 pr-2">
 
-              {/* Separator */}
-              <div className="stationery-sep mb-6"></div>
+                <div className="mb-4">
+                  <h2 className="font-serif text-lg md:text-xl leading-tight" style={{ color: '#1E2A38' }}>
+                    {profileContent.heroLine1}
+                    <br />
+                    {profileContent.heroLine2}
+                  </h2>
+                  <p className="text-xs md:text-sm leading-relaxed mt-2" style={{ color: '#4A5552' }}>
+                    {profileContent.descLine1} {profileContent.descLine2}
+                  </p>
+                </div>
 
-              {/* Buttons */}
-              <div className="w-full flex flex-col items-center gap-3">
-                <Link 
-                  to="/projects" 
-                  className="btn-primary w-fit min-w-[190px] text-center px-6"
-                >
-                  {profileContent.projectsCta}
-                </Link>
-                <button 
-                  onClick={() => setIsModalOpen(true)}
-                  className="btn-ghost w-fit min-w-[190px] text-center px-6"
-                >
-                  {profileContent.contactCta}
-                </button>
-                <a
-                  href="/one-sheet?pdf=1"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-link text-center"
-                >
-                  {profileContent.cvCta}
-                </a>
+                <p className="text-base font-bold mb-0.5" style={{ color: 'var(--accent-primary)' }}>
+                  Barbara Aceto
+                </p>
+                <p className="text-xs font-medium mb-0.5" style={{ color: 'var(--text-secondary)' }}>
+                  {profileContent.role}
+                </p>
+                <p className="text-xs mb-4" style={{ color: 'var(--text-muted)' }}>
+                  Buenos Aires, Argentina
+                </p>
+
+                <div className="stationery-sep mb-4"></div>
+
+                <div className="flex flex-col gap-2">
+                  <Link 
+                    to="/projects" 
+                    className="btn-primary text-center px-4 text-sm"
+                  >
+                    {profileContent.projectsCta}
+                  </Link>
+                  <button 
+                    onClick={() => setIsModalOpen(true)}
+                    className="btn-ghost text-center px-4 text-sm"
+                  >
+                    {profileContent.contactCta}
+                  </button>
+                  <a
+                    href="/one-sheet?pdf=1"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-link text-center text-sm"
+                  >
+                    {profileContent.cvCta}
+                  </a>
+                </div>
               </div>
+
             </div>
           </div>
           </div>
