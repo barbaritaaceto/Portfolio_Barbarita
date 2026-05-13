@@ -24,17 +24,12 @@ export default function Footer() {
         style={{ borderTop: '1px solid var(--border-base)', backgroundColor: 'var(--bg-alt)' }}
       >
         <div
-          className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-3"
-          style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}
+          className="container mx-auto px-4 flex items-center justify-center"
         >
-          <span>aceto.barbara@gmail.com</span>
           <button
             type="button"
             onClick={() => setIsOpen(true)}
-            className="transition-colors duration-150"
-            style={{ color: 'var(--text-muted)', fontWeight: 500 }}
-            onMouseEnter={e => (e.currentTarget.style.color = 'var(--accent-primary)')}
-            onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-muted)')}
+            className="btn-primary px-6"
           >
             {isEnglish ? '+ Leave feedback' : '+ Dejar feedback'}
           </button>
