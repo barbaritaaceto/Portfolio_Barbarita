@@ -527,6 +527,8 @@ export default function Projects(){
               {isEnglish ? 'Next' : 'Sig.'} →
             </button>
           </div>
+
+          {localizedProjectData && (
             <div className="bg-white mt-4 md:mt-8 p-4 md:p-8 animate-in fade-in slide-in-from-top-4 duration-500 w-full mx-auto border rounded-2xl shadow-sm" style={{ maxWidth: `${carouselTotalWidth}px`, borderColor: 'var(--border-base)' }}>
               <div className="flex items-center gap-3 mb-4">
                 <h2 className="text-2xl md:text-3xl font-serif font-semibold text-slate-900">
