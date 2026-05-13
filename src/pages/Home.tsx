@@ -65,11 +65,11 @@ export default function Home() {
       }
     : {
         whyTitle: 'Por qué construyo',
-        wayTitle: 'Mi forma de trabajar',
-      whyLine1: 'Conecto estrategia, tecnología y comportamiento humano para crear productos que funcionan.',
-      whyLine2: 'Mi foco es simple: dirección clara, equipos alineados y resultados medibles.',
-      whyHighlight: 'Priorizo valor entregado, no solo features publicadas.',
-      wayIntro: 'Un marco práctico para pasar de la ambigüedad al impacto.',
+        wayTitle: 'Cómo trabajo',
+        whyLine1: 'Trabajo donde negocio, tecnología y experiencia suelen chocar.',
+        whyLine2: 'Me gusta transformar ambigüedad en dirección clara, ordenar complejidad y ayudar a que equipos reales construyan productos que funcionen en el mundo real.',
+        whyHighlight: 'No creo en features por acumulación. Creo en decisiones con contexto, foco y propósito.',
+        wayIntro: 'Entender contexto, validar hipótesis y aprender rápido forma parte del producto, no solo de la entrega.',
         newsTitle: 'Últimas noticias',
         newsSubtitle: 'Artículos y entrevistas en medios.',
         readArticle: 'Leer nota →',
@@ -87,45 +87,45 @@ export default function Home() {
     ? [
         {
           number: '01',
-          title: 'Discover',
-          description: "I don't just research users: I align business, technology and operations.",
+          title: 'Understand before building',
+          description: 'Before moving a roadmap, I need to understand how business, users, operations and technology coexist.',
         },
         {
           number: '02',
-          title: 'Define',
-          description: 'I turn ambiguity into actionable roadmaps.',
+          title: 'Validate hypotheses',
+          description: 'I use signals, behavior and continuous learning to reduce uncertainty and make better decisions.',
         },
         {
           number: '03',
-          title: 'Build',
-          description: 'I work close to real teams, not from PowerPoints.',
+          title: 'Build close to reality',
+          description: 'I prefer teams connected to the problem over perfect processes disconnected from real impact.',
         },
         {
           number: '04',
-          title: 'Measure',
-          description: 'Metrics, feedback and continuous learning.',
+          title: 'Evolve continuously',
+          description: 'Experimenting, iterating and learning is not a phase. It is part of the product.',
         },
       ]
     : [
         {
           number: '01',
-          title: 'Descubrir',
-          description: 'No investigo solo usuarios: alineo negocio, tecnología y operación.',
+          title: 'Entender antes de construir',
+          description: 'Antes de mover un roadmap, necesito entender cómo conviven negocio, usuarios, operación y tecnología.',
         },
         {
           number: '02',
-          title: 'Definir',
-          description: 'Transformo ambigüedad en roadmaps accionables.',
+          title: 'Validar hipótesis',
+          description: 'Uso señales, comportamiento y aprendizaje continuo para reducir incertidumbre y tomar mejores decisiones.',
         },
         {
           number: '03',
-          title: 'Construir',
-          description: 'Trabajo cerca de equipos reales, no desde PowerPoints.',
+          title: 'Construir cerca de la realidad',
+          description: 'Prefiero equipos conectados al problema antes que procesos perfectos alejados del impacto real.',
         },
         {
           number: '04',
-          title: 'Medir',
-          description: 'Métricas, feedback y aprendizaje continuo.',
+          title: 'Evolucionar continuamente',
+          description: 'Experimentar, iterar y aprender no es una etapa del proceso. Es parte del producto.',
         },
       ];
 
@@ -335,21 +335,18 @@ export default function Home() {
                 </h2>
               </header>
               <div
-                className="space-y-4 rounded-2xl p-4 md:p-5"
                 style={{
                   color: 'var(--text-secondary)',
                   fontSize: '1rem',
-                  lineHeight: 1.7,
-                  backgroundColor: 'var(--card-bg)',
-                  border: '1px solid var(--border-base)',
+                  lineHeight: 1.75,
                 }}
               >
-                <div className="space-y-2.5">
+                <div className="space-y-3 mb-6">
                   <p>{homeText.whyLine1}</p>
                   <p>{homeText.whyLine2}</p>
                 </div>
-                <div className="border-l-2 pl-4 py-1" style={{ borderColor: 'var(--accent-primary)', color: 'var(--text-primary)' }}>
-                  <p className="font-semibold">{homeText.whyHighlight}</p>
+                <div className="border-l-2 pl-5 py-1" style={{ borderColor: 'var(--accent-primary)', color: 'var(--text-primary)' }}>
+                  <p className="font-serif italic text-base md:text-lg leading-snug">{homeText.whyHighlight}</p>
                 </div>
               </div>
 
@@ -367,39 +364,29 @@ export default function Home() {
                   {workSteps.map((step) => (
                     <article
                       key={step.number}
-                      className="group relative overflow-hidden rounded-xl px-4 py-3.5 min-h-[116px] transition-all duration-200 ease-out hover:-translate-y-0.5"
+                      className="rounded-xl px-5 py-4 min-h-[110px]"
                       style={{
                         backgroundColor: 'var(--card-bg)',
                         border: '1px solid var(--border-base)',
+                        transition: 'transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease',
+                      }}
+                      onMouseEnter={e => {
+                        e.currentTarget.style.transform = 'translateY(-2px)'
+                        e.currentTarget.style.boxShadow = '0 4px 14px rgba(30,42,56,0.08)'
+                        e.currentTarget.style.borderColor = 'rgba(58,125,107,0.4)'
+                      }}
+                      onMouseLeave={e => {
+                        e.currentTarget.style.transform = 'translateY(0)'
+                        e.currentTarget.style.boxShadow = 'none'
+                        e.currentTarget.style.borderColor = 'var(--border-base)'
                       }}
                     >
-                      <span
-                        className="absolute right-3 top-2 font-semibold pointer-events-none select-none"
-                        style={{
-                          fontSize: 'clamp(1.3rem, 1.8vw, 1.7rem)',
-                          lineHeight: 1,
-                          color: 'var(--accent-primary)',
-                          opacity: 0.2,
-                        }}
-                      >
-                        {step.number}
-                      </span>
-
-                      <div className="relative z-10 pt-0.5">
-                        <h3 className="text-sm md:text-base font-serif font-semibold mb-1" style={{ color: 'var(--accent-primary)' }}>
-                          {step.title}
-                        </h3>
-                        <p
-                          className="text-sm leading-relaxed"
-                          style={{
-                            color: 'var(--text-secondary)',
-                          }}
-                        >
-                          {step.description.split('\n').map((line) => (
-                            <span key={`${step.number}-${line}`} className="block">{line}</span>
-                          ))}
-                        </p>
-                      </div>
+                      <h3 className="text-sm md:text-base font-serif font-semibold mb-2" style={{ color: 'var(--accent-primary)' }}>
+                        {step.title}
+                      </h3>
+                      <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                        {step.description}
+                      </p>
                     </article>
                   ))}
                 </div>
