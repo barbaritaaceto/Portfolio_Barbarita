@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom'
+import emailjs from '@emailjs/browser'
 const Layout: React.FC = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [isEnglish, setIsEnglish] = useState(() => {
@@ -68,6 +69,19 @@ const Layout: React.FC = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     if (!feedback.trim()) return
+
+    emailjs.send(
+      import.meta.env.VITE_EMAILJS_SERVICE_ID,
+      import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+      {
+        from_name: name || 'Anónimo',
+        from_email: email || 'Sin email',
+        message: feedback,
+        page_url: window.location.href,
+      },
+      import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+    )
+
     setIsSubmitted(true)
   }
 
