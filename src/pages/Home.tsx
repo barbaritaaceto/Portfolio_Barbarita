@@ -166,8 +166,8 @@ export default function Home() {
     ? {
         heroLine1: 'Between humans and algorithms,',
         heroLine2: 'I build what truly matters.',
-        descLine1: 'Products that understand people.',
-        descLine2: 'Services that make them feel better.',
+        descLine1: '+10 years building digital products, supporting teams',
+        descLine2: 'and connecting strategy with execution.',,
         role: 'Product Leader · AI & Digital Strategy',
         projectsCta: 'View Projects',
         contactCta: 'Get in touch',
@@ -176,8 +176,8 @@ export default function Home() {
     : {
         heroLine1: 'Entre humanos y algoritmos,',
         heroLine2: 'construyo lo que de verdad importa.',
-        descLine1: 'Productos que entienden a las personas.',
-        descLine2: 'Servicios que les hacen la vida mejor.',
+        descLine1: '+10 años construyendo productos digitales, acompañando equipos',
+        descLine2: 'y conectando estrategia con ejecución.',
         role: 'Líder de Producto · IA y Estrategia Digital',
         projectsCta: 'Ver proyectos',
         contactCta: 'Contactame',
