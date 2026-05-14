@@ -51,11 +51,12 @@ export default function Home() {
         whyLine2: 'It lives in understanding context, aligning people, testing hypotheses and making decisions while things keep changing.',
         whyHighlight: 'That is where I like to work.',
         wayIntro: 'My way of working evolved over the years. Today I prioritize context, learning and decisions with clear direction.',
-        newsTitle: 'Latest News',
-        newsSubtitle: 'Articles and interviews in media.',
-        readArticle: 'Read article →',
-        trainingNoteTitle: 'Watch the intro of the Google Analytics & Tarot training',
-        trainingNoteBody: 'I had an incredible time in this session. It was great to share the space with friends, teammates and new joiners, all learning from their different roles in product, business, UX, technology and commercial areas. The focus was practical: how to use this tool and turn metrics into better day-to-day decisions. #Analytics #OneProductTeam #Tarot #SantanderAR',
+        newsTitle: 'Thinking, Product & Shared Learning',
+        newsSubtitle: 'A curated selection of notes, publications and conversations on product, AI, strategy and teams.',
+        newsCta: 'Explore more publications and appearances →',
+        readArticle: 'Read publication →',
+        trainingNoteTitle: 'Google Analytics and decision-making in product',
+        trainingNoteBody: 'How to connect metrics, behavior and shared learning across teams.',
         trainingNoteCta: 'Watch recording ↗',
         scrollWhyAria: 'Scroll to Why I Build and The Way I Work',
         scrollNewsAria: 'Scroll to news section',
@@ -70,11 +71,12 @@ export default function Home() {
         whyLine2: 'Está en entender contexto, alinear personas, validar hipótesis y tomar decisiones mientras las cosas cambian.',
         whyHighlight: 'Ahí es donde más me gusta trabajar.',
         wayIntro: 'Mi forma de trabajar fue cambiando con los años. Hoy priorizo contexto, aprendizaje y decisiones con dirección.',
-        newsTitle: 'Últimas noticias',
-        newsSubtitle: 'Artículos y entrevistas en medios.',
-        readArticle: 'Leer nota →',
-        trainingNoteTitle: 'Mirá la intro de la capacitación de Google Analytics y Tarot',
-        trainingNoteBody: 'Increíble lo que me divertí ♥️ quienes estuvieron espero hayan disfrutado tanto como yo. Fue lindo ver amigos, compañeros y nuevos ingresantes en un mismo lugar. Cada uno desde su rol de producto, negocio, UX, tecnología y comercial, queriendo aprender sobre el uso de esta herramienta y cómo capitalizar las métricas en la toma de decisiones del día a día. #Analytics #OneProductTeam #Tarot #SantanderAR',
+        newsTitle: 'Pensamiento, producto y aprendizaje compartido',
+        newsSubtitle: 'Una selección de notas, publicaciones y conversaciones sobre producto, AI, estrategia y equipos.',
+        newsCta: 'Explorar más publicaciones y apariciones →',
+        readArticle: 'Leer publicación →',
+        trainingNoteTitle: 'Google Analytics y toma de decisiones en producto',
+        trainingNoteBody: 'Cómo conectar métricas, comportamiento y aprendizaje compartido entre equipos.',
         trainingNoteCta: 'Ver grabación ↗',
         scrollWhyAria: 'Ir a Por qué construyo y Mi forma de trabajar',
         scrollNewsAria: 'Ir a la sección de noticias',
@@ -166,18 +168,28 @@ export default function Home() {
     excerpt: isEnglish ? (item as { excerptEn?: string }).excerptEn || item.excerpt : item.excerpt,
   }));
 
-  const newsCardSizes = [
-    'md:col-span-2',
-    'md:col-span-2',
-    'md:col-span-2',
-    'md:col-span-2',
-    'md:col-span-2',
-    'md:col-span-2',
-    'md:col-span-3',
-    'md:col-span-3',
-    'md:col-span-2',
-    'md:col-span-4',
-  ];
+  const newsCardMeta: Record<string, { label: string; shortExcerpt: string }> = {
+    'press-4': {
+      label: 'FEATURED ARTICLE',
+      shortExcerpt: isEnglish
+        ? 'How to transform scattered information into actionable learning using AI inside real organizations.'
+        : 'Cómo transformar información dispersa en aprendizaje accionable usando AI dentro de organizaciones reales.',
+    },
+    'press-5': {
+      label: 'TALK',
+      shortExcerpt: isEnglish
+        ? 'AI applied to product, UX and technology — from fundamentals to real practice and shared learning.'
+        : 'IA aplicada a producto, UX y tecnología — desde fundamentos hasta práctica real y aprendizaje compartido.',
+    },
+    'press-6': {
+      label: 'LINKEDIN POST',
+      shortExcerpt: isEnglish
+        ? 'Strategy and product mindset: each move has impact, and real mastery lives in intention.'
+        : 'Estrategia y mindset de producto: cada jugada tiene impacto y la maestría real está en la intención.',
+    },
+  };
+  const featuredCard = localizedNewsCards[0] ?? null;
+  const secondaryCards = localizedNewsCards.slice(1);
   const profileContent = isEnglish
     ? {
         heroLine1: 'Between humans and algorithms,',
@@ -433,12 +445,14 @@ export default function Home() {
         </section>
 
         {/* ════════════════════════════════════ */}
-        {/* NOTICIAS */}
+        {/* PENSAMIENTO */}
         {/* ════════════════════════════════════ */}
-        <section id="news-start" className="w-full py-20 md:py-28 px-4" style={{ marginTop: '-5rem' }}>
+        <section id="news-start" className="w-full py-16 md:py-24 px-4" style={{ marginTop: '-5rem' }}>
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
-              <div className="flex justify-center mt-1 mb-4">
+
+            {/* Section header */}
+            <div className="text-center mb-12 md:mb-16">
+              <div className="flex justify-center mt-1 mb-5">
                 <button
                   type="button"
                   onClick={scrollToNews}
@@ -456,87 +470,125 @@ export default function Home() {
                   </svg>
                 </button>
               </div>
-
-              <h2 className="text-4xl md:text-5xl font-serif font-semibold text-slate-900 mb-4">
+              <h2 className="text-3xl md:text-4xl font-serif font-semibold mb-3" style={{ color: 'var(--text-primary)' }}>
                 {homeText.newsTitle}
               </h2>
-              <p className="text-slate-600 text-base max-w-xl mx-auto">
+              <p className="text-sm md:text-base max-w-lg mx-auto" style={{ color: 'var(--text-muted)' }}>
                 {homeText.newsSubtitle}
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-6 auto-rows-fr gap-5 mb-10 items-stretch">
-              {localizedNewsCards.map((item, index) => (
-                (() => {
-                  const isHumanosYAlgoritmos = item.title.toLowerCase().includes('humanos y algoritmos');
-                  const isGratitudMindset = item.title.toLowerCase().includes('gratitud: estrategia y mindset de producto');
-                  const isVisionPost = isGratitudMindset;
-                  return (
-                <a
-                  key={`${item.outlet}-${item.title}-${index}`}
-                  href={item.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`group block ${newsCardSizes[index] ?? 'md:col-span-2'}`}
+            {/* Featured card */}
+            {featuredCard && (
+              <a
+                href={featuredCard.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block mb-5 md:mb-6"
+              >
+                <article
+                  className="rounded-2xl border overflow-hidden"
+                  style={{ borderColor: 'var(--border-base)', backgroundColor: 'var(--card-bg)', transition: 'border-color 0.2s ease' }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(58,125,107,0.4)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border-base)'; }}
                 >
-                  <article className="card h-full p-4 md:p-5 transition-colors duration-200 flex flex-col" style={{ borderColor: 'var(--border-base)' }}>
-                    <p className="text-[10px] font-semibold uppercase tracking-wide mb-1.5" style={{ color: 'var(--accent-primary)' }}>
-                      {item.outlet}
-                    </p>
-                    <h3 className="text-base md:text-lg font-serif font-semibold text-slate-900 mb-2 leading-snug">
-                      {item.title}
-                    </h3>
-                    <p className={`text-xs md:text-sm text-slate-700 leading-relaxed ${(isHumanosYAlgoritmos || isGratitudMindset) ? 'line-clamp-8' : 'line-clamp-4'}`}>
-                      {item.excerpt}
-                    </p>
-                    {item.date && (
-                      <time className="text-[11px] text-slate-500 mt-3 block">
-                        {new Date(item.date).toLocaleDateString(dateLocale, {
-                          month: 'short',
-                          day: 'numeric',
-                          year: 'numeric',
-                        })}
-                      </time>
-                    )}
-                    <span className="inline-block mt-3 text-xs font-medium transition-colors" style={{ color: 'var(--accent-primary)' }}>
-                      {homeText.readArticle}
-                    </span>
-                    {item.image && (
-                      <div className={`w-full flex-1 ${isVisionPost ? 'min-h-[140px]' : 'min-h-[120px]'} rounded-lg overflow-hidden mt-3 border`} style={{ borderColor: 'var(--border-base)', backgroundColor: '#F3F2EF' }}>
+                  <div className="grid grid-cols-1 md:grid-cols-12">
+                    <div className="md:col-span-7 p-6 md:p-8 flex flex-col justify-between" style={{ minHeight: '280px' }}>
+                      <div>
+                        <span
+                          className="inline-block text-[10px] font-semibold mb-3"
+                          style={{ color: 'var(--accent-primary)', letterSpacing: '0.13em', opacity: 0.65 }}
+                        >
+                          {newsCardMeta[featuredCard.slug]?.label ?? 'ARTICLE'}
+                        </span>
+                        <h3 className="text-xl md:text-2xl font-serif font-semibold mb-3 leading-snug" style={{ color: 'var(--text-primary)' }}>
+                          {featuredCard.title}
+                        </h3>
+                        <p className="text-sm md:text-base leading-relaxed" style={{ color: 'var(--text-secondary)', maxWidth: '52ch' }}>
+                          {newsCardMeta[featuredCard.slug]?.shortExcerpt ?? featuredCard.excerpt}
+                        </p>
+                      </div>
+                      <span className="inline-block mt-6 text-sm font-medium" style={{ color: 'var(--accent-primary)' }}>
+                        {homeText.readArticle}
+                      </span>
+                    </div>
+                    {featuredCard.image && (
+                      <div className="md:col-span-5 relative overflow-hidden" style={{ minHeight: '220px' }}>
                         <img
-                          src={item.image}
-                          alt={item.title}
-                          className={`w-full h-full ${(isHumanosYAlgoritmos || isVisionPost) ? 'object-contain p-1' : 'object-cover'}`}
+                          src={featuredCard.image}
+                          alt={featuredCard.title}
+                          className="absolute inset-0 w-full h-full object-cover"
+                          style={{ objectPosition: 'center top', filter: 'brightness(0.88) contrast(0.92)' }}
                           loading="lazy"
+                        />
+                        <div
+                          className="absolute inset-0 pointer-events-none hidden md:block"
+                          style={{ background: 'linear-gradient(to right, var(--card-bg) 0%, transparent 30%)' }}
                         />
                       </div>
                     )}
-                  </article>
-                </a>
-                  );
-                })()
-              ))}
-            </div>
+                  </div>
+                </article>
+              </a>
+            )}
 
-            <div className="w-full flex justify-end">
-              <Link
-                to="/news-links"
-                className="text-sm md:text-base font-medium underline"
-                style={{ color: 'var(--accent-primary)' }}
+            {/* Secondary grid */}
+            {secondaryCards.length > 0 && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5 md:mb-6">
+                {secondaryCards.map((item, i) => (
+                  <a
+                    key={`${item.slug}-${i}`}
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block"
+                  >
+                    <article
+                      className="h-full rounded-xl border p-5 flex flex-col"
+                      style={{ borderColor: 'var(--border-base)', backgroundColor: 'var(--card-bg)', transition: 'border-color 0.2s ease' }}
+                      onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(58,125,107,0.4)'; }}
+                      onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border-base)'; }}
+                    >
+                      <span
+                        className="inline-block text-[10px] font-semibold mb-2.5"
+                        style={{ color: 'var(--accent-primary)', letterSpacing: '0.13em', opacity: 0.65 }}
+                      >
+                        {newsCardMeta[item.slug]?.label ?? item.outlet}
+                      </span>
+                      <h3 className="text-base font-serif font-semibold mb-2 leading-snug" style={{ color: 'var(--text-primary)' }}>
+                        {item.title}
+                      </h3>
+                      <p className="text-sm leading-relaxed flex-1" style={{ color: 'var(--text-secondary)' }}>
+                        {newsCardMeta[item.slug]?.shortExcerpt ?? item.excerpt}
+                      </p>
+                      <span className="inline-block mt-4 text-xs font-medium" style={{ color: 'var(--accent-primary)' }}>
+                        {homeText.readArticle}
+                      </span>
+                    </article>
+                  </a>
+                ))}
+              </div>
+            )}
+
+            {/* Workshop card */}
+            <div
+              className="rounded-xl border p-5 md:p-6 mb-10 md:mb-12"
+              style={{ borderColor: 'var(--border-base)', backgroundColor: 'var(--card-bg)' }}
+            >
+              <span
+                className="inline-block text-[10px] font-semibold mb-3"
+                style={{ color: 'var(--accent-primary)', letterSpacing: '0.13em', opacity: 0.65 }}
               >
-                {isEnglish ? 'Know more' : 'Conocé más'}
-              </Link>
-            </div>
-
-            <div className="mt-6 rounded-2xl border p-4 md:p-5" style={{ borderColor: 'var(--border-base)', backgroundColor: '#FFFFFF' }}>
-              <p className="text-sm md:text-base font-medium" style={{ color: 'var(--text-primary)' }}>
+                WORKSHOP
+              </span>
+              <p className="text-base font-serif font-semibold mb-1.5" style={{ color: 'var(--text-primary)' }}>
                 {homeText.trainingNoteTitle}
               </p>
-              <p className="text-sm leading-relaxed mt-2" style={{ color: 'var(--text-secondary)' }}>
+              <p className="text-sm leading-relaxed mb-4" style={{ color: 'var(--text-secondary)' }}>
                 {homeText.trainingNoteBody}
               </p>
               <video
-                className="w-full mt-3 rounded-xl border"
+                className="w-full rounded-xl border"
                 style={{ borderColor: 'var(--border-base)', backgroundColor: '#000000' }}
                 controls
                 preload="metadata"
@@ -547,11 +599,22 @@ export default function Home() {
                 href="https://www.linkedin.com/posts/barbaraaceto_analytics-oneproductteam-tarot-activity-6940000359255801856-fy_R?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAO9lWcBYTOMHR-JOYdfU2v4CZ_xUqB85qc"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex mt-2 text-sm font-medium underline"
+                className="inline-flex mt-3 text-sm font-medium"
                 style={{ color: 'var(--accent-primary)' }}
               >
                 {homeText.trainingNoteCta}
               </a>
+            </div>
+
+            {/* CTA */}
+            <div className="flex justify-end">
+              <Link
+                to="/news-links"
+                className="text-sm md:text-base font-medium"
+                style={{ color: 'var(--accent-primary)' }}
+              >
+                {homeText.newsCta}
+              </Link>
             </div>
 
           </div>
