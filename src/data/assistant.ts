@@ -4,8 +4,44 @@ export interface AssistantIntent {
   keywordsEN: string[]
   responseES: string
   responseEN: string
+  variantsES?: string[]
+  variantsEN?: string[]
   suggestionsES: string[]
   suggestionsEN: string[]
+  navLinks?: { labelES: string; labelEN: string; route: string }[]
+}
+
+// Context memory chain: "¿y antes?" follows company history
+const prevCompany: Record<string, string> = {
+  redbee: 'santander',
+  santander: 'mercadolibre',
+  mercadolibre: 'fintech',
+  fintech: 'experience',
+}
+
+const followUpPatternsES = ['antes', 'anterior', 'previo', 'otra empresa', 'otro trabajo', 'y antes', 'que mas', 'que hizo antes']
+const followUpPatternsEN = ['before', 'previous', 'prior', 'another company', 'other job', 'and before', 'what else', 'what before']
+
+// Synonym expansion
+const synonymsES: Record<string, string> = {
+  'gente': 'equipo',
+  'personas': 'equipo',
+  'contratar': 'disponible',
+  'contratarla': 'disponible',
+  'empleo': 'disponible',
+  'oferta': 'disponible',
+  'diferencia': 'diferenciador',
+  'diferente': 'diferenciador',
+}
+
+const synonymsEN: Record<string, string> = {
+  'people': 'team',
+  'hire': 'available',
+  'hiring': 'available',
+  'opportunity': 'available',
+  'role': 'available',
+  'different': 'differentiator',
+  'unique': 'differentiator',
 }
 
 export const intents: AssistantIntent[] = [
@@ -15,6 +51,14 @@ export const intents: AssistantIntent[] = [
     keywordsEN: ['hello', 'hi', 'hey', 'good morning', 'greetings', 'howdy'],
     responseES: 'Hola! Soy el asistente de Barbara.\n\nPuedo contarte sobre su experiencia, cómo trabaja, qué proyectos lideró y cómo piensa sobre AI y producto.\n\n¿Por dónde empezamos?',
     responseEN: "Hi! I'm Barbara's assistant.\n\nI can tell you about her experience, how she works, the projects she led, and her thinking on AI and product.\n\nWhere would you like to start?",
+    variantsES: [
+      'Hola! Soy el asistente de Barbara.\n\nPuedo contarte sobre su experiencia, cómo trabaja, qué proyectos lideró y cómo piensa sobre AI y producto.\n\n¿Por dónde empezamos?',
+      '¡Buenas! Estás en el portfolio de Barbara Aceto — PM con más de 10 años construyendo productos digitales.\n\nPreguntame lo que quieras: su trayectoria, forma de trabajo, visión sobre AI o cómo contactarla.\n\n¿Por dónde arrancamos?',
+    ],
+    variantsEN: [
+      "Hi! I'm Barbara's assistant.\n\nI can tell you about her experience, how she works, the projects she led, and her thinking on AI and product.\n\nWhere would you like to start?",
+      "Welcome! You're in Barbara Aceto's portfolio — a PM with 10+ years building digital products.\n\nAsk me anything: her background, how she works, her take on AI, or how to reach her.\n\nWhat would you like to know?",
+    ],
     suggestionsES: ['¿Qué tipo de productos lideró?', '¿Qué hizo en Santander?', '¿Cómo usa AI en producto?'],
     suggestionsEN: ['What kind of products did she lead?', 'What did she do at Santander?', 'How does she use AI in product?'],
   },
@@ -24,6 +68,14 @@ export const intents: AssistantIntent[] = [
     keywordsEN: ['who', 'barbara', 'what does she do', 'introduce', 'tell me', 'about her', 'about barbara'],
     responseES: 'Barbara es Product Manager con +10 años construyendo productos digitales.\n\nTrabajó en banca (Santander), ecommerce (Mercado Libre), insurtech (123Seguro) y consultoría digital (redbee). Conecta estrategia, tecnología y equipos — con un enfoque sistémico y humano.\n\nHoy lidera desde redbee, con foco en AI aplicada a producto y equipos.',
     responseEN: 'Barbara is a Product Manager with 10+ years building digital products.\n\nShe has worked in banking (Santander), e-commerce (Mercado Libre), insurtech (123Seguro), and digital consulting (redbee). She connects strategy, technology, and teams — with a systemic and human-centered approach.\n\nToday she leads at redbee, focused on AI applied to product and teams.',
+    variantsES: [
+      'Barbara es Product Manager con +10 años construyendo productos digitales.\n\nTrabajó en banca (Santander), ecommerce (Mercado Libre), insurtech (123Seguro) y consultoría digital (redbee). Conecta estrategia, tecnología y equipos — con un enfoque sistémico y humano.\n\nHoy lidera desde redbee, con foco en AI aplicada a producto y equipos.',
+      'Barbara es la persona rara que entiende tanto de negocio como de tecnología — y sabe traducir entre los dos mundos.\n\nMás de 10 años construyendo productos en banca, ecommerce, insurtech y consultoría digital. Hoy lidera en redbee con foco en AI aplicada a producto.\n\nLo que la define: no acumula features. Diseña sistemas que resuelven problemas reales.',
+    ],
+    variantsEN: [
+      'Barbara is a Product Manager with 10+ years building digital products.\n\nShe has worked in banking (Santander), e-commerce (Mercado Libre), insurtech (123Seguro), and digital consulting (redbee). She connects strategy, technology, and teams — with a systemic and human-centered approach.\n\nToday she leads at redbee, focused on AI applied to product and teams.',
+      "Barbara is the rare person who understands both business and technology — and knows how to translate between the two.\n\n10+ years building products in banking, e-commerce, insurtech, and digital consulting. Today she leads at redbee with a focus on AI applied to product.\n\nWhat defines her: she doesn't stack features. She designs systems that solve real problems.",
+    ],
     suggestionsES: ['¿Cuál es su experiencia en fintech?', '¿Cómo lidera equipos?', '¿Qué proyectos lideró?'],
     suggestionsEN: ['What is her fintech experience?', 'How does she lead teams?', 'What projects did she lead?'],
   },
@@ -35,6 +87,7 @@ export const intents: AssistantIntent[] = [
     responseEN: 'She has 10+ years in digital product. Her trajectory:\n\n- **redbee studios** · Product leadership in digital ecosystem\n- **Santander Argentina** · Product Manager — Collections & Payments (4 years)\n- **Mercado Libre** · Senior Product — Darwin Project LATAM (2 years)\n- **123Seguro** · Growth Marketing Manager — insurtech\n- **Cognizant** · Account Strategist — Google project (2 years)\n\nShe started in digital marketing, moved into product, and has been leading cross-functional squads for several years.',
     suggestionsES: ['¿Qué hizo en Santander?', '¿Qué hizo en Mercado Libre?', '¿Cómo es su forma de trabajar?'],
     suggestionsEN: ['What did she do at Santander?', 'What did she do at Mercado Libre?', 'How does she work?'],
+    navLinks: [{ labelES: '→ Ver Proyectos', labelEN: '→ See Projects', route: '/projects' }],
   },
   {
     id: 'santander',
@@ -107,6 +160,7 @@ export const intents: AssistantIntent[] = [
     responseEN: 'You can explore her main projects in the **Projects** section of the portfolio:\n\n- **redbee studios** — Product leadership in digital ecosystem\n- **Santander Argentina** — Collections & Payments, digital transformation\n- **Mercado Libre** — Darwin Project, Mercado Shops LATAM\n- **123Seguro** — Growth and insurtech\n- **Cognizant / Google** — Account Strategy\n\nWould you like more detail on any of them?',
     suggestionsES: ['¿Qué hizo en Santander?', '¿Qué hizo en Mercado Libre?', '¿Cuál fue un desafío complejo?'],
     suggestionsEN: ['What did she do at Santander?', 'What did she do at Mercado Libre?', 'What was a complex challenge she solved?'],
+    navLinks: [{ labelES: '→ Ver Proyectos', labelEN: '→ See Projects', route: '/projects' }],
   },
   {
     id: 'contact_cv',
@@ -116,13 +170,22 @@ export const intents: AssistantIntent[] = [
     responseEN: 'You can contact Barbara by email: **aceto.barbara@gmail.com**\n\nOr download her CV from the **One Sheet** section of the portfolio.\n\nShe\'s also active on LinkedIn if you\'d like to connect professionally.',
     suggestionsES: ['¿Cómo trabaja?', '¿Qué proyectos lideró?', '¿Dónde ver su experiencia?'],
     suggestionsEN: ['How does she work?', 'What projects did she lead?', 'Where can I see her experience?'],
+    navLinks: [{ labelES: '→ Ver One Sheet', labelEN: '→ See One Sheet', route: '/one-sheet' }],
   },
   {
     id: 'motivation',
     keywordsES: ['motiva', 'motivacion', 'motivación', 'te gusta', 'le gusta', 'disfruta', 'por que hace', 'por qué hace', 'pasion', 'pasión', 'que le apasiona', 'qué le apasiona'],
     keywordsEN: ['motivates', 'motivation', 'enjoy', 'like', 'passion', 'why she does', 'what drives'],
     responseES: 'Le motiva transformar ambigüedad en dirección clara. Y trabajar con equipos donde se pueda construir en serio sin perder humanidad.\n\nLo que más disfruta: el momento en que un equipo entendió el problema de verdad y puede tomar decisiones sin necesitar respuesta para cada cosa.\n\nLe cansa: la reunionitis, el producto decorativo, la estrategia que nunca llega a ejecución.',
-    responseEN: 'She\'s motivated by transforming ambiguity into clear direction. And working with teams where you can build seriously without losing humanity.\n\nWhat she enjoys most: the moment a team truly understands the problem and can make decisions without needing an answer for every little thing.\n\nWhat drains her: meeting theater, decorative product, strategy that never reaches execution.',
+    responseEN: "She's motivated by transforming ambiguity into clear direction. And working with teams where you can build seriously without losing humanity.\n\nWhat she enjoys most: the moment a team truly understands the problem and can make decisions without needing an answer for every little thing.\n\nWhat drains her: meeting theater, decorative product, strategy that never reaches execution.",
+    variantsES: [
+      'Le motiva transformar ambigüedad en dirección clara. Y trabajar con equipos donde se pueda construir en serio sin perder humanidad.\n\nLo que más disfruta: el momento en que un equipo entendió el problema de verdad y puede tomar decisiones sin necesitar respuesta para cada cosa.\n\nLe cansa: la reunionitis, el producto decorativo, la estrategia que nunca llega a ejecución.',
+      'Le apasiona el momento en que la complejidad se convierte en claridad — cuando alguien dice “ahora entiendo” y el equipo puede avanzar solo.\n\nConstruye lo opuesto al producto por acumulación: foco, contexto y propósito.\n\nLo que le cansa: la estrategia bonita que nunca llega a ejecución.',
+    ],
+    variantsEN: [
+      "She's motivated by transforming ambiguity into clear direction. And working with teams where you can build seriously without losing humanity.\n\nWhat she enjoys most: the moment a team truly understands the problem and can make decisions without needing an answer for every little thing.\n\nWhat drains her: meeting theater, decorative product, strategy that never reaches execution.",
+      "She's passionate about the moment complexity becomes clarity — when someone says 'now I get it' and the team can move forward on its own.\n\nShe builds the opposite of feature accumulation: focus, context, and purpose.\n\nWhat drains her: beautiful strategy that never reaches execution.",
+    ],
     suggestionsES: ['¿Cómo lidera equipos?', '¿Qué tipo de problemas resuelve?', '¿Cuál fue un desafío complejo?'],
     suggestionsEN: ['How does she lead teams?', 'What kind of problems does she solve?', 'What was a complex challenge?'],
   },
@@ -143,6 +206,7 @@ export const intents: AssistantIntent[] = [
     responseEN: 'She gave talks and workshops on:\n\n- **"Humans and Algorithms"** — AI applied to product and teams\n- Product fundamentals for Product Owners\n- Token App for businesses (Santander)\n- Metrics and measurement frameworks\n- Google Analytics, GA4, and GTM\n- UX basics for product teams\n- Product strategy and mindset\n\nYou can find articles and reflections in the **Notes** section of the portfolio.',
     suggestionsES: ['¿Cómo usa AI en producto?', '¿Cómo enseña a equipos?', '¿Dónde ver sus notas?'],
     suggestionsEN: ['How does she use AI in product?', 'How does she teach teams?', 'Where can I see her notes?'],
+    navLinks: [{ labelES: '→ Ver Notas', labelEN: '→ See Notes', route: '/notes' }],
   },
   {
     id: 'challenge',
@@ -153,10 +217,48 @@ export const intents: AssistantIntent[] = [
     suggestionsES: ['¿Cómo lidera en entornos complejos?', '¿Qué hizo en Santander?', '¿Cómo tomás decisiones difíciles?'],
     suggestionsEN: ['How does she lead in complex environments?', 'What did she do at Santander?', 'How does she make tough decisions?'],
   },
+  {
+    id: 'availability',
+    keywordsES: ['disponible', 'disponibilidad', 'busca trabajo', 'open to work', 'contratar', 'contratarla', 'trabajo nuevo', 'buscando trabajo', 'oportunidad', 'oportunidades', 'entrevistar', 'hablar con ella', 'empleo', 'oferta', 'oferta laboral', 'proyecto nuevo', 'freelance', 'consulting'],
+    keywordsEN: ['available', 'availability', 'looking for work', 'open to work', 'hire', 'hiring', 'job opportunity', 'new role', 'new project', 'reach out', 'interview', 'freelance', 'consulting', 'contract'],
+    responseES: 'Barbara está siempre dispuesta a escuchar — ya sea una propuesta, un proyecto o simplemente conocerse.\n\nNo hay barrera de entrada: si algo resuena, responde.\n\nEl mejor primer paso es escribirle directamente:\n**aceto.barbara@gmail.com**\n\nTambién está activa en LinkedIn para conectar profesionalmente.',
+    responseEN: "Barbara is always open to new conversations — whether it's a role, a project, or just getting to know each other.\n\nNo gatekeeping: if it resonates, she responds.\n\nThe best move is to reach out directly:\n**aceto.barbara@gmail.com**\n\nShe's also active on LinkedIn for professional connections.",
+    suggestionsES: ['¿Cómo trabaja?', '¿Qué proyectos lideró?', '¿Cómo descargar su CV?'],
+    suggestionsEN: ['How does she work?', 'What projects did she lead?', 'How to download her CV?'],
+    navLinks: [{ labelES: '→ Ver One Sheet', labelEN: '→ See One Sheet', route: '/one-sheet' }],
+  },
+  {
+    id: 'differentiator',
+    keywordsES: ['diferencia', 'diferenciador', 'diferente', 'unico', 'por que producto', 'por qué producto', 'que la hace distinta', 'qué la hace distinta', 'valor diferencial', 'propuesta de valor', 'fortaleza', 'fortalezas', 'distingue', 'distinta'],
+    keywordsEN: ['differentiator', 'different', 'unique', 'why product', 'not a designer', 'not a developer', 'what makes her different', 'value proposition', 'strength', 'strengths', 'stand out', 'stands out'],
+    responseES: 'Lo que la distingue no es una sola disciplina — es la intersección.\n\nNo es diseñadora, no es desarrolladora, no es solo estratega. Es la persona que puede hablar con cada uno de ellos en su idioma y traducir eso en decisiones de producto que tienen sentido.\n\nDiez años construyendo en esa intersección le dieron algo difícil de enseñar: criterio. Saber qué preguntar antes de saber qué construir.',
+    responseEN: "What sets her apart isn't a single discipline — it's the intersection.\n\nShe's not a designer, not a developer, not just a strategist. She's the person who can speak each of their languages and translate that into product decisions that actually make sense.\n\nTen years working at that intersection gave her something hard to teach: judgment. Knowing what to ask before knowing what to build.",
+    suggestionsES: ['¿Cómo lidera equipos?', '¿Cuál es su metodología?', '¿Qué la motiva?'],
+    suggestionsEN: ['How does she lead teams?', 'What is her methodology?', 'What motivates her?'],
+  },
+  {
+    id: 'short_ack',
+    keywordsES: ['dale', 'joya', 'copado', 'genial', 'perfecto', 'excelente', 'gracias', 'buenisimo', 'buenísimo', 'entendido', 'listo', 'okey'],
+    keywordsEN: ['thanks', 'thank you', 'great', 'perfect', 'cool', 'awesome', 'got it', 'nice', 'understood', 'sure'],
+    responseES: 'Buenísimo.\n\n¿Hay algo más sobre lo que pueda contarte?',
+    responseEN: "Great!\n\nAnything else you'd like to know?",
+    variantsES: [
+      'Buenísimo.\n\n¿Hay algo más sobre lo que pueda contarte?',
+      'Con gusto.\n\n¿Querés saber algo más sobre Barbara o su forma de trabajar?',
+      '¡Perfecto! ¿Seguimos explorando?',
+    ],
+    variantsEN: [
+      "Great!\n\nAnything else you'd like to know?",
+      "Of course.\n\nWant to explore more about Barbara or how she works?",
+      "Glad to help!\n\nIs there anything else you'd like to know?",
+    ],
+    suggestionsES: ['¿Cómo trabaja?', '¿Qué proyectos lideró?', '¿Cómo contactarla?'],
+    suggestionsEN: ['How does she work?', 'What projects did she lead?', 'How to contact her?'],
+  },
 ]
 
-export const fallbackES = 'No estoy seguro de haber entendido bien esa pregunta.\n\n¿Te puedo ayudar con alguno de estos temas?'
-export const fallbackEN = "I'm not sure I fully understood that question.\n\nCan I help you with one of these topics?"
+export const fallbackES = 'No encontré eso exactamente — probá con algo más concreto 🙂\n\n¿Te puedo ayudar con alguno de estos temas?'
+export const fallbackEN = "I didn't quite catch that — try asking something more specific 🙂\n\nCan I help you with one of these topics?"
 
 export const defaultSuggestionsES = [
   '¿Qué tipo de productos lideró?',
@@ -177,20 +279,68 @@ function normalize(text: string): string {
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .replace(/[^a-z0-9\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
 }
 
-export function matchIntent(input: string, isEnglish: boolean): AssistantIntent | null {
+export function matchIntent(input: string, isEnglish: boolean, lastIntentId?: string): AssistantIntent | null {
   const normalized = normalize(input)
+  const words = normalized.split(' ').filter(Boolean)
+
+  // Context memory: short follow-up → chain to previous company/topic
+  if (lastIntentId && words.length <= 5) {
+    const followUps = isEnglish ? followUpPatternsEN : followUpPatternsES
+    const isFollowUp = followUps.some(p => normalized.includes(normalize(p)))
+    if (isFollowUp && prevCompany[lastIntentId]) {
+      const prev = intents.find(i => i.id === prevCompany[lastIntentId])
+      if (prev) return prev
+    }
+  }
+
+  // Short acknowledgments: only for very short inputs (≤3 words)
+  if (words.length <= 3) {
+    const shortYesES = ['si', 'sí', 'ok', 'okey']
+    const shortYesEN = ['yes', 'ok', 'okay']
+    const shortYes = isEnglish ? shortYesEN : shortYesES
+    const ackIntent = intents.find(i => i.id === 'short_ack')
+    if (ackIntent) {
+      const kwList = isEnglish ? ackIntent.keywordsEN : ackIntent.keywordsES
+      if (kwList.some(kw => words.includes(normalize(kw))) || shortYes.some(kw => words.includes(kw))) {
+        return ackIntent
+      }
+    }
+  }
+
+  // Synonym expansion: add mapped words to the input before scoring
+  const synonymMap = isEnglish ? synonymsEN : synonymsES
+  let expanded = normalized
+  for (const [word, replacement] of Object.entries(synonymMap)) {
+    if (words.includes(normalize(word))) {
+      expanded += ' ' + normalize(replacement)
+    }
+  }
+  const expandedWords = expanded.split(' ').filter(Boolean)
+
   let bestScore = 0
   let bestIntent: AssistantIntent | null = null
 
   for (const intent of intents) {
+    if (intent.id === 'short_ack') continue // already handled above
     const keywords = isEnglish ? intent.keywordsEN : intent.keywordsES
     let score = 0
     for (const kw of keywords) {
-      if (normalized.includes(normalize(kw))) {
-        // longer keywords score higher
-        score += kw.split(' ').length
+      const normKw = normalize(kw)
+      const kwWords = normKw.split(' ').filter(Boolean)
+      if (kwWords.length === 1 && normKw.length <= 4) {
+        // Short single-word keywords: require exact word match (not substring)
+        if (expandedWords.includes(normKw)) {
+          score += 1
+        }
+      } else {
+        // Longer or multi-word keywords: substring match scores by word count
+        if (expanded.includes(normKw)) {
+          score += kwWords.length
+        }
       }
     }
     if (score > bestScore) {

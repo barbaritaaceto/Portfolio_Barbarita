@@ -81,18 +81,18 @@ const Layout: React.FC = () => {
           onClick={() => setIsAssistantOpen(true)}
           className="w-14 h-14 rounded-full flex items-center justify-center ai-btn-float"
           style={{
-            backgroundColor: '#FFFFFF',
-            border: '1.5px solid rgba(58, 125, 107, 0.3)',
+            backgroundColor: isAssistantOpen ? 'var(--accent-primary)' : '#FFFFFF',
+            border: `1.5px solid ${isAssistantOpen ? 'var(--accent-primary)' : 'rgba(58, 125, 107, 0.3)'}`,
             boxShadow: '0 4px 14px rgba(30, 42, 56, 0.10)',
           }}
         >
           <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <circle cx="13" cy="7" r="3" fill="var(--accent-primary)" />
-            <circle cx="6" cy="20" r="2" fill="var(--accent-primary)" opacity="0.65" />
-            <circle cx="20" cy="20" r="2" fill="var(--accent-primary)" opacity="0.65" />
-            <line x1="13" y1="7" x2="6" y2="20" stroke="var(--accent-primary)" strokeWidth="1.5" strokeLinecap="round" opacity="0.45" />
-            <line x1="13" y1="7" x2="20" y2="20" stroke="var(--accent-primary)" strokeWidth="1.5" strokeLinecap="round" opacity="0.45" />
-            <line x1="6" y1="20" x2="20" y2="20" stroke="var(--accent-primary)" strokeWidth="1.2" strokeLinecap="round" opacity="0.35" />
+            <circle cx="13" cy="7" r="3" fill={isAssistantOpen ? 'white' : 'var(--accent-primary)'} />
+            <circle cx="6" cy="20" r="2" fill={isAssistantOpen ? 'white' : 'var(--accent-primary)'} opacity="0.65" />
+            <circle cx="20" cy="20" r="2" fill={isAssistantOpen ? 'white' : 'var(--accent-primary)'} opacity="0.65" />
+            <line x1="13" y1="7" x2="6" y2="20" stroke={isAssistantOpen ? 'white' : 'var(--accent-primary)'} strokeWidth="1.5" strokeLinecap="round" opacity="0.45" />
+            <line x1="13" y1="7" x2="20" y2="20" stroke={isAssistantOpen ? 'white' : 'var(--accent-primary)'} strokeWidth="1.5" strokeLinecap="round" opacity="0.45" />
+            <line x1="6" y1="20" x2="20" y2="20" stroke={isAssistantOpen ? 'white' : 'var(--accent-primary)'} strokeWidth="1.2" strokeLinecap="round" opacity="0.35" />
           </svg>
         </button>
         <div
