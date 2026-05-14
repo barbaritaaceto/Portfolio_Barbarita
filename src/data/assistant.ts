@@ -261,14 +261,14 @@ export const fallbackES = 'No encontré eso exactamente — probá con algo más
 export const fallbackEN = "I didn't quite catch that — try asking something more specific 🙂\n\nCan I help you with one of these topics?"
 
 export const defaultSuggestionsES = [
-  '¿Qué hizo en Santander?',
-  '¿Cómo usa AI?',
+  '¿Quién es Barbara?',
   '¿Está disponible?',
+  '¿Qué la diferencia?',
 ]
 export const defaultSuggestionsEN = [
-  'Santander experience',
-  'How she uses AI',
+  'Who is Barbara?',
   'Is she available?',
+  'What sets her apart?',
 ]
 
 function normalize(text: string): string {
