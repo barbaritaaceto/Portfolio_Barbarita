@@ -50,7 +50,7 @@ export default function Home() {
         whyLine1: 'Over the years I understood that most of the work in product is not just about ideas.',
         whyLine2: 'It lives in understanding context, aligning people, testing hypotheses and making decisions while things keep changing.',
         whyHighlight: 'That is where I like to work.',
-        wayIntro: 'Four principles that shape how I approach any product, team or challenge.',
+        wayIntro: 'My way of working evolved over the years. Today I prioritize context, learning and decisions with clear direction.',
         newsTitle: 'Latest News',
         newsSubtitle: 'Articles and interviews in media.',
         readArticle: 'Read article →',
@@ -69,7 +69,7 @@ export default function Home() {
         whyLine1: 'Con el tiempo entendí que gran parte del trabajo en producto no está solo en las ideas.',
         whyLine2: 'Está en entender contexto, alinear personas, validar hipótesis y tomar decisiones mientras las cosas cambian.',
         whyHighlight: 'Ahí es donde más me gusta trabajar.',
-        wayIntro: 'Cuatro principios que definen cómo me acerco a cualquier producto, equipo o desafío.',
+        wayIntro: 'Mi forma de trabajar fue cambiando con los años. Hoy priorizo contexto, aprendizaje y decisiones con dirección.',
         newsTitle: 'Últimas noticias',
         newsSubtitle: 'Artículos y entrevistas en medios.',
         readArticle: 'Leer nota →',
@@ -87,45 +87,61 @@ export default function Home() {
     ? [
         {
           number: '01',
+          label: 'DISCOVERY',
           title: 'Understand before building',
           description: 'Before moving a roadmap, I need to understand how business, users, operations and technology coexist.',
+          highlight: false,
         },
         {
           number: '02',
+          label: 'HYPOTHESES',
           title: 'Validate hypotheses',
           description: 'I use signals, behavior and continuous learning to reduce uncertainty and make better decisions.',
+          highlight: false,
         },
         {
           number: '03',
+          label: 'DELIVERY',
           title: 'Build close to reality',
           description: 'I prefer teams connected to the problem over perfect processes disconnected from real impact.',
+          highlight: false,
         },
         {
           number: '04',
+          label: 'LEARNING LOOP',
           title: 'Evolve continuously',
           description: 'Experimenting, iterating and learning is not a phase. It is part of the product.',
+          highlight: true,
         },
       ]
     : [
         {
           number: '01',
+          label: 'DISCOVERY',
           title: 'Entender antes de construir',
           description: 'Antes de mover un roadmap, necesito entender cómo conviven negocio, usuarios, operación y tecnología.',
+          highlight: false,
         },
         {
           number: '02',
+          label: 'HIPÓTESIS',
           title: 'Validar hipótesis',
           description: 'Uso señales, comportamiento y aprendizaje continuo para reducir incertidumbre y tomar mejores decisiones.',
+          highlight: false,
         },
         {
           number: '03',
+          label: 'DELIVERY',
           title: 'Construir cerca de la realidad',
           description: 'Prefiero equipos conectados al problema antes que procesos perfectos alejados del impacto real.',
+          highlight: false,
         },
         {
           number: '04',
+          label: 'LEARNING LOOP',
           title: 'Evolucionar continuamente',
           description: 'Experimentar, iterar y aprender no es una etapa del proceso. Es parte del producto.',
+          highlight: true,
         },
       ];
 
@@ -319,12 +335,16 @@ export default function Home() {
         >
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10 items-stretch">
-              <div className="rounded-3xl overflow-hidden border w-full max-w-xl mx-auto md:mx-0 md:col-span-5 h-full min-h-[640px]" style={{ borderColor: 'var(--border-base)' }}>
+              <div className="relative rounded-3xl overflow-hidden border w-full max-w-xl mx-auto md:mx-0 md:col-span-5 h-full min-h-[640px]" style={{ borderColor: 'var(--border-base)' }}>
                 <img
                   src="/barbi fuego.png"
                   alt="Barbara"
                   className="w-full h-full object-cover"
-                  style={{ objectPosition: '18% center' }}
+                  style={{ objectPosition: '18% center', filter: 'brightness(0.84) contrast(0.92)' }}
+                />
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{ background: 'linear-gradient(160deg, rgba(20,32,44,0.28) 0%, rgba(20,32,44,0.06) 52%, rgba(20,32,44,0.22) 100%)' }}
                 />
               </div>
 
@@ -360,34 +380,50 @@ export default function Home() {
                   </p>
                 </header>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full content-start">
-                  {workSteps.map((step) => (
-                    <article
-                      key={step.number}
-                      className="rounded-xl px-5 py-4 min-h-[110px]"
-                      style={{
-                        backgroundColor: 'var(--card-bg)',
-                        border: '1px solid var(--border-base)',
-                        transition: 'transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease',
-                      }}
-                      onMouseEnter={e => {
-                        e.currentTarget.style.transform = 'translateY(-2px)'
-                        e.currentTarget.style.boxShadow = '0 4px 14px rgba(30,42,56,0.08)'
-                        e.currentTarget.style.borderColor = 'rgba(58,125,107,0.4)'
-                      }}
-                      onMouseLeave={e => {
-                        e.currentTarget.style.transform = 'translateY(0)'
-                        e.currentTarget.style.boxShadow = 'none'
-                        e.currentTarget.style.borderColor = 'var(--border-base)'
-                      }}
-                    >
-                      <h3 className="text-sm md:text-base font-serif font-semibold mb-2" style={{ color: 'var(--accent-primary)' }}>
-                        {step.title}
-                      </h3>
-                      <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                        {step.description}
-                      </p>
-                    </article>
+                <div className="flex flex-col w-full">
+                  {workSteps.map((step, i) => (
+                    <div key={step.number}>
+                      <article
+                        className="group flex gap-3 py-3.5 px-3 rounded-xl transition-all duration-200"
+                        style={{ borderLeft: '2px solid transparent' }}
+                        onMouseEnter={e => {
+                          e.currentTarget.style.borderLeftColor = 'var(--accent-primary)'
+                          e.currentTarget.style.backgroundColor = 'rgba(58,125,107,0.04)'
+                        }}
+                        onMouseLeave={e => {
+                          e.currentTarget.style.borderLeftColor = 'transparent'
+                          e.currentTarget.style.backgroundColor = 'transparent'
+                        }}
+                      >
+                        <div className="flex-1 min-w-0">
+                          <span
+                            className="inline-block text-[10px] font-semibold mb-1.5"
+                            style={{ color: 'var(--accent-primary)', opacity: 0.65, letterSpacing: '0.13em' }}
+                          >
+                            {step.label}
+                          </span>
+                          <h3 className="text-sm md:text-base font-serif font-semibold mb-1 leading-snug" style={{ color: 'var(--text-primary)' }}>
+                            {step.title}
+                          </h3>
+                          {step.highlight ? (
+                            <p className="text-sm font-serif italic leading-relaxed" style={{ color: 'var(--accent-primary)', opacity: 0.82 }}>
+                              {step.description}
+                            </p>
+                          ) : (
+                            <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                              {step.description}
+                            </p>
+                          )}
+                        </div>
+                      </article>
+                      {i < workSteps.length - 1 && (
+                        <div className="flex items-center pl-4 py-0.5" aria-hidden="true">
+                          <svg width="10" height="14" viewBox="0 0 10 14" fill="none">
+                            <path d="M5 0v9M1.5 6.5L5 10.5l3.5-4" stroke="var(--accent-primary)" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" opacity="0.3"/>
+                          </svg>
+                        </div>
+                      )}
+                    </div>
                   ))}
                 </div>
               </div>
