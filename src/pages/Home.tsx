@@ -47,10 +47,10 @@ export default function Home() {
     ? {
         whyTitle: 'Why I Build',
         wayTitle: 'The Way I Work',
-        whyLine1: 'I connect strategy, technology and human behavior to build products that perform.',
-        whyLine2: 'My focus is simple: clear direction, aligned teams and measurable outcomes.',
-        whyHighlight: 'I prioritize value delivered, not just features released.',
-        wayIntro: 'A practical framework to move from ambiguity to impact.',
+        whyLine1: 'Over the years I understood that most of the work in product is not just about ideas.',
+        whyLine2: 'It lives in understanding context, aligning people, testing hypotheses and making decisions while things keep changing.',
+        whyHighlight: 'That is where I like to work.',
+        wayIntro: 'Four principles that shape how I approach any product, team or challenge.',
         newsTitle: 'Latest News',
         newsSubtitle: 'Articles and interviews in media.',
         readArticle: 'Read article →',
@@ -66,10 +66,10 @@ export default function Home() {
     : {
         whyTitle: 'Por qué construyo',
         wayTitle: 'Cómo trabajo',
-        whyLine1: 'Trabajo donde negocio, tecnología y experiencia suelen chocar.',
-        whyLine2: 'Me gusta transformar ambigüedad en dirección clara, ordenar complejidad y ayudar a que equipos reales construyan productos que funcionen en el mundo real.',
-        whyHighlight: 'No creo en features por acumulación. Creo en decisiones con contexto, foco y propósito.',
-        wayIntro: 'Entender contexto, validar hipótesis y aprender rápido forma parte del producto, no solo de la entrega.',
+        whyLine1: 'Con el tiempo entendí que gran parte del trabajo en producto no está solo en las ideas.',
+        whyLine2: 'Está en entender contexto, alinear personas, validar hipótesis y tomar decisiones mientras las cosas cambian.',
+        whyHighlight: 'Ahí es donde más me gusta trabajar.',
+        wayIntro: 'Cuatro principios que definen cómo me acerco a cualquier producto, equipo o desafío.',
         newsTitle: 'Últimas noticias',
         newsSubtitle: 'Artículos y entrevistas en medios.',
         readArticle: 'Leer nota →',
@@ -338,15 +338,15 @@ export default function Home() {
                 style={{
                   color: 'var(--text-secondary)',
                   fontSize: '1rem',
-                  lineHeight: 1.75,
+                  lineHeight: 1.8,
                 }}
               >
-                <div className="space-y-3 mb-6">
-                  <p>{homeText.whyLine1}</p>
-                  <p>{homeText.whyLine2}</p>
+                <div className="space-y-4 mb-7">
+                  <p style={{ maxWidth: '52ch' }}>{homeText.whyLine1}</p>
+                  <p style={{ maxWidth: '52ch' }}>{homeText.whyLine2}</p>
                 </div>
                 <div className="border-l-2 pl-5 py-1" style={{ borderColor: 'var(--accent-primary)', color: 'var(--text-primary)' }}>
-                  <p className="font-serif italic text-base md:text-lg leading-snug">{homeText.whyHighlight}</p>
+                  <p className="font-serif italic text-base md:text-lg leading-relaxed">{homeText.whyHighlight}</p>
                 </div>
               </div>
 
