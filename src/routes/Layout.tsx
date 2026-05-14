@@ -111,20 +111,10 @@ const Layout: React.FC = () => {
 
       {/* AI Assistant dialog */}
       {isAssistantOpen && (
-        <div className="fixed inset-0 z-[60] flex items-end justify-end p-4 md:p-6 md:items-end">
-          <button
-            type="button"
-            className="absolute inset-0 bg-black/15"
-            aria-label={isEnglish ? 'Close assistant' : 'Cerrar asistente'}
-            onClick={() => setIsAssistantOpen(false)}
-          />
-          <div className="relative">
-            <AIAssistant
-              isEnglish={isEnglish}
-              onClose={() => setIsAssistantOpen(false)}
-            />
-          </div>
-        </div>
+        <AIAssistant
+          isEnglish={isEnglish}
+          onClose={() => setIsAssistantOpen(false)}
+        />
       )}
 
       <style>{`
