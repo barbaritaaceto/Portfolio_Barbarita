@@ -27,7 +27,7 @@ export default function Footer() {
           className="container mx-auto px-4 flex items-center justify-center gap-3 flex-wrap"
         >
           <a
-            href="/Presentaci%C3%B3n%20proyecto%20porfolio.pdf"
+            href="/proceso.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-ghost px-5 text-sm"

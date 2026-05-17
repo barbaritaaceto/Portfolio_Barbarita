@@ -156,7 +156,7 @@ function TourCard({ emoji, title, body, step, total, onNext, onSkip, isLast, isE
         </div>
         {isLast && (
           <a
-            href="/Presentaci%C3%B3n%20proyecto%20porfolio.pdf"
+            href="/proceso.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="text-xs font-medium text-center py-2 px-4 rounded-xl transition-colors"
