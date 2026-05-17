@@ -5,8 +5,8 @@ const projects: Project[] = [
     slug: 'redbee',
     title: 'redbee',
     summary: 'Product leadership within a high-impact digital ecosystem.',
-    description: 'Leading product and delivery in a consultancy that builds digital ecosystems for top-tier companies. Working across strategy, systems and teams to move things that matter forward.',
-    tech: ['Product Leadership','Digital Strategy','Systems Thinking','Cross-functional Teams','Human-Centered'],
+    description: 'Traversing the opportunity to challenge myself professionally building a home banking product, creating with AI, and shaping product and team processes.',
+    tech: ['Product Management','Digital Products','Fintech','AI Product Strategy','UX Strategy','Discovery & Delivery','Agile','Stakeholder Management','Roadmapping','AI Assisted Delivery','User Experience','Product Discovery','Data-Driven Decision Making','Design Thinking','Scrum','Cross-functional Leadership','Banking Products','Conversational AI','Product Strategy','Team Leadership'],
     featured: true,
     images: ['/placeholder.png'],
     duration: '2025 - Actualidad',
@@ -15,12 +15,14 @@ const projects: Project[] = [
         title: 'Bee Manager',
         period: 'Oct 2025 - Present',
         responsibilities: [
-          'Shaping product direction and delivery quality across high-impact client projects.',
-          'Connecting business strategy with execution across cross-functional teams.',
-          'Building a collaborative, human-centered culture within consulting environments.',
-          'Driving continuous learning and product thinking across teams.',
+          'Building digital banking experiences for web, mobile and AI channels.',
+          'Designing products centered on users and complex operations.',
+          'Coordinating Product, UX, QA and Technology teams.',
+          'Driving conversational assistants powered by artificial intelligence.',
+          'Managing roadmaps, releases and high-impact deployments.',
+          'Transforming legacy processes into simple digital experiences.',
         ],
-        focus: 'Product Leadership · Strategy · Systems Thinking · Human-Centered Culture'
+        focus: ''
       }
     ]
   },
@@ -55,7 +57,7 @@ const projects: Project[] = [
           'Designed and implemented measurement frameworks to optimize conversion and performance.',
           'Enabled cross-selling opportunities through ecosystem integration.'
         ],
-        focus: 'Product Strategy · Agile Delivery · Digital Transformation · Data-Driven Optimization'
+        focus: ''
       },
       {
         title: 'Senior Product Lead',
@@ -67,7 +69,7 @@ const projects: Project[] = [
           'Defined key metrics and leveraged user feedback for continuous iteration.',
           'Connected product strategy with evolving market trends and customer needs.'
         ],
-        focus: 'Roadmapping · Stakeholder Alignment · Metrics & Iteration · Agile Leadership'
+        focus: ''
       }
     ],
     talks: [
@@ -124,7 +126,7 @@ const projects: Project[] = [
         responsibilities: [
           'Responsible for carrying out strategies and actions related to: Acquisition | Branding | Product | SEO | Social networks | Press | Email marketing | Audience analysis | Conversion funnels | A/B testing'
         ],
-        focus: 'Data analytics · Leadership'
+        focus: ''
       },
       {
         title: 'Acquisition Marketing Manager',
@@ -135,7 +137,7 @@ const projects: Project[] = [
           'Budget distribution and control per campaign/channel',
           'Marketing acquisition communication'
         ],
-        focus: 'Tools & knowledge of: Google Adwords | Google Analytics | Google Tag Manager | HTML | SQL | Mixpanel | Whimsical'
+        focus: ''
       }
     ]
   },
@@ -143,7 +145,7 @@ const projects: Project[] = [
     slug: 'cognizant',
     title: 'Google · Cognizant',
     summary: 'LCS Account Strategist & Optimizer - Google Project',
-    description: 'Specialized on Media and Entertainment, with cross-industry experience in Food & Beverage, Telco, Finance and Insurance. Managed YouTube, GDN and Search on multicultural accounts.',
+    description: 'Understanding the world of Media and Entertainment, with cross-industry experience in Food & Beverage, Telco, Finance and Insurance, among others. Managed YouTube, GDN and Search on multicultural accounts.',
     tech: ['YouTube','GDN','Search','Client Management','Optimization'],
     featured: true,
     images: ['/placeholder.png'],
@@ -191,7 +193,7 @@ const projects: Project[] = [
           'Knowledge of UX and keyword research patterns',
           'Innovation in presentations'
         ],
-        focus: 'SEO · Keyword Research · UX'
+        focus: ''
       }
     ]
   },

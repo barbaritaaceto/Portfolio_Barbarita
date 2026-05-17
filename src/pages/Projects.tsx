@@ -21,17 +21,18 @@ const companyMeta: Record<string, { emoji: string; accent: string; primary: bool
 
 // ─── Company logos ────────────────────────────────────────────────────────────
 const companyLogos: Record<string, string> = {
-  'redbee':              '/redbee.png',
-  'mercado-libre':       '/mercadolibre.jpeg',
+  'redbee':              '/redbee logo nuevo.png',
+  'mercado-libre':       '/mercado libre logo nuevo.png',
   '123seguro':           '/123seguros.png',
   'cognizant':           '/cognizant.png',
-  'globant':             '/globant.jpeg',
+  'globant':             '/globant logo nuevo.png',
   'santander-argentina': '/santander.png',
 }
 
 // ─── Extra logos (secondary) — shown alongside the main logo ─────────────────
 const companyLogosExtra: Record<string, string> = {
   'cognizant': '/google .jpeg',
+  'globant':   '/mercado libre logo nuevo.png',
 }
 
 // ─── Company start years ──────────────────────────────────────────────────────
@@ -67,12 +68,12 @@ const timelinePhrases: Record<string, { es: string; en: string }> = {
 // ─── Editorial learnings ──────────────────────────────────────────────────────
 const learnings: Record<string, { es: string; en: string }> = {
   'redbee': {
-    es: 'Liderar en consultoría me enseñó que construir cultura y construir producto son la misma cosa. El impacto real ocurre cuando el equipo también crece.',
-    en: 'Leading in consulting taught me that building culture and building product are the same thing. Real impact happens when the team grows too.',
+    es: 'La IA nos atraviesa por todos lados, y el desafío no es solo tecnológico: es entender cómo cambia la forma en que construimos, decidimos y colaboramos. Estoy en el centro de eso, y lo disfruto.',
+    en: 'AI is everywhere, and the challenge is not just technical: it is understanding how it changes the way we build, decide and collaborate. I am right in the middle of that, and I enjoy it.',
   },
   'santander-argentina': {
-    es: 'La tecnología sola no transforma procesos. La adopción real ocurre cuando negocio, operación y UX se alinean — y cuando la gente siente que la herramienta trabaja para ella, no al revés.',
-    en: 'Technology alone does not transform processes. Real adoption happens when business, operations and UX align — and when people feel the tool works for them, not the other way around.',
+    es: 'La tecnología sola no transforma procesos. La adopción real ocurre cuando negocio, operación y UX se alinean.',
+    en: 'Technology alone does not transform processes. Real adoption happens when business, operations and UX align.',
   },
   'mercado-libre': {
     es: 'Escalar para millones te obliga a pensar en sistemas, no en features. La simplicidad es el resultado de mucho trabajo invisible.',
@@ -177,7 +178,13 @@ export default function Projects() {
   // ─── Translations map (kept intact for localization) ─────────────────────────
   const esMap: Record<string, string> = {
     'redbee': 'redbee',
-    'Leading product and delivery in a consultancy that builds digital ecosystems for top-tier companies. Working across strategy, systems and teams to move things that matter forward.': 'Liderando producto y entrega en una consultora que construye ecosistemas digitales para empresas de primer nivel. Trabajo entre estrategia, sistemas y equipos para hacer avanzar lo que importa.',
+    'Traversing the opportunity to challenge myself professionally building a home banking product, creating with AI, and shaping product and team processes.': 'Atravesando la oportunidad de desafiarme como profesional en la construcción de un home banking, creando con AI, producto y procesos de equipo.',
+    'Building digital banking experiences for web, mobile and AI channels.': 'Construyendo experiencias de banca digital para canales web, mobile e IA.',
+    'Designing products centered on users and complex operations.': 'Diseñando productos centrados en usuarios y operaciones complejas.',
+    'Coordinating Product, UX, QA and Technology teams.': 'Coordinando equipos de Producto, UX, QA y Tecnología.',
+    'Driving conversational assistants powered by artificial intelligence.': 'Impulsando asistentes conversacionales con inteligencia artificial.',
+    'Managing roadmaps, releases and high-impact deployments.': 'Gestionando roadmaps, releases y despliegues de alto impacto.',
+    'Transforming legacy processes into simple digital experiences.': 'Transformando procesos legacy en experiencias digitales simples.',
     'Product leadership within a high-impact digital ecosystem.': 'Liderazgo de producto dentro de un ecosistema digital de alto impacto.',
     'Bee Manager': 'Bee Manager',
     'Shaping product direction and delivery quality across high-impact client projects.': 'Definiendo dirección de producto y calidad de entrega en proyectos de clientes de alto impacto.',
@@ -192,7 +199,7 @@ export default function Projects() {
     'Insurance technology and digital customer experience.': 'Tecnología de seguros y experiencia de cliente digital.',
     '"Growth" is more of a mindset than a position. People who embrace this idea are not afraid to stretch boundaries and think outside the box to get results. Basically anyone who has an experimental mind.': '"Growth" es más una mentalidad que un puesto. Quienes adoptan esta idea no temen expandir límites y pensar distinto para lograr resultados. Básicamente, cualquiera con mentalidad experimental.',
     'LCS Account Strategist & Optimizer - Google Project': 'Estratega y Optimizadora de Cuentas LCS - Proyecto Google',
-    'Specialized on Media and Entertainment, with cross-industry experience in Food & Beverage, Telco, Finance and Insurance. Managed YouTube, GDN and Search on multicultural accounts.': 'Especializada en Media y Entretenimiento, con experiencia transversal en Alimentos y Bebidas, Telco, Finanzas y Seguros. Gestioné YouTube, GDN y Search en cuentas multiculturales.',
+    'Understanding the world of Media and Entertainment, with cross-industry experience in Food & Beverage, Telco, Finance and Insurance, among others. Managed YouTube, GDN and Search on multicultural accounts.': 'Entendiendo el mundo de Medios y Entretenimiento, con experiencia transversal en Alimentos y Bebidas, Telco, Finanzas y Seguros, entre otros. Gestioné YouTube, GDN y Search en cuentas multiculturales.',
     'SEO Semi Senior Analyst at Mercadolibre Inc.': 'Analista SEO Semi Senior en Mercadolibre Inc.',
     'SEO Semi Senior Analyst at Mercadolibre with focus on Classifieds Business Unit (Motors, Real Estate & Services). Specialist in keyword research and opportunity detection; started as Analyst Trainee.': 'Analista SEO Semi Senior en Mercadolibre con foco en la unidad de Clasificados (Autos, Inmuebles y Servicios). Especialista en keyword research y detección de oportunidades; comencé como Analista Trainee.',
     'Digital Graphic Designer and Public Relations': 'Diseñadora Gráfica Digital y Relaciones Públicas',
@@ -586,9 +593,9 @@ export default function Projects() {
                           {companyLogosExtra[selectedSlug] && (
                             <img
                               src={companyLogosExtra[selectedSlug]}
-                              alt="Google"
+                              alt={selectedSlug === 'cognizant' ? 'Google' : 'Mercado Libre'}
                               className="object-contain rounded"
-                              style={{ maxHeight: 36, maxWidth: 80 }}
+                              style={{ maxHeight: selectedSlug === 'globant' ? 52 : 64, maxWidth: 100 }}
                             />
                           )}
                           <img
@@ -596,11 +603,11 @@ export default function Projects() {
                             alt={localizedProject.title}
                             className="object-contain rounded"
                             style={{
-                              maxHeight: ['globant', '123seguro', 'mercado-libre'].includes(selectedSlug) ? 52 : selectedSlug === 'redbee' ? 48 : 36,
+                              maxHeight: ['globant', '123seguro', 'mercado-libre'].includes(selectedSlug) ? (selectedSlug === 'globant' ? 60 : 52) : selectedSlug === 'redbee' ? 48 : selectedSlug === 'cognizant' ? 26 : 36,
                               maxWidth: 160,
-                              backgroundColor: selectedSlug === 'redbee' ? '#ffffff' : 'transparent',
-                              padding: selectedSlug === 'redbee' ? '4px 8px' : 0,
-                              borderRadius: selectedSlug === 'redbee' ? 6 : 0,
+                              backgroundColor: 'transparent',
+                              padding: 0,
+                              borderRadius: 0,
                             }}
                           />
                         </div>
