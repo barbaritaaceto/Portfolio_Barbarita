@@ -70,6 +70,11 @@ h1,h2,h3,.serif-heading{
   @apply shadow-md;
 }
 
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 .stationery-sep{
   height: 1px;
   background: linear-gradient(90deg, rgba(230,226,221,1), rgba(230,226,221,0.65), transparent);

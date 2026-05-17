@@ -28,8 +28,8 @@ const Layout: React.FC = () => {
   }, [])
 
   const tooltip = isEnglish
-    ? 'Ask me about product, AI or strategy'
-    : 'Preguntame sobre producto, AI o estrategia'
+    ? 'Ask me about Barbi'
+    : 'Preguntame sobre Barbi'
   const ariaLabel = isEnglish ? "Barbara's AI Assistant" : 'AI Assistant de Barbara'
 
   return (
