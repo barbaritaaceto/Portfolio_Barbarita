@@ -138,33 +138,12 @@ export default function ImageComparisonSlider({
         style={{
           left: `${position}%`,
           width: 1,
-          backgroundColor: 'rgba(255,255,255,0.85)',
+          backgroundColor: 'rgba(255,255,255,0.60)',
           transform: 'translateX(-0.5px)',
-          boxShadow: '0 0 8px rgba(0,0,0,0.20)',
         }}
       />
 
-      {/* ── Handle — low so it doesn't cover faces ── */}
-      <div
-        className="absolute flex items-center justify-center pointer-events-none"
-        style={{
-          left: `${position}%`,
-          top: '80%',
-          transform: 'translate(-50%, -50%)',
-          width: 28,
-          height: 28,
-          borderRadius: '50%',
-          backgroundColor: 'rgba(255,255,255,0.92)',
-          boxShadow: '0 1px 8px rgba(0,0,0,0.20)',
-          border: '1.5px solid rgba(255,255,255,0.7)',
-          backdropFilter: 'blur(4px)',
-        }}
-      >
-        <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
-          <path d="M4.5 1L1 5l3.5 4" stroke="var(--accent-primary)" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M9.5 1L13 5l-3.5 4" stroke="var(--accent-primary)" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-      </div>
+
 
       {/* ── Year labels ── */}
       <span

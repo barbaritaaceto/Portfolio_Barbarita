@@ -115,7 +115,7 @@ const learnings: Record<string, { es: string; en: string }> = {
 // ─── Component ────────────────────────────────────────────────────────────────
 export default function Projects() {
   const [selectedSlug, setSelectedSlug] = useState('redbee')
-  const [showEarlyCareer, setShowEarlyCareer] = useState(true)
+  const [showEarlyCareer, setShowEarlyCareer] = useState(false)
   const [isEnglish, setIsEnglish] = useState(() => {
     if (typeof window === 'undefined') return false
     return window.localStorage.getItem('lang') === 'en'
@@ -177,8 +177,14 @@ export default function Projects() {
   // ─── Translations map (kept intact for localization) ─────────────────────────
   const esMap: Record<string, string> = {
     'redbee': 'redbee',
-    'Contributing to the design and delivery of products that matter — blending strategy, systems thinking and execution while nurturing a collaborative, human-centered culture.': 'Contribuyendo al diseño y la entrega de productos que importan, combinando estrategia, pensamiento sistémico y ejecución mientras se cultiva una cultura colaborativa y centrada en las personas.',
+    'Leading product and delivery in a consultancy that builds digital ecosystems for top-tier companies. Working across strategy, systems and teams to move things that matter forward.': 'Liderando producto y entrega en una consultora que construye ecosistemas digitales para empresas de primer nivel. Trabajo entre estrategia, sistemas y equipos para hacer avanzar lo que importa.',
     'Product leadership within a high-impact digital ecosystem.': 'Liderazgo de producto dentro de un ecosistema digital de alto impacto.',
+    'Bee Manager': 'Bee Manager',
+    'Shaping product direction and delivery quality across high-impact client projects.': 'Definiendo dirección de producto y calidad de entrega en proyectos de clientes de alto impacto.',
+    'Connecting business strategy with execution across cross-functional teams.': 'Conectando estrategia de negocio con ejecución en equipos cross-funcionales.',
+    'Building a collaborative, human-centered culture within consulting environments.': 'Construyendo una cultura colaborativa y centrada en las personas dentro de entornos de consultoría.',
+    'Driving continuous learning and product thinking across teams.': 'Impulsando aprendizaje continuo y pensamiento de producto en los equipos.',
+    'Product Leadership · Strategy · Systems Thinking · Human-Centered Culture': 'Liderazgo de Producto · Estrategia · Pensamiento Sistémico · Cultura Centrada en las Personas',
     'Product leadership across the Collections & Payments digital ecosystem.': 'Liderazgo de producto en el ecosistema digital de Cobranzas y Pagos.',
     'Defined and executed onboarding strategy, aligned cross-functional teams, and built data-driven measurement frameworks to accelerate digital transformation and optimize performance.': 'Definí y ejecuté la estrategia de onboarding, alineé equipos cross-funcionales y construí marcos de medición basados en datos para acelerar la transformación digital y optimizar el rendimiento.',
     'Product Senior at Mercado Shops | Proud Darwin TTTL': 'Product Senior en Mercado Shops | Orgullosa Darwin TTTL',
@@ -613,8 +619,11 @@ export default function Projects() {
                             alt={localizedProject.title}
                             className="object-contain rounded"
                             style={{
-                              maxHeight: ['globant', '123seguro', 'mercado-libre'].includes(selectedSlug) ? 52 : 36,
+                              maxHeight: ['globant', '123seguro', 'mercado-libre'].includes(selectedSlug) ? 52 : selectedSlug === 'redbee' ? 48 : 36,
                               maxWidth: 160,
+                              backgroundColor: selectedSlug === 'redbee' ? '#ffffff' : 'transparent',
+                              padding: selectedSlug === 'redbee' ? '4px 8px' : 0,
+                              borderRadius: selectedSlug === 'redbee' ? 6 : 0,
                             }}
                           />
                         </div>
@@ -631,11 +640,7 @@ export default function Projects() {
                           {localizedProject.duration}
                         </p>
                       )}
-                      {currentPhrase && (
-                        <p className="text-sm italic mt-2 leading-snug" style={{ color: 'var(--text-secondary)' }}>
-                          {isEnglish ? currentPhrase.en : currentPhrase.es}
-                        </p>
-                      )}
+
                     </div>
                   </div>
                 </div>

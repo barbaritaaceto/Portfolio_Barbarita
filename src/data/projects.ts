@@ -5,7 +5,7 @@ const projects: Project[] = [
     slug: 'redbee',
     title: 'redbee',
     summary: 'Product leadership within a high-impact digital ecosystem.',
-    description: 'Contributing to the design and delivery of products that matter — blending strategy, systems thinking and execution while nurturing a collaborative, human-centered culture.',
+    description: 'Leading product and delivery in a consultancy that builds digital ecosystems for top-tier companies. Working across strategy, systems and teams to move things that matter forward.',
     tech: ['Product Leadership','Digital Strategy','Systems Thinking','Cross-functional Teams','Human-Centered'],
     featured: true,
     images: ['/placeholder.png'],
@@ -15,9 +15,10 @@ const projects: Project[] = [
         title: 'Bee Manager',
         period: 'Oct 2025 - Present',
         responsibilities: [
-          'Contributing to the design and delivery of products that matter.',
-          'Blending strategy, systems thinking and execution across high-impact digital ecosystems.',
-          'Nurturing a collaborative, human-centered culture within cross-functional teams.',
+          'Shaping product direction and delivery quality across high-impact client projects.',
+          'Connecting business strategy with execution across cross-functional teams.',
+          'Building a collaborative, human-centered culture within consulting environments.',
+          'Driving continuous learning and product thinking across teams.',
         ],
         focus: 'Product Leadership · Strategy · Systems Thinking · Human-Centered Culture'
       }
