@@ -27,7 +27,6 @@ export default function Footer() {
           className="container mx-auto px-4 flex items-center justify-center"
         >
           <button
-            id="footer-feedback-btn"
             type="button"
             onClick={() => setIsOpen(true)}
             className="btn-primary px-6"

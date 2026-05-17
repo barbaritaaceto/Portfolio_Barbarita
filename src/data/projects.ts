@@ -8,11 +8,24 @@ const projects: Project[] = [
     description: 'Contributing to the design and delivery of products that matter — blending strategy, systems thinking and execution while nurturing a collaborative, human-centered culture.',
     tech: ['Product Leadership','Digital Strategy','Systems Thinking','Cross-functional Teams','Human-Centered'],
     featured: true,
-    images: ['/placeholder.png']
+    images: ['/placeholder.png'],
+    duration: '2025 - Actualidad',
+    roles: [
+      {
+        title: 'Bee Manager',
+        period: 'Oct 2025 - Present',
+        responsibilities: [
+          'Contributing to the design and delivery of products that matter.',
+          'Blending strategy, systems thinking and execution across high-impact digital ecosystems.',
+          'Nurturing a collaborative, human-centered culture within cross-functional teams.',
+        ],
+        focus: 'Product Leadership · Strategy · Systems Thinking · Human-Centered Culture'
+      }
+    ]
   },
   {
     slug: 'santander-argentina',
-    title: 'Santander Argentina',
+    title: 'Santander',
     summary: 'Product leadership across the Collections & Payments digital ecosystem.',
     description: 'Defined and executed onboarding strategy, aligned cross-functional teams, and built data-driven measurement frameworks to accelerate digital transformation and optimize performance.',
     tech: ['Product Strategy','Fintech','Digital Transformation','Agile Leadership','Data & Analytics'],
@@ -29,7 +42,7 @@ const projects: Project[] = [
     },
     featured: true,
     images: ['/placeholder.png'],
-    duration: 'Full-time · 4 yrs',
+    duration: 'Aug 2021 - Jul 2025 · 4 yrs',
     roles: [
       {
         title: 'Product Manager',
@@ -127,7 +140,7 @@ const projects: Project[] = [
   },
   {
     slug: 'cognizant',
-    title: 'Cognizant',
+    title: 'Google · Cognizant',
     summary: 'LCS Account Strategist & Optimizer - Google Project',
     description: 'Specialized on Media and Entertainment, with cross-industry experience in Food & Beverage, Telco, Finance and Insurance. Managed YouTube, GDN and Search on multicultural accounts.',
     tech: ['YouTube','GDN','Search','Client Management','Optimization'],
@@ -156,7 +169,7 @@ const projects: Project[] = [
   },
   {
     slug: 'globant',
-    title: 'Globant',
+    title: 'Mercado Libre - Globant',
     summary: 'SEO Semi Senior Analyst at Mercadolibre Inc.',
     description: 'SEO Semi Senior Analyst at Mercadolibre with focus on Classifieds Business Unit (Motors, Real Estate & Services). Specialist in keyword research and opportunity detection; started as Analyst Trainee.',
     tech: ['SEO','Keyword Research','UX','Strategic Thinking','Innovation'],

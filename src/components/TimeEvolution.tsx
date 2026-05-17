@@ -24,6 +24,7 @@ export default function TimeEvolution({ isEnglish }: Props) {
     <div
       ref={ref}
       style={{
+        width: 160,
         maxWidth: 180,
         opacity: visible ? 1 : 0,
         transform: visible ? 'translateY(0)' : 'translateY(12px)',
@@ -37,14 +38,6 @@ export default function TimeEvolution({ isEnglish }: Props) {
         altAfter="Barbara hoy"
         initialPosition={50}
       />
-      <p
-        className="text-center mt-2 text-xs italic"
-        style={{ color: 'var(--text-muted)', letterSpacing: '0.01em' }}
-      >
-        {isEnglish
-          ? 'The context changed. Not the essence.'
-          : 'Cambió el contexto. No la esencia.'}
-      </p>
     </div>
   )
 }

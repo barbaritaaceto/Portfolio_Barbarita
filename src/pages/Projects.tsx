@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import projectsData from '../data/projects'
+import TimeEvolution from '../components/TimeEvolution'
 
 // ─── Company metadata ─────────────────────────────────────────────────────────
 const companyMeta: Record<string, { emoji: string; accent: string; primary: boolean }> = {
@@ -11,11 +12,41 @@ const companyMeta: Record<string, { emoji: string; accent: string; primary: bool
   '123seguro':                           { emoji: '🛡️', accent: '#7050C0', primary: true  },
   'cognizant':                           { emoji: '💼', accent: '#4A4AB8', primary: true  },
   'globant':                             { emoji: '🌐', accent: '#237A3A', primary: true  },
-  'freelance-digital-designer':          { emoji: '✍️', accent: '#0A7A7A', primary: true  },
+  'freelance-digital-designer':          { emoji: '✍️', accent: '#0A7A7A', primary: false },
   'x-project-administrative-assistant': { emoji: '🗃️', accent: '#5A6070', primary: false },
   'yo-estoy-marketing-assistant':        { emoji: '👥', accent: '#1D5CB5', primary: false },
   'imanaging-marketing-assistant':       { emoji: '👥', accent: '#6030B0', primary: false },
   'fulbright-database-growth-trainee':   { emoji: '🤸', accent: '#0A7070', primary: false },
+}
+
+// ─── Company logos ────────────────────────────────────────────────────────────
+const companyLogos: Record<string, string> = {
+  'redbee':              '/redbee.png',
+  'mercado-libre':       '/mercadolibre.jpeg',
+  '123seguro':           '/123seguros.png',
+  'cognizant':           '/cognizant.png',
+  'globant':             '/globant.jpeg',
+  'santander-argentina': '/santander.png',
+}
+
+// ─── Extra logos (secondary) — shown alongside the main logo ─────────────────
+const companyLogosExtra: Record<string, string> = {
+  'cognizant': '/google .jpeg',
+}
+
+// ─── Company start years ──────────────────────────────────────────────────────
+const companyYears: Record<string, number> = {
+  'redbee':                              2025,
+  'santander-argentina':                 2021,
+  'mercado-libre':                       2019,
+  '123seguro':                           2018,
+  'cognizant':                           2015,
+  'globant':                             2015,
+  'freelance-digital-designer':          2013,
+  'x-project-administrative-assistant': 2013,
+  'yo-estoy-marketing-assistant':        2012,
+  'imanaging-marketing-assistant':       2011,
+  'fulbright-database-growth-trainee':   2010,
 }
 
 // ─── Timeline node phrases ────────────────────────────────────────────────────
@@ -84,7 +115,7 @@ const learnings: Record<string, { es: string; en: string }> = {
 // ─── Component ────────────────────────────────────────────────────────────────
 export default function Projects() {
   const [selectedSlug, setSelectedSlug] = useState('redbee')
-  const [showEarlyCareer, setShowEarlyCareer] = useState(false)
+  const [showEarlyCareer, setShowEarlyCareer] = useState(true)
   const [isEnglish, setIsEnglish] = useState(() => {
     if (typeof window === 'undefined') return false
     return window.localStorage.getItem('lang') === 'en'
@@ -107,7 +138,8 @@ export default function Projects() {
     ? {
         backHome: 'Back to home',
         heroTitle: 'Making noise since 1989',
-        heroSubtitle: 'Each stage changed the way I build product.',
+        heroSubtitle: 'The context changed. Not the essence.',
+        heroThirdLine: 'Each stage evolved the way I build product.',
         contextLabel: 'Context',
         rolesLabel: 'Roles & Responsibilities',
         focusLabel: 'Focus',
@@ -125,7 +157,8 @@ export default function Projects() {
     : {
         backHome: 'Volver al inicio',
         heroTitle: 'Haciendo ruido desde 1989',
-        heroSubtitle: 'Cada etapa cambió mi forma de construir producto.',
+        heroSubtitle: 'Cambió el contexto. No la esencia.',
+        heroThirdLine: 'Cada etapa evolucionó mi forma de construir producto.',
         contextLabel: 'Contexto',
         rolesLabel: 'Roles y Responsabilidades',
         focusLabel: 'Foco',
@@ -295,10 +328,11 @@ export default function Projects() {
     'Outreach': 'Outreach',
     'Product Strategy': 'Estrategia de Producto',
     'Strategic Thinking': 'Pensamiento Estratégico',
-    'Santander Argentina': 'Santander Argentina',
+    'Santander': 'Santander',
     'Mercado Libre': 'Mercado Libre',
     '123Seguro': '123Seguro',
     'Cognizant': 'Cognizant',
+    'Google · Cognizant': 'Google · Cognizant',
     'Globant': 'Globant',
     'Freelance Project': 'Proyecto Freelance',
     'X Project S.A.': 'X Project S.A.',
@@ -337,6 +371,8 @@ export default function Projects() {
   // ─── Derived data ─────────────────────────────────────────────────────────────
   const primaryProjects = projectsData.filter(p => companyMeta[p.slug]?.primary)
   const earlyProjects   = projectsData.filter(p => !companyMeta[p.slug]?.primary)
+  const sortedPrimary   = [...primaryProjects].sort((a, b) => (companyYears[b.slug] ?? 0) - (companyYears[a.slug] ?? 0))
+  const sortedEarly     = [...earlyProjects].sort((a, b) => (companyYears[b.slug] ?? 0) - (companyYears[a.slug] ?? 0))
 
   const selectedProject = projectsData.find(p => p.slug === selectedSlug) ?? projectsData[0]
   const currentMeta     = companyMeta[selectedSlug] ?? { emoji: '💼', accent: 'var(--accent-primary)', primary: true }
@@ -395,174 +431,136 @@ export default function Projects() {
             ← {uiText.backHome}
           </Link>
 
-          {/* ── INTRO ─────────────────────────────────────────────────────── */}
-          <section className="mb-12 md:mb-16">
-            <div className="flex items-center gap-4 mb-5">
-              <div
-                className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0"
-                style={{ border: '1px solid var(--border-base)' }}
-              >
-                <img
-                  src="/barbi baby.png"
-                  alt="Barbara Aceto"
-                  className="w-full h-full object-cover scale-110"
+          {/* ── MAIN: vertical timeline left + content right ─────────────── */}
+          <div className="flex gap-8 md:gap-12 items-start">
+
+            {/* ── LEFT: image + vertical timeline ──────────────────────── */}
+            <div className="flex-shrink-0 hidden sm:block" style={{ width: 188 }}>
+
+              {/* Slider image */}
+              <TimeEvolution isEnglish={isEnglish} />
+
+              {/* Vertical timeline — line starts from below the image */}
+              <div className="relative mt-3" style={{ paddingLeft: 20 }}>
+                {/* Vertical line */}
+                <div
+                  className="absolute top-0 bottom-0"
+                  style={{ left: 6, width: 0.5, backgroundColor: 'var(--border-base)' }}
                 />
+
+                {/* Primary career items */}
+                {sortedPrimary.map(project => {
+                  const isActive = selectedSlug === project.slug
+                  const meta     = companyMeta[project.slug]
+                  const year     = companyYears[project.slug]
+                  return (
+                    <button
+                      key={project.slug}
+                      onClick={() => setSelectedSlug(project.slug)}
+                      className="relative w-full text-left pb-4 focus:outline-none"
+                      aria-pressed={isActive}
+                    >
+                      <span
+                        className="absolute rounded-full transition-all duration-200"
+                        style={{
+                          left: isActive ? -15 : -13, top: 5,
+                          width: isActive ? 9 : 7, height: isActive ? 9 : 7,
+                          backgroundColor: isActive ? meta.accent : 'var(--border-base)',
+                          boxShadow: isActive ? `0 0 0 3px ${meta.accent}28` : 'none',
+                        }}
+                      />
+                      <span
+                        className="block text-[10px] leading-none mb-0.5"
+                        style={{ color: 'var(--text-muted)' }}
+                      >{year}</span>
+                      <span
+                        className="block text-xs font-medium leading-snug transition-colors"
+                        style={{ color: isActive ? meta.accent : 'var(--text-primary)' }}
+                      >{tValue(project.title)}</span>
+                    </button>
+                  )
+                })}
+
+                {/* Early-career toggle */}
+                <button
+                  onClick={() => setShowEarlyCareer(v => !v)}
+                  className="relative w-full text-left py-2 focus:outline-none group"
+                  aria-pressed={showEarlyCareer}
+                >
+                  <span
+                    className="absolute rounded-full transition-all duration-200"
+                    style={{
+                      left: -14, top: 13,
+                      width: 8, height: 8,
+                      backgroundColor: showEarlyCareer ? 'var(--accent-primary)' : 'var(--border-base)',
+                    }}
+                  />
+                  <span
+                    className="text-xs font-medium transition-colors"
+                    style={{ color: 'var(--accent-primary)', opacity: showEarlyCareer ? 1 : 0.7 }}
+                  >
+                    {showEarlyCareer
+                      ? (isEnglish ? '↓ hide early' : '↓ ocultar inicios')
+                      : (isEnglish ? '↓ early career' : '↓ inicios')}
+                  </span>
+                </button>
+
+                {/* Early career items */}
+                {showEarlyCareer && sortedEarly.map(project => {
+                  const isActive = selectedSlug === project.slug
+                  const meta     = companyMeta[project.slug]
+                  const year     = companyYears[project.slug]
+                  return (
+                    <button
+                      key={project.slug}
+                      onClick={() => setSelectedSlug(project.slug)}
+                      className="relative w-full text-left pb-4 focus:outline-none"
+                      aria-pressed={isActive}
+                    >
+                      <span
+                        className="absolute rounded-full transition-all duration-200"
+                        style={{
+                          left: isActive ? -15 : -13, top: 5,
+                          width: isActive ? 9 : 7, height: isActive ? 9 : 7,
+                          backgroundColor: isActive ? meta.accent : 'var(--border-base)',
+                          boxShadow: isActive ? `0 0 0 3px ${meta.accent}28` : 'none',
+                        }}
+                      />
+                      <span
+                        className="block text-[10px] leading-none mb-0.5"
+                        style={{ color: 'var(--text-muted)' }}
+                      >{year}</span>
+                      <span
+                        className="block text-xs font-medium leading-snug transition-colors"
+                        style={{ color: isActive ? meta.accent : 'var(--text-secondary)' }}
+                      >{tValue(project.title)}</span>
+                    </button>
+                  )
+                })}
               </div>
-              <div>
+            </div>
+
+            {/* ── RIGHT: intro text + experience panel ─────────────────── */}
+            <div className="flex-1 min-w-0">
+
+              {/* Intro text */}
+              <div className="mb-8">
                 <h1
                   className="font-serif text-2xl md:text-3xl font-semibold leading-tight"
                   style={{ color: 'var(--text-primary)' }}
                 >
                   {uiText.heroTitle}
                 </h1>
-                <p className="text-sm md:text-base mt-1" style={{ color: 'var(--text-secondary)' }}>
+                <p className="text-sm md:text-base mt-1 italic" style={{ color: 'var(--text-secondary)' }}>
                   {uiText.heroSubtitle}
                 </p>
+                <p className="text-sm md:text-base mt-2" style={{ color: 'var(--text-secondary)' }}>
+                  {uiText.heroThirdLine}
+                </p>
               </div>
-            </div>
-            <div className="h-px w-full" style={{ backgroundColor: 'var(--border-base)' }} />
-          </section>
 
-          {/* ── MAIN LAYOUT ───────────────────────────────────────────────── */}
-          <div className="lg:flex lg:gap-14 lg:items-start">
-
-            {/* ── LEFT: Timeline (desktop only) ──────────────────────────── */}
-            <aside
-              className="hidden lg:block flex-shrink-0 sticky top-24"
-              style={{ width: 232 }}
-              aria-label={isEnglish ? 'Career timeline' : 'Línea de tiempo'}
-            >
-              <div className="relative">
-                {/* Vertical line */}
-                <div
-                  className="absolute top-2 bottom-0"
-                  style={{
-                    left: 3,
-                    width: 1,
-                    backgroundColor: 'var(--border-base)',
-                  }}
-                />
-
-                {/* Primary nodes */}
-                <div>
-                  {primaryProjects.map(project => {
-                    const isActive = selectedSlug === project.slug
-                    const meta     = companyMeta[project.slug]
-                    const phrase   = timelinePhrases[project.slug]
-                    return (
-                      <button
-                        key={project.slug}
-                        onClick={() => setSelectedSlug(project.slug)}
-                        className="relative w-full text-left pl-6 pb-5 transition-all duration-200 group"
-                        aria-pressed={isActive}
-                      >
-                        {/* Dot */}
-                        <span
-                          className="absolute top-[5px] rounded-full transition-all duration-200"
-                          style={{
-                            left:            isActive ? -1 : 0,
-                            width:           isActive ? 10 : 7,
-                            height:          isActive ? 10 : 7,
-                            backgroundColor: isActive ? meta.accent : 'var(--border-base)',
-                            boxShadow:       isActive ? `0 0 0 3px ${meta.accent}28` : 'none',
-                          }}
-                        />
-                        {/* Company */}
-                        <span
-                          className="block text-sm font-medium leading-tight transition-colors"
-                          style={{ color: isActive ? meta.accent : 'var(--text-primary)' }}
-                        >
-                          {tValue(project.title)}
-                        </span>
-                        {/* Duration */}
-                        {project.duration && (
-                          <span
-                            className="block text-[10px] mt-0.5"
-                            style={{ color: 'var(--text-muted)' }}
-                          >
-                            {tValue(project.duration)}
-                          </span>
-                        )}
-                        {/* Phrase */}
-                        {phrase && (
-                          <span
-                            className="block text-[11px] italic mt-1 leading-snug transition-opacity duration-200"
-                            style={{
-                              color:   'var(--text-secondary)',
-                              opacity: isActive ? 1 : 0,
-                              height:  isActive ? 'auto' : 0,
-                              overflow: 'hidden',
-                            }}
-                          >
-                            {isEnglish ? phrase.en : phrase.es}
-                          </span>
-                        )}
-                      </button>
-                    )
-                  })}
-                </div>
-
-                {/* Early career toggle */}
-                <div className="pl-6 mt-1">
-                  <button
-                    onClick={() => setShowEarlyCareer(v => !v)}
-                    className="text-[11px] font-medium transition-colors hover:underline"
-                    style={{ color: 'var(--text-muted)' }}
-                  >
-                    {showEarlyCareer
-                      ? `↑ ${uiText.hideEarlyCareerLabel}`
-                      : `↓ ${uiText.earlyCareerLabel}`}
-                  </button>
-
-                  {showEarlyCareer && (
-                    <div className="mt-3">
-                      {earlyProjects.map(project => {
-                        const isActive = selectedSlug === project.slug
-                        const meta     = companyMeta[project.slug]
-                        return (
-                          <button
-                            key={project.slug}
-                            onClick={() => setSelectedSlug(project.slug)}
-                            className="relative w-full text-left pl-5 pb-4 transition-all duration-200"
-                            aria-pressed={isActive}
-                          >
-                            <span
-                              className="absolute top-[4px] rounded-full transition-all"
-                              style={{
-                                left:            0,
-                                width:           6,
-                                height:          6,
-                                backgroundColor: isActive ? meta.accent : 'var(--border-base)',
-                              }}
-                            />
-                            <span
-                              className="block text-xs font-medium"
-                              style={{ color: isActive ? meta.accent : 'var(--text-secondary)' }}
-                            >
-                              {tValue(project.title)}
-                            </span>
-                            {project.duration && (
-                              <span
-                                className="block text-[10px] mt-0.5"
-                                style={{ color: 'var(--text-muted)' }}
-                              >
-                                {tValue(project.duration)}
-                              </span>
-                            )}
-                          </button>
-                        )
-                      })}
-                    </div>
-                  )}
-                </div>
-              </div>
-            </aside>
-
-            {/* ── RIGHT: Experience panel ─────────────────────────────────── */}
-            <div className="flex-1 min-w-0">
-
-              {/* Mobile: horizontal company selector */}
-              <div className="lg:hidden -mx-4 px-4 overflow-x-auto mb-8">
+              {/* Mobile: horizontal company selector (shown only on small screens) */}
+              <div className="sm:hidden -mx-4 px-4 overflow-x-auto mb-8">
                 <div className="flex gap-2 pb-3 min-w-max">
                   {projectsData.map(project => {
                     const meta     = companyMeta[project.slug]
@@ -571,23 +569,22 @@ export default function Projects() {
                       <button
                         key={project.slug}
                         onClick={() => setSelectedSlug(project.slug)}
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium flex-shrink-0 border transition-all duration-200"
+                        className="px-3 py-1.5 rounded-full text-xs font-medium flex-shrink-0 border transition-all duration-200"
                         style={{
                           backgroundColor: isActive ? meta?.accent : 'transparent',
-                          color:           isActive ? '#FFFFFF' : 'var(--text-secondary)',
+                          color:           isActive ? '#fff' : 'var(--text-secondary)',
                           borderColor:     isActive ? (meta?.accent ?? 'var(--accent-primary)') : 'var(--border-base)',
                         }}
                         aria-pressed={isActive}
                       >
-                        <span aria-hidden="true">{meta?.emoji}</span>
-                        <span>{tValue(project.title)}</span>
+                        {tValue(project.title)}
                       </button>
                     )
                   })}
                 </div>
               </div>
 
-              {/* Experience panel — key triggers fade-in on change */}
+              {/* Experience panel */}
               <div key={selectedSlug} className="panel-enter">
 
                 {/* Company hero */}
@@ -600,16 +597,35 @@ export default function Projects() {
                   }}
                 >
                   <div className="flex items-start gap-4">
-                    <span className="text-4xl leading-none mt-0.5 flex-shrink-0" aria-hidden="true">
-                      {currentMeta.emoji}
-                    </span>
                     <div className="flex-1 min-w-0">
-                      <h2
-                        className="font-serif text-xl md:text-2xl font-semibold leading-tight"
-                        style={{ color: 'var(--text-primary)' }}
-                      >
-                        {localizedProject.title}
-                      </h2>
+                      {companyLogos[selectedSlug] ? (
+                        <div className="flex items-center gap-3 mb-2">
+                          {companyLogosExtra[selectedSlug] && (
+                            <img
+                              src={companyLogosExtra[selectedSlug]}
+                              alt="Google"
+                              className="object-contain rounded"
+                              style={{ maxHeight: 36, maxWidth: 80 }}
+                            />
+                          )}
+                          <img
+                            src={companyLogos[selectedSlug]}
+                            alt={localizedProject.title}
+                            className="object-contain rounded"
+                            style={{
+                              maxHeight: ['globant', '123seguro', 'mercado-libre'].includes(selectedSlug) ? 52 : 36,
+                              maxWidth: 160,
+                            }}
+                          />
+                        </div>
+                      ) : (
+                        <h2
+                          className="font-serif text-xl md:text-2xl font-semibold leading-tight"
+                          style={{ color: 'var(--text-primary)' }}
+                        >
+                          {localizedProject.title}
+                        </h2>
+                      )}
                       {localizedProject.duration && (
                         <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>
                           {localizedProject.duration}
@@ -826,12 +842,13 @@ export default function Projects() {
                   </section>
                 )}
 
-              </div>
-              {/* end panel-enter */}
             </div>
-            {/* end right panel */}
+            {/* end panel-enter */}
+
+            </div>
+            {/* end right column */}
           </div>
-          {/* end main layout */}
+          {/* end flex layout */}
 
         </div>
       </div>
