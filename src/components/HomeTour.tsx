@@ -156,7 +156,7 @@ function TourCard({ emoji, title, body, step, total, onNext, onSkip, isLast, isE
         </div>
         {isLast && (
           <a
-            href="/proceso.pdf"
+            href="https://docs.google.com/viewer?url=https://portfolio-barbarita.vercel.app/proceso.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="text-xs font-medium text-center py-2 px-4 rounded-xl transition-colors"
