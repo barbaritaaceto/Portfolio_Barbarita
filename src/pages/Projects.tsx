@@ -438,16 +438,18 @@ export default function Projects() {
           </Link>
 
           {/* ── MAIN: vertical timeline left + content right ─────────────── */}
-          <div className="flex gap-8 md:gap-12 items-start">
+          <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 md:gap-12 items-start">
 
             {/* ── LEFT: image + vertical timeline ──────────────────────── */}
-            <div className="flex-shrink-0 hidden sm:block" style={{ width: 188 }}>
+            <div className="flex-shrink-0 flex flex-row sm:flex-col gap-4 sm:gap-0 sm:w-[188px]">
 
               {/* Slider image */}
-              <TimeEvolution isEnglish={isEnglish} />
+              <div className="flex-shrink-0">
+                <TimeEvolution isEnglish={isEnglish} />
+              </div>
 
               {/* Vertical timeline — line starts from below the image */}
-              <div className="relative mt-3" style={{ paddingLeft: 20 }}>
+              <div className="relative flex-1 min-w-0 sm:flex-none mt-0 sm:mt-3" style={{ paddingLeft: 20 }}>
                 {/* Vertical line */}
                 <div
                   className="absolute top-0 bottom-0"
@@ -563,31 +565,6 @@ export default function Projects() {
                 <p className="text-sm md:text-base mt-2" style={{ color: 'var(--text-secondary)' }}>
                   {uiText.heroThirdLine}
                 </p>
-              </div>
-
-              {/* Mobile: horizontal company selector (shown only on small screens) */}
-              <div className="sm:hidden -mx-4 px-4 overflow-x-auto mb-8">
-                <div className="flex gap-2 pb-3 min-w-max">
-                  {projectsData.map(project => {
-                    const meta     = companyMeta[project.slug]
-                    const isActive = selectedSlug === project.slug
-                    return (
-                      <button
-                        key={project.slug}
-                        onClick={() => setSelectedSlug(project.slug)}
-                        className="px-3 py-1.5 rounded-full text-xs font-medium flex-shrink-0 border transition-all duration-200"
-                        style={{
-                          backgroundColor: isActive ? meta?.accent : 'transparent',
-                          color:           isActive ? '#fff' : 'var(--text-secondary)',
-                          borderColor:     isActive ? (meta?.accent ?? 'var(--accent-primary)') : 'var(--border-base)',
-                        }}
-                        aria-pressed={isActive}
-                      >
-                        {tValue(project.title)}
-                      </button>
-                    )
-                  })}
-                </div>
               </div>
 
               {/* Experience panel */}
