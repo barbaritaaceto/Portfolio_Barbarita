@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import press from '../data/press';
+import HomeTour from '../components/HomeTour';
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -214,6 +215,7 @@ export default function Home() {
 
   return (
     <>
+      <HomeTour isEnglish={isEnglish} />
       <Helmet>
         <title>Barbara Aceto | Builder of Things That Matter</title>
         <meta name="description" content="Barbara Aceto — Products that understand people and services that make them feel better." />
@@ -249,13 +251,13 @@ export default function Home() {
         {/* ════════════════════════════════════ */}
         <section className="w-full px-4 py-16 md:py-20 relative z-40" style={{ marginTop: '-16rem' }}>
           <div className="max-w-6xl mx-auto">
-          <div className="card w-full max-w-xl relative overflow-hidden mx-auto">
+          <div id="home-profile-card" className="card w-full max-w-xl relative overflow-hidden mx-auto">
             <div className="relative z-10 flex flex-row gap-5 items-stretch">
 
               {/* Foto izquierda */}
               <div className="w-2/5 flex-shrink-0 -m-6 mr-0">
                 <img 
-                  src="/barbi con saco.png" 
+                  src="/limones saco.png" 
                   alt="Barbara Aceto" 
                   className="w-full h-full object-cover object-top rounded-l-2xl"
                   style={{ minHeight: '280px' }}
@@ -290,6 +292,7 @@ export default function Home() {
 
                 <div className="flex flex-col gap-2">
                   <Link 
+                    id="home-btn-projects"
                     to="/projects" 
                     className="btn-primary text-center px-4 text-sm"
                   >
