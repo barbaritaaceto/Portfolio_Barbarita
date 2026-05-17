@@ -41,7 +41,7 @@ const Layout: React.FC = () => {
       <Footer />
 
       {/* Language toggle */}
-      <div className="fixed top-6 right-6 md:top-8 md:right-8 z-[65]">
+      <div id="layout-lang-toggle" className="fixed top-6 right-6 md:top-8 md:right-8 z-[65]">
         <div
           className="inline-flex rounded-full p-1"
           style={{ backgroundColor: 'var(--bg-alt)', border: '1px solid var(--border-base)' }}
@@ -76,6 +76,7 @@ const Layout: React.FC = () => {
       {/* AI Assistant floating button */}
       <div className="fixed top-20 right-6 md:top-24 md:right-8 z-50 group flex flex-col items-end gap-2">
         <button
+          id="layout-ai-btn"
           type="button"
           aria-label={ariaLabel}
           onClick={() => setIsAssistantOpen(true)}

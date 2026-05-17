@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import press from '../data/press';
+import HomeTour from '../components/HomeTour';
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -192,8 +193,8 @@ export default function Home() {
   const secondaryCards = localizedNewsCards.slice(1);
   const profileContent = isEnglish
     ? {
-        heroLine1: 'Between humans and algorithms,',
-        heroLine2: 'I build what truly matters.',
+        heroLine1: 'The best teams also smile',
+        heroLine2: 'while they build.',
         descLine1: '+10 years building digital products, supporting teams',
         descLine2: 'and connecting strategy with execution.',
         role: 'Product Leader · AI & Digital Strategy',
@@ -202,8 +203,8 @@ export default function Home() {
         cvCta: 'Download CV',
       }
     : {
-        heroLine1: 'Entre humanos y algoritmos,',
-        heroLine2: 'construyo lo que de verdad importa.',
+        heroLine1: 'Los mejores equipos también sonríen',
+        heroLine2: 'cuando están construyendo.',
         descLine1: '+10 años construyendo productos digitales, acompañando equipos',
         descLine2: 'y conectando estrategia con ejecución.',
         role: 'Líder de Producto · IA y Estrategia Digital',
@@ -214,6 +215,7 @@ export default function Home() {
 
   return (
     <>
+      <HomeTour isEnglish={isEnglish} />
       <Helmet>
         <title>Barbara Aceto | Builder of Things That Matter</title>
         <meta name="description" content="Barbara Aceto — Products that understand people and services that make them feel better." />
@@ -249,7 +251,7 @@ export default function Home() {
         {/* ════════════════════════════════════ */}
         <section className="w-full px-4 py-16 md:py-20 relative z-40" style={{ marginTop: '-16rem' }}>
           <div className="max-w-6xl mx-auto">
-          <div className="card w-full max-w-xl relative overflow-hidden mx-auto">
+          <div id="home-profile-card" className="card w-full max-w-[600px] relative overflow-hidden mx-auto">
             <div className="relative z-10 flex flex-row gap-5 items-stretch">
 
               {/* Foto izquierda */}
@@ -266,7 +268,7 @@ export default function Home() {
               <div className="flex-1 flex flex-col justify-center text-left py-2 pr-2">
 
                 <div className="mb-4">
-                  <h2 className="font-serif text-lg md:text-xl leading-tight" style={{ color: '#1E2A38' }}>
+                  <h2 className="font-serif leading-tight text-[15px] md:text-[17px]" style={{ color: '#1E2A38' }}>
                     {profileContent.heroLine1}
                     <br />
                     {profileContent.heroLine2}
@@ -290,18 +292,21 @@ export default function Home() {
 
                 <div className="flex flex-col gap-2">
                   <Link 
+                    id="home-btn-projects"
                     to="/projects" 
                     className="btn-primary text-center px-4 text-sm"
                   >
                     {profileContent.projectsCta}
                   </Link>
                   <button 
+                    id="home-btn-contact"
                     onClick={() => setIsModalOpen(true)}
                     className="btn-ghost text-center px-4 text-sm"
                   >
                     {profileContent.contactCta}
                   </button>
                   <a
+                    id="home-btn-cv"
                     href="/one-sheet?pdf=1"
                     target="_blank"
                     rel="noopener noreferrer"
