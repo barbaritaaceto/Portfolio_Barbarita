@@ -3,111 +3,88 @@ import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import projectsData from '../data/projects'
 
-const projectInitialCards: Record<string, { emoji: string; title: string; titleEs: string; text: string; textEs: string; borderColor: string; textColor: string }> = {
-  'redbee': {
-    emoji: '🐝',
-    title: 'Bee Manager',
-    titleEs: 'Bee Manager',
-    text: 'Leading with purpose within a digital ecosystem that values impact, creativity and human connection.',
-    textEs: 'Liderando con propósito dentro de un ecosistema digital que valora el impacto, la creatividad y la conexión humana.',
-    borderColor: '#DC2626',
-    textColor: '#DC2626'
-  },
-  'santander-argentina': {
-    emoji: '🏦',
-    title: 'Santander Argentina',
-    titleEs: 'Santander Argentina',
-    text: 'Building the future of digital banking across Collections & Payments.',
-    textEs: 'Lideré iniciativas de digitalización bancaria enfocadas en cobranzas, pagos y experiencia empresarial, conectando estrategia, tecnología y operación para reducir fricción en procesos críticos.',
-    borderColor: '#DC2626',
-    textColor: '#DC2626'
-  },
-  'mercado-libre': {
-    emoji: '🛒',
-    title: 'Mercado Libre',
-    titleEs: 'Mercado Libre',
-    text: 'AI-powered discovery for 80M+ users across Latin America.',
-    textEs: 'Diseño de experiencias de descubrimiento inteligente para millones de usuarios en LATAM, combinando IA, experiencia de usuario y decisiones basadas en datos.',
-    borderColor: '#FACC15',
-    textColor: '#FACC15'
-  },
-  'globant': {
-    emoji: '🌐',
-    title: 'Globant',
-    titleEs: 'Globant',
-    text: 'Digital transformation consulting for Fortune 500 companies.',
-    textEs: 'Consultoría en transformación digital para empresas Fortune 500.',
-    borderColor: '#16A34A',
-    textColor: '#16A34A'
-  },
-  'freelance-digital-designer': {
-    emoji: '✍️',
-    title: 'Freelance Project',
-    titleEs: 'Proyecto Freelance',
-    text: 'Digital graphic design and public relations across branding and communication initiatives.',
-    textEs: 'Diseño gráfico digital y relaciones públicas en iniciativas de branding y comunicación.',
-    borderColor: '#0EA5A4',
-    textColor: '#0EA5A4'
-  },
-  'x-project-administrative-assistant': {
-    emoji: '🗃️',
-    title: 'X Project S.A.',
-    titleEs: 'X Project S.A.',
-    text: 'Administrative operations across tax, labor settlement and billing.',
-    textEs: 'Operaciones administrativas en liquidación impositiva, laboral y facturación.',
-    borderColor: '#6B7280',
-    textColor: '#6B7280'
-  },
-  'yo-estoy-marketing-assistant': {
-    emoji: '👥',
-    title: 'Yo Estoy',
-    titleEs: 'Yo Estoy',
-    text: 'Market research, audience strategy and lead generation support.',
-    textEs: 'Investigación de mercado, estrategia de audiencias y soporte de generación de leads.',
-    borderColor: '#2563EB',
-    textColor: '#2563EB'
-  },
-  'imanaging-marketing-assistant': {
-    emoji: '👥',
-    title: 'Imanaging',
-    titleEs: 'Imanaging',
-    text: 'Lead generation and event follow-up for marketing operations.',
-    textEs: 'Generación de leads y seguimiento de eventos para operaciones de marketing.',
-    borderColor: '#7C3AED',
-    textColor: '#7C3AED'
-  },
-  'fulbright-database-growth-trainee': {
-    emoji: '🤸',
-    title: 'Fulbright',
-    titleEs: 'Fulbright',
-    text: 'Database growth through research, outreach and email marketing.',
-    textEs: 'Crecimiento de base de datos mediante investigación, outreach y email marketing.',
-    borderColor: '#0D9488',
-    textColor: '#0D9488'
-  },
-  '123seguro': {
-    emoji: '🛡️',
-    title: '123Seguro',
-    titleEs: '123Seguro',
-    text: 'Insurance technology and digital customer experience.',
-    textEs: 'Tecnología de seguros y experiencia de cliente digital.',
-    borderColor: '#8B5CF6',
-    textColor: '#8B5CF6'
-  },
-  'cognizant': {
-    emoji: '💼',
-    title: 'Cognizant',
-    titleEs: 'Cognizant',
-    text: 'Technology consulting and digital solutions.',
-    textEs: 'Consultoría tecnológica y soluciones digitales.',
-    borderColor: '#6366F1',
-    textColor: '#6366F1'
-  }
+// ─── Company metadata ─────────────────────────────────────────────────────────
+const companyMeta: Record<string, { emoji: string; accent: string; primary: boolean }> = {
+  'redbee':                              { emoji: '🐝', accent: '#C05A5A', primary: true  },
+  'santander-argentina':                 { emoji: '🏦', accent: '#B85040', primary: true  },
+  'mercado-libre':                       { emoji: '🛒', accent: '#A0820A', primary: true  },
+  '123seguro':                           { emoji: '🛡️', accent: '#7050C0', primary: true  },
+  'cognizant':                           { emoji: '💼', accent: '#4A4AB8', primary: true  },
+  'globant':                             { emoji: '🌐', accent: '#237A3A', primary: true  },
+  'freelance-digital-designer':          { emoji: '✍️', accent: '#0A7A7A', primary: true  },
+  'x-project-administrative-assistant': { emoji: '🗃️', accent: '#5A6070', primary: false },
+  'yo-estoy-marketing-assistant':        { emoji: '👥', accent: '#1D5CB5', primary: false },
+  'imanaging-marketing-assistant':       { emoji: '👥', accent: '#6030B0', primary: false },
+  'fulbright-database-growth-trainee':   { emoji: '🤸', accent: '#0A7070', primary: false },
 }
 
-export default function Projects(){
-  const [selectedProject, setSelectedProject] = useState<string | null>('redbee')
-  const [pageIndex, setPageIndex] = useState(0)
+// ─── Timeline node phrases ────────────────────────────────────────────────────
+const timelinePhrases: Record<string, { es: string; en: string }> = {
+  'redbee':                              { es: 'Estrategia, sistemas y cultura. Todo a la vez.',                   en: 'Strategy, systems and culture. All at once.' },
+  'santander-argentina':                 { es: 'Reduciendo fricción en sistemas financieros complejos.',           en: 'Reducing friction in complex financial systems.' },
+  'mercado-libre':                       { es: 'Aprendiendo a diseñar para millones.',                             en: 'Learning to design for millions.' },
+  '123seguro':                           { es: 'Growth como mentalidad, no como puesto.',                          en: 'Growth as a mindset, not a job title.' },
+  'cognizant':                           { es: 'Escala, multicultural, decisiones bajo presión.',                  en: 'Scale, multicultural, decisions under pressure.' },
+  'globant':                             { es: 'Donde los datos se convirtieron en curiosidad de producto.',        en: 'Where data turned into product curiosity.' },
+  'freelance-digital-designer':          { es: 'Construyendo identidades visuales desde cero.',                    en: 'Building visual identities from scratch.' },
+  'x-project-administrative-assistant': { es: 'La disciplina de los procesos detallados.',                        en: 'The discipline of detailed processes.' },
+  'yo-estoy-marketing-assistant':        { es: 'Primeros pasos en estrategia de audiencias.',                      en: 'First steps in audience strategy.' },
+  'imanaging-marketing-assistant':       { es: 'Ejecución y seguimiento consistentes.',                            en: 'Consistent execution and follow-up.' },
+  'fulbright-database-growth-trainee':   { es: 'Growth y expansión de base de datos.',                            en: 'Growth and database expansion.' },
+}
+
+// ─── Editorial learnings ──────────────────────────────────────────────────────
+const learnings: Record<string, { es: string; en: string }> = {
+  'redbee': {
+    es: 'Liderar en consultoría me enseñó que construir cultura y construir producto son la misma cosa. El impacto real ocurre cuando el equipo también crece.',
+    en: 'Leading in consulting taught me that building culture and building product are the same thing. Real impact happens when the team grows too.',
+  },
+  'santander-argentina': {
+    es: 'La tecnología sola no transforma procesos. La adopción real ocurre cuando negocio, operación y UX se alinean — y cuando la gente siente que la herramienta trabaja para ella, no al revés.',
+    en: 'Technology alone does not transform processes. Real adoption happens when business, operations and UX align — and when people feel the tool works for them, not the other way around.',
+  },
+  'mercado-libre': {
+    es: 'Escalar para millones te obliga a pensar en sistemas, no en features. La simplicidad es el resultado de mucho trabajo invisible.',
+    en: 'Scaling for millions forces you to think in systems, not features. Simplicity is the result of a lot of invisible work.',
+  },
+  '123seguro': {
+    es: 'Growth no es solo adquisición. Es entender por qué alguien se queda y por qué se va. La experimentación constante cambia la forma de tomar decisiones — hace que la intuición y los datos trabajen juntos.',
+    en: 'Growth is not just acquisition. It is understanding why someone stays and why they leave. Constant experimentation changes how you make decisions — it makes intuition and data work together.',
+  },
+  'cognizant': {
+    es: 'Trabajar con clientes de industrias muy distintas me enseñó a contextualizar rápido y a priorizar con información incompleta. Eso es una habilidad central del producto.',
+    en: 'Working with clients from very different industries taught me to contextualize quickly and prioritize with incomplete information. That is a core product skill.',
+  },
+  'globant': {
+    es: 'SEO fue mi primer contacto real con la intersección entre datos y comportamiento de usuario. Ahí empezó mi curiosidad por el producto y por entender cómo la gente busca y decide.',
+    en: 'SEO was my first real contact with the intersection between data and user behavior. That is where my curiosity for product started — and for understanding how people search and decide.',
+  },
+  'freelance-digital-designer': {
+    es: 'El diseño me enseñó que la comunicación tiene estructura invisible. Eso se tradujo directamente en cómo pienso roadmaps, presentaciones y jerarquía de información.',
+    en: 'Design taught me that communication has invisible structure. That directly translated into how I think about roadmaps, presentations and information hierarchy.',
+  },
+  'x-project-administrative-assistant': {
+    es: 'Aprendí la disciplina de los procesos detallados y el valor de la precisión operativa. Una base que nunca subestimo.',
+    en: 'I learned the discipline of detailed processes and the value of operational precision. A foundation I never underestimate.',
+  },
+  'yo-estoy-marketing-assistant': {
+    es: 'Entender a quién le hablás es siempre el primer paso de cualquier producto o campaña. Acá lo aprendí desde la práctica.',
+    en: 'Understanding who you are talking to is always the first step of any product or campaign. I learned that here through practice.',
+  },
+  'imanaging-marketing-assistant': {
+    es: 'El seguimiento consistente y la ejecución son habilidades que no se enseñan en cursos. Se aprenden haciéndolo.',
+    en: 'Consistent follow-up and execution are skills not taught in courses. They are learned by doing.',
+  },
+  'fulbright-database-growth-trainee': {
+    es: 'Mis primeros contactos con growth y expansión de base. El outreach bien hecho tiene más de producto que de marketing.',
+    en: 'My first contacts with growth and database expansion. Good outreach has more of product than marketing in it.',
+  },
+}
+
+// ─── Component ────────────────────────────────────────────────────────────────
+export default function Projects() {
+  const [selectedSlug, setSelectedSlug] = useState('redbee')
+  const [showEarlyCareer, setShowEarlyCareer] = useState(false)
   const [isEnglish, setIsEnglish] = useState(() => {
     if (typeof window === 'undefined') return false
     return window.localStorage.getItem('lang') === 'en'
@@ -118,7 +95,6 @@ export default function Projects(){
       if (typeof window === 'undefined') return
       setIsEnglish(window.localStorage.getItem('lang') === 'en')
     }
-
     window.addEventListener('storage', syncLanguage)
     window.addEventListener('app-language-change', syncLanguage as EventListener)
     return () => {
@@ -131,34 +107,41 @@ export default function Projects(){
     ? {
         backHome: 'Back to home',
         heroTitle: 'Making noise since 1989',
-        heroSubtitle: 'Leading product strategy across fintech, AI and digital platforms.',
-        selectCard: 'Select a card to view details.',
-        durationLabel: 'Duration',
-        roles: 'Roles & Responsibilities',
-        focus: 'Focus',
-        talks: 'Product Talks & Knowledge Sharing',
+        heroSubtitle: 'Each stage changed the way I build product.',
+        contextLabel: 'Context',
+        rolesLabel: 'Roles & Responsibilities',
+        focusLabel: 'Focus',
+        learningLabel: 'What I Learned',
+        skillsLabel: 'Skills',
+        talksLabel: 'Product Talks & Knowledge Sharing',
         talksDesc: 'Delivered internal talks and trainings on:',
-        featuredLink: 'Featured Link',
-        featuredLinkDesc: (title: string) => `Explore a related publication from the ${title} experience.`,
+        linksLabel: 'Featured Link',
+        linksDesc: (title: string) => `Explore a related publication from the ${title} experience.`,
+        earlyCareerLabel: 'Show early career',
+        hideEarlyCareerLabel: 'Hide early career',
+        openLink: 'Open link',
+        externalLink: 'External link',
       }
     : {
         backHome: 'Volver al inicio',
         heroTitle: 'Haciendo ruido desde 1989',
-        heroSubtitle: 'Liderando estrategia de producto en fintech, IA y plataformas digitales.',
-        selectCard: 'Seleccioná una tarjeta para ver el detalle.',
-        durationLabel: 'Período',
-        roles: 'Roles y Responsabilidades',
-        focus: 'Foco',
-        talks: 'Charlas de Producto y Compartir Conocimiento',
+        heroSubtitle: 'Cada etapa cambió mi forma de construir producto.',
+        contextLabel: 'Contexto',
+        rolesLabel: 'Roles y Responsabilidades',
+        focusLabel: 'Foco',
+        learningLabel: 'Lo que aprendí',
+        skillsLabel: 'Skills',
+        talksLabel: 'Charlas de Producto y Compartir Conocimiento',
         talksDesc: 'Di charlas internas y capacitaciones sobre:',
-        featuredLink: 'Enlace destacado',
-        featuredLinkDesc: (title: string) => `Explorá una publicación relacionada con la experiencia en ${title}.`,
-        previousProjects: 'Proyectos anteriores',
-        nextProjects: 'Proyectos siguientes',
+        linksLabel: 'Enlace destacado',
+        linksDesc: (title: string) => `Explorá una publicación relacionada con la experiencia en ${title}.`,
+        earlyCareerLabel: 'Ver primeros pasos',
+        hideEarlyCareerLabel: 'Ocultar primeros pasos',
         openLink: 'Abrir enlace',
         externalLink: 'Enlace externo',
       }
 
+  // ─── Translations map (kept intact for localization) ─────────────────────────
   const esMap: Record<string, string> = {
     'redbee': 'redbee',
     'Contributing to the design and delivery of products that matter — blending strategy, systems thinking and execution while nurturing a collaborative, human-centered culture.': 'Contribuyendo al diseño y la entrega de productos que importan, combinando estrategia, pensamiento sistémico y ejecución mientras se cultiva una cultura colaborativa y centrada en las personas.',
@@ -258,7 +241,7 @@ export default function Projects(){
     'Projects, MVPs and experiments: Smart Shopping integration | Facebook Shop | Instagram tagging | Google Analytics pixel | Facebook Pixel | Google Ads pixel | Search Console | GTM | Custom Scripts | PAds & Shops | Darwin Pilot | Continuity | Flash Darwin | ROAS experiments | Darwin roadmap': 'Proyectos, MVPs y experimentos: integración Smart Shopping | Facebook Shop | etiquetado en Instagram | pixel de Google Analytics | Facebook Pixel | pixel de Google Ads | Search Console | GTM | scripts custom | PAds & Shops | Darwin Pilot | Continuity | Flash Darwin | experimentos ROAS | roadmap Darwin',
     'Data analytics · Leadership': 'Analítica de datos · Liderazgo',
     'Tools & knowledge of: Google Adwords | Google Analytics | Google Tag Manager | HTML | SQL | Mixpanel | Whimsical': 'Herramientas y conocimientos: Google Adwords | Google Analytics | Google Tag Manager | HTML | SQL | Mixpanel | Whimsical',
-    'Awards: Associate of the Year 2016 · Employee of the Quarter – Q2’16': 'Premios: Associate of the Year 2016 · Employee of the Quarter – Q2’16',
+    'Awards: Associate of the Year 2016 · Employee of the Quarter – Q2\u201916': 'Premios: Associate of the Year 2016 · Employee of the Quarter – Q2\u201916',
     'SEO · Keyword Research · UX': 'SEO · Keyword Research · UX',
     'Skills: Proactivity · Ownership · Empowerment · Consistency · Digital Design · Communication skills': 'Skills: Proactividad · Ownership · Empowerment · Consistencia · Diseño digital · Habilidades de comunicación',
     'Administrative Operations · Tax & Labor Processes': 'Operaciones administrativas · Procesos impositivos y laborales',
@@ -309,62 +292,25 @@ export default function Projects(){
     'Audience Strategy': 'Estrategia de Audiencias',
     'Marketing': 'Marketing',
     'Event Follow-up': 'Seguimiento de Eventos',
-    'Outreach': 'Outreach'
+    'Outreach': 'Outreach',
+    'Product Strategy': 'Estrategia de Producto',
+    'Strategic Thinking': 'Pensamiento Estratégico',
+    'Santander Argentina': 'Santander Argentina',
+    'Mercado Libre': 'Mercado Libre',
+    '123Seguro': '123Seguro',
+    'Cognizant': 'Cognizant',
+    'Globant': 'Globant',
+    'Freelance Project': 'Proyecto Freelance',
+    'X Project S.A.': 'X Project S.A.',
+    'Yo Estoy': 'Yo Estoy',
+    'Imanaging': 'Imanaging',
+    'Comisión Fulbright Argentina': 'Comisión Fulbright Argentina',
   }
 
-  const tValue = (value?: string) => {
+  const tValue = (value?: string): string => {
     if (!value) return ''
     if (isEnglish) return value
     return esMap[value] ?? value
-  }
-
-  const cardsPerPage = 5
-  const totalPages = Math.ceil(projectsData.length / cardsPerPage)
-  const carouselGap = 16
-  const carouselCardWidth = 220
-  const carouselTotalWidth = carouselCardWidth * cardsPerPage + carouselGap * (cardsPerPage - 1)
-
-  const handleCardClick = (e: React.MouseEvent, slug: string) => {
-    e.stopPropagation()
-    if (selectedProject === slug) {
-      setSelectedProject('redbee')
-    } else {
-      setSelectedProject(slug)
-    }
-  }
-
-  const selectedProjectData = selectedProject ? projectsData.find(p => p.slug === selectedProject) : null
-
-  const localizedProjectData = selectedProjectData
-    ? {
-        ...selectedProjectData,
-        title: tValue(selectedProjectData.title),
-        summary: tValue(selectedProjectData.summary),
-        description: tValue(selectedProjectData.description),
-        duration: tValue(selectedProjectData.duration),
-        tech: selectedProjectData.tech?.map((tag) => tValue(tag)) ?? [],
-        roles: selectedProjectData.roles?.map((role) => ({
-          ...role,
-          title: tValue(role.title),
-          period: tValue(role.period),
-          responsibilities: role.responsibilities.map((resp) => tValue(resp)),
-          focus: tValue(role.focus),
-        })),
-        talks: selectedProjectData.talks?.map((talk) => tValue(talk)),
-      }
-    : null
-
-  const visibleProjects = projectsData.slice(
-    pageIndex * cardsPerPage,
-    (pageIndex + 1) * cardsPerPage
-  )
-
-  const nextPage = () => {
-    setPageIndex((prev) => Math.min(prev + 1, totalPages - 1))
-  }
-
-  const prevPage = () => {
-    setPageIndex((prev) => Math.max(prev - 1, 0))
   }
 
   const getLinkMetaFromUrl = (url: string) => {
@@ -375,304 +321,518 @@ export default function Projects(){
         .split('/')
         .filter(Boolean)
         .find((segment) => segment.includes('activity-') || segment.includes('_'))
-
       if (!pathSegment) {
-        return {
-          title: host,
-          heading: isEnglish ? 'Open link' : uiText.openLink,
-        }
+        return { title: host, heading: uiText.openLink }
       }
-
       const slugPart = pathSegment.includes('_') ? pathSegment.split('_').slice(1).join('_') : pathSegment
       const withoutActivity = slugPart.replace(/-activity-.*/, '')
       const decoded = decodeURIComponent(withoutActivity).replace(/-/g, ' ').replace(/\s+/g, ' ').trim()
-      const heading = decoded ? decoded.charAt(0).toUpperCase() + decoded.slice(1) : (isEnglish ? 'Open link' : uiText.openLink)
-
-      return {
-        title: host,
-        heading,
-      }
+      const heading = decoded ? decoded.charAt(0).toUpperCase() + decoded.slice(1) : uiText.openLink
+      return { title: host, heading }
     } catch {
-      return {
-        title: isEnglish ? 'External link' : uiText.externalLink,
-        heading: isEnglish ? 'Open link' : uiText.openLink,
-      }
+      return { title: uiText.externalLink, heading: uiText.openLink }
     }
   }
 
+  // ─── Derived data ─────────────────────────────────────────────────────────────
+  const primaryProjects = projectsData.filter(p => companyMeta[p.slug]?.primary)
+  const earlyProjects   = projectsData.filter(p => !companyMeta[p.slug]?.primary)
+
+  const selectedProject = projectsData.find(p => p.slug === selectedSlug) ?? projectsData[0]
+  const currentMeta     = companyMeta[selectedSlug] ?? { emoji: '💼', accent: 'var(--accent-primary)', primary: true }
+  const currentPhrase   = timelinePhrases[selectedSlug]
+  const currentLearning = learnings[selectedSlug]
+
+  const localizedProject = {
+    ...selectedProject,
+    title:       tValue(selectedProject.title),
+    description: tValue(selectedProject.description),
+    duration:    tValue(selectedProject.duration),
+    tech:        selectedProject.tech?.map(tValue) ?? [],
+    roles:       selectedProject.roles?.map(role => ({
+      ...role,
+      title:            tValue(role.title),
+      period:           tValue(role.period),
+      responsibilities: role.responsibilities.map(tValue),
+      focus:            tValue(role.focus),
+    })),
+    talks: selectedProject.talks?.map(tValue),
+  }
+
+  // ─── Section label style ───────────────────────────────────────────────────
+  const sectionLabel = (text: string) => (
+    <p
+      className="text-[10px] font-semibold uppercase mb-3 tracking-[0.14em]"
+      style={{ color: 'var(--text-muted)' }}
+    >
+      {text}
+    </p>
+  )
+
+  // ─── Render ───────────────────────────────────────────────────────────────
   return (
     <>
       <Helmet><title>Projects — Barbara Aceto</title></Helmet>
-      
-      <div className="w-full min-h-screen py-10 md:py-20 px-4" style={{ backgroundColor: 'var(--bg)' }}>
-        <div className="max-w-6xl mx-auto">
-          <Link 
-            to="/" 
-            className="inline-flex items-center text-sm transition-colors mb-8"
+
+      {/* Keyframe animation for panel */}
+      <style>{`
+        @keyframes panelFadeUp {
+          from { opacity: 0; transform: translateY(8px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        .panel-enter { animation: panelFadeUp 0.28s ease both; }
+      `}</style>
+
+      <div className="w-full min-h-screen" style={{ backgroundColor: 'var(--bg)' }}>
+        <div className="max-w-6xl mx-auto px-4 py-10 md:py-16">
+
+          {/* Back */}
+          <Link
+            to="/"
+            className="inline-flex items-center text-sm mb-10 transition-colors"
             style={{ color: 'var(--accent-primary)' }}
           >
             ← {uiText.backHome}
           </Link>
 
-          <div className="mb-5 text-left">
-            <div className="flex items-center gap-3">
-              <div className="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border" style={{ borderColor: 'var(--border-base)' }}>
+          {/* ── INTRO ─────────────────────────────────────────────────────── */}
+          <section className="mb-12 md:mb-16">
+            <div className="flex items-center gap-4 mb-5">
+              <div
+                className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0"
+                style={{ border: '1px solid var(--border-base)' }}
+              >
                 <img
                   src="/barbi baby.png"
-                  alt="Barbara baby"
+                  alt="Barbara Aceto"
                   className="w-full h-full object-cover scale-110"
                 />
               </div>
               <div>
-                <h2 className="text-2xl md:text-3xl font-serif font-semibold" style={{ color: 'var(--text-primary)' }}>
+                <h1
+                  className="font-serif text-2xl md:text-3xl font-semibold leading-tight"
+                  style={{ color: 'var(--text-primary)' }}
+                >
                   {uiText.heroTitle}
-                </h2>
+                </h1>
                 <p className="text-sm md:text-base mt-1" style={{ color: 'var(--text-secondary)' }}>
                   {uiText.heroSubtitle}
                 </p>
               </div>
             </div>
-            <div className="mt-3 h-px w-full" style={{ backgroundColor: 'var(--border-base)' }}></div>
-          </div>
+            <div className="h-px w-full" style={{ backgroundColor: 'var(--border-base)' }} />
+          </section>
 
-          <p className="text-sm mb-3" style={{ color: 'var(--text-muted)' }}>
-            {uiText.selectCard}
-          </p>
+          {/* ── MAIN LAYOUT ───────────────────────────────────────────────── */}
+          <div className="lg:flex lg:gap-14 lg:items-start">
 
-          <div className="relative" onClick={() => { setSelectedProject('redbee'); setPageIndex(0); }}>
-            {pageIndex > 0 && (
-              <button
-                onClick={(e) => { e.stopPropagation(); prevPage(); }}
-                className="hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-28 w-10 h-10 rounded-full bg-white/90 border shadow-sm hover:bg-white transition-colors duration-200 z-10 items-center justify-center"
-                style={{ borderColor: 'var(--border-base)', color: 'var(--text-muted)' }}
-                aria-label={isEnglish ? 'Previous projects' : uiText.previousProjects}
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-            )}
-
-            {pageIndex < totalPages - 1 && (
-              <button
-                onClick={(e) => { e.stopPropagation(); nextPage(); }}
-                className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-28 w-10 h-10 rounded-full bg-white/90 border shadow-sm hover:bg-white transition-colors duration-200 z-10 items-center justify-center"
-                style={{ borderColor: 'var(--border-base)', color: 'var(--text-muted)' }}
-                aria-label={isEnglish ? 'Next projects' : uiText.nextProjects}
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-            )}
-
-            <div className="flex flex-row gap-2 md:gap-4 mb-4 items-stretch">
-            {visibleProjects.map((project) => {
-              const initialCard = projectInitialCards[project.slug]
-              const isSelected = selectedProject === project.slug
-              const isRedbeeCard = project.slug === 'redbee'
-              const isColoredCard = isSelected
-
-              return (
-                <div 
-                  key={project.slug}
-                  className="cursor-pointer transition-all duration-300 flex-1 min-w-0 h-32 sm:h-40 lg:h-[220px]"
-                  style={{ 
-                    position: 'relative',
-                    zIndex: isSelected ? 5 : 1
+            {/* ── LEFT: Timeline (desktop only) ──────────────────────────── */}
+            <aside
+              className="hidden lg:block flex-shrink-0 sticky top-24"
+              style={{ width: 232 }}
+              aria-label={isEnglish ? 'Career timeline' : 'Línea de tiempo'}
+            >
+              <div className="relative">
+                {/* Vertical line */}
+                <div
+                  className="absolute top-2 bottom-0"
+                  style={{
+                    left: 3,
+                    width: 1,
+                    backgroundColor: 'var(--border-base)',
                   }}
-                  onClick={(e) => handleCardClick(e, project.slug)}
-                >
-                  <div className={`w-full h-full rounded-2xl p-4 flex flex-col gap-3 justify-center items-center text-center relative ${isSelected ? 'shadow-xl' : 'shadow-sm'}`}
-                    style={{ 
-                      backgroundColor: isColoredCard
-                        ? (isRedbeeCard ? '#DC2626' : `${initialCard.borderColor}10`)
-                        : '#FFFFFF',
-                      borderWidth: '1px',
-                      borderStyle: 'solid',
-                      borderColor: isColoredCard ? initialCard.borderColor : '#D1D5DB',
-                    }}
-                  >
-                    <div className="text-3xl mb-2">{initialCard.emoji}</div>
-                    <h3 className="text-base font-serif font-semibold" style={{ color: isColoredCard && isRedbeeCard ? '#FAF8F5' : '#0f172a' }}>
-                      {isEnglish ? initialCard.title : initialCard.titleEs}
-                    </h3>
-                    <p className="text-xs leading-relaxed px-2" style={{ color: isColoredCard && isRedbeeCard ? '#FDECEC' : '#334155' }}>
-                      {isEnglish ? initialCard.text : initialCard.textEs}
-                    </p>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        </div>
+                />
 
-          {/* Mobile pagination buttons */}
-          <div className="flex lg:hidden justify-between items-center mb-6 mt-2">
-            <button
-              onClick={(e) => { e.stopPropagation(); prevPage(); }}
-              disabled={pageIndex === 0}
-              className="flex items-center gap-1 px-4 py-2 rounded-full text-sm border transition-colors disabled:opacity-30"
-              style={{ borderColor: 'var(--border-base)', color: 'var(--text-secondary)', backgroundColor: '#FFFFFF' }}
-            >
-              ← {isEnglish ? 'Prev' : 'Ant.'}
-            </button>
-            <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{pageIndex + 1} / {totalPages}</span>
-            <button
-              onClick={(e) => { e.stopPropagation(); nextPage(); }}
-              disabled={pageIndex >= totalPages - 1}
-              className="flex items-center gap-1 px-4 py-2 rounded-full text-sm border transition-colors disabled:opacity-30"
-              style={{ borderColor: 'var(--border-base)', color: 'var(--text-secondary)', backgroundColor: '#FFFFFF' }}
-            >
-              {isEnglish ? 'Next' : 'Sig.'} →
-            </button>
-          </div>
-
-          {localizedProjectData && (
-            <div className="bg-white mt-4 md:mt-8 p-4 md:p-8 animate-in fade-in slide-in-from-top-4 duration-500 w-full mx-auto border rounded-2xl shadow-sm" style={{ maxWidth: `${carouselTotalWidth}px`, borderColor: 'var(--border-base)' }}>
-              <div className="flex items-center gap-3 mb-4">
-                <h2 className="text-2xl md:text-3xl font-serif font-semibold text-slate-900">
-                  {localizedProjectData.title}
-                </h2>
-              </div>
-
-              {localizedProjectData.duration && (
-                <p className="text-sm text-slate-500 mb-4">{uiText.durationLabel}: {localizedProjectData.duration}</p>
-              )}
-
-              <p className="text-base text-slate-600 leading-relaxed mb-6">
-                {localizedProjectData.description}
-              </p>
-
-              <div className="flex flex-wrap gap-2 mb-8">
-                {localizedProjectData.tech?.map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-4 py-1 rounded-full text-sm font-medium"
-                    style={{ backgroundColor: '#E7F3F2', color: '#2F7F78' }}
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-
-              {localizedProjectData.roles && localizedProjectData.roles.length > 0 && (
-                <div className="space-y-6 mb-8">
-                  <h3 className="text-xl font-serif font-semibold text-slate-900">{uiText.roles}</h3>
-                  {localizedProjectData.roles.map((role, index) => (
-                    <div key={index} className="border-l-4 pl-4" style={{ borderColor: 'var(--accent-primary)' }}>
-                      <h4 className="text-lg font-semibold text-slate-900 mb-1">
-                        {role.title}
-                      </h4>
-                      <p className="text-sm text-slate-500 mb-3">{role.period}</p>
-                      <ul className="space-y-2 mb-4">
-                        {role.responsibilities.map((resp, i) => (
-                          <li key={i} className="text-sm text-slate-700 flex">
-                            <span className="mr-2 flex-shrink-0" style={{ color: 'var(--accent-primary)' }}>•</span>
-                            <span>{resp}</span>
-                          </li>
-                        ))}
-                      </ul>
-                      <p className="text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1">{uiText.focus}</p>
-                      <p className="text-sm text-slate-700">{role.focus}</p>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {localizedProjectData.talks && localizedProjectData.talks.length > 0 && (
+                {/* Primary nodes */}
                 <div>
-                  <h3 className="text-xl font-serif font-semibold text-slate-900 mb-4">
-                    {uiText.talks}
-                  </h3>
-                  <p className="text-sm text-slate-600 mb-3">
-                    {uiText.talksDesc}
-                  </p>
-                  <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                    {localizedProjectData.talks.map((talk, i) => (
-                      <li key={i} className="text-sm text-slate-700 flex items-start">
-                        <span className="mr-2 flex-shrink-0" style={{ color: 'var(--accent-primary)' }}>•</span>
-                        <span>{talk}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {(localizedProjectData.links?.demo || localizedProjectData.links?.repo || (localizedProjectData.links?.posts && localizedProjectData.links.posts.length > 0)) && (
-                <div className="mt-8 p-5 rounded-xl border" style={{ borderColor: 'var(--border-base)', backgroundColor: '#FAFBFB' }}>
-                  <h3 className="text-lg font-serif font-semibold text-slate-900 mb-1">{uiText.featuredLink}</h3>
-                  <p className="text-sm text-slate-600 mb-4">
-                    {uiText.featuredLinkDesc(localizedProjectData.title)}
-                  </p>
-                  <div className="space-y-3">
-                    {localizedProjectData.links?.posts?.map((postUrl) => {
-                      const linkMeta = getLinkMetaFromUrl(postUrl)
-                      return (
-                      <div key={postUrl} className="rounded-lg border p-4" style={{ borderColor: 'var(--border-base)', backgroundColor: '#FFFFFF' }}>
-                        <p className="text-xs uppercase tracking-wide font-semibold mb-1" style={{ color: 'var(--text-muted)' }}>
-                          {linkMeta.title}
-                        </p>
-                        <a
-                          href={postUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="font-serif text-lg md:text-2xl leading-tight transition-colors"
-                          style={{ color: 'var(--accent-primary)' }}
+                  {primaryProjects.map(project => {
+                    const isActive = selectedSlug === project.slug
+                    const meta     = companyMeta[project.slug]
+                    const phrase   = timelinePhrases[project.slug]
+                    return (
+                      <button
+                        key={project.slug}
+                        onClick={() => setSelectedSlug(project.slug)}
+                        className="relative w-full text-left pl-6 pb-5 transition-all duration-200 group"
+                        aria-pressed={isActive}
+                      >
+                        {/* Dot */}
+                        <span
+                          className="absolute top-[5px] rounded-full transition-all duration-200"
+                          style={{
+                            left:            isActive ? -1 : 0,
+                            width:           isActive ? 10 : 7,
+                            height:          isActive ? 10 : 7,
+                            backgroundColor: isActive ? meta.accent : 'var(--border-base)',
+                            boxShadow:       isActive ? `0 0 0 3px ${meta.accent}28` : 'none',
+                          }}
+                        />
+                        {/* Company */}
+                        <span
+                          className="block text-sm font-medium leading-tight transition-colors"
+                          style={{ color: isActive ? meta.accent : 'var(--text-primary)' }}
                         >
-                          {linkMeta.heading} ↗
-                        </a>
-                      </div>
-                      )
-                    })}
-                    {localizedProjectData.links?.demo && (
-                      (() => {
-                        const linkMeta = getLinkMetaFromUrl(localizedProjectData.links.demo as string)
+                          {tValue(project.title)}
+                        </span>
+                        {/* Duration */}
+                        {project.duration && (
+                          <span
+                            className="block text-[10px] mt-0.5"
+                            style={{ color: 'var(--text-muted)' }}
+                          >
+                            {tValue(project.duration)}
+                          </span>
+                        )}
+                        {/* Phrase */}
+                        {phrase && (
+                          <span
+                            className="block text-[11px] italic mt-1 leading-snug transition-opacity duration-200"
+                            style={{
+                              color:   'var(--text-secondary)',
+                              opacity: isActive ? 1 : 0,
+                              height:  isActive ? 'auto' : 0,
+                              overflow: 'hidden',
+                            }}
+                          >
+                            {isEnglish ? phrase.en : phrase.es}
+                          </span>
+                        )}
+                      </button>
+                    )
+                  })}
+                </div>
+
+                {/* Early career toggle */}
+                <div className="pl-6 mt-1">
+                  <button
+                    onClick={() => setShowEarlyCareer(v => !v)}
+                    className="text-[11px] font-medium transition-colors hover:underline"
+                    style={{ color: 'var(--text-muted)' }}
+                  >
+                    {showEarlyCareer
+                      ? `↑ ${uiText.hideEarlyCareerLabel}`
+                      : `↓ ${uiText.earlyCareerLabel}`}
+                  </button>
+
+                  {showEarlyCareer && (
+                    <div className="mt-3">
+                      {earlyProjects.map(project => {
+                        const isActive = selectedSlug === project.slug
+                        const meta     = companyMeta[project.slug]
                         return (
-                          <div className="rounded-lg border p-4" style={{ borderColor: 'var(--border-base)', backgroundColor: '#FFFFFF' }}>
-                            <p className="text-xs uppercase tracking-wide font-semibold mb-1" style={{ color: 'var(--text-muted)' }}>
-                              {linkMeta.title}
-                            </p>
-                            <a
-                              href={localizedProjectData.links?.demo}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="font-serif text-lg md:text-2xl leading-tight transition-colors"
-                              style={{ color: 'var(--accent-primary)' }}
+                          <button
+                            key={project.slug}
+                            onClick={() => setSelectedSlug(project.slug)}
+                            className="relative w-full text-left pl-5 pb-4 transition-all duration-200"
+                            aria-pressed={isActive}
+                          >
+                            <span
+                              className="absolute top-[4px] rounded-full transition-all"
+                              style={{
+                                left:            0,
+                                width:           6,
+                                height:          6,
+                                backgroundColor: isActive ? meta.accent : 'var(--border-base)',
+                              }}
+                            />
+                            <span
+                              className="block text-xs font-medium"
+                              style={{ color: isActive ? meta.accent : 'var(--text-secondary)' }}
                             >
-                              {linkMeta.heading} ↗
-                            </a>
-                          </div>
+                              {tValue(project.title)}
+                            </span>
+                            {project.duration && (
+                              <span
+                                className="block text-[10px] mt-0.5"
+                                style={{ color: 'var(--text-muted)' }}
+                              >
+                                {tValue(project.duration)}
+                              </span>
+                            )}
+                          </button>
                         )
-                      })()
-                    )}
-                    {localizedProjectData.links?.repo && (
-                      (() => {
-                        const linkMeta = getLinkMetaFromUrl(localizedProjectData.links.repo as string)
-                        return (
-                          <div className="rounded-lg border p-4" style={{ borderColor: 'var(--border-base)', backgroundColor: '#FFFFFF' }}>
-                            <p className="text-xs uppercase tracking-wide font-semibold mb-1" style={{ color: 'var(--text-muted)' }}>
-                              {linkMeta.title}
-                            </p>
-                            <a
-                              href={localizedProjectData.links?.repo}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="font-serif text-lg md:text-2xl leading-tight transition-colors"
-                              style={{ color: 'var(--accent-primary)' }}
-                            >
-                              {linkMeta.heading} ↗
-                            </a>
-                          </div>
-                        )
-                      })()
-                    )}
+                      })}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </aside>
+
+            {/* ── RIGHT: Experience panel ─────────────────────────────────── */}
+            <div className="flex-1 min-w-0">
+
+              {/* Mobile: horizontal company selector */}
+              <div className="lg:hidden -mx-4 px-4 overflow-x-auto mb-8">
+                <div className="flex gap-2 pb-3 min-w-max">
+                  {projectsData.map(project => {
+                    const meta     = companyMeta[project.slug]
+                    const isActive = selectedSlug === project.slug
+                    return (
+                      <button
+                        key={project.slug}
+                        onClick={() => setSelectedSlug(project.slug)}
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium flex-shrink-0 border transition-all duration-200"
+                        style={{
+                          backgroundColor: isActive ? meta?.accent : 'transparent',
+                          color:           isActive ? '#FFFFFF' : 'var(--text-secondary)',
+                          borderColor:     isActive ? (meta?.accent ?? 'var(--accent-primary)') : 'var(--border-base)',
+                        }}
+                        aria-pressed={isActive}
+                      >
+                        <span aria-hidden="true">{meta?.emoji}</span>
+                        <span>{tValue(project.title)}</span>
+                      </button>
+                    )
+                  })}
+                </div>
+              </div>
+
+              {/* Experience panel — key triggers fade-in on change */}
+              <div key={selectedSlug} className="panel-enter">
+
+                {/* Company hero */}
+                <div
+                  className="rounded-2xl p-5 md:p-6 mb-10 border"
+                  style={{
+                    borderColor: 'var(--border-base)',
+                    borderLeft:  `4px solid ${currentMeta.accent}`,
+                    backgroundColor: 'var(--card-bg)',
+                  }}
+                >
+                  <div className="flex items-start gap-4">
+                    <span className="text-4xl leading-none mt-0.5 flex-shrink-0" aria-hidden="true">
+                      {currentMeta.emoji}
+                    </span>
+                    <div className="flex-1 min-w-0">
+                      <h2
+                        className="font-serif text-xl md:text-2xl font-semibold leading-tight"
+                        style={{ color: 'var(--text-primary)' }}
+                      >
+                        {localizedProject.title}
+                      </h2>
+                      {localizedProject.duration && (
+                        <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>
+                          {localizedProject.duration}
+                        </p>
+                      )}
+                      {currentPhrase && (
+                        <p className="text-sm italic mt-2 leading-snug" style={{ color: 'var(--text-secondary)' }}>
+                          {isEnglish ? currentPhrase.en : currentPhrase.es}
+                        </p>
+                      )}
+                    </div>
                   </div>
                 </div>
-              )}
 
+                {/* Context */}
+                <section className="mb-10">
+                  {sectionLabel(uiText.contextLabel)}
+                  <p className="text-base leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                    {localizedProject.description}
+                  </p>
+                </section>
+
+                {/* Roles */}
+                {localizedProject.roles && localizedProject.roles.length > 0 && (
+                  <section className="mb-10">
+                    {sectionLabel(uiText.rolesLabel)}
+                    <div className="space-y-8">
+                      {localizedProject.roles.map((role, i) => (
+                        <div key={i}>
+                          <p
+                            className="text-sm font-semibold"
+                            style={{ color: 'var(--text-primary)' }}
+                          >
+                            {role.title}
+                          </p>
+                          <p className="text-xs mt-0.5 mb-3" style={{ color: 'var(--text-muted)' }}>
+                            {role.period}
+                          </p>
+                          <ul className="space-y-2 mb-3">
+                            {role.responsibilities.map((resp, j) => (
+                              <li key={j} className="flex items-start gap-2.5">
+                                <span
+                                  className="mt-[7px] flex-shrink-0 rounded-full"
+                                  style={{
+                                    width:           5,
+                                    height:          5,
+                                    backgroundColor: currentMeta.accent,
+                                    opacity:         0.55,
+                                  }}
+                                />
+                                <span
+                                  className="text-sm leading-relaxed"
+                                  style={{ color: 'var(--text-secondary)' }}
+                                >
+                                  {resp}
+                                </span>
+                              </li>
+                            ))}
+                          </ul>
+                          {role.focus && (
+                            <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+                              {role.focus}
+                            </p>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+                )}
+
+                {/* Lo que aprendí */}
+                {currentLearning && (
+                  <section className="mb-10">
+                    {sectionLabel(uiText.learningLabel)}
+                    <div
+                      className="border-l-2 pl-5 py-1"
+                      style={{ borderColor: currentMeta.accent }}
+                    >
+                      <p
+                        className="font-serif italic text-base md:text-lg leading-relaxed"
+                        style={{ color: 'var(--text-primary)' }}
+                      >
+                        {isEnglish ? currentLearning.en : currentLearning.es}
+                      </p>
+                    </div>
+                  </section>
+                )}
+
+                {/* Skills */}
+                {localizedProject.tech && localizedProject.tech.length > 0 && (
+                  <section className="mb-10">
+                    {sectionLabel(uiText.skillsLabel)}
+                    <div className="flex flex-wrap gap-x-5 gap-y-2">
+                      {localizedProject.tech.map(tag => (
+                        <span
+                          key={tag}
+                          className="text-xs font-medium"
+                          style={{ color: currentMeta.accent }}
+                        >
+                          + {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </section>
+                )}
+
+                {/* Talks */}
+                {localizedProject.talks && localizedProject.talks.length > 0 && (
+                  <section className="mb-10">
+                    {sectionLabel(uiText.talksLabel)}
+                    <p className="text-sm mb-3" style={{ color: 'var(--text-secondary)' }}>
+                      {uiText.talksDesc}
+                    </p>
+                    <div className="flex flex-wrap gap-x-5 gap-y-2">
+                      {localizedProject.talks.map((talk, i) => (
+                        <span
+                          key={i}
+                          className="text-xs font-medium"
+                          style={{ color: currentMeta.accent }}
+                        >
+                          + {talk}
+                        </span>
+                      ))}
+                    </div>
+                  </section>
+                )}
+
+                {/* Links */}
+                {(localizedProject.links?.demo || localizedProject.links?.repo ||
+                  (localizedProject.links?.posts && localizedProject.links.posts.length > 0)) && (
+                  <section className="mb-10">
+                    {sectionLabel(uiText.linksLabel)}
+                    <p className="text-sm mb-4" style={{ color: 'var(--text-secondary)' }}>
+                      {uiText.linksDesc(localizedProject.title)}
+                    </p>
+                    <div className="space-y-3">
+                      {localizedProject.links?.posts?.map(postUrl => {
+                        const lm = getLinkMetaFromUrl(postUrl)
+                        return (
+                          <div
+                            key={postUrl}
+                            className="rounded-xl border p-4"
+                            style={{ borderColor: 'var(--border-base)', backgroundColor: 'var(--card-bg)' }}
+                          >
+                            <p
+                              className="text-[10px] uppercase tracking-[0.13em] font-semibold mb-1"
+                              style={{ color: 'var(--text-muted)' }}
+                            >
+                              {lm.title}
+                            </p>
+                            <a
+                              href={postUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="font-serif text-base leading-snug transition-colors"
+                              style={{ color: 'var(--accent-primary)' }}
+                            >
+                              {lm.heading} ↗
+                            </a>
+                          </div>
+                        )
+                      })}
+                      {localizedProject.links?.demo && (() => {
+                        const lm = getLinkMetaFromUrl(localizedProject.links!.demo as string)
+                        return (
+                          <div
+                            className="rounded-xl border p-4"
+                            style={{ borderColor: 'var(--border-base)', backgroundColor: 'var(--card-bg)' }}
+                          >
+                            <p
+                              className="text-[10px] uppercase tracking-[0.13em] font-semibold mb-1"
+                              style={{ color: 'var(--text-muted)' }}
+                            >
+                              {lm.title}
+                            </p>
+                            <a
+                              href={localizedProject.links!.demo}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="font-serif text-base leading-snug transition-colors"
+                              style={{ color: 'var(--accent-primary)' }}
+                            >
+                              {lm.heading} ↗
+                            </a>
+                          </div>
+                        )
+                      })()}
+                      {localizedProject.links?.repo && (() => {
+                        const lm = getLinkMetaFromUrl(localizedProject.links!.repo as string)
+                        return (
+                          <div
+                            className="rounded-xl border p-4"
+                            style={{ borderColor: 'var(--border-base)', backgroundColor: 'var(--card-bg)' }}
+                          >
+                            <p
+                              className="text-[10px] uppercase tracking-[0.13em] font-semibold mb-1"
+                              style={{ color: 'var(--text-muted)' }}
+                            >
+                              {lm.title}
+                            </p>
+                            <a
+                              href={localizedProject.links!.repo}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="font-serif text-base leading-snug transition-colors"
+                              style={{ color: 'var(--accent-primary)' }}
+                            >
+                              {lm.heading} ↗
+                            </a>
+                          </div>
+                        )
+                      })()}
+                    </div>
+                  </section>
+                )}
+
+              </div>
+              {/* end panel-enter */}
             </div>
-          )}
+            {/* end right panel */}
+          </div>
+          {/* end main layout */}
+
         </div>
       </div>
     </>
