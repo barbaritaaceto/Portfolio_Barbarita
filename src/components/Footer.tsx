@@ -24,8 +24,18 @@ export default function Footer() {
         style={{ borderTop: '1px solid var(--border-base)', backgroundColor: 'var(--bg-alt)' }}
       >
         <div
-          className="container mx-auto px-4 flex items-center justify-center"
+          className="container mx-auto px-4 flex items-center justify-center gap-3 flex-wrap"
         >
+          <a
+            href="/Presentaci%C3%B3n%20proyecto%20porfolio.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-ghost px-5 text-sm"
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+          >
+            <span style={{ fontSize: '14px' }}>✨</span>
+            {isEnglish ? 'How this portfolio was built' : 'Cómo se construyó este portfolio'}
+          </a>
           <button
             id="footer-feedback-btn"
             type="button"

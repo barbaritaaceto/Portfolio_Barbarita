@@ -132,25 +132,47 @@ function TourCard({ emoji, title, body, step, total, onNext, onSkip, isLast, isE
       </div>
 
       {/* Actions */}
-      <div className="flex items-center gap-2">
-        <button
-          type="button"
-          onClick={onNext}
-          className="btn-primary text-sm px-5 py-2"
-        >
-          {isLast
-            ? isEnglish ? '✓ Got it' : '✓ Entendido'
-            : isEnglish ? 'Next →' : 'Siguiente →'}
-        </button>
-        {onSkip && (
+      <div className="flex flex-col gap-2">
+        <div className="flex items-center gap-2">
           <button
             type="button"
-            onClick={onSkip}
-            className="text-xs px-3 py-2 rounded-full transition-colors"
-            style={{ color: 'var(--text-muted)' }}
+            onClick={onNext}
+            className="btn-primary text-sm px-5 py-2"
           >
-            {isEnglish ? 'Skip tour' : 'Saltar tour'}
+            {isLast
+              ? isEnglish ? '✓ Got it' : '✓ Entendido'
+              : isEnglish ? 'Next →' : 'Siguiente →'}
           </button>
+          {onSkip && (
+            <button
+              type="button"
+              onClick={onSkip}
+              className="text-xs px-3 py-2 rounded-full transition-colors"
+              style={{ color: 'var(--text-muted)' }}
+            >
+              {isEnglish ? 'Skip tour' : 'Saltar tour'}
+            </button>
+          )}
+        </div>
+        {isLast && (
+          <a
+            href="/Presentaci%C3%B3n%20proyecto%20porfolio.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs font-medium text-center py-2 px-4 rounded-xl transition-colors"
+            style={{
+              color: 'var(--accent-primary)',
+              border: '1px solid var(--border-base)',
+              backgroundColor: 'var(--bg)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '6px',
+            }}
+          >
+            <span>✨</span>
+            {isEnglish ? '¿How was this portfolio built?' : '¿Cómo se construyó este portfolio?'}
+          </a>
         )}
       </div>
     </div>
