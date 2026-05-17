@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import press from '../data/press';
+import notesData from '../data/notes';
 import HomeTour from '../components/HomeTour';
 
 export default function Home() {
@@ -54,11 +55,9 @@ export default function Home() {
         wayIntro: 'My way of working evolved over the years. Today I prioritize context, learning and decisions with clear direction.',
         newsTitle: 'Thinking, Product & Shared Learning',
         newsSubtitle: 'A curated selection of notes, publications and conversations on product, AI, strategy and teams.',
-        newsCta: 'Explore more publications and appearances →',
         readArticle: 'Read publication →',
-        trainingNoteTitle: 'Google Analytics and decision-making in product',
-        trainingNoteBody: 'How to connect metrics, behavior and shared learning across teams.',
-        trainingNoteCta: 'Watch recording ↗',
+        noteLabel: 'NOTE',
+        readNote: 'See on LinkedIn →',
         scrollWhyAria: 'Scroll to Why I Build and The Way I Work',
         scrollNewsAria: 'Scroll to news section',
         closeModalAria: 'Close modal',
@@ -74,11 +73,9 @@ export default function Home() {
         wayIntro: 'Mi forma de trabajar fue cambiando con los años. Hoy priorizo contexto, aprendizaje y decisiones con dirección.',
         newsTitle: 'Pensamiento, producto y aprendizaje compartido',
         newsSubtitle: 'Una selección de notas, publicaciones y conversaciones sobre producto, AI, estrategia y equipos.',
-        newsCta: 'Explorar más publicaciones y apariciones →',
         readArticle: 'Leer publicación →',
-        trainingNoteTitle: 'Google Analytics y toma de decisiones en producto',
-        trainingNoteBody: 'Cómo conectar métricas, comportamiento y aprendizaje compartido entre equipos.',
-        trainingNoteCta: 'Ver grabación ↗',
+        noteLabel: 'NOTA',
+        readNote: 'Ver en LinkedIn →',
         scrollWhyAria: 'Ir a Por qué construyo y Mi forma de trabajar',
         scrollNewsAria: 'Ir a la sección de noticias',
         closeModalAria: 'Cerrar modal',
@@ -191,6 +188,28 @@ export default function Home() {
   };
   const featuredCard = localizedNewsCards[0] ?? null;
   const secondaryCards = localizedNewsCards.slice(1);
+
+  const linkedInNotes = notesData
+    .filter((n) => ['women-in-tech', 'claude-code', 'reinventandome'].includes(n.slug))
+    .sort((a, b) => ['women-in-tech', 'claude-code', 'reinventandome'].indexOf(a.slug) - ['women-in-tech', 'claude-code', 'reinventandome'].indexOf(b.slug));
+
+  const noteCardMeta: Record<string, { labelEs: string; labelEn: string; titleEn: string }> = {
+    'women-in-tech': {
+      labelEs: 'MUJERES EN TECH',
+      labelEn: 'WOMEN IN TECH',
+      titleEn: 'Women in Tech · Product Management · redbee',
+    },
+    'claude-code': {
+      labelEs: 'APRENDIZAJES',
+      labelEn: 'LEARNING',
+      titleEn: 'My learnings using Claude in the last 72 hours',
+    },
+    'reinventandome': {
+      labelEs: 'REFLEXIÓN',
+      labelEn: 'REFLECTION',
+      titleEn: 'Reinventing myself',
+    },
+  };
   const profileContent = isEnglish
     ? {
         heroLine1: 'Between humans and algorithms,',
@@ -481,6 +500,54 @@ export default function Home() {
               </p>
             </div>
 
+            {/* LinkedIn notes grid */}
+            {linkedInNotes.length > 0 && (
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5 md:mb-6">
+                {linkedInNotes.map((note) => (
+                  <a
+                    key={note.slug}
+                    href={note.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block"
+                  >
+                    <article
+                      className="h-full rounded-xl border overflow-hidden flex flex-col"
+                      style={{ borderColor: 'var(--border-base)', backgroundColor: 'var(--card-bg)', transition: 'border-color 0.2s ease' }}
+                      onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(58,125,107,0.4)' }}
+                      onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border-base)' }}
+                    >
+                      {note.image && (
+                        <div className="w-full overflow-hidden" style={{ height: '140px' }}>
+                          <img
+                            src={note.image}
+                            alt={note.title}
+                            className="w-full h-full object-cover"
+                            style={{ objectPosition: 'center top', filter: 'brightness(0.88) contrast(0.92)' }}
+                            loading="lazy"
+                          />
+                        </div>
+                      )}
+                      <div className="p-5 flex flex-col flex-1">
+                        <span
+                          className="inline-block text-[10px] font-semibold mb-2.5"
+                          style={{ color: 'var(--accent-primary)', letterSpacing: '0.13em', opacity: 0.65 }}
+                        >
+                          {isEnglish ? (noteCardMeta[note.slug]?.labelEn ?? homeText.noteLabel) : (noteCardMeta[note.slug]?.labelEs ?? homeText.noteLabel)}
+                        </span>
+                        <h3 className="text-base font-serif font-semibold mb-2 leading-snug flex-1" style={{ color: 'var(--text-primary)' }}>
+                          {isEnglish ? (noteCardMeta[note.slug]?.titleEn ?? note.title) : note.title}
+                        </h3>
+                        <span className="inline-block mt-3 text-xs font-medium" style={{ color: 'var(--accent-primary)' }}>
+                          {homeText.readNote}
+                        </span>
+                      </div>
+                    </article>
+                  </a>
+                ))}
+              </div>
+            )}
+
             {/* Featured card */}
             {featuredCard && (
               <a
@@ -573,52 +640,6 @@ export default function Home() {
               </div>
             )}
 
-            {/* Workshop card */}
-            <div
-              className="rounded-xl border p-5 md:p-6 mb-10 md:mb-12"
-              style={{ borderColor: 'var(--border-base)', backgroundColor: 'var(--card-bg)' }}
-            >
-              <span
-                className="inline-block text-[10px] font-semibold mb-3"
-                style={{ color: 'var(--accent-primary)', letterSpacing: '0.13em', opacity: 0.65 }}
-              >
-                WORKSHOP
-              </span>
-              <p className="text-base font-serif font-semibold mb-1.5" style={{ color: 'var(--text-primary)' }}>
-                {homeText.trainingNoteTitle}
-              </p>
-              <p className="text-sm leading-relaxed mb-4" style={{ color: 'var(--text-secondary)' }}>
-                {homeText.trainingNoteBody}
-              </p>
-              <video
-                className="w-full rounded-xl border"
-                style={{ borderColor: 'var(--border-base)', backgroundColor: '#000000' }}
-                controls
-                preload="metadata"
-              >
-                <source src="/Grabación de pantalla 2026-02-18 a las 18.47.11.mov" type="video/quicktime" />
-              </video>
-              <a
-                href="https://www.linkedin.com/posts/barbaraaceto_analytics-oneproductteam-tarot-activity-6940000359255801856-fy_R?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAO9lWcBYTOMHR-JOYdfU2v4CZ_xUqB85qc"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex mt-3 text-sm font-medium"
-                style={{ color: 'var(--accent-primary)' }}
-              >
-                {homeText.trainingNoteCta}
-              </a>
-            </div>
-
-            {/* CTA */}
-            <div className="flex justify-end">
-              <Link
-                to="/news-links"
-                className="text-sm md:text-base font-medium"
-                style={{ color: 'var(--accent-primary)' }}
-              >
-                {homeText.newsCta}
-              </Link>
-            </div>
 
           </div>
         </section>

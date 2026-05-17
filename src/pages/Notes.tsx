@@ -85,10 +85,52 @@ export default function Notes(){
       excerpt: 'Construir datos como producto.',
       content: 'Contenido completo de referencia.',
     },
+    'humanos-algoritmos': {
+      title: 'Entre humanos y algoritmos',
+      excerpt: 'Reflexiones sobre inteligencia artificial, equipos y el desafío real de las organizaciones hoy.',
+      content: 'Reflexiones sobre inteligencia artificial, equipos y el desafío real de las organizaciones hoy.',
+    },
+    'claude-code': {
+      title: 'Claude Code — usando AI para construir en serio',
+      excerpt: 'Explorando cómo Claude Code cambia la forma de construir productos y herramientas digitales.',
+      content: 'Explorando cómo Claude Code cambia la forma de construir productos y herramientas digitales.',
+    },
+    'women-in-tech': {
+      title: 'Women in Tech · Product Management · redbee',
+      excerpt: 'Sobre liderazgo femenino en tecnología y producto — lo que cambió, lo que sigue pendiente y lo que construimos.',
+      content: 'Sobre liderazgo femenino en tecnología y producto — lo que cambió, lo que sigue pendiente y lo que construimos.',
+    },
+    'reinventandome': {
+      title: 'Reinventándome',
+      excerpt: 'Un momento de pausa, reflexión y reinvención personal — sobre cambiar el rumbo con intención.',
+      content: 'Un momento de pausa, reflexión y reinvención personal — sobre cambiar el rumbo con intención.',
+    },
   }
 
+  const enBySlug: Record<string, { title: string; excerpt: string }> = {
+    'humanos-algoritmos': {
+      title: 'Between humans and algorithms',
+      excerpt: 'Reflections on artificial intelligence, teams and the real challenge organizations face today.',
+    },
+    'claude-code': {
+      title: 'Claude Code — using AI to build seriously',
+      excerpt: 'Exploring how Claude Code changes the way digital products and tools are built.',
+    },
+    'women-in-tech': {
+      title: 'Women in Tech · Product Management · redbee',
+      excerpt: 'On female leadership in tech and product — what changed, what remains, and what we build.',
+    },
+  }
+
+  const tagLabels: Record<string, string> = isEnglish
+    ? {}
+    : { 'AI': 'IA', 'Metrics': 'Métricas', 'Ops': 'Ops', 'Design': 'Diseño', 'Ethics': 'Ética', 'People': 'Personas', 'Research': 'Research', 'Strategy': 'Estrategia', 'Data': 'Datos', 'Liderazgo': 'Liderazgo', 'Producto': 'Producto' }
+
   const localizedNotes = useMemo(
-    () => notesData.map((note) => (isEnglish ? note : { ...note, ...(esBySlug[note.slug] || {}) })),
+    () => notesData.map((note) => {
+      if (isEnglish) return { ...note, ...(enBySlug[note.slug] || {}) }
+      return { ...note, ...(esBySlug[note.slug] || {}) }
+    }),
     [isEnglish],
   )
 
@@ -110,7 +152,7 @@ export default function Notes(){
       <Card>
         <div className="mb-3 flex gap-2 flex-wrap">
           {tags.map(t=> (
-            <button key={t} onClick={()=> setTag(prev=> prev===t? null : t)} className={`px-3 py-1 rounded-full text-sm ${tag===t? 'bg-primary text-white':'bg-gray-100'}`}>{t}</button>
+            <button key={t} onClick={()=> setTag(prev=> prev===t? null : t)} className={`px-3 py-1 rounded-full text-sm ${tag===t? 'bg-primary text-white':'bg-gray-100'}`}>{tagLabels[t] ?? t}</button>
           ))}
         </div>
 

@@ -40,11 +40,22 @@ export default function NoteDetail(){
     'research-practices': { title: 'Prácticas de research', excerpt: 'Cómo convertir research en roadmaps.', content: 'Contenido completo de referencia.' },
     'roadmaps': { title: 'Roadmaps que avanzan', excerpt: 'Roadmapping orientado a resultados.', content: 'Contenido completo de referencia.' },
     'data-strategy': { title: 'Fundamentos de estrategia de datos', excerpt: 'Construir datos como producto.', content: 'Contenido completo de referencia.' },
+    'humanos-algoritmos': { title: 'Entre humanos y algoritmos', excerpt: 'Reflexiones sobre inteligencia artificial, equipos y el desafío real de las organizaciones hoy.', content: 'Reflexiones sobre inteligencia artificial, equipos y el desafío real de las organizaciones hoy.' },
+    'claude-code': { title: 'Claude Code — usando AI para construir en serio', excerpt: 'Explorando cómo Claude Code cambia la forma de construir productos y herramientas digitales.', content: 'Explorando cómo Claude Code cambia la forma de construir productos y herramientas digitales.' },
+    'women-in-tech': { title: 'Women in Tech · Product Management · redbee', excerpt: 'Sobre liderazgo femenino en tecnología y producto — lo que cambió, lo que sigue pendiente y lo que construimos.', content: 'Sobre liderazgo femenino en tecnología y producto — lo que cambió, lo que sigue pendiente y lo que construimos.' },
+    'reinventandome': { title: 'Reinventándome', excerpt: 'Un momento de pausa, reflexión y reinvención personal — sobre cambiar el rumbo con intención.', content: 'Un momento de pausa, reflexión y reinvención personal — sobre cambiar el rumbo con intención.' },
+  }
+
+  const enBySlug: Record<string, { title: string; excerpt: string }> = {
+    'humanos-algoritmos': { title: 'Between humans and algorithms', excerpt: 'Reflections on artificial intelligence, teams and the real challenge organizations face today.' },
+    'claude-code': { title: 'My learnings using Claude in the last 72 hours', excerpt: 'Exploring how Claude changes the way we build digital products and tools.' },
+    'women-in-tech': { title: 'Women in Tech · Product Management · redbee', excerpt: 'On female leadership in tech and product — what changed, what remains, and what we build.' },
+    'reinventandome': { title: 'Reinventing myself', excerpt: 'A moment of pause, reflection and personal reinvention — on changing direction with intention.' },
   }
 
   const localizedNote = useMemo(() => {
     if (!note) return null
-    if (isEnglish) return note
+    if (isEnglish) return { ...note, ...(enBySlug[note.slug] || {}) }
     return { ...note, ...(esBySlug[note.slug] || {}) }
   }, [isEnglish, note])
 

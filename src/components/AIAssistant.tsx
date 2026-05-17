@@ -202,6 +202,12 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
 
   useEffect(() => { setTimeout(() => inputRef.current?.focus(), 100) }, [])
   useEffect(() => { messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' }) }, [messages, isTyping])
+  // Cleanup stream interval on unmount to prevent setState on unmounted component
+  useEffect(() => {
+    return () => {
+      if (streamIntervalRef.current) clearInterval(streamIntervalRef.current)
+    }
+  }, [])
   useEffect(() => {
     if (input.length > 0) return
     const t = setInterval(() => setPlaceholderIdx(i => (i + 1) % placeholders.length), 3400)
