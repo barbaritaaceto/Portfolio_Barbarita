@@ -83,12 +83,13 @@ interface TourCardProps {
   step: number
   total: number
   onNext: () => void
-  onSkip?: () => void
+  onBack?: () => void
+  onClose: () => void
   isLast: boolean
   isEnglish: boolean
 }
 
-function TourCard({ emoji, title, body, step, total, onNext, onSkip, isLast, isEnglish }: TourCardProps) {
+function TourCard({ emoji, title, body, step, total, onNext, onBack, onClose, isLast, isEnglish }: TourCardProps) {
   return (
     <div
       className="rounded-2xl p-5"
@@ -98,7 +99,7 @@ function TourCard({ emoji, title, body, step, total, onNext, onSkip, isLast, isE
         boxShadow: '0 8px 32px rgba(31,46,42,0.22)',
       }}
     >
-      {/* Progress dots */}
+      {/* Header row: progress dots + X */}
       <div className="flex items-center gap-1.5 mb-4">
         {Array.from({ length: total }).map((_, i) => (
           <div
@@ -115,6 +116,17 @@ function TourCard({ emoji, title, body, step, total, onNext, onSkip, isLast, isE
         <span className="ml-auto text-[10px] font-medium" style={{ color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>
           {step + 1} / {total}
         </span>
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label={isEnglish ? 'Close tour' : 'Cerrar tour'}
+          style={{ background: 'none', border: 'none', padding: '2px 0 2px 8px', cursor: 'pointer', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', flexShrink: 0 }}
+        >
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+            <line x1="1.5" y1="1.5" x2="10.5" y2="10.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+            <line x1="10.5" y1="1.5" x2="1.5" y2="10.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+          </svg>
+        </button>
       </div>
 
       {/* Content */}
@@ -134,6 +146,16 @@ function TourCard({ emoji, title, body, step, total, onNext, onSkip, isLast, isE
       {/* Actions */}
       <div className="flex flex-col gap-2">
         <div className="flex items-center gap-2">
+          {onBack && (
+            <button
+              type="button"
+              onClick={onBack}
+              className="text-xs px-3 py-2 rounded-full transition-colors"
+              style={{ color: 'var(--text-muted)', border: '1px solid var(--border-base)', background: 'none' }}
+            >
+              {isEnglish ? '← Back' : '← Atrás'}
+            </button>
+          )}
           <button
             type="button"
             onClick={onNext}
@@ -143,16 +165,6 @@ function TourCard({ emoji, title, body, step, total, onNext, onSkip, isLast, isE
               ? isEnglish ? '✓ Got it' : '✓ Entendido'
               : isEnglish ? 'Next →' : 'Siguiente →'}
           </button>
-          {onSkip && (
-            <button
-              type="button"
-              onClick={onSkip}
-              className="text-xs px-3 py-2 rounded-full transition-colors"
-              style={{ color: 'var(--text-muted)' }}
-            >
-              {isEnglish ? 'Skip tour' : 'Saltar tour'}
-            </button>
-          )}
         </div>
         {isLast && (
           <a
@@ -272,6 +284,10 @@ export default function HomeTour({ isEnglish }: HomeTourProps) {
     }
   }, [step])
 
+  const prevStep = useCallback(() => {
+    setStep(s => Math.max(0, s - 1))
+  }, [])
+
   const skip = useCallback(() => {
     setActive(false)
     sessionStorage.setItem(DONE_KEY, '1')
@@ -358,7 +374,8 @@ export default function HomeTour({ isEnglish }: HomeTourProps) {
           step={step}
           total={STEPS.length}
           onNext={nextStep}
-          onSkip={step < STEPS.length - 1 ? skip : undefined}
+          onBack={step > 0 ? prevStep : undefined}
+          onClose={skip}
           isLast={step === STEPS.length - 1}
           isEnglish={isEnglish}
         />

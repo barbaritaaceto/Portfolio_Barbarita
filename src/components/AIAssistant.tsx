@@ -122,11 +122,11 @@ function TypingDots() {
 }
 
 // Tour callout card
-function TourCard({ emoji, title, body, onNext, nextLabel, onBack, backLabel, onSkip, skipLabel }: {
+function TourCard({ emoji, title, body, onNext, nextLabel, onBack, backLabel, onClose }: {
   emoji: string; title: string; body: string
   onNext: () => void; nextLabel: string
   onBack?: () => void; backLabel?: string
-  onSkip?: () => void; skipLabel?: string
+  onClose?: () => void
 }) {
   return (
     <div style={{
@@ -138,7 +138,15 @@ function TourCard({ emoji, title, body, onNext, nextLabel, onBack, backLabel, on
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '7px', marginBottom: '6px' }}>
         <span style={{ fontSize: '16px', lineHeight: 1 }}>{emoji}</span>
-        <span style={{ fontWeight: 700, fontSize: '13px', color: 'var(--text-primary)' }}>{title}</span>
+        <span style={{ fontWeight: 700, fontSize: '13px', color: 'var(--text-primary)', flex: 1 }}>{title}</span>
+        {onClose && (
+          <button type="button" onClick={onClose} aria-label="Cerrar" style={{ background: 'none', border: 'none', padding: '2px', cursor: 'pointer', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+              <line x1="1.5" y1="1.5" x2="10.5" y2="10.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+              <line x1="10.5" y1="1.5" x2="1.5" y2="10.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+            </svg>
+          </button>
+        )}
       </div>
       <p style={{ fontSize: '12px', color: 'var(--text-secondary)', lineHeight: '1.6', margin: '0 0 12px' }}>{body}</p>
       <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
@@ -153,11 +161,6 @@ function TourCard({ emoji, title, body, onNext, nextLabel, onBack, backLabel, on
         >
           {nextLabel}
         </button>
-        {onSkip && (
-          <button type="button" onClick={onSkip} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', fontSize: '11px', cursor: 'pointer' }}>
-            {skipLabel ?? 'Saltar'}
-          </button>
-        )}
       </div>
     </div>
   )
@@ -416,8 +419,7 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
                 backLabel={isEnglish ? '← Back' : '← Atrás'}
                 onNext={nextTour}
                 nextLabel={isEnglish ? 'Next →' : 'Siguiente →'}
-                onSkip={skipTour}
-                skipLabel={isEnglish ? 'Skip' : 'Saltar'}
+                onClose={skipTour}
               />
             </div>
           )}
@@ -445,8 +447,7 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
                   : 'Escribí tu pregunta acá — experiencia, proyectos, AI, disponibilidad, o lo que quieras saber.'}
                 onNext={nextTour}
                 nextLabel={isEnglish ? 'Next →' : 'Siguiente →'}
-                onSkip={skipTour}
-                skipLabel={isEnglish ? 'Skip' : 'Saltar'}
+                onClose={skipTour}
               />
             </div>
           )}
@@ -505,6 +506,7 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
                   backLabel={isEnglish ? '← Back' : '← Atrás'}
                   onNext={nextTour}
                   nextLabel={isEnglish ? '✓ Got it' : '✓ Entendido'}
+                  onClose={skipTour}
                 />
               </div>
             )}
