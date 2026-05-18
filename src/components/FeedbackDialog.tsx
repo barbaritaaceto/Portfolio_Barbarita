@@ -36,7 +36,7 @@ export default function FeedbackDialog({ isOpen, onClose, isEnglish }: FeedbackD
         feedbackPlaceholder: 'Contame qué mejorarías...',
         submit: 'Enviar feedback',
         close: 'Cerrar',
-        thanks: '¡Gracias! Tu feedback fue enviado.',
+        thanks: 'Grazie milleee! Tu feedback fue enviado.',
         error: 'Hubo un error al enviar. Intentá de nuevo.',
       }
 
@@ -86,13 +86,6 @@ export default function FeedbackDialog({ isOpen, onClose, isEnglish }: FeedbackD
         className="relative w-full max-w-sm rounded-2xl border p-6 shadow-xl"
         style={{ backgroundColor: '#FFFFFF', borderColor: 'var(--border-base)', zIndex: 1 }}
       >
-        <p className="text-lg font-serif font-semibold" style={{ color: 'var(--text-primary)' }}>
-          {t.title}
-        </p>
-        <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>
-          {t.subtitle}
-        </p>
-
         {!isSubmitted ? (
           <form className="mt-4 space-y-3" onSubmit={handleSubmit}>
             <div>

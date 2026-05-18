@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 const EN = {
   pageTitle: 'One Sheet',
   backHome: 'Back to home',
-  printBtn: 'Download / Print',
+  printBtn: 'Download',
   name: 'Barbara Aceto',
   role: 'Product Leader · AI & Digital Strategy · Fintech',
   location: 'Buenos Aires, Argentina',
@@ -87,7 +87,7 @@ const EN = {
 const ES = {
   pageTitle: 'One Sheet',
   backHome: 'Volver al inicio',
-  printBtn: 'Descargar / Imprimir',
+  printBtn: 'Descargar',
   name: 'Barbara Aceto',
   role: 'Líder de Producto · IA y Estrategia Digital · Fintech',
   location: 'Buenos Aires, Argentina',
@@ -212,34 +212,22 @@ export default function OneSheet() {
     <>
       <Helmet><title>{c.pageTitle} — Barbara Aceto</title></Helmet>
 
-      {/* Action bar — hidden on print */}
-      {!isPdfMode && (
-        <div
-          className="one-sheet-actionbar sticky top-0 z-40 flex items-center justify-between px-6 py-3"
-          style={{ backgroundColor: 'var(--bg)', borderBottom: '1px solid var(--border-base)' }}
+      {/* Action bar — always visible, hidden on print */}
+      <div
+        className="one-sheet-actionbar sticky top-0 z-40 flex items-center gap-3 px-6 py-3"
+        style={{ backgroundColor: 'var(--bg)', borderBottom: '1px solid var(--border-base)' }}
+      >
+        <Link
+          to="/"
+          className="inline-flex items-center gap-1.5 text-sm font-medium"
+          style={{ color: 'var(--text-secondary)' }}
         >
-          <Link
-            to="/"
-            className="inline-flex items-center gap-1.5 text-sm font-medium"
-            style={{ color: 'var(--text-secondary)' }}
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            {c.backHome}
-          </Link>
-          <button
-            onClick={() => window.print()}
-            className="inline-flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-full transition-colors"
-            style={{ backgroundColor: 'var(--accent-primary)', color: '#fff' }}
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-            </svg>
-            {c.printBtn}
-          </button>
-        </div>
-      )}
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+          {c.backHome}
+        </Link>
+      </div>
 
       <div className="one-sheet-wrap w-full min-h-screen px-4 py-8 md:py-12" style={{ backgroundColor: 'var(--bg)' }}>
         <article
@@ -354,20 +342,11 @@ export default function OneSheet() {
           </div>
 
           {/* ── FOOTER / CONTACT ── */}
-          <div className="px-8 py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div className="px-8 py-5">
             <div className="text-xs" style={{ color: 'var(--text-muted)' }}>
               <span className="font-medium" style={{ color: 'var(--text-secondary)' }}>{c.contactTitle}: </span>
               aceto.barbara@gmail.com · +54 9 11 6209 3765
             </div>
-            <a
-              href="https://portfolio-barbarita.vercel.app"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs font-medium"
-              style={{ color: 'var(--accent-primary)' }}
-            >
-              {c.portfolioLabel} →
-            </a>
           </div>
 
         </article>

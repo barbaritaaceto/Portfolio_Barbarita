@@ -113,12 +113,16 @@ export default function Notes(){
       excerpt: 'Reflections on artificial intelligence, teams and the real challenge organizations face today.',
     },
     'claude-code': {
-      title: 'Claude Code — using AI to build seriously',
-      excerpt: 'Exploring how Claude Code changes the way digital products and tools are built.',
+      title: 'My learnings using Claude in the last 72 hours',
+      excerpt: 'What I discovered building seriously with AI — and what surprised me.',
     },
     'women-in-tech': {
       title: 'Women in Tech · Product Management · redbee',
       excerpt: 'On female leadership in tech and product — what changed, what remains, and what we build.',
+    },
+    'reinventandome': {
+      title: 'Reinventing myself',
+      excerpt: 'A moment of pause, reflection and personal reinvention — on changing direction with intention.',
     },
   }
 
