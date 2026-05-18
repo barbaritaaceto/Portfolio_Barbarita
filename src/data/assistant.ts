@@ -134,16 +134,8 @@ export const intents: AssistantIntent[] = [
     id: 'cognizant',
     keywordsES: ['cognizant', 'google', 'account strategist', 'account strategy', 'globant', 'meli globant', 'inicios', 'comienzos', 'primeros trabajos', 'primera empresa', 'imanaging', 'fulbright', 'inicio carrera', 'carrera inicial', 'seo analyst', 'semi senior'],
     keywordsEN: ['cognizant', 'google', 'account strategist', 'account strategy', 'globant', 'early career', 'first jobs', 'first company', 'imanaging', 'fulbright', 'career start', 'beginnings', 'seo analyst', 'semi senior'],
-    responseES: 'En **Cognizant** fue Account Strategist en un proyecto para Google durante 2 años — estrategia digital y crecimiento de cuentas para anunciantes de Google Ads.
-
-Antes de eso, fue **SEO Semi Senior Analyst en Globant / MeLi** — sus primeros pasos en el mundo digital, construyendo bases en analytics, SEO y marketing de performance.
-
-Esa etapa le dio la visión de negocio y el contexto de escala que hoy aplica en producto.',
-    responseEN: 'At **Cognizant** she was Account Strategist on a Google project for 2 years — digital strategy and account growth for Google Ads advertisers.
-
-Before that, she was **SEO Semi Senior Analyst at Globant / MeLi** — her first steps in the digital world, building her foundations in analytics, SEO, and performance marketing.
-
-That stage gave her the business vision and scale context she applies to product today.',
+    responseES: 'En **Cognizant** fue Account Strategist en un proyecto para Google durante 2 años — estrategia digital y crecimiento de cuentas para anunciantes de Google Ads.\n\nAntes de eso, fue **SEO Semi Senior Analyst en Globant / MeLi** — sus primeros pasos en el mundo digital, construyendo bases en analytics, SEO y marketing de performance.\n\nEsa etapa le dio la visión de negocio y el contexto de escala que hoy aplica en producto.',
+    responseEN: 'At **Cognizant** she was Account Strategist on a Google project for 2 years — digital strategy and account growth for Google Ads advertisers.\n\nBefore that, she was **SEO Semi Senior Analyst at Globant / MeLi** — her first steps in the digital world, building her foundations in analytics, SEO, and performance marketing.\n\nThat stage gave her the business vision and scale context she applies to product today.',
     suggestionsES: ['¿123Seguro?', '¿Mercado Libre?', '¿Trayectoria completa?'],
     suggestionsEN: ['123Seguro?', 'Mercado Libre?', 'Full background?'],
   },
@@ -151,34 +143,8 @@ That stage gave her the business vision and scale context she applies to product
     id: 'education',
     keywordsES: ['educacion', 'educación', 'formacion', 'formación', 'estudios', 'universidad', 'titulo', 'título', 'uade', 'relaciones publicas', 'relaciones públicas', 'certificacion', 'certificaciones', 'certificado', 'diploma', 'digital house', 'coderhouse', 'leadership agility', 'data analytics', 'google analytics curso', 'donde estudio', 'dónde estudió', 'aprendizaje', 'formacion academica'],
     keywordsEN: ['education', 'formation', 'university', 'degree', 'studied', 'uade', 'certifications', 'certified', 'public relations', 'digital house', 'coderhouse', 'leadership agility', 'data analytics', 'where she studied', 'learning', 'academic background', 'google analytics course'],
-    responseES: 'Su formación combina base académica con certificaciones prácticas.
-
-**Grado:**
-- Lic. Relaciones Públicas e Institucionales — UADE (2008–2012)
-
-**Certificaciones:**
-- Claude Code para Product Managers (2025)
-- Leadership Agility Certified (2024)
-- IA para Project Managers (2024)
-- Data Analytics — Digital House (2020)
-- Google Analytics Avanzado — Coderhouse (2020)
-- SEO — CAMSEO · Coderhouse (2019)
-
-Toda su formación técnica fue autodidacta y orientada a aplicación real.',
-    responseEN: 'Her training combines an academic foundation with practical certifications.
-
-**Degree:**
-- Public & Institutional Relations — UADE (2008–2012)
-
-**Certifications:**
-- Claude Code for Product Managers (2025)
-- Leadership Agility Certified (2024)
-- AI for Project Managers (2024)
-- Data Analytics — Digital House (2020)
-- Advanced Google Analytics — Coderhouse (2020)
-- SEO — CAMSEO · Coderhouse (2019)
-
-All her technical training was self-directed and applied.',
+    responseES: 'Su formación combina base académica con certificaciones prácticas.\n\n**Grado:**\n- Lic. Relaciones Públicas e Institucionales — UADE (2008–2012)\n\n**Certificaciones:**\n- Claude Code para Product Managers (2025)\n- Leadership Agility Certified (2024)\n- IA para Project Managers (2024)\n- Data Analytics — Digital House (2020)\n- Google Analytics Avanzado — Coderhouse (2020)\n- SEO — CAMSEO · Coderhouse (2019)\n\nToda su formación técnica fue autodidacta y orientada a aplicación real.',
+    responseEN: 'Her training combines an academic foundation with practical certifications.\n\n**Degree:**\n- Public & Institutional Relations — UADE (2008–2012)\n\n**Certifications:**\n- Claude Code for Product Managers (2025)\n- Leadership Agility Certified (2024)\n- AI for Project Managers (2024)\n- Data Analytics — Digital House (2020)\n- Advanced Google Analytics — Coderhouse (2020)\n- SEO — CAMSEO · Coderhouse (2019)\n\nAll her technical training was self-directed and applied.',
     suggestionsES: ['¿Herramientas que usa?', '¿Metodología?', '¿Experiencia?'],
     suggestionsEN: ['Tools she uses?', 'Her methodology?', 'Experience?'],
   },
@@ -222,40 +188,8 @@ All her technical training was self-directed and applied.',
     id: 'tools_stack',
     keywordsES: ['herramientas', 'figma', 'jira', 'notion', 'miro', 'confluence', 'amplitude', 'mixpanel', 'ga4', 'gtm', 'google tag manager', 'hotjar', 'looker', 'metabase', 'sql', 'sheets', 'slack', 'linear', 'asana', 'trello', 'stack', 'software', 'aplicaciones', 'programas', 'que usa', 'qué usa', 'que utiliza', 'analytics', 'google analytics'],
     keywordsEN: ['tools', 'figma', 'jira', 'notion', 'miro', 'confluence', 'amplitude', 'mixpanel', 'ga4', 'gtm', 'google tag manager', 'hotjar', 'looker', 'metabase', 'sql', 'sheets', 'slack', 'linear', 'asana', 'trello', 'tech stack', 'software', 'applications', 'programs', 'what she uses', 'analytics', 'google analytics'],
-    responseES: 'Trabaja con un stack orientado a producto y datos:
-
-**Producto & Colaboración:**
-- Jira · Confluence · Notion · Linear
-- Miro · FigJam (workshops y mapas de flujo)
-- Figma (revisión y handoff, no diseño)
-
-**Analytics & Datos:**
-- Google Analytics 4 · Google Tag Manager
-- Amplitude · Mixpanel · Hotjar
-- Looker · Metabase · Google Sheets
-
-**AI (uso diario):**
-- Claude · ChatGPT · Cursor · NotebookLM
-- GitHub Copilot · Gemini
-
-Elige las herramientas que reducen fricción para su equipo, no las que están de moda.',
-    responseEN: 'She works with a product and data-oriented stack:
-
-**Product & Collaboration:**
-- Jira · Confluence · Notion · Linear
-- Miro · FigJam (workshops and flow maps)
-- Figma (review and handoff, not design)
-
-**Analytics & Data:**
-- Google Analytics 4 · Google Tag Manager
-- Amplitude · Mixpanel · Hotjar
-- Looker · Metabase · Google Sheets
-
-**AI (daily use):**
-- Claude · ChatGPT · Cursor · NotebookLM
-- GitHub Copilot · Gemini
-
-She picks what reduces friction for her team, not what\'s trending.',
+    responseES: 'Trabaja con un stack orientado a producto y datos:\n\n**Producto & Colaboración:**\n- Jira · Confluence · Notion · Linear\n- Miro · FigJam (workshops y mapas de flujo)\n- Figma (revisión y handoff, no diseño)\n\n**Analytics & Datos:**\n- Google Analytics 4 · Google Tag Manager\n- Amplitude · Mixpanel · Hotjar\n- Looker · Metabase · Google Sheets\n\n**AI (uso diario):**\n- Claude · ChatGPT · Cursor · NotebookLM\n- GitHub Copilot · Gemini\n\nElige las herramientas que reducen fricción para su equipo, no las que están de moda.',
+    responseEN: 'She works with a product and data-oriented stack:\n\n**Product & Collaboration:**\n- Jira · Confluence · Notion · Linear\n- Miro · FigJam (workshops and flow maps)\n- Figma (review and handoff, not design)\n\n**Analytics & Data:**\n- Google Analytics 4 · Google Tag Manager\n- Amplitude · Mixpanel · Hotjar\n- Looker · Metabase · Google Sheets\n\n**AI (daily use):**\n- Claude · ChatGPT · Cursor · NotebookLM\n- GitHub Copilot · Gemini\n\nShe picks what reduces friction for her team, not what\'s trending.',,
     suggestionsES: ['¿Metodología?', '¿Cómo usa AI?', '¿Ver proyectos?'],
     suggestionsEN: ['Her methodology?', 'How she uses AI?', 'See projects?'],
   },
@@ -357,30 +291,8 @@ She picks what reduces friction for her team, not what\'s trending.',
     id: 'location_remote',
     keywordsES: ['donde vive', 'dónde vive', 'donde esta', 'dónde está', 'ubicacion', 'ubicación', 'pais', 'país', 'ciudad', 'argentina', 'buenos aires', 'remoto', 'hibrido', 'híbrido', 'presencial', 'trabaja remoto', 'zona horaria', 'timezone', 'idioma', 'idiomas', 'ingles', 'inglés', 'habla ingles', 'bilingue', 'bilingüe', 'relocation', 'remota', 'trabaja desde'],
     keywordsEN: ['where is she', 'where she lives', 'location', 'country', 'city', 'argentina', 'buenos aires', 'remote', 'hybrid', 'in-person', 'timezone', 'language', 'languages', 'english', 'speaks english', 'bilingual', 'based', 'relocation', 'work from'],
-    responseES: 'Barbara vive en **Buenos Aires, Argentina** (UTC-3).
-
-Modalidades de trabajo:
-- **Remoto** — experiencia con equipos distribuidos en LATAM y globales
-- **Híbrido** — lo más habitual en sus últimas empresas
-- **Presencial** — Buenos Aires principalmente
-
-Idiomas:
-- **Español** nativo
-- **Inglés** profesional (B2/C1) — reuniones, documentación, presentaciones
-
-No busca relocation activamente, pero está abierta a proyectos globales en remoto.',
-    responseEN: 'Barbara is based in **Buenos Aires, Argentina** (UTC-3).
-
-Work modes:
-- **Remote** — experienced with distributed LATAM and global teams
-- **Hybrid** — most common in her recent companies
-- **On-site** — Buenos Aires primarily
-
-Languages:
-- **Spanish** native
-- **English** professional (B2/C1) — meetings, documentation, presentations
-
-Not actively seeking relocation, but open to global remote projects.',
+    responseES: 'Barbara vive en **Buenos Aires, Argentina** (UTC-3).\n\nModalidades de trabajo:\n- **Remoto** — experiencia con equipos distribuidos en LATAM y globales\n- **Híbrido** — lo más habitual en sus últimas empresas\n- **Presencial** — Buenos Aires principalmente\n\nIdiomas:\n- **Español** nativo\n- **Inglés** profesional (B2/C1) — reuniones, documentación, presentaciones\n\nNo busca relocation activamente, pero está abierta a proyectos globales en remoto.',
+    responseEN: 'Barbara is based in **Buenos Aires, Argentina** (UTC-3).\n\nWork modes:\n- **Remote** — experienced with distributed LATAM and global teams\n- **Hybrid** — most common in her recent companies\n- **On-site** — Buenos Aires primarily\n\nLanguages:\n- **Spanish** native\n- **English** professional (B2/C1) — meetings, documentation, presentations\n\nNot actively seeking relocation, but open to global remote projects.',
     suggestionsES: ['¿Disponibilidad?', '¿Contactarla?', '¿Cómo trabaja?'],
     suggestionsEN: ['Availability?', 'Contact her?', 'How she works?'],
   },
