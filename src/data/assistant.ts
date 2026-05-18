@@ -15,7 +15,8 @@ export interface AssistantIntent {
 const prevCompany: Record<string, string> = {
   redbee: 'santander',
   santander: 'mercadolibre',
-  mercadolibre: 'fintech',
+  mercadolibre: 'seguro123',
+  seguro123: 'experience',
   fintech: 'experience',
 }
 
@@ -49,15 +50,17 @@ export const intents: AssistantIntent[] = [
     id: 'greeting',
     keywordsES: ['hola', 'buenas', 'buen dia', 'buenos dias', 'hey', 'saludos', 'como estas', 'que tal'],
     keywordsEN: ['hello', 'hi', 'hey', 'good morning', 'greetings', 'howdy'],
-    responseES: 'Hola! Soy el asistente de Barbara.\n\nPuedo contarte sobre su experiencia, cómo trabaja, qué proyectos lideró y cómo piensa sobre AI y producto.\n\n¿Por dónde empezamos?',
-    responseEN: "Hi! I'm Barbara's assistant.\n\nI can tell you about her experience, how she works, the projects she led, and her thinking on AI and product.\n\nWhere would you like to start?",
+    responseES: 'Hola! Soy Boconcino, tu guía en el portfolio de Barbara.\n\nPuedo contarte sobre su experiencia, cómo trabaja, qué proyectos lideró y cómo piensa sobre AI.\n\n¿Por dónde empezamos?',
+    responseEN: "Hi! I'm Boconcino, Barbara's guide.\n\nI can tell you about her experience, how she works, the projects she led, and her thinking on AI and product.\n\nWhere would you like to start?",
     variantsES: [
-      'Hola! Soy el asistente de Barbara.\n\nPuedo contarte sobre su experiencia, cómo trabaja, qué proyectos lideró y cómo piensa sobre AI y producto.\n\n¿Por dónde empezamos?',
-      '¡Buenas! Estás en el portfolio de Barbara Aceto — PM con más de 10 años construyendo productos digitales.\n\nPreguntame lo que quieras: su trayectoria, forma de trabajo, visión sobre AI o cómo contactarla.\n\n¿Por dónde arrancamos?',
+      'Hola! Soy Boconcino, tu guía en el portfolio de Barbara.\n\nPuedo contarte sobre su experiencia, cómo trabaja, qué proyectos lideró y cómo piensa sobre AI.\n\n¿Por dónde empezamos?',
+      '¡Buenas! Soy Boconcino. Barbara tiene más de 10 años construyendo productos digitales en banca, ecommerce e IA.\n\nPreguntame lo que quieras — trayectoria, proyectos, forma de liderar, visión sobre AI, disponibilidad.\n\n¿Arrancamos?',
+      '¡Hola! Boconcino por acá. Estás en el portfolio de Barbara Aceto — PM con visión sistémica y un gusto particular por los problemas difíciles.\n\n¿Qué querés saber?',
     ],
     variantsEN: [
-      "Hi! I'm Barbara's assistant.\n\nI can tell you about her experience, how she works, the projects she led, and her thinking on AI and product.\n\nWhere would you like to start?",
-      "Welcome! You're in Barbara Aceto's portfolio — a PM with 10+ years building digital products.\n\nAsk me anything: her background, how she works, her take on AI, or how to reach her.\n\nWhat would you like to know?",
+      "Hi! I'm Boconcino, Barbara's guide.\n\nI can tell you about her experience, how she works, the projects she led, and her thinking on AI and product.\n\nWhere would you like to start?",
+      "Welcome! I'm Boconcino. Barbara Aceto is a PM with 10+ years building digital products in banking, e-commerce, and AI.\n\nAsk me anything: background, projects, how she leads, her AI vision, or availability.\n\nWhat would you like to know?",
+      "Hey! Boconcino here. You're in Barbara Aceto's portfolio — a product leader with a systemic mindset and a taste for hard problems.\n\nWhat would you like to know?",
     ],
     suggestionsES: ['¿Qué hizo en Santander?', '¿Cómo usa AI?', '¿Está disponible?'],
     suggestionsEN: ['Santander experience', 'How she uses AI', 'Is she available?'],
@@ -81,10 +84,10 @@ export const intents: AssistantIntent[] = [
   },
   {
     id: 'experience',
-    keywordsES: ['experiencia', 'trayectoria', 'anos', 'años', 'background', 'carrera', 'trabajos', 'historia', 'recorrido', 'cv', 'curriculum'],
-    keywordsEN: ['experience', 'years', 'background', 'career', 'trajectory', 'history', 'resume', 'cv'],
-    responseES: 'Lleva más de 10 años en producto digital. Su trayectoria:\n\n- **redbee studios** · Product leadership en ecosistema digital\n- **Santander Argentina** · Product Manager — Cobranzas y Pagos (4 años)\n- **Mercado Libre** · Product Senior — Darwin Project LATAM (2 años)\n- **123Seguro** · Growth Marketing Manager — insurtech\n- **Cognizant** · Account Strategist — proyecto Google (2 años)\n\nEmpezó en marketing digital, migró a producto y lleva varios años liderando squads cross-funcionales.',
-    responseEN: 'She has 10+ years in digital product. Her trajectory:\n\n- **redbee studios** · Product leadership in digital ecosystem\n- **Santander Argentina** · Product Manager — Collections & Payments (4 years)\n- **Mercado Libre** · Senior Product — Darwin Project LATAM (2 years)\n- **123Seguro** · Growth Marketing Manager — insurtech\n- **Cognizant** · Account Strategist — Google project (2 years)\n\nShe started in digital marketing, moved into product, and has been leading cross-functional squads for several years.',
+    keywordsES: ['experiencia', 'trayectoria', 'anos', 'años', 'background', 'carrera', 'trabajos', 'historia', 'recorrido'],
+    keywordsEN: ['experience', 'years', 'background', 'career', 'trajectory', 'history', 'resume'],
+    responseES: 'Lleva más de 10 años en producto digital. Su trayectoria:\n\n- **redbee studios** · Product leadership en ecosistema digital\n- **Santander Argentina** · Product Manager — Cobranzas y Pagos (4 años)\n- **Mercado Libre** · Product Senior — Darwin Project LATAM (2 años)\n- **123Seguro** · Growth Marketing Manager — insurtech\n- **Cognizant** · Account Strategist — proyecto Google (2 años)\n- **MeLi · Globant** · SEO Semi Senior Analyst — primeros pasos en digital\n\nEmpezó en SEO y marketing digital, migró a producto y lleva varios años liderando squads cross-funcionales.',
+    responseEN: 'She has 10+ years in digital product. Her trajectory:\n\n- **redbee studios** · Product leadership in digital ecosystem\n- **Santander Argentina** · Product Manager — Collections & Payments (4 years)\n- **Mercado Libre** · Senior Product — Darwin Project LATAM (2 years)\n- **123Seguro** · Growth Marketing Manager — insurtech\n- **Cognizant** · Account Strategist — Google project (2 years)\n- **MeLi · Globant** · SEO Semi Senior Analyst — first steps in digital\n\nShe started in SEO and digital marketing, moved into product, and has been leading cross-functional squads for several years.',
     suggestionsES: ['¿Santander?', '¿Mercado Libre?', '¿Cómo trabaja?'],
     suggestionsEN: ['Santander?', 'Mercado Libre?', 'How she works?'],
     navLinks: [{ labelES: '→ Ver Proyectos', labelEN: '→ See Projects', route: '/projects' }],
@@ -106,6 +109,15 @@ export const intents: AssistantIntent[] = [
     responseEN: 'At Mercado Libre she was Senior Product at Mercado Shops for 2 years. She led the Darwin Project for LATAM — a smart marketing initiative for sellers.\n\nSome things she built:\n- Smart Shopping integration\n- Facebook Shop and Instagram tagging\n- Google Analytics, Facebook Pixel, Google Ads integrations\n- ROAS experiments and Darwin roadmap\n\nWorking at MeLi meant learning product at real scale with top-tier teams.',
     suggestionsES: ['¿Ver proyectos?', '¿Cómo lidera?', '¿Santander?'],
     suggestionsEN: ['See her projects?', 'How she leads?', 'Santander?'],
+  },
+  {
+    id: 'seguro123',
+    keywordsES: ['123seguro', '123 seguro', 'seguro', 'seguros'],
+    keywordsEN: ['123seguro', '123 seguro', 'insurance'],
+    responseES: 'En 123Seguro fue Growth Marketing Manager — una insurtech para comparar y contratar seguros de auto, moto y hogar online.\n\nSus focos ahí:\n- Estrategia de adquisición digital\n- Embudos de conversión y landing page optimization\n- SEO, SEM y campañas de performance\n- Análisis de cohortes y métricas de growth\n\nFue una etapa bisagra: consolidó la visión de negocio y growth que después volcó en roles de producto.',
+    responseEN: 'At 123Seguro she was Growth Marketing Manager — an insurtech for comparing and hiring car, motorcycle, and home insurance online.\n\nHer focus there:\n- Digital acquisition strategy\n- Conversion funnels and landing page optimization\n- SEO, SEM, and performance campaigns\n- Cohort analysis and growth metrics\n\nA pivotal stage: she built the business and growth mindset she later brought into product roles.',
+    suggestionsES: ['¿Mercado Libre?', '¿Fintech?', '¿Cómo lidera?'],
+    suggestionsEN: ['Mercado Libre?', 'Fintech?', 'How she leads?'],
   },
   {
     id: 'redbee',
@@ -145,7 +157,7 @@ export const intents: AssistantIntent[] = [
   },
   {
     id: 'fintech',
-    keywordsES: ['fintech', 'financiero', 'pagos digitales', 'transformacion digital', 'transformación digital', 'banca digital', 'insurtech', 'seguro', 'cobro digital'],
+    keywordsES: ['fintech', 'financiero', 'pagos digitales', 'transformacion digital', 'transformación digital', 'banca digital', 'insurtech', 'cobro digital'],
     keywordsEN: ['fintech', 'financial', 'digital payments', 'digital transformation', 'digital banking', 'insurtech', 'insurance'],
     responseES: 'Tiene experiencia sólida en fintech y banca digital.\n\n**Santander:** transformación digital del ecosistema de Cobranzas y Pagos. Onboarding empresarial, compliance, métricas de conversión.\n\n**123Seguro:** insurtech, adquisición digital, embudos de conversión y growth.\n\nSu perspectiva: los productos fintech más difíciles no son los técnicamente complejos — son los que necesitan generar confianza en cada paso del flujo.',
     responseEN: 'She has solid experience in fintech and digital banking.\n\n**Santander:** digital transformation of the Collections & Payments ecosystem. Business onboarding, compliance, conversion metrics.\n\n**123Seguro:** insurtech, digital acquisition, conversion funnels, and growth.\n\nHer take: the hardest fintech products aren\'t the technically complex ones — they\'re the ones that need to build trust at every step of the flow.',
@@ -166,8 +178,8 @@ export const intents: AssistantIntent[] = [
     id: 'contact_cv',
     keywordsES: ['contacto', 'contactar', 'email', 'mail', 'cv', 'curriculum', 'descargar', 'linkedin', 'one sheet', 'onesheet'],
     keywordsEN: ['contact', 'email', 'cv', 'resume', 'download', 'linkedin', 'one sheet', 'onesheet'],
-    responseES: 'Podés contactar a Barbara por email: **aceto.barbara@gmail.com**\n\nO descargar su CV desde la sección **One Sheet** del portfolio.\n\nTambién está activa en LinkedIn si querés conectar profesionalmente.',
-    responseEN: 'You can contact Barbara by email: **aceto.barbara@gmail.com**\n\nOr download her CV from the **One Sheet** section of the portfolio.\n\nShe\'s also active on LinkedIn if you\'d like to connect professionally.',
+    responseES: 'Podés contactar a Barbara por:\n\n- **WhatsApp:** +54 9 11 6209 3765\n- **Email:** aceto.barbara@gmail.com\n- **LinkedIn:** /in/barbaraaceto\n\nO descargar su CV desde la sección **One Sheet** del portfolio.',
+    responseEN: 'You can contact Barbara via:\n\n- **WhatsApp:** +54 9 11 6209 3765\n- **Email:** aceto.barbara@gmail.com\n- **LinkedIn:** /in/barbaraaceto\n\nOr download her CV from the **One Sheet** section of the portfolio.',
     suggestionsES: ['¿Cómo trabaja?', '¿Ver proyectos?', '¿Experiencia?'],
     suggestionsEN: ['How she works?', 'Her projects?', 'Her background?'],
     navLinks: [{ labelES: '→ Ver One Sheet', labelEN: '→ See One Sheet', route: '/one-sheet' }],
@@ -200,12 +212,22 @@ export const intents: AssistantIntent[] = [
   },
   {
     id: 'talks',
-    keywordsES: ['talks', 'charlas', 'speaker', 'conferencia', 'conferencias', 'cursos', 'workshop', 'workshops', 'ensenar', 'enseñar', 'notas', 'articulos', 'artículos', 'prensa', 'humanos y algoritmos'],
-    keywordsEN: ['talks', 'speaker', 'conference', 'conferences', 'courses', 'workshop', 'workshops', 'teach', 'notes', 'articles', 'press', 'humans and algorithms'],
+    keywordsES: ['talks', 'charlas', 'speaker', 'conferencia', 'conferencias', 'cursos', 'workshop', 'workshops', 'ensenar', 'enseñar', 'humanos y algoritmos'],
+    keywordsEN: ['talks', 'speaker', 'conference', 'conferences', 'courses', 'workshop', 'workshops', 'teach', 'humans and algorithms'],
     responseES: 'Dió charlas y workshops sobre:\n\n- **"Humanos y Algoritmos"** — AI aplicada a producto y equipos\n- Fundamentos de producto para Product Owners\n- Token App para empresas (Santander)\n- Métricas y frameworks de medición\n- Google Analytics, GA4 y GTM\n- UX básico para equipos de producto\n- Estrategia y mindset de producto\n\nPodés ver artículos y reflexiones en la sección **Notas** del portfolio.',
     responseEN: 'She gave talks and workshops on:\n\n- **"Humans and Algorithms"** — AI applied to product and teams\n- Product fundamentals for Product Owners\n- Token App for businesses (Santander)\n- Metrics and measurement frameworks\n- Google Analytics, GA4, and GTM\n- UX basics for product teams\n- Product strategy and mindset\n\nYou can find articles and reflections in the **Notes** section of the portfolio.',
     suggestionsES: ['¿Cómo usa AI?', '¿Charlas?', '¿Sus notas?'],
     suggestionsEN: ['How she uses AI?', 'Her talks?', 'Her notes?'],
+    navLinks: [{ labelES: '→ Ver Notas', labelEN: '→ See Notes', route: '/notes' }],
+  },
+  {
+    id: 'notes_press',
+    keywordsES: ['notas', 'nota', 'articulos', 'artículos', 'articulo', 'escribe', 'escrito', 'publica', 'reflexiones', 'contenido', 'prensa', 'noticias'],
+    keywordsEN: ['notes', 'note', 'articles', 'article', 'writes', 'written', 'posts', 'content', 'reflections', 'press', 'news'],
+    responseES: 'Barbara escribe sobre producto, liderazgo y aprendizaje en público.\n\nSus notas más recientes:\n- **IA y el desafío humano** — NotebookLM y las organizaciones\n- **Humanos y Algoritmos** — AI aplicada a producto y equipos\n- **Mujeres en Tech** — reflexiones sobre diversidad\n- **Reinventándome** — cambiar de dirección con intención\n\nPodés leerlas en la sección **Notas**. También tiene cobertura en medios en la sección **Prensa**.',
+    responseEN: 'Barbara writes about product, leadership, and learning in public.\n\nHer recent notes:\n- **AI and the human challenge** — NotebookLM and organizations\n- **Humans and Algorithms** — AI applied to product and teams\n- **Women in Tech** — reflections on diversity\n- **Reinventing myself** — changing direction with intention\n\nYou can read them in the **Notes** section. She also has media coverage in the **Press** section.',
+    suggestionsES: ['¿Sus charlas?', '¿Humanos y Algoritmos?', '¿Cómo usa AI?'],
+    suggestionsEN: ['Her talks?', 'Humans & Algorithms?', 'How she uses AI?'],
     navLinks: [{ labelES: '→ Ver Notas', labelEN: '→ See Notes', route: '/notes' }],
   },
   {
@@ -257,8 +279,8 @@ export const intents: AssistantIntent[] = [
   },
 ]
 
-export const fallbackES = 'No encontré eso exactamente — probá con algo más concreto 🙂\n\n¿Te puedo ayudar con alguno de estos temas?'
-export const fallbackEN = "I didn't quite catch that — try asking something more specific 🙂\n\nCan I help you with one of these topics?"
+export const fallbackES = 'Mmm, no llegué a entender eso. Podés preguntarme sobre experiencia, proyectos, cómo trabaja, su visión sobre AI o cómo contactarla.\n\n¿Por cuál empezamos?'
+export const fallbackEN = "Hmm, I didn't quite get that. You can ask about her experience, projects, how she works, her AI vision, or how to reach her.\n\nWhere would you like to start?"
 
 export const defaultSuggestionsES = [
   '¿Quién es Barbara?',

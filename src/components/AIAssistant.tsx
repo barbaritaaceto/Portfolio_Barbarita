@@ -28,8 +28,8 @@ interface AIAssistantProps {
 const initialChipsES = ['Experiencia', 'Proyectos', 'Producto + AI', 'Disponibilidad']
 const initialChipsEN = ['Experience', 'Projects', 'Product + AI', 'Availability']
 
-const onboardingES = 'Hola 👋 Soy barbara.ai. Podés preguntarme cómo trabaja Barbara, cómo aplica AI en producto, qué proyectos hizo o cómo lidera equipos.'
-const onboardingEN = "Hi 👋 I'm barbara.ai. Ask me how Barbara works, how she applies AI to product, what projects she's done, or how she leads teams."
+const onboardingES = 'Hola 👋 Soy Boconcino, tu guía. Podés preguntarme cómo trabaja Barbara, cómo aplica AI en producto, qué proyectos hizo o cómo lidera equipos.'
+const onboardingEN = "Hi 👋 I'm Boconcino, your guide. Ask me how Barbara works, how she applies AI to product, what projects she's done, or how she leads teams."
 
 const placeholdersES = ['Preguntame sobre producto, AI o equipos…', '¿Cómo usa AI en producto?', '¿Está disponible?', '¿Cuál es su metodología?']
 const placeholdersEN = ['Ask me about product, AI or teams…', 'How does she use AI in product?', 'Is she available?', 'What is her methodology?']
@@ -52,6 +52,8 @@ const intentMeta: Record<string, { emoji: string; labelES: string; labelEN: stri
   talks:          { emoji: '🎙️', labelES: 'Charlas',         labelEN: 'Talks' },
   challenge:      { emoji: '⚡', labelES: 'Desafío',         labelEN: 'Challenge' },
   differentiator: { emoji: '⭐', labelES: 'Diferenciador',   labelEN: 'Differentiator' },
+  seguro123:      { emoji: '🛡️', labelES: '123Seguro',       labelEN: '123Seguro' },
+  notes_press:    { emoji: '📝', labelES: 'Notas & Prensa',  labelEN: 'Notes & Press' },
   short_ack:      { emoji: '✅', labelES: '',                labelEN: '' },
 }
 
@@ -120,9 +122,11 @@ function TypingDots() {
 }
 
 // Tour callout card
-function TourCard({ emoji, title, body, onNext, nextLabel, onSkip }: {
+function TourCard({ emoji, title, body, onNext, nextLabel, onBack, backLabel, onSkip, skipLabel }: {
   emoji: string; title: string; body: string
-  onNext: () => void; nextLabel: string; onSkip?: () => void
+  onNext: () => void; nextLabel: string
+  onBack?: () => void; backLabel?: string
+  onSkip?: () => void; skipLabel?: string
 }) {
   return (
     <div style={{
@@ -138,6 +142,11 @@ function TourCard({ emoji, title, body, onNext, nextLabel, onSkip }: {
       </div>
       <p style={{ fontSize: '12px', color: 'var(--text-secondary)', lineHeight: '1.6', margin: '0 0 12px' }}>{body}</p>
       <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+        {onBack && (
+          <button type="button" onClick={onBack} style={{ background: 'none', border: '1px solid var(--border-base)', borderRadius: '20px', color: 'var(--text-muted)', fontSize: '11px', padding: '4px 12px', cursor: 'pointer' }}>
+            {backLabel ?? '← Atrás'}
+          </button>
+        )}
         <button
           type="button" onClick={onNext}
           style={{ backgroundColor: 'var(--accent-primary)', color: '#fff', border: 'none', borderRadius: '20px', padding: '5px 16px', fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}
@@ -146,7 +155,7 @@ function TourCard({ emoji, title, body, onNext, nextLabel, onSkip }: {
         </button>
         {onSkip && (
           <button type="button" onClick={onSkip} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', fontSize: '11px', cursor: 'pointer' }}>
-            {' '}Saltar
+            {skipLabel ?? 'Saltar'}
           </button>
         )}
       </div>
@@ -182,6 +191,7 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
       setTourStep(s => s + 1)
     }
   }
+  const prevTour = () => setTourStep(s => Math.max(0, s - 1))
   const skipTour = () => {
     setTourStep(-1)
     if (typeof window !== 'undefined') window.sessionStorage.setItem('ai-tour-done', '1')
@@ -299,7 +309,7 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
       {/* Panel */}
       <div
         role="dialog" aria-modal="true"
-        aria-label={isEnglish ? "Barbara's AI Assistant" : 'Asistente AI de Barbara'}
+        aria-label={isEnglish ? "Boconcino — Barbara's Guide" : 'Boconcino — Guía de Barbara'}
         className="ai-panel fixed z-[61] flex flex-col inset-x-0 bottom-0 rounded-t-[28px] md:inset-auto md:bottom-auto md:top-[5vh] md:left-1/2 md:-translate-x-1/2 md:w-[580px] md:rounded-[24px]"
         style={{
           backgroundColor: '#FFFFFF',
@@ -319,7 +329,7 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full" style={{ backgroundColor: 'var(--accent-primary)' }} />
               <span style={{ fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 600, fontSize: '15px', color: 'var(--text-primary)', letterSpacing: '-0.01em' }}>
-                {isEnglish ? 'Your Guide' : 'Tu Guía'}
+                Boconcino
               </span>
             </div>
             <p className="ml-4 mt-0.5" style={{ fontSize: '10px', color: 'var(--text-muted)', letterSpacing: '0.04em' }}>
@@ -402,9 +412,12 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
                 body={isEnglish
                   ? 'Tap any chip to explore a topic instantly — no typing needed.'
                   : 'Tocá cualquier pastilla para explorar un tema al toque, sin escribir nada.'}
+                onBack={prevTour}
+                backLabel={isEnglish ? '← Back' : '← Atrás'}
                 onNext={nextTour}
                 nextLabel={isEnglish ? 'Next →' : 'Siguiente →'}
                 onSkip={skipTour}
+                skipLabel={isEnglish ? 'Skip' : 'Saltar'}
               />
             </div>
           )}
@@ -426,13 +439,14 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
             <div className="mb-3">
               <TourCard
                 emoji="✍️"
-                title={isEnglish ? 'Ask me anything' : 'Preguntame lo que quieras'}
+                title={isEnglish ? 'Ask me anything' : 'Preguntame lo que querés'}
                 body={isEnglish
                   ? 'Type a question below — experience, projects, AI, availability, or anything you\'re curious about.'
                   : 'Escribí tu pregunta acá — experiencia, proyectos, AI, disponibilidad, o lo que quieras saber.'}
                 onNext={nextTour}
                 nextLabel={isEnglish ? 'Next →' : 'Siguiente →'}
                 onSkip={skipTour}
+                skipLabel={isEnglish ? 'Skip' : 'Saltar'}
               />
             </div>
           )}
@@ -487,6 +501,8 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
                   body={isEnglish
                     ? 'These two chips are always here. "Tour the portfolio" takes you through the site. "Tour the guide" restarts this walkthrough anytime.'
                     : 'Estos dos chips siempre están acá. "Tour del portfolio" te lleva por el sitio. "Tour del asistente" reinicia esta guía cuando quieras.'}
+                  onBack={prevTour}
+                  backLabel={isEnglish ? '← Back' : '← Atrás'}
                   onNext={nextTour}
                   nextLabel={isEnglish ? '✓ Got it' : '✓ Entendido'}
                 />
