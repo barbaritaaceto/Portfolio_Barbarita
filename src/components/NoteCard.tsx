@@ -8,7 +8,7 @@ export default function NoteCard({note, locale = 'en-US', minuteLabel = 'min'}:{
       <div className="bg-white rounded-2xl border p-4 shadow-sm" style={{borderColor:'var(--card-border)'}}>
         {note.image && (
           <div className="w-full h-36 rounded-xl overflow-hidden mb-3 border" style={{ borderColor: 'var(--border-base)', backgroundColor: '#F3F2EF' }}>
-            <img src={note.image} alt={note.title} className="w-full h-full object-cover" loading="lazy" />
+            <img src={note.image} alt={note.title} className="w-full h-full object-cover" style={note.imagePosition ? { objectPosition: note.imagePosition } : undefined} loading="lazy" />
           </div>
         )}
         <h4 className="font-medium text-gray-900">{note.title}</h4>

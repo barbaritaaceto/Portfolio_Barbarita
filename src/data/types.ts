@@ -26,6 +26,7 @@ export type Note = {
   tags: string[]
   content: string
   image?: string
+  imagePosition?: string
   url?: string
 }
 

@@ -61,6 +61,7 @@ const notes: Note[] = [
     tags: ['Reflexión', 'Personas'],
     content: 'Un momento de pausa, reflexión y reinvención personal — sobre cambiar el rumbo con intención.',
     image: '/Reinventandome.png',
+    imagePosition: '50% 15%',
     url: 'https://www.linkedin.com/in/barbaraaceto',
   },
 ]
