@@ -117,6 +117,7 @@ const learnings: Record<string, { es: string; en: string }> = {
 export default function Projects() {
   const [selectedSlug, setSelectedSlug] = useState('redbee')
   const [showEarlyCareer, setShowEarlyCareer] = useState(false)
+  const [showFormacion, setShowFormacion] = useState(false)
   const [isEnglish, setIsEnglish] = useState(() => {
     if (typeof window === 'undefined') return false
     return window.localStorage.getItem('lang') === 'en'
@@ -381,7 +382,83 @@ export default function Projects() {
     }
   }
 
-  // ─── Derived data ─────────────────────────────────────────────────────────────
+  // ─── Education / Formación data (from LinkedIn PDF) ───────────────────────
+  const formacionItems = [
+    {
+      period: '2025',
+      titleES: 'Claude Code para Product Managers',
+      titleEN: 'Claude Code for Product Managers',
+      institutionES: 'Certificación',
+      institutionEN: 'Certification',
+      tagES: 'IA aplicada',
+      tagEN: 'Applied AI',
+    },
+    {
+      period: '2024',
+      titleES: 'Leadership Agility Certified',
+      titleEN: 'Leadership Agility Certified',
+      institutionES: 'Certificación',
+      institutionEN: 'Certification',
+      tagES: 'Liderazgo',
+      tagEN: 'Leadership',
+    },
+    {
+      period: '2024',
+      titleES: 'Inteligencia Artificial para Project Managers',
+      titleEN: 'Artificial Intelligence for Project Managers',
+      institutionES: 'Certificación',
+      institutionEN: 'Certification',
+      tagES: 'IA · Producto',
+      tagEN: 'AI · Product',
+    },
+    {
+      period: '2020',
+      titleES: 'Data Analytics',
+      titleEN: 'Data Analytics',
+      institutionES: 'Digital House',
+      institutionEN: 'Digital House',
+      tagES: 'Datos',
+      tagEN: 'Data',
+    },
+    {
+      period: '2020',
+      titleES: 'Google Analytics Avanzado',
+      titleEN: 'Google Analytics Advanced',
+      institutionES: 'Coderhouse',
+      institutionEN: 'Coderhouse',
+      tagES: 'Analítica',
+      tagEN: 'Analytics',
+    },
+    {
+      period: '2019',
+      titleES: 'SEO',
+      titleEN: 'SEO',
+      institutionES: 'CAMSEO · Coderhouse',
+      institutionEN: 'CAMSEO · Coderhouse',
+      tagES: 'SEO · Growth',
+      tagEN: 'SEO · Growth',
+    },
+    {
+      period: '2019',
+      titleES: 'Curso Básico de Marketing Digital',
+      titleEN: 'Digital Marketing Fundamentals',
+      institutionES: 'Certificación',
+      institutionEN: 'Certification',
+      tagES: 'Marketing',
+      tagEN: 'Marketing',
+    },
+    {
+      period: '2008–2012',
+      titleES: 'Lic. Relaciones Públicas e Institucionales',
+      titleEN: 'Public & Institutional Relations Degree',
+      institutionES: 'UADE',
+      institutionEN: 'UADE',
+      tagES: 'Base',
+      tagEN: 'Foundation',
+    },
+  ]
+
+
   const primaryProjects = projectsData.filter(p => companyMeta[p.slug]?.primary)
   const earlyProjects   = projectsData.filter(p => !companyMeta[p.slug]?.primary)
   const sortedPrimary   = [...primaryProjects].sort((a, b) => (companyYears[b.slug] ?? 0) - (companyYears[a.slug] ?? 0))
@@ -552,6 +629,87 @@ export default function Projects() {
                     </button>
                   )
                 })}
+
+                {/* ── Formación toggle ──────────────────────────────── */}
+                <button
+                  onClick={() => setShowFormacion(v => !v)}
+                  className="relative w-full text-left py-2 focus:outline-none group"
+                  aria-pressed={showFormacion}
+                >
+                  <span
+                    className="absolute rounded-full transition-all duration-200"
+                    style={{
+                      left: -14, top: 13,
+                      width: 8, height: 8,
+                      backgroundColor: showFormacion ? '#4A9B8E' : 'var(--border-base)',
+                    }}
+                  />
+                  <span
+                    className="text-xs font-medium transition-colors"
+                    style={{ color: '#4A9B8E', opacity: showFormacion ? 1 : 0.7 }}
+                  >
+                    {showFormacion
+                      ? (isEnglish ? '− Hide education' : '− Ocultar formación')
+                      : (isEnglish ? '+ Education' : '+ Formación')}
+                  </span>
+                </button>
+
+                {/* ── Formación items ────────────────────────────────── */}
+                {showFormacion && (
+                  <>
+                    {/* Dashed teal line for education section */}
+                    <div
+                      className="absolute"
+                      style={{
+                        left: 6, width: 0.5,
+                        top: 'auto',
+                        backgroundColor: 'transparent',
+                        borderLeft: '1.5px dashed #4A9B8E',
+                        opacity: 0.4,
+                        height: `${formacionItems.length * 48 + 12}px`,
+                      }}
+                    />
+                    {formacionItems.map((item, idx) => (
+                      <div
+                        key={idx}
+                        className="relative pb-3"
+                        style={{
+                          animation: `panelFadeUp 0.22s ease ${idx * 0.04}s both`,
+                        }}
+                      >
+                        <span
+                          className="absolute rounded-full"
+                          style={{
+                            left: -13, top: 5,
+                            width: 7, height: 7,
+                            backgroundColor: '#4A9B8E',
+                            opacity: 0.55,
+                          }}
+                        />
+                        <span
+                          className="block text-[10px] leading-none mb-0.5"
+                          style={{ color: '#4A9B8E', opacity: 0.7 }}
+                        >{item.period}</span>
+                        <span
+                          className="block text-xs font-medium leading-snug"
+                          style={{ color: 'var(--text-primary)' }}
+                        >
+                          {isEnglish ? item.titleEN : item.titleES}
+                        </span>
+                        <span
+                          className="block text-[10px] leading-snug"
+                          style={{ color: 'var(--text-muted)' }}
+                        >
+                          {isEnglish ? item.institutionEN : item.institutionES}
+                          {' · '}
+                          <span style={{ color: '#4A9B8E', opacity: 0.8 }}>
+                            {isEnglish ? item.tagEN : item.tagES}
+                          </span>
+                        </span>
+                      </div>
+                    ))}
+                  </>
+                )}
               </div>
             </div>
 
