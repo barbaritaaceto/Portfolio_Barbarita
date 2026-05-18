@@ -55,6 +55,7 @@ const intentMeta: Record<string, { emoji: string; labelES: string; labelEN: stri
   seguro123:      { emoji: '🛡️', labelES: '123Seguro',       labelEN: '123Seguro' },
   notes_press:    { emoji: '📝', labelES: 'Notas & Prensa',  labelEN: 'Notes & Press' },
   short_ack:      { emoji: '✅', labelES: '',                labelEN: '' },
+  help_menu:      { emoji: '📋', labelES: 'Menú',           labelEN: 'Menu' },
 }
 
 function renderInline(text: string): React.ReactNode[] {
@@ -107,6 +108,18 @@ function renderText(text: string): React.ReactNode {
       </span>
     )
   })
+}
+
+function detectInputLanguage(text: string): 'en' | 'es' | 'unknown' {
+  const lower = text.toLowerCase()
+  const words = lower.split(/\s+/)
+  const EN_EXCLUSIVE = new Set(['the', 'she', 'her', 'his', 'they', 'you', 'your', 'does', 'has', 'have', 'what', 'how', 'tell', 'about', 'where', 'when', 'did', 'can', 'could', 'would', 'should', 'are', 'were', 'was'])
+  const ES_EXCLUSIVE = new Set(['qué', 'cómo', 'está', 'tiene', 'hace', 'también', 'cuál', 'trabaja', 'podés', 'querés', 'sabés', 'conóces', 'qué', 'dónde', 'cuándo', 'tenés', 'sos'])
+  const enCount = words.filter(w => EN_EXCLUSIVE.has(w)).length
+  const esCount = words.filter(w => ES_EXCLUSIVE.has(w)).length
+  if (enCount >= 2 || (enCount === 1 && esCount === 0)) return 'en'
+  if (esCount >= 1 && enCount === 0) return 'es'
+  return 'unknown'
 }
 
 function TypingDots() {
@@ -180,9 +193,10 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
     if (typeof window === 'undefined') return -1
     return window.sessionStorage.getItem('ai-tour-done') ? -1 : 0
   })
-  const inputRef = useRef<HTMLInputElement>(null)
+  const inputRef = useRef<HTMLTextAreaElement>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const lastIntentIdRef = useRef<string | undefined>(undefined)
+  const seenIntentsRef = useRef<Set<string>>(new Set())
   const streamIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const placeholders = isEnglish ? placeholdersEN : placeholdersES
 
@@ -232,10 +246,10 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
     return () => window.removeEventListener('keydown', onKey)
   }, [onClose])
 
-  const pickResponse = (intent: NonNullable<ReturnType<typeof matchIntent>>): string => {
-    const variants = isEnglish ? intent.variantsEN : intent.variantsES
+  const pickResponse = (intent: NonNullable<ReturnType<typeof matchIntent>>, lang: boolean): string => {
+    const variants = lang ? intent.variantsEN : intent.variantsES
     if (variants?.length) return variants[Math.floor(Math.random() * variants.length)]
-    return isEnglish ? intent.responseEN : intent.responseES
+    return lang ? intent.responseEN : intent.responseES
   }
 
   const sendMessage = useCallback((text: string) => {
@@ -243,19 +257,36 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
     if (tourStep >= 0) skipTour()
     const query = text.trim()
     setInput('')
+    if (inputRef.current) { inputRef.current.style.height = 'auto' }
     setMessages(prev => [...prev, { id: `u-${Date.now()}`, role: 'user', text: query }])
     setIsTyping(true)
     setTimeout(() => {
-      const intent = matchIntent(query, isEnglish, lastIntentIdRef.current)
+      // Auto-detect language: if user types in the other language, respond accordingly
+      const detectedLang = detectInputLanguage(query)
+      const effectiveEnglish = detectedLang !== 'unknown' ? detectedLang === 'en' : isEnglish
+      const intent = matchIntent(query, effectiveEnglish, lastIntentIdRef.current)
       let responseText: string, chips: string[], navLinks: Message['navLinks']
       if (intent) {
-        responseText = pickResponse(intent)
-        chips = isEnglish ? intent.suggestionsEN : intent.suggestionsES
+        responseText = pickResponse(intent, effectiveEnglish)
+        // Dynamic chips: filter out already-seen intents
+        const rawChips = effectiveEnglish ? intent.suggestionsEN : intent.suggestionsES
+        const filtered = rawChips.filter(chip => {
+          const m = matchIntent(chip, effectiveEnglish, undefined)
+          return !m || !seenIntentsRef.current.has(m.id)
+        })
+        chips = filtered.length >= 2 ? filtered : rawChips
         navLinks = intent.navLinks
         lastIntentIdRef.current = intent.id
+        seenIntentsRef.current.add(intent.id)
       } else {
-        responseText = isEnglish ? fallbackEN : fallbackES
-        chips = isEnglish ? defaultSuggestionsEN : defaultSuggestionsES
+        // Log unmatched queries for continuous improvement
+        try {
+          const key = 'ai-fallback-log'
+          const existing: { q: string; t: number }[] = JSON.parse(localStorage.getItem(key) || '[]')
+          localStorage.setItem(key, JSON.stringify([...existing, { q: query, t: Date.now() }].slice(-50)))
+        } catch {}
+        responseText = effectiveEnglish ? fallbackEN : fallbackES
+        chips = effectiveEnglish ? defaultSuggestionsEN : defaultSuggestionsES
       }
       const msgId = `a-${Date.now()}`
       setIsTyping(false)
@@ -460,13 +491,23 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
             <form onSubmit={handleSubmit}>
               <div className="ai-inp-wrap flex items-center gap-3 px-4 py-2.5 rounded-2xl"
                 style={{ border: '1.5px solid var(--border-base)', backgroundColor: 'var(--bg)' }}>
-                <input
-                  ref={inputRef} type="text" value={input}
-                  onChange={e => setInput(e.target.value)}
+                <textarea
+                  ref={inputRef}
+                  rows={1}
+                  value={input}
+                  onChange={e => {
+                    setInput(e.target.value)
+                    e.target.style.height = 'auto'
+                    e.target.style.height = `${Math.min(e.target.scrollHeight, 96)}px`
+                  }}
+                  onKeyDown={e => {
+                    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(input) }
+                  }}
                   placeholder={placeholders[placeholderIdx]}
-                  className="ai-inp flex-1 bg-transparent text-sm"
-                  style={{ color: 'var(--text-primary)', caretColor: 'var(--accent-primary)' }}
-                  disabled={isTyping} autoComplete="off"
+                  className="ai-inp flex-1 bg-transparent text-sm resize-none"
+                  style={{ color: 'var(--text-primary)', caretColor: 'var(--accent-primary)', lineHeight: '1.4', overflow: 'hidden', minHeight: '20px' }}
+                  disabled={isTyping}
+                  autoComplete="off"
                 />
                 <button
                   type="submit" disabled={isTyping || !input.trim()}

@@ -203,8 +203,8 @@ export const intents: AssistantIntent[] = [
   },
   {
     id: 'ai_opinion',
-    keywordsES: ['opinion', 'opinión', 'futuro', 'robots', 'reemplazar', 'automatizacion', 'automatización', 'perder trabajo', 'reemplaza', 'ai reemplaza', 'inteligencia artificial reemplaza', 'que piensa', 'qué piensa'],
-    keywordsEN: ['opinion', 'future', 'robots', 'replace', 'automation', 'lose job', 'replaces', 'ai replaces', 'what she thinks', 'thoughts on ai'],
+    keywordsES: ['opinion', 'opinión', 'futuro', 'robots', 'reemplazar', 'automatizacion', 'automatización', 'perder trabajo', 'reemplaza', 'ai reemplaza', 'inteligencia artificial reemplaza', 'que piensa', 'qué piensa', 'vision', 'visión', 'vision ai', 'visión ai', 'su vision', 'su visión', 'vision sobre'],
+    keywordsEN: ['opinion', 'future', 'robots', 'replace', 'automation', 'lose job', 'replaces', 'ai replaces', 'what she thinks', 'thoughts on ai', 'vision', 'ai vision', 'her vision', 'her take', 'her view'],
     responseES: 'Su postura es práctica: la AI no reemplaza el criterio, lo amplifica.\n\nLo que le interesa no es la tecnología en sí — es qué problemas reales puede resolver. Cuando enseñó "Humanos y Algoritmos" arrancó exactamente ahí: no desde el hype, sino desde el problema organizacional.\n\nSu preocupación real: organizaciones que adoptan AI sin cambiar sus procesos de fondo. La herramienta no transforma sola.',
     responseEN: "Her stance is practical: AI doesn't replace judgment, it amplifies it.\n\nWhat interests her isn't the technology itself — it's what real problems it can solve. When she taught \"Humans and Algorithms\" she started exactly there: not from the hype, but from the organizational problem.\n\nHer real concern: organizations that adopt AI without changing their underlying processes. The tool doesn't transform on its own.",
     suggestionsES: ['¿Cómo usa AI?', '¿Humanos y Algoritmos?', '¿Integrar AI?'],
@@ -257,6 +257,39 @@ export const intents: AssistantIntent[] = [
     responseEN: "What sets her apart isn't a single discipline — it's the intersection.\n\nShe's not a designer, not a developer, not just a strategist. She's the person who can speak each of their languages and translate that into product decisions that actually make sense.\n\nTen years working at that intersection gave her something hard to teach: judgment. Knowing what to ask before knowing what to build.",
     suggestionsES: ['¿Cómo lidera?', '¿Metodología?', '¿Qué la motiva?'],
     suggestionsEN: ['How she leads?', 'Her methodology?', 'What motivates her?'],
+  },
+  {
+    id: 'help_menu',
+    keywordsES: ['menu', 'que me podes contar', 'que podes decirme', 'que podes', 'que podés', 'opciones', 'ayuda', 'que preguntar', 'temas', 'lista', 'que sabe', 'qué sabe', 'que temas', 'qué temas'],
+    keywordsEN: ['menu', 'what can you tell', 'what can you do', 'what can you say', 'options', 'help', 'what to ask', 'what do you know', 'topics', 'list of topics', 'what do you cover'],
+    responseES: 'Puedo contarte sobre:
+
+- **Experiencia** — trayectoria, empresas, roles
+- **Proyectos** — Santander, Mercado Libre, redbee, 123Seguro
+- **Cómo trabaja** — metodología, liderazgo, equipos
+- **AI y Producto** — cómo aplica inteligencia artificial
+- **Visión AI** — qué piensa sobre el futuro de la tecnología
+- **Notas y Prensa** — artículos y reflexiones que publica
+- **Charlas** — workshops y cursos que dictó
+- **Disponibilidad** — si está abierta a nuevos proyectos
+- **Contacto** — cómo escribirle o descargar su CV
+
+¿Por dónde arrancamos?',
+    responseEN: 'I can tell you about:
+
+- **Experience** — trajectory, companies, roles
+- **Projects** — Santander, Mercado Libre, redbee, 123Seguro
+- **How she works** — methodology, leadership, teams
+- **AI & Product** — how she applies artificial intelligence
+- **AI Vision** — her take on the future of technology
+- **Notes & Press** — articles and reflections she publishes
+- **Talks** — workshops and courses she has given
+- **Availability** — whether she\'s open to new projects
+- **Contact** — how to reach her or download her CV
+
+Where would you like to start?',
+    suggestionsES: ['¿Experiencia?', '¿Cómo usa AI?', '¿Disponibilidad?'],
+    suggestionsEN: ['Experience?', 'How she uses AI?', 'Availability?'],
   },
   {
     id: 'short_ack',
