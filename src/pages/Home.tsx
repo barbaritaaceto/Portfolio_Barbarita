@@ -378,11 +378,11 @@ export default function Home() {
         {/* ════════════════════════════════════ */}
         <section
           id="why-work-start"
-          className="w-full mt-6 md:mt-8 py-10 md:py-14 px-4"
+          className="w-full mt-4 md:mt-6 py-7 md:py-10 px-4"
         >
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10 items-stretch">
-              <div className="relative rounded-3xl overflow-hidden border w-full max-w-xl mx-auto md:mx-0 md:col-span-5 h-full min-h-[640px]" style={{ borderColor: 'var(--border-base)' }}>
+              <div className="relative rounded-3xl overflow-hidden border w-full max-w-xl mx-auto md:mx-0 md:col-span-5 h-full min-h-[480px]" style={{ borderColor: 'var(--border-base)' }}>
                 <img
                   src="/barbi fuego.png"
                   alt="Barbara"
@@ -395,31 +395,31 @@ export default function Home() {
                 />
               </div>
 
-            <div className="text-center md:text-left w-full rounded-3xl border p-6 md:p-8 md:col-span-7 h-full min-h-[640px] flex flex-col" style={{ borderColor: 'var(--border-base)', background: 'linear-gradient(180deg, var(--card-bg) 0%, var(--bg) 100%)' }}>
-              <header className="mb-6 md:mb-7">
-                <h2 className="text-2xl md:text-3xl font-serif font-semibold leading-tight" style={{ color: 'var(--accent-primary)' }}>
+            <div className="text-center md:text-left w-full rounded-3xl border p-5 md:p-6 md:col-span-7 h-full min-h-[480px] flex flex-col" style={{ borderColor: 'var(--border-base)', background: 'linear-gradient(180deg, var(--card-bg) 0%, var(--bg) 100%)' }}>
+              <header className="mb-4 md:mb-5">
+                <h2 className="text-xl md:text-2xl font-serif font-semibold leading-tight" style={{ color: 'var(--accent-primary)' }}>
                   {homeText.whyTitle}
                 </h2>
               </header>
               <div
                 style={{
                   color: 'var(--text-secondary)',
-                  fontSize: '1rem',
-                  lineHeight: 1.8,
+                  fontSize: '0.9rem',
+                  lineHeight: 1.7,
                 }}
               >
-                <div className="space-y-4 mb-7">
+                <div className="space-y-3 mb-5">
                   <p style={{ maxWidth: '52ch' }}>{homeText.whyLine1}</p>
                   <p style={{ maxWidth: '52ch' }}>{homeText.whyLine2}</p>
                 </div>
                 <div className="border-l-2 pl-5 py-1" style={{ borderColor: 'var(--accent-primary)', color: 'var(--text-primary)' }}>
-                  <p className="font-serif italic text-base md:text-lg leading-relaxed">{homeText.whyHighlight}</p>
+                  <p className="font-serif italic text-sm md:text-base leading-relaxed">{homeText.whyHighlight}</p>
                 </div>
               </div>
 
-              <div className="mt-8 md:mt-9 flex-1 flex flex-col">
-                <header className="mb-4 md:mb-5">
-                  <h2 className="text-xl md:text-2xl font-serif font-semibold" style={{ color: 'var(--accent-primary)' }}>
+              <div className="mt-5 md:mt-6 flex-1 flex flex-col">
+                <header className="mb-3 md:mb-4">
+                  <h2 className="text-base md:text-lg font-serif font-semibold" style={{ color: 'var(--accent-primary)' }}>
                     {homeText.wayTitle}
                   </h2>
                   <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>
@@ -431,7 +431,7 @@ export default function Home() {
                   {workSteps.map((step, i) => (
                     <div key={step.number}>
                       <article
-                        className="group flex gap-3 py-3.5 px-3 rounded-xl transition-all duration-200"
+                        className="group flex gap-3 py-2.5 px-3 rounded-xl transition-all duration-200"
                         style={{ borderLeft: '2px solid transparent' }}
                         onMouseEnter={e => {
                           e.currentTarget.style.borderLeftColor = 'var(--accent-primary)'
