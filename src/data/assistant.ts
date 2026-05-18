@@ -16,7 +16,8 @@ const prevCompany: Record<string, string> = {
   redbee: 'santander',
   santander: 'mercadolibre',
   mercadolibre: 'seguro123',
-  seguro123: 'experience',
+  seguro123: 'cognizant',
+  cognizant: 'experience',
   fintech: 'experience',
 }
 
@@ -33,6 +34,11 @@ const synonymsES: Record<string, string> = {
   'oferta': 'disponible',
   'diferencia': 'diferenciador',
   'diferente': 'diferenciador',
+  'titulo': 'educacion',
+  'estudio': 'educacion',
+  'idiomas': 'ingles',
+  'bilingue': 'ingles',
+  'apps': 'herramientas',
 }
 
 const synonymsEN: Record<string, string> = {
@@ -43,6 +49,11 @@ const synonymsEN: Record<string, string> = {
   'role': 'available',
   'different': 'differentiator',
   'unique': 'differentiator',
+  'degree': 'education',
+  'studied': 'education',
+  'languages': 'english',
+  'bilingual': 'english',
+  'apps': 'tools',
 }
 
 export const intents: AssistantIntent[] = [
@@ -94,8 +105,8 @@ export const intents: AssistantIntent[] = [
   },
   {
     id: 'santander',
-    keywordsES: ['santander', 'banco', 'bancaria', 'onboarding', 'cobranzas', 'pagos', 'cobro', 'banca'],
-    keywordsEN: ['santander', 'bank', 'banking', 'onboarding', 'collections', 'payments'],
+    keywordsES: ['santander', 'banco', 'bancaria', 'onboarding', 'cobranzas', 'pagos', 'cobro', 'banca', 'token', 'token app', 'squad', 'bancario', 'transformacion', 'empresarial', 'pyme', 'ecosistema pagos', 'digital bank'],
+    keywordsEN: ['santander', 'bank', 'banking', 'onboarding', 'collections', 'payments', 'token', 'token app', 'squad', 'digital transformation', 'enterprise', 'sme', 'banking ecosystem'],
     responseES: 'En Santander lideró el Squad de Onboarding del ecosistema de Cobranzas y Pagos durante 4 años.\n\nAlgunos focos clave:\n- Digitalización end-to-end de flujos de onboarding empresarial\n- Liderazgo de equipos cross-funcionales: UX, Tech, Data, Compliance\n- Frameworks de medición para optimizar conversión\n- Oportunidades de cross-selling vía integración de ecosistema\n\nAntes fue Senior Product Lead: roadmapping, alineación de stakeholders y métricas de iteración.',
     responseEN: 'At Santander she led the Onboarding Squad within the Collections & Payments ecosystem for 4 years.\n\nKey areas:\n- End-to-end digitalization of business onboarding flows\n- Cross-functional team leadership: UX, Tech, Data, Compliance\n- Measurement frameworks to optimize conversion\n- Cross-selling opportunities through ecosystem integration\n\nBefore that, she was Senior Product Lead: roadmapping, stakeholder alignment, and iteration metrics.',
     suggestionsES: ['¿Cómo lidera?', '¿Qué métricas usaba?', '¿Mercado Libre?'],
@@ -103,8 +114,8 @@ export const intents: AssistantIntent[] = [
   },
   {
     id: 'mercadolibre',
-    keywordsES: ['mercado libre', 'mercadolibre', 'meli', 'ecommerce', 'darwin', 'shops', 'sellers', 'marketplace'],
-    keywordsEN: ['mercado libre', 'mercadolibre', 'meli', 'ecommerce', 'darwin', 'shops', 'sellers', 'marketplace'],
+    keywordsES: ['mercado libre', 'mercadolibre', 'meli', 'ecommerce', 'darwin', 'shops', 'sellers', 'marketplace', 'smart shopping', 'facebook shop', 'instagram shop', 'roas', 'mercado shops', 'tienda online', 'anunciantes'],
+    keywordsEN: ['mercado libre', 'mercadolibre', 'meli', 'ecommerce', 'darwin', 'shops', 'sellers', 'marketplace', 'smart shopping', 'facebook shop', 'instagram shop', 'roas', 'mercado shops', 'online store', 'advertisers'],
     responseES: 'En Mercado Libre fue Product Senior en Mercado Shops durante 2 años. Lideró el Proyecto Darwin para LATAM — una iniciativa de marketing inteligente para sellers.\n\nAlgunas cosas que construyó:\n- Smart Shopping integration\n- Facebook Shop e Instagram tagging\n- Integraciones de Google Analytics, Facebook Pixel, Google Ads\n- Experimentos de ROAS y Darwin roadmap\n\nTrabajar en MeLi fue aprender producto con escala real y equipos de altísimo nivel.',
     responseEN: 'At Mercado Libre she was Senior Product at Mercado Shops for 2 years. She led the Darwin Project for LATAM — a smart marketing initiative for sellers.\n\nSome things she built:\n- Smart Shopping integration\n- Facebook Shop and Instagram tagging\n- Google Analytics, Facebook Pixel, Google Ads integrations\n- ROAS experiments and Darwin roadmap\n\nWorking at MeLi meant learning product at real scale with top-tier teams.',
     suggestionsES: ['¿Ver proyectos?', '¿Cómo lidera?', '¿Santander?'],
@@ -120,9 +131,61 @@ export const intents: AssistantIntent[] = [
     suggestionsEN: ['Mercado Libre?', 'Fintech?', 'How she leads?'],
   },
   {
+    id: 'cognizant',
+    keywordsES: ['cognizant', 'google', 'account strategist', 'account strategy', 'globant', 'meli globant', 'inicios', 'comienzos', 'primeros trabajos', 'primera empresa', 'imanaging', 'fulbright', 'inicio carrera', 'carrera inicial', 'seo analyst', 'semi senior'],
+    keywordsEN: ['cognizant', 'google', 'account strategist', 'account strategy', 'globant', 'early career', 'first jobs', 'first company', 'imanaging', 'fulbright', 'career start', 'beginnings', 'seo analyst', 'semi senior'],
+    responseES: 'En **Cognizant** fue Account Strategist en un proyecto para Google durante 2 años — estrategia digital y crecimiento de cuentas para anunciantes de Google Ads.
+
+Antes de eso, fue **SEO Semi Senior Analyst en Globant / MeLi** — sus primeros pasos en el mundo digital, construyendo bases en analytics, SEO y marketing de performance.
+
+Esa etapa le dio la visión de negocio y el contexto de escala que hoy aplica en producto.',
+    responseEN: 'At **Cognizant** she was Account Strategist on a Google project for 2 years — digital strategy and account growth for Google Ads advertisers.
+
+Before that, she was **SEO Semi Senior Analyst at Globant / MeLi** — her first steps in the digital world, building her foundations in analytics, SEO, and performance marketing.
+
+That stage gave her the business vision and scale context she applies to product today.',
+    suggestionsES: ['¿123Seguro?', '¿Mercado Libre?', '¿Trayectoria completa?'],
+    suggestionsEN: ['123Seguro?', 'Mercado Libre?', 'Full background?'],
+  },
+  {
+    id: 'education',
+    keywordsES: ['educacion', 'educación', 'formacion', 'formación', 'estudios', 'universidad', 'titulo', 'título', 'uade', 'relaciones publicas', 'relaciones públicas', 'certificacion', 'certificaciones', 'certificado', 'diploma', 'digital house', 'coderhouse', 'leadership agility', 'data analytics', 'google analytics curso', 'donde estudio', 'dónde estudió', 'aprendizaje', 'formacion academica'],
+    keywordsEN: ['education', 'formation', 'university', 'degree', 'studied', 'uade', 'certifications', 'certified', 'public relations', 'digital house', 'coderhouse', 'leadership agility', 'data analytics', 'where she studied', 'learning', 'academic background', 'google analytics course'],
+    responseES: 'Su formación combina base académica con certificaciones prácticas.
+
+**Grado:**
+- Lic. Relaciones Públicas e Institucionales — UADE (2008–2012)
+
+**Certificaciones:**
+- Claude Code para Product Managers (2025)
+- Leadership Agility Certified (2024)
+- IA para Project Managers (2024)
+- Data Analytics — Digital House (2020)
+- Google Analytics Avanzado — Coderhouse (2020)
+- SEO — CAMSEO · Coderhouse (2019)
+
+Toda su formación técnica fue autodidacta y orientada a aplicación real.',
+    responseEN: 'Her training combines an academic foundation with practical certifications.
+
+**Degree:**
+- Public & Institutional Relations — UADE (2008–2012)
+
+**Certifications:**
+- Claude Code for Product Managers (2025)
+- Leadership Agility Certified (2024)
+- AI for Project Managers (2024)
+- Data Analytics — Digital House (2020)
+- Advanced Google Analytics — Coderhouse (2020)
+- SEO — CAMSEO · Coderhouse (2019)
+
+All her technical training was self-directed and applied.',
+    suggestionsES: ['¿Herramientas que usa?', '¿Metodología?', '¿Experiencia?'],
+    suggestionsEN: ['Tools she uses?', 'Her methodology?', 'Experience?'],
+  },
+  {
     id: 'redbee',
-    keywordsES: ['redbee', 'redbee studios', 'actual', 'empresa actual', 'trabaja ahora', 'trabaja hoy', 'donde trabaja', 'dónde trabaja'],
-    keywordsEN: ['redbee', 'redbee studios', 'current', 'current company', 'where she works', 'works now'],
+    keywordsES: ['redbee', 'redbee studios', 'actual', 'empresa actual', 'trabaja ahora', 'trabaja hoy', 'donde trabaja', 'dónde trabaja', 'consultora', 'consultoría', 'actualmente', 'hoy trabaja', 'empresa hoy'],
+    keywordsEN: ['redbee', 'redbee studios', 'current', 'current company', 'where she works', 'works now', 'consulting', 'consulting firm', 'currently', 'studio'],
     responseES: 'Hoy trabaja en redbee studios — una empresa de consultoría digital de alto impacto.\n\nAllí combina liderazgo de producto con pensamiento sistémico: diseñar y entregar productos que realmente importan, con equipos colaborativos y cultura human-centered.\n\nUna iniciativa destacada: "Humanos y Algoritmos", un curso sobre IA aplicada a producto, UX y tecnología. Cubrió fundamentos de LLMs, prompting estratégico, agentes, métricas de AI y ética.',
     responseEN: 'She currently works at redbee studios — a high-impact digital consulting firm.\n\nThere she combines product leadership with systems thinking: designing and delivering products that truly matter, with collaborative teams and a human-centered culture.\n\nA notable initiative: "Humans and Algorithms", a course on AI applied to product, UX, and technology. It covered LLM fundamentals, strategic prompting, agents, AI metrics, and ethics.',
     suggestionsES: ['¿Humanos y Algoritmos?', '¿Cómo usa AI?', '¿Sus proyectos?'],
@@ -130,8 +193,8 @@ export const intents: AssistantIntent[] = [
   },
   {
     id: 'ai_product',
-    keywordsES: ['ai', 'ia', 'inteligencia artificial', 'agentes', 'llm', 'llms', 'gpt', 'notebooklm', 'copilot', 'prompting', 'automatizacion', 'automatización', 'machine learning', 'humanos y algoritmos', 'algoritmos'],
-    keywordsEN: ['ai', 'artificial intelligence', 'agents', 'llm', 'llms', 'gpt', 'notebooklm', 'copilot', 'prompting', 'automation', 'machine learning', 'humans and algorithms'],
+    keywordsES: ['ai', 'ia', 'inteligencia artificial', 'agentes', 'llm', 'llms', 'gpt', 'notebooklm', 'copilot', 'prompting', 'automatizacion', 'automatización', 'machine learning', 'humanos y algoritmos', 'algoritmos', 'claude', 'chatgpt', 'openai', 'gemini', 'cursor', 'claude code', 'ia generativa', 'generativa', 'gen ai', 'asistente ia', 'herramienta ia', 'integrar ia'],
+    keywordsEN: ['ai', 'artificial intelligence', 'agents', 'llm', 'llms', 'gpt', 'notebooklm', 'copilot', 'prompting', 'automation', 'machine learning', 'humans and algorithms', 'claude', 'chatgpt', 'openai', 'gemini', 'cursor', 'claude code', 'generative ai', 'gen ai', 'ai tools', 'integrating ai'],
     responseES: 'Cree que la AI es un acelerador — no un reemplazo.\n\nDictó "Humanos y Algoritmos" en redbee: LLMs, prompting estratégico, agentes, métricas y ética. Y reflexionó sobre NotebookLM y el desafío real de las organizaciones: no es falta de información, es falta de capacidad para procesarla.\n\nSu visión de AI aplicada a producto:\n- Saber cuándo usarla y cuándo no\n- Mantener el humano en el loop del diseño\n- Medir impacto real, no solo el hype\n- Simplificar primero, automatizar después',
     responseEN: 'She believes AI is an accelerator — not a replacement.\n\nShe taught "Humans and Algorithms" at redbee: LLMs, strategic prompting, agents, metrics, and ethics. She also wrote about NotebookLM and the real challenge for organizations: it\'s not a lack of information — it\'s the lack of capacity to process it.\n\nHer view on AI applied to product:\n- Know when to use it and when not to\n- Keep humans in the design loop\n- Measure real impact, not just hype\n- Simplify first, automate second',
     suggestionsES: ['¿AI y equipos?', '¿Humanos y Algoritmos?', '¿Integrar AI?'],
@@ -139,8 +202,8 @@ export const intents: AssistantIntent[] = [
   },
   {
     id: 'leadership',
-    keywordsES: ['liderazgo', 'liderar', 'lidera', 'equipo', 'equipos', 'gestión', 'gestion', 'manage', 'management', 'cultura', 'colaboracion', 'colaboración'],
-    keywordsEN: ['leadership', 'lead', 'leads', 'team', 'teams', 'management', 'culture', 'collaboration'],
+    keywordsES: ['liderazgo', 'liderar', 'lidera', 'equipo', 'equipos', 'gestión', 'gestion', 'manage', 'management', 'cultura', 'colaboracion', 'colaboración', 'squad', 'squads', 'pm', 'product manager', 'product owner', 'po', 'lider', 'líder', 'feedback', 'empatia', 'empatía', 'mentoring', 'comunicacion', 'comunicación', 'dirigir'],
+    keywordsEN: ['leadership', 'lead', 'leads', 'team', 'teams', 'management', 'culture', 'collaboration', 'squad', 'squads', 'pm', 'product manager', 'product owner', 'po', 'leader', 'feedback', 'empathy', 'mentoring', 'communication'],
     responseES: 'Lidera desde la claridad y la dirección, no desde el control.\n\nAlgunos principios que la definen:\n- Dar contexto antes de dar instrucciones\n- Confiar en los equipos para ejecutar\n- Hacer preguntas antes de dar soluciones\n- Conectar el "qué" con el "por qué"\n\nLideró equipos cross-funcionales en Santander (UX, Tech, Data, Compliance) y colaboró con partners en MeLi a escala LATAM.',
     responseEN: 'She leads from clarity and direction, not from control.\n\nSome principles that define her:\n- Give context before giving instructions\n- Trust teams to execute\n- Ask questions before offering solutions\n- Connect the "what" with the "why"\n\nShe led cross-functional teams at Santander (UX, Tech, Data, Compliance) and collaborated with partners at MeLi across LATAM.',
     suggestionsES: ['¿Metodología?', '¿Maneja ambigüedad?', '¿Cómo lidera?'],
@@ -148,17 +211,58 @@ export const intents: AssistantIntent[] = [
   },
   {
     id: 'methodology',
-    keywordsES: ['discovery', 'delivery', 'roadmap', 'priorizar', 'priorización', 'metodologia', 'metodología', 'proceso', 'agile', 'agil', 'ágil', 'scrum', 'sprint', 'iteracion', 'iteración', 'metrica', 'métricas', 'metricas', 'decisiones', 'ambiguedad', 'ambigüedad', 'trabaja', 'forma de trabajar'],
-    keywordsEN: ['discovery', 'delivery', 'roadmap', 'prioritize', 'prioritization', 'methodology', 'process', 'agile', 'scrum', 'sprint', 'iteration', 'metrics', 'decisions', 'ambiguity', 'works', 'how she works', 'way of working'],
+    keywordsES: ['discovery', 'delivery', 'roadmap', 'priorizar', 'priorización', 'metodologia', 'metodología', 'proceso', 'agile', 'agil', 'ágil', 'scrum', 'sprint', 'iteracion', 'iteración', 'metrica', 'métricas', 'metricas', 'decisiones', 'ambiguedad', 'ambigüedad', 'trabaja', 'forma de trabajar', 'okr', 'kpi', 'nps', 'backlog', 'lean', 'design thinking', 'ab test', 'experimento', 'hipotesis', 'hipótesis', 'funnel', 'conversion', 'conversión', 'insight', 'datos', 'prioridad'],
+    keywordsEN: ['discovery', 'delivery', 'roadmap', 'prioritize', 'prioritization', 'methodology', 'process', 'agile', 'scrum', 'sprint', 'iteration', 'metrics', 'decisions', 'ambiguity', 'works', 'how she works', 'way of working', 'okr', 'kpi', 'nps', 'backlog', 'lean', 'design thinking', 'ab test', 'experiment', 'hypothesis', 'funnel', 'conversion', 'insight', 'data', 'priority'],
     responseES: 'Su proceso empieza por entender el problema real antes de hablar de soluciones.\n\n**En discovery:** escucha, datos, síntesis y definición de hipótesis claras.\n**En delivery:** prioridades explícitas, ceremonias útiles (no rituales vacíos) y métricas que importan.\n\nUsa un marco de 4 pasos: Descubrir → Definir → Construir → Medir.\n\nLo que más valora: la alineación. Un equipo alineado ejecuta 10x mejor que uno brillante pero desconectado.',
     responseEN: 'Her process starts by understanding the real problem before talking about solutions.\n\n**In discovery:** listening, data, synthesis, and clear hypothesis definition.\n**In delivery:** explicit priorities, useful ceremonies (not empty rituals), and metrics that matter.\n\nShe uses a 4-step framework: Discover → Define → Build → Measure.\n\nWhat she values most: alignment. An aligned team executes 10x better than a brilliant but disconnected one.',
     suggestionsES: ['¿Cómo lidera?', '¿Qué métricas usa?', '¿Ver proyectos?'],
     suggestionsEN: ['How she leads?', 'What metrics?', 'See projects?'],
   },
   {
+    id: 'tools_stack',
+    keywordsES: ['herramientas', 'figma', 'jira', 'notion', 'miro', 'confluence', 'amplitude', 'mixpanel', 'ga4', 'gtm', 'google tag manager', 'hotjar', 'looker', 'metabase', 'sql', 'sheets', 'slack', 'linear', 'asana', 'trello', 'stack', 'software', 'aplicaciones', 'programas', 'que usa', 'qué usa', 'que utiliza', 'analytics', 'google analytics'],
+    keywordsEN: ['tools', 'figma', 'jira', 'notion', 'miro', 'confluence', 'amplitude', 'mixpanel', 'ga4', 'gtm', 'google tag manager', 'hotjar', 'looker', 'metabase', 'sql', 'sheets', 'slack', 'linear', 'asana', 'trello', 'tech stack', 'software', 'applications', 'programs', 'what she uses', 'analytics', 'google analytics'],
+    responseES: 'Trabaja con un stack orientado a producto y datos:
+
+**Producto & Colaboración:**
+- Jira · Confluence · Notion · Linear
+- Miro · FigJam (workshops y mapas de flujo)
+- Figma (revisión y handoff, no diseño)
+
+**Analytics & Datos:**
+- Google Analytics 4 · Google Tag Manager
+- Amplitude · Mixpanel · Hotjar
+- Looker · Metabase · Google Sheets
+
+**AI (uso diario):**
+- Claude · ChatGPT · Cursor · NotebookLM
+- GitHub Copilot · Gemini
+
+Elige las herramientas que reducen fricción para su equipo, no las que están de moda.',
+    responseEN: 'She works with a product and data-oriented stack:
+
+**Product & Collaboration:**
+- Jira · Confluence · Notion · Linear
+- Miro · FigJam (workshops and flow maps)
+- Figma (review and handoff, not design)
+
+**Analytics & Data:**
+- Google Analytics 4 · Google Tag Manager
+- Amplitude · Mixpanel · Hotjar
+- Looker · Metabase · Google Sheets
+
+**AI (daily use):**
+- Claude · ChatGPT · Cursor · NotebookLM
+- GitHub Copilot · Gemini
+
+She picks what reduces friction for her team, not what\'s trending.',
+    suggestionsES: ['¿Metodología?', '¿Cómo usa AI?', '¿Ver proyectos?'],
+    suggestionsEN: ['Her methodology?', 'How she uses AI?', 'See projects?'],
+  },
+  {
     id: 'fintech',
-    keywordsES: ['fintech', 'financiero', 'pagos digitales', 'transformacion digital', 'transformación digital', 'banca digital', 'insurtech', 'cobro digital'],
-    keywordsEN: ['fintech', 'financial', 'digital payments', 'digital transformation', 'digital banking', 'insurtech', 'insurance'],
+    keywordsES: ['fintech', 'financiero', 'pagos digitales', 'transformacion digital', 'transformación digital', 'banca digital', 'insurtech', 'cobro digital', 'bancario', 'aseguradora', 'medios de pago', 'billetera digital', 'sector financiero'],
+    keywordsEN: ['fintech', 'financial', 'digital payments', 'digital transformation', 'digital banking', 'insurtech', 'insurance', 'banking sector', 'payment methods', 'digital wallet', 'financial sector'],
     responseES: 'Tiene experiencia sólida en fintech y banca digital.\n\n**Santander:** transformación digital del ecosistema de Cobranzas y Pagos. Onboarding empresarial, compliance, métricas de conversión.\n\n**123Seguro:** insurtech, adquisición digital, embudos de conversión y growth.\n\nSu perspectiva: los productos fintech más difíciles no son los técnicamente complejos — son los que necesitan generar confianza en cada paso del flujo.',
     responseEN: 'She has solid experience in fintech and digital banking.\n\n**Santander:** digital transformation of the Collections & Payments ecosystem. Business onboarding, compliance, conversion metrics.\n\n**123Seguro:** insurtech, digital acquisition, conversion funnels, and growth.\n\nHer take: the hardest fintech products aren\'t the technically complex ones — they\'re the ones that need to build trust at every step of the flow.',
     suggestionsES: ['¿Santander?', '¿Métricas?', '¿Banca digital?'],
@@ -176,8 +280,8 @@ export const intents: AssistantIntent[] = [
   },
   {
     id: 'contact_cv',
-    keywordsES: ['contacto', 'contactar', 'email', 'mail', 'cv', 'curriculum', 'descargar', 'linkedin', 'one sheet', 'onesheet'],
-    keywordsEN: ['contact', 'email', 'cv', 'resume', 'download', 'linkedin', 'one sheet', 'onesheet'],
+    keywordsES: ['contacto', 'contactar', 'email', 'mail', 'cv', 'curriculum', 'descargar', 'linkedin', 'one sheet', 'onesheet', 'whatsapp', 'llamar', 'llamada', 'escribirle', 'escribirla', 'reunion', 'reunión', 'hablar', 'telefono', 'teléfono', 'mensaje', 'como contactar'],
+    keywordsEN: ['contact', 'email', 'cv', 'resume', 'download', 'linkedin', 'one sheet', 'onesheet', 'whatsapp', 'call', 'write', 'reach out', 'meeting', 'phone', 'message', 'how to contact'],
     responseES: 'Podés contactar a Barbara por:\n\n- **WhatsApp:** +54 9 11 6209 3765\n- **Email:** aceto.barbara@gmail.com\n- **LinkedIn:** /in/barbaraaceto\n\nO descargar su CV desde la sección **One Sheet** del portfolio.',
     responseEN: 'You can contact Barbara via:\n\n- **WhatsApp:** +54 9 11 6209 3765\n- **Email:** aceto.barbara@gmail.com\n- **LinkedIn:** /in/barbaraaceto\n\nOr download her CV from the **One Sheet** section of the portfolio.',
     suggestionsES: ['¿Cómo trabaja?', '¿Ver proyectos?', '¿Experiencia?'],
@@ -250,6 +354,37 @@ export const intents: AssistantIntent[] = [
     navLinks: [{ labelES: '→ Ver One Sheet', labelEN: '→ See One Sheet', route: '/one-sheet' }],
   },
   {
+    id: 'location_remote',
+    keywordsES: ['donde vive', 'dónde vive', 'donde esta', 'dónde está', 'ubicacion', 'ubicación', 'pais', 'país', 'ciudad', 'argentina', 'buenos aires', 'remoto', 'hibrido', 'híbrido', 'presencial', 'trabaja remoto', 'zona horaria', 'timezone', 'idioma', 'idiomas', 'ingles', 'inglés', 'habla ingles', 'bilingue', 'bilingüe', 'relocation', 'remota', 'trabaja desde'],
+    keywordsEN: ['where is she', 'where she lives', 'location', 'country', 'city', 'argentina', 'buenos aires', 'remote', 'hybrid', 'in-person', 'timezone', 'language', 'languages', 'english', 'speaks english', 'bilingual', 'based', 'relocation', 'work from'],
+    responseES: 'Barbara vive en **Buenos Aires, Argentina** (UTC-3).
+
+Modalidades de trabajo:
+- **Remoto** — experiencia con equipos distribuidos en LATAM y globales
+- **Híbrido** — lo más habitual en sus últimas empresas
+- **Presencial** — Buenos Aires principalmente
+
+Idiomas:
+- **Español** nativo
+- **Inglés** profesional (B2/C1) — reuniones, documentación, presentaciones
+
+No busca relocation activamente, pero está abierta a proyectos globales en remoto.',
+    responseEN: 'Barbara is based in **Buenos Aires, Argentina** (UTC-3).
+
+Work modes:
+- **Remote** — experienced with distributed LATAM and global teams
+- **Hybrid** — most common in her recent companies
+- **On-site** — Buenos Aires primarily
+
+Languages:
+- **Spanish** native
+- **English** professional (B2/C1) — meetings, documentation, presentations
+
+Not actively seeking relocation, but open to global remote projects.',
+    suggestionsES: ['¿Disponibilidad?', '¿Contactarla?', '¿Cómo trabaja?'],
+    suggestionsEN: ['Availability?', 'Contact her?', 'How she works?'],
+  },
+  {
     id: 'differentiator',
     keywordsES: ['diferencia', 'diferenciador', 'diferente', 'unico', 'por que producto', 'por qué producto', 'que la hace distinta', 'qué la hace distinta', 'valor diferencial', 'propuesta de valor', 'fortaleza', 'fortalezas', 'distingue', 'distinta'],
     keywordsEN: ['differentiator', 'different', 'unique', 'why product', 'not a designer', 'not a developer', 'what makes her different', 'value proposition', 'strength', 'strengths', 'stand out', 'stands out', 'sets her apart'],
@@ -262,32 +397,8 @@ export const intents: AssistantIntent[] = [
     id: 'help_menu',
     keywordsES: ['menu', 'que me podes contar', 'que podes decirme', 'que podes', 'que podés', 'opciones', 'ayuda', 'que preguntar', 'temas', 'lista', 'que sabe', 'qué sabe', 'que temas', 'qué temas'],
     keywordsEN: ['menu', 'what can you tell', 'what can you do', 'what can you say', 'options', 'help', 'what to ask', 'what do you know', 'topics', 'list of topics', 'what do you cover'],
-    responseES: 'Puedo contarte sobre:
-
-- **Experiencia** — trayectoria, empresas, roles
-- **Proyectos** — Santander, Mercado Libre, redbee, 123Seguro
-- **Cómo trabaja** — metodología, liderazgo, equipos
-- **AI y Producto** — cómo aplica inteligencia artificial
-- **Visión AI** — qué piensa sobre el futuro de la tecnología
-- **Notas y Prensa** — artículos y reflexiones que publica
-- **Charlas** — workshops y cursos que dictó
-- **Disponibilidad** — si está abierta a nuevos proyectos
-- **Contacto** — cómo escribirle o descargar su CV
-
-¿Por dónde arrancamos?',
-    responseEN: 'I can tell you about:
-
-- **Experience** — trajectory, companies, roles
-- **Projects** — Santander, Mercado Libre, redbee, 123Seguro
-- **How she works** — methodology, leadership, teams
-- **AI & Product** — how she applies artificial intelligence
-- **AI Vision** — her take on the future of technology
-- **Notes & Press** — articles and reflections she publishes
-- **Talks** — workshops and courses she has given
-- **Availability** — whether she\'s open to new projects
-- **Contact** — how to reach her or download her CV
-
-Where would you like to start?',
+    responseES: 'Puedo contarte sobre:\n\n- **Experiencia** — trayectoria, empresas, roles\n- **Proyectos** — Santander, Mercado Libre, redbee, 123Seguro, Cognizant\n- **Cómo trabaja** — metodología, liderazgo, equipos\n- **Herramientas** — stack de producto, analytics, AI tools\n- **Formación** — grado universitario y certificaciones\n- **AI y Producto** — cómo aplica inteligencia artificial\n- **Visión AI** — qué piensa sobre el futuro de la tecnología\n- **Notas y Prensa** — artículos y reflexiones que publica\n- **Charlas** — workshops y cursos que dictó\n- **Disponibilidad** — si está abierta a nuevos proyectos\n- **Ubicación** — dónde vive, idiomas, modalidad de trabajo\n- **Contacto** — cómo escribirle o descargar su CV\n\n¿Por dónde arrancamos?',
+    responseEN: 'I can tell you about:\n\n- **Experience** — trajectory, companies, roles\n- **Projects** — Santander, Mercado Libre, redbee, 123Seguro, Cognizant\n- **How she works** — methodology, leadership, teams\n- **Tools** — product stack, analytics, AI tools\n- **Education** — university degree and certifications\n- **AI & Product** — how she applies artificial intelligence\n- **AI Vision** — her take on the future of technology\n- **Notes & Press** — articles and reflections she publishes\n- **Talks** — workshops and courses she has given\n- **Availability** — whether she\'s open to new projects\n- **Location** — where she\'s based, languages, work modes\n- **Contact** — how to reach her or download her CV\n\nWhere would you like to start?',
     suggestionsES: ['¿Experiencia?', '¿Cómo usa AI?', '¿Disponibilidad?'],
     suggestionsEN: ['Experience?', 'How she uses AI?', 'Availability?'],
   },

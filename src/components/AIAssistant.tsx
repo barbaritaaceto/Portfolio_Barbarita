@@ -56,6 +56,10 @@ const intentMeta: Record<string, { emoji: string; labelES: string; labelEN: stri
   notes_press:    { emoji: '📝', labelES: 'Notas & Prensa',  labelEN: 'Notes & Press' },
   short_ack:      { emoji: '✅', labelES: '',                labelEN: '' },
   help_menu:      { emoji: '📋', labelES: 'Menú',           labelEN: 'Menu' },
+  education:      { emoji: '🎓', labelES: 'Formación',      labelEN: 'Education' },
+  tools_stack:    { emoji: '🛠️', labelES: 'Herramientas',   labelEN: 'Tools' },
+  location_remote:{ emoji: '📍', labelES: 'Ubicación',      labelEN: 'Location' },
+  cognizant:      { emoji: '🌐', labelES: 'Cognizant · Google', labelEN: 'Cognizant · Google' },
 }
 
 function renderInline(text: string): React.ReactNode[] {
