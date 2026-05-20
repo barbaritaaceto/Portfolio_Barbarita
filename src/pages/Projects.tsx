@@ -213,6 +213,12 @@ export default function Projects() {
     'Trainee - Fulbright Database Growth Area': 'Trainee - Área de Crecimiento de Base de Datos Fulbright',
     'Supported database growth initiatives through outreach, research and email campaigns.': 'Apoyé iniciativas de crecimiento de base de datos mediante outreach, investigación y campañas de email.',
     'Full-time · 4 yrs': 'Tiempo completo · 4 años',
+    'Aug 2021 - Jul 2025 · 4 yrs': 'Ago 2021 - Jul 2025 · 4 años',
+    'Aug 2023 – Jul 2025': 'Ago 2023 – Jul 2025',
+    'Aug 2021 – Aug 2023': 'Ago 2021 – Ago 2023',
+    'Oct 2025 - Present': 'Oct 2025 - Presente',
+    'Oct 2018 - May 2019 · 8 mos': 'Oct 2018 - May 2019 · 8 meses',
+    'Feb 2018 - Feb 2019 · 1 yr 1 mo': 'Feb 2018 - Feb 2019 · 1 año 1 mes',
     'Jun 2019 - Jun 2021 · 2 yrs 1 mo': 'Jun 2019 - Jun 2021 · 2 años 1 mes',
     'Feb 2018 - May 2019 · 1 yr 4 mos': 'Feb 2018 - May 2019 · 1 año 4 meses',
     'Sep 2015 - Dec 2017 · 2 yrs 4 mos': 'Sep 2015 - Dic 2017 · 2 años 4 meses',
@@ -487,12 +493,15 @@ export default function Projects() {
 
   // ─── Section label style ───────────────────────────────────────────────────
   const sectionLabel = (text: string) => (
-    <p
-      className="text-[10px] font-semibold uppercase mb-3 tracking-[0.14em]"
-      style={{ color: 'var(--text-muted)' }}
-    >
-      {text}
-    </p>
+    <div className="flex items-center gap-2 mb-4">
+      <div style={{ width: 16, height: 1.5, borderRadius: 2, backgroundColor: currentMeta.accent, opacity: 0.5, flexShrink: 0 }} />
+      <p
+        className="text-[10px] font-semibold uppercase tracking-[0.14em]"
+        style={{ color: 'var(--text-muted)' }}
+      >
+        {text}
+      </p>
+    </div>
   )
 
   // ─── Render ───────────────────────────────────────────────────────────────
@@ -510,7 +519,7 @@ export default function Projects() {
       `}</style>
 
       <div className="w-full min-h-screen" style={{ backgroundColor: 'var(--bg)' }}>
-        <div className="max-w-6xl mx-auto px-4 py-10 md:py-16">
+        <div className="max-w-6xl mx-auto px-4 py-6 md:py-10">
 
           {/* Back */}
           <Link
@@ -549,21 +558,24 @@ export default function Projects() {
                     <button
                       key={project.slug}
                       onClick={() => setSelectedSlug(project.slug)}
-                      className="relative w-full text-left pb-4 focus:outline-none"
+                      className="relative w-full text-left pb-3 pt-0.5 pr-2 focus:outline-none rounded-lg transition-colors duration-200"
                       aria-pressed={isActive}
+                      style={{ backgroundColor: isActive ? `${meta.accent}0D` : 'transparent' }}
+                      onMouseEnter={e => { if (!isActive) e.currentTarget.style.backgroundColor = `${meta.accent}07` }}
+                      onMouseLeave={e => { if (!isActive) e.currentTarget.style.backgroundColor = 'transparent' }}
                     >
                       <span
                         className="absolute rounded-full transition-all duration-200"
                         style={{
-                          left: isActive ? -15 : -13, top: 5,
+                          left: isActive ? -15 : -13, top: 7,
                           width: isActive ? 9 : 7, height: isActive ? 9 : 7,
                           backgroundColor: isActive ? meta.accent : 'var(--border-base)',
                           boxShadow: isActive ? `0 0 0 3px ${meta.accent}28` : 'none',
                         }}
                       />
                       <span
-                        className="block text-[10px] leading-none mb-0.5"
-                        style={{ color: 'var(--text-muted)' }}
+                        className="block text-[10px] leading-none mb-0.5 font-semibold"
+                        style={{ color: isActive ? meta.accent : 'var(--text-muted)', opacity: isActive ? 0.75 : 0.55, letterSpacing: '0.08em' }}
                       >{year}</span>
                       <span
                         className="block text-xs font-medium leading-snug transition-colors"
@@ -576,25 +588,42 @@ export default function Projects() {
                 {/* Early-career toggle */}
                 <button
                   onClick={() => setShowEarlyCareer(v => !v)}
-                  className="relative w-full text-left py-2 focus:outline-none group"
+                  className="relative w-full text-left pt-1 pb-3 focus:outline-none"
                   aria-pressed={showEarlyCareer}
                 >
-                  <span
-                    className="absolute rounded-full transition-all duration-200"
-                    style={{
-                      left: -14, top: 13,
-                      width: 8, height: 8,
-                      backgroundColor: showEarlyCareer ? 'var(--accent-primary)' : 'var(--border-base)',
-                    }}
-                  />
-                  <span
-                    className="text-xs font-medium transition-colors"
-                    style={{ color: 'var(--accent-primary)', opacity: showEarlyCareer ? 1 : 0.7 }}
-                  >
-                    {showEarlyCareer
-                      ? (isEnglish ? '↓ hide early' : '↓ ocultar inicios')
-                      : (isEnglish ? '↓ early career' : '↓ inicios')}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    {/* dot alineado con el pill */}
+                    <span
+                      className="rounded-full flex-shrink-0 transition-all duration-200"
+                      style={{
+                        width: 7, height: 7,
+                        marginLeft: -19,
+                        backgroundColor: showEarlyCareer ? 'var(--accent-primary)' : 'var(--border-base)',
+                        boxShadow: showEarlyCareer ? '0 0 0 3px rgba(74,127,121,0.18)' : 'none',
+                      }}
+                    />
+                    <span
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: 4,
+                        fontSize: 10,
+                        fontWeight: 600,
+                        letterSpacing: '0.07em',
+                        color: 'var(--accent-primary)',
+                        opacity: showEarlyCareer ? 1 : 0.6,
+                        border: '1px dashed rgba(74,127,121,0.45)',
+                        borderRadius: 20,
+                        padding: '3px 9px',
+                        transition: 'opacity 0.2s ease',
+                      }}
+                    >
+                      {showEarlyCareer ? '↑ ' : '↓ '}
+                      {showEarlyCareer
+                        ? (isEnglish ? 'hide early' : 'ocultar inicios')
+                        : (isEnglish ? 'early career' : 'inicios')}
+                    </span>
+                  </div>
                 </button>
 
                 {/* Early career items */}
@@ -606,21 +635,24 @@ export default function Projects() {
                     <button
                       key={project.slug}
                       onClick={() => setSelectedSlug(project.slug)}
-                      className="relative w-full text-left pb-4 focus:outline-none"
+                      className="relative w-full text-left pb-3 pt-0.5 pr-2 focus:outline-none rounded-lg transition-colors duration-200"
                       aria-pressed={isActive}
+                      style={{ backgroundColor: isActive ? `${meta.accent}0D` : 'transparent' }}
+                      onMouseEnter={e => { if (!isActive) e.currentTarget.style.backgroundColor = `${meta.accent}07` }}
+                      onMouseLeave={e => { if (!isActive) e.currentTarget.style.backgroundColor = 'transparent' }}
                     >
                       <span
                         className="absolute rounded-full transition-all duration-200"
                         style={{
-                          left: isActive ? -15 : -13, top: 5,
+                          left: isActive ? -15 : -13, top: 7,
                           width: isActive ? 9 : 7, height: isActive ? 9 : 7,
                           backgroundColor: isActive ? meta.accent : 'var(--border-base)',
                           boxShadow: isActive ? `0 0 0 3px ${meta.accent}28` : 'none',
                         }}
                       />
                       <span
-                        className="block text-[10px] leading-none mb-0.5"
-                        style={{ color: 'var(--text-muted)' }}
+                        className="block text-[10px] leading-none mb-0.5 font-semibold"
+                        style={{ color: isActive ? meta.accent : 'var(--text-muted)', opacity: isActive ? 0.75 : 0.55, letterSpacing: '0.08em' }}
                       >{year}</span>
                       <span
                         className="block text-xs font-medium leading-snug transition-colors"
@@ -633,25 +665,41 @@ export default function Projects() {
                 {/* ── Formación toggle ──────────────────────────────── */}
                 <button
                   onClick={() => setShowFormacion(v => !v)}
-                  className="relative w-full text-left py-2 focus:outline-none group"
+                  className="relative w-full text-left pt-1 pb-3 focus:outline-none"
                   aria-pressed={showFormacion}
                 >
-                  <span
-                    className="absolute rounded-full transition-all duration-200"
-                    style={{
-                      left: -14, top: 13,
-                      width: 8, height: 8,
-                      backgroundColor: showFormacion ? '#4A9B8E' : 'var(--border-base)',
-                    }}
-                  />
-                  <span
-                    className="text-xs font-medium transition-colors"
-                    style={{ color: '#4A9B8E', opacity: showFormacion ? 1 : 0.7 }}
-                  >
-                    {showFormacion
-                      ? (isEnglish ? '− Hide education' : '− Ocultar formación')
-                      : (isEnglish ? '+ Education' : '+ Formación')}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    {/* dot naranja alineado igual que inicios */}
+                    <span
+                      className="rounded-full flex-shrink-0 transition-all duration-200"
+                      style={{
+                        width: 7, height: 7,
+                        marginLeft: -19,
+                        backgroundColor: showFormacion ? '#C97C3A' : 'var(--border-base)',
+                        boxShadow: showFormacion ? '0 0 0 3px rgba(201,124,58,0.18)' : 'none',
+                      }}
+                    />
+                    <span
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: 4,
+                        fontSize: 10,
+                        fontWeight: 600,
+                        letterSpacing: '0.07em',
+                        color: '#C97C3A',
+                        opacity: showFormacion ? 1 : 0.6,
+                        border: '1px dashed rgba(201,124,58,0.45)',
+                        borderRadius: 20,
+                        padding: '3px 9px',
+                        transition: 'opacity 0.2s ease',
+                      }}
+                    >
+                      {showFormacion
+                        ? (isEnglish ? '− Hide education' : '− Ocultar formación')
+                        : (isEnglish ? '+ Education' : '+ Formación')}
+                    </span>
+                  </div>
                 </button>
 
                 {/* ── Formación items ────────────────────────────────── */}
@@ -717,17 +765,35 @@ export default function Projects() {
             <div className="flex-1 min-w-0">
 
               {/* Intro text */}
-              <div className="mb-8">
+              <div className="mb-10 pb-8" style={{ borderBottom: '1px solid var(--border-base)' }}>
+                {/* Decorative line */}
+                <div
+                  className="mb-5"
+                  style={{
+                    width: 36,
+                    height: 2,
+                    borderRadius: 2,
+                    background: 'linear-gradient(90deg, var(--accent-primary) 0%, transparent 100%)',
+                  }}
+                />
                 <h1
-                  className="font-serif text-2xl md:text-3xl font-semibold leading-tight"
-                  style={{ color: 'var(--text-primary)' }}
+                  className="font-serif leading-[1.15] mb-4"
+                  style={{
+                    color: 'var(--text-primary)',
+                    fontSize: 'clamp(1.65rem, 3.5vw, 2.25rem)',
+                    fontWeight: 600,
+                    letterSpacing: '-0.01em',
+                  }}
                 >
                   {uiText.heroTitle}
                 </h1>
-                <p className="text-sm md:text-base mt-1 italic" style={{ color: 'var(--text-secondary)' }}>
+                <p
+                  className="font-serif italic leading-relaxed mb-2"
+                  style={{ color: 'var(--accent-primary)', fontSize: '1rem', opacity: 0.85 }}
+                >
                   {uiText.heroSubtitle}
                 </p>
-                <p className="text-sm md:text-base mt-2" style={{ color: 'var(--text-secondary)' }}>
+                <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)', maxWidth: 460 }}>
                   {uiText.heroThirdLine}
                 </p>
               </div>
@@ -737,53 +803,53 @@ export default function Projects() {
 
                 {/* Company hero */}
                 <div
-                  className="rounded-2xl p-5 md:p-6 mb-10 border"
+                  className="rounded-2xl px-5 py-4 mb-8 border"
                   style={{
                     borderColor: 'var(--border-base)',
-                    borderLeft:  `4px solid ${currentMeta.accent}`,
+                    borderLeft:  `3px solid ${currentMeta.accent}`,
                     backgroundColor: 'var(--card-bg)',
+                    boxShadow: '0 1px 8px rgba(30,42,56,0.05)',
                   }}
                 >
-                  <div className="flex items-start gap-4">
-                    <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between gap-4">
+                    <div>
                       {companyLogos[selectedSlug] ? (
-                        <div className="flex items-center gap-3 mb-2">
+                        <div className="flex items-center gap-3">
                           {companyLogosExtra[selectedSlug] && (
                             <img
                               src={companyLogosExtra[selectedSlug]}
                               alt={selectedSlug === 'cognizant' ? 'Google' : 'Mercado Libre'}
-                              className="object-contain rounded"
-                              style={{ maxHeight: selectedSlug === 'globant' ? 52 : 64, maxWidth: 100 }}
+                              className="object-contain"
+                              style={{ maxHeight: selectedSlug === 'globant' ? 40 : 48, maxWidth: 80 }}
                             />
                           )}
                           <img
                             src={companyLogos[selectedSlug]}
                             alt={localizedProject.title}
-                            className="object-contain rounded"
+                            className="object-contain"
                             style={{
-                              maxHeight: ['globant', '123seguro', 'mercado-libre'].includes(selectedSlug) ? (selectedSlug === 'globant' ? 60 : 52) : selectedSlug === 'redbee' ? 48 : selectedSlug === 'cognizant' ? 26 : 36,
-                              maxWidth: 160,
-                              backgroundColor: 'transparent',
-                              padding: 0,
-                              borderRadius: 0,
+                              maxHeight: ['globant', '123seguro', 'mercado-libre'].includes(selectedSlug) ? (selectedSlug === 'globant' ? 44 : 38) : selectedSlug === 'redbee' ? 36 : selectedSlug === 'cognizant' ? 22 : 30,
+                              maxWidth: 140,
                             }}
                           />
                         </div>
                       ) : (
                         <h2
-                          className="font-serif text-xl md:text-2xl font-semibold leading-tight"
+                          className="font-serif text-lg font-semibold leading-tight"
                           style={{ color: 'var(--text-primary)' }}
                         >
                           {localizedProject.title}
                         </h2>
                       )}
-                      {localizedProject.duration && (
-                        <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>
-                          {localizedProject.duration}
-                        </p>
-                      )}
-
                     </div>
+                    {localizedProject.duration && (
+                      <p
+                        className="text-xs text-right flex-shrink-0"
+                        style={{ color: 'var(--text-muted)', maxWidth: 120 }}
+                      >
+                        {localizedProject.duration}
+                      </p>
+                    )}
                   </div>
                 </div>
 
@@ -799,28 +865,32 @@ export default function Projects() {
                 {localizedProject.roles && localizedProject.roles.length > 0 && (
                   <section className="mb-10">
                     {sectionLabel(uiText.rolesLabel)}
-                    <div className="space-y-8">
+                    <div className="space-y-6">
                       {localizedProject.roles.map((role, i) => (
-                        <div key={i}>
+                        <div
+                          key={i}
+                          className="rounded-2xl p-4"
+                          style={{ backgroundColor: `${currentMeta.accent}08`, border: `1px solid ${currentMeta.accent}18` }}
+                        >
                           <p
-                            className="text-sm font-semibold"
+                            className="text-sm font-semibold mb-0.5"
                             style={{ color: 'var(--text-primary)' }}
                           >
                             {role.title}
                           </p>
-                          <p className="text-xs mt-0.5 mb-3" style={{ color: 'var(--text-muted)' }}>
+                          <p className="text-[11px] mb-3" style={{ color: 'var(--text-muted)' }}>
                             {role.period}
                           </p>
-                          <ul className="space-y-2 mb-3">
+                          <ul className="space-y-2.5 mb-3">
                             {role.responsibilities.map((resp, j) => (
-                              <li key={j} className="flex items-start gap-2.5">
+                              <li key={j} className="flex items-start gap-3">
                                 <span
-                                  className="mt-[7px] flex-shrink-0 rounded-full"
+                                  className="mt-[6px] flex-shrink-0 rounded-full"
                                   style={{
-                                    width:           5,
-                                    height:          5,
+                                    width:           4,
+                                    height:          4,
                                     backgroundColor: currentMeta.accent,
-                                    opacity:         0.55,
+                                    opacity:         0.6,
                                   }}
                                 />
                                 <span
@@ -848,8 +918,8 @@ export default function Projects() {
                   <section className="mb-10">
                     {sectionLabel(uiText.learningLabel)}
                     <div
-                      className="border-l-2 pl-5 py-1"
-                      style={{ borderColor: currentMeta.accent }}
+                      className="border-l-2 pl-5 py-3 rounded-r-xl"
+                      style={{ borderColor: currentMeta.accent, backgroundColor: `${currentMeta.accent}07` }}
                     >
                       <p
                         className="font-serif italic text-base md:text-lg leading-relaxed"
@@ -865,14 +935,19 @@ export default function Projects() {
                 {localizedProject.tech && localizedProject.tech.length > 0 && (
                   <section className="mb-10">
                     {sectionLabel(uiText.skillsLabel)}
-                    <div className="flex flex-wrap gap-x-5 gap-y-2">
+                    <div className="flex flex-wrap gap-2">
                       {localizedProject.tech.map(tag => (
                         <span
                           key={tag}
-                          className="text-xs font-medium"
-                          style={{ color: currentMeta.accent }}
+                          className="text-xs font-medium px-3 py-1.5 rounded-full"
+                          style={{
+                            color: currentMeta.accent,
+                            backgroundColor: `${currentMeta.accent}12`,
+                            border: `1px solid ${currentMeta.accent}28`,
+                            transition: 'background-color 0.2s ease, transform 0.2s ease',
+                          }}
                         >
-                          + {tag}
+                          {tag}
                         </span>
                       ))}
                     </div>
@@ -886,14 +961,18 @@ export default function Projects() {
                     <p className="text-sm mb-3" style={{ color: 'var(--text-secondary)' }}>
                       {uiText.talksDesc}
                     </p>
-                    <div className="flex flex-wrap gap-x-5 gap-y-2">
+                    <div className="flex flex-wrap gap-2">
                       {localizedProject.talks.map((talk, i) => (
                         <span
                           key={i}
-                          className="text-xs font-medium"
-                          style={{ color: currentMeta.accent }}
+                          className="text-xs font-medium px-3 py-1.5 rounded-full"
+                          style={{
+                            color: currentMeta.accent,
+                            backgroundColor: `${currentMeta.accent}12`,
+                            border: `1px solid ${currentMeta.accent}28`,
+                          }}
                         >
-                          + {talk}
+                          {talk}
                         </span>
                       ))}
                     </div>
@@ -914,8 +993,18 @@ export default function Projects() {
                         return (
                           <div
                             key={postUrl}
-                            className="rounded-2xl border p-4"
-                            style={{ borderColor: 'var(--border-base)', backgroundColor: 'var(--card-bg)' }}
+                            className="rounded-2xl border p-4 transition-all duration-200"
+                            style={{ borderColor: 'var(--border-base)', backgroundColor: 'var(--card-bg)', cursor: 'default' }}
+                            onMouseEnter={e => {
+                              e.currentTarget.style.borderColor = 'rgba(74,127,121,0.3)'
+                              e.currentTarget.style.transform = 'translateY(-1px)'
+                              e.currentTarget.style.boxShadow = '0 4px 12px rgba(30,42,56,0.07)'
+                            }}
+                            onMouseLeave={e => {
+                              e.currentTarget.style.borderColor = 'var(--border-base)'
+                              e.currentTarget.style.transform = ''
+                              e.currentTarget.style.boxShadow = ''
+                            }}
                           >
                             <p
                               className="text-[10px] uppercase tracking-[0.13em] font-semibold mb-1"
@@ -939,8 +1028,18 @@ export default function Projects() {
                         const lm = getLinkMetaFromUrl(localizedProject.links!.demo as string)
                         return (
                           <div
-                            className="rounded-2xl border p-4"
+                            className="rounded-2xl border p-4 transition-all duration-200"
                             style={{ borderColor: 'var(--border-base)', backgroundColor: 'var(--card-bg)' }}
+                            onMouseEnter={e => {
+                              e.currentTarget.style.borderColor = 'rgba(74,127,121,0.3)'
+                              e.currentTarget.style.transform = 'translateY(-1px)'
+                              e.currentTarget.style.boxShadow = '0 4px 12px rgba(30,42,56,0.07)'
+                            }}
+                            onMouseLeave={e => {
+                              e.currentTarget.style.borderColor = 'var(--border-base)'
+                              e.currentTarget.style.transform = ''
+                              e.currentTarget.style.boxShadow = ''
+                            }}
                           >
                             <p
                               className="text-[10px] uppercase tracking-[0.13em] font-semibold mb-1"
@@ -964,8 +1063,18 @@ export default function Projects() {
                         const lm = getLinkMetaFromUrl(localizedProject.links!.repo as string)
                         return (
                           <div
-                            className="rounded-2xl border p-4"
+                            className="rounded-2xl border p-4 transition-all duration-200"
                             style={{ borderColor: 'var(--border-base)', backgroundColor: 'var(--card-bg)' }}
+                            onMouseEnter={e => {
+                              e.currentTarget.style.borderColor = 'rgba(74,127,121,0.3)'
+                              e.currentTarget.style.transform = 'translateY(-1px)'
+                              e.currentTarget.style.boxShadow = '0 4px 12px rgba(30,42,56,0.07)'
+                            }}
+                            onMouseLeave={e => {
+                              e.currentTarget.style.borderColor = 'var(--border-base)'
+                              e.currentTarget.style.transform = ''
+                              e.currentTarget.style.boxShadow = ''
+                            }}
                           >
                             <p
                               className="text-[10px] uppercase tracking-[0.13em] font-semibold mb-1"

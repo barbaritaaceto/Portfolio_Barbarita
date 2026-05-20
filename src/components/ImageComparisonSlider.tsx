@@ -87,7 +87,7 @@ export default function ImageComparisonSlider({
       role="img"
       className="relative select-none overflow-hidden"
       style={{
-        borderRadius: 16,
+        borderRadius: 20,
         aspectRatio: '3 / 4',
         cursor: dragging ? 'ew-resize' : 'col-resize',
         opacity: revealed ? 1 : 0,
@@ -147,14 +147,40 @@ export default function ImageComparisonSlider({
 
       {/* ── Year labels ── */}
       <span
-        className="absolute bottom-2.5 left-2.5 text-[10px] font-medium uppercase pointer-events-none"
-        style={{ color: 'rgba(255,255,255,0.80)', letterSpacing: '0.14em', textShadow: '0 1px 4px rgba(0,0,0,0.40)' }}
+        className="absolute bottom-2.5 left-2.5 pointer-events-none"
+        style={{
+          fontSize: 9,
+          fontWeight: 600,
+          letterSpacing: '0.12em',
+          textTransform: 'uppercase',
+          color: 'rgba(255,255,255,0.92)',
+          backgroundColor: 'rgba(0,0,0,0.28)',
+          backdropFilter: 'blur(6px)',
+          WebkitBackdropFilter: 'blur(6px)',
+          border: '1px solid rgba(255,255,255,0.18)',
+          borderRadius: 20,
+          padding: '3px 8px',
+          lineHeight: 1,
+        }}
       >
         1989
       </span>
       <span
-        className="absolute bottom-2.5 right-2.5 text-[10px] font-medium uppercase pointer-events-none"
-        style={{ color: 'rgba(255,255,255,0.80)', letterSpacing: '0.14em', textShadow: '0 1px 4px rgba(0,0,0,0.40)' }}
+        className="absolute bottom-2.5 right-2.5 pointer-events-none"
+        style={{
+          fontSize: 9,
+          fontWeight: 600,
+          letterSpacing: '0.12em',
+          textTransform: 'uppercase',
+          color: 'rgba(255,255,255,0.92)',
+          backgroundColor: 'rgba(0,0,0,0.28)',
+          backdropFilter: 'blur(6px)',
+          WebkitBackdropFilter: 'blur(6px)',
+          border: '1px solid rgba(255,255,255,0.18)',
+          borderRadius: 20,
+          padding: '3px 8px',
+          lineHeight: 1,
+        }}
       >
         2026
       </span>

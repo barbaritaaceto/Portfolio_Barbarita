@@ -343,9 +343,8 @@ export default function Home() {
                     {profileContent.contactCta}
                   </button>
                   <a
-                    href="/one-sheet?pdf=1"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href="/cv.pdf"
+                    download="Barbara_Aceto_CV.pdf"
                     className="btn-link text-center text-sm"
                   >
                     {profileContent.cvCta}

@@ -44,17 +44,24 @@ const Layout: React.FC = () => {
       <div id="layout-lang-toggle" className="fixed top-6 right-6 md:top-8 md:right-8 z-[65]">
         <div
           className="inline-flex rounded-full p-1"
-          style={{ backgroundColor: 'var(--bg-alt)', border: '1px solid var(--border-base)' }}
+          style={{
+            backgroundColor: 'rgba(255,255,255,0.72)',
+            backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)',
+            border: '1px solid rgba(74,127,121,0.18)',
+            boxShadow: '0 4px 18px rgba(30,42,56,0.08), inset 0 1px 0 rgba(255,255,255,0.8)',
+          }}
           role="group"
           aria-label="Language toggle"
         >
           <button
             type="button"
             onClick={() => setLanguage(false)}
-            className="px-3 py-1.5 text-xs font-semibold rounded-full transition-colors"
+            className="px-3 py-1.5 text-xs font-semibold rounded-full transition-all duration-200"
             style={{
               backgroundColor: isEnglish ? 'transparent' : 'var(--accent-primary)',
               color: isEnglish ? 'var(--text-secondary)' : '#FFFFFF',
+              boxShadow: isEnglish ? 'none' : '0 2px 8px rgba(74,127,121,0.25)',
             }}
           >
             ES
@@ -62,10 +69,11 @@ const Layout: React.FC = () => {
           <button
             type="button"
             onClick={() => setLanguage(true)}
-            className="px-3 py-1.5 text-xs font-semibold rounded-full transition-colors"
+            className="px-3 py-1.5 text-xs font-semibold rounded-full transition-all duration-200"
             style={{
               backgroundColor: isEnglish ? 'var(--accent-primary)' : 'transparent',
               color: isEnglish ? '#FFFFFF' : 'var(--text-secondary)',
+              boxShadow: isEnglish ? '0 2px 8px rgba(74,127,121,0.25)' : 'none',
             }}
           >
             EN
