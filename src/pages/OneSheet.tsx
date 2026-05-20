@@ -214,7 +214,7 @@ export default function OneSheet() {
 
       {/* Action bar — always visible, hidden on print */}
       <div
-        className="one-sheet-actionbar sticky top-0 z-40 flex items-center justify-between gap-3 px-6 py-3"
+        className="one-sheet-actionbar sticky top-0 z-40 flex items-center gap-4 px-6 py-3"
         style={{ backgroundColor: 'var(--bg)', borderBottom: '1px solid var(--border-base)' }}
       >
         <Link
@@ -228,12 +228,13 @@ export default function OneSheet() {
           {c.backHome}
         </Link>
         <button
-          onClick={() => window.print()}
+          type="button"
+          onClick={() => { setTimeout(() => window.print(), 0) }}
           className="inline-flex items-center gap-1.5 text-sm font-medium px-3 py-1.5 rounded-lg transition-colors"
           style={{ backgroundColor: 'var(--accent-primary)', color: '#fff' }}
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 9V3h12v6M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2M9 21h6v-6H9v6z" />
           </svg>
           {c.printBtn}
         </button>
