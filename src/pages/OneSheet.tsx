@@ -226,17 +226,6 @@ export default function OneSheet() {
           </svg>
           {c.backHome}
         </Link>
-        <button
-          type="button"
-          onClick={() => window.print()}
-          className="inline-flex items-center gap-1.5 text-sm font-medium px-3 py-1.5 rounded-lg transition-colors"
-          style={{ backgroundColor: 'var(--accent-primary)', color: '#fff' }}
-        >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 9V3h12v6M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2M9 21h6v-6H9v6z" />
-          </svg>
-          {c.printBtn}
-        </button>
       </div>
 
       <div className="one-sheet-wrap w-full min-h-screen px-4 py-8 md:py-12" style={{ backgroundColor: 'var(--bg)' }}>
