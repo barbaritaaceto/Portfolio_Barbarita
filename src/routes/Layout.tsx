@@ -34,14 +34,14 @@ const Layout: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <main className="flex-1 container mx-auto px-4 py-8">
+      <main className="flex-1 container mx-auto px-4 pt-4 pb-8">
         <Outlet />
       </main>
 
       <Footer />
 
       {/* Language toggle */}
-      <div id="layout-lang-toggle" className="fixed top-6 right-6 md:top-8 md:right-8 z-[65]">
+      <div id="layout-lang-toggle" className="fixed top-4 right-4 md:top-8 md:right-8 z-[65]">
         <div
           className="inline-flex rounded-full p-1"
           style={{
@@ -82,7 +82,7 @@ const Layout: React.FC = () => {
       </div>
 
       {/* AI Assistant floating button */}
-      <div className="fixed top-20 right-6 md:top-24 md:right-8 z-50 group flex flex-col items-end gap-2">
+      <div className="fixed top-16 right-4 md:top-24 md:right-8 z-50 group flex flex-col items-end gap-2">
         <button
           id="layout-ai-btn"
           type="button"

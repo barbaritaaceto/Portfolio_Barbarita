@@ -287,7 +287,7 @@ export default function Home() {
         {/* ════════════════════════════════════ */}
         {/* PROFILE CARD */}
         {/* ════════════════════════════════════ */}
-        <section className="w-full px-4 py-16 md:py-20 relative z-40" style={{ marginTop: '-16rem' }}>
+        <section className="w-full px-4 py-16 md:py-20 relative z-40 -mt-24 sm:-mt-40 md:-mt-64">
           <div className="max-w-6xl mx-auto">
           <div id="home-profile-card" className="card w-full max-w-xl relative overflow-hidden mx-auto">
             <div className="relative z-10 flex flex-row gap-5 items-stretch">
@@ -388,7 +388,7 @@ export default function Home() {
         >
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10 items-stretch">
-              <div className="relative rounded-3xl overflow-hidden border w-full max-w-xl mx-auto md:mx-0 md:col-span-5 h-full min-h-[480px]" style={{ borderColor: 'var(--border-base)' }}>
+              <div className="relative rounded-3xl overflow-hidden border w-full max-w-xl mx-auto md:mx-0 md:col-span-5 h-full min-h-[220px] md:min-h-[480px]" style={{ borderColor: 'var(--border-base)' }}>
                 <img
                   src="/barbi fuego.png"
                   alt="Barbara"
@@ -401,7 +401,7 @@ export default function Home() {
                 />
               </div>
 
-            <div className="text-center md:text-left w-full rounded-3xl border p-5 md:p-6 md:col-span-7 h-full min-h-[480px] flex flex-col" style={{ borderColor: 'var(--border-base)', background: 'linear-gradient(180deg, var(--card-bg) 0%, var(--bg) 100%)' }}>
+            <div className="text-center md:text-left w-full rounded-3xl border p-5 md:p-6 md:col-span-7 h-full md:min-h-[480px] flex flex-col" style={{ borderColor: 'var(--border-base)', background: 'linear-gradient(180deg, var(--card-bg) 0%, var(--bg) 100%)' }}>
               <header className="mb-4 md:mb-5">
                 <h2 className="text-xl md:text-2xl font-serif font-semibold leading-tight" style={{ color: 'var(--accent-primary)' }}>
                   {homeText.whyTitle}
