@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async'
 import pressData from '../data/press'
 import PressCard from '../components/PressCard'
 import Card from '../components/ui/Card'
+import { useReveal } from '../hooks/useReveal'
 
 export default function Press(){
   const [isEnglish, setIsEnglish] = useState(() => {
@@ -62,7 +63,7 @@ export default function Press(){
           {years.map(y=> <button key={y} onClick={()=> setYear(prev=> prev===y? null : y)} className={`px-3 py-1 rounded ${year===y? 'bg-primary text-white':'bg-gray-100'}`}>{y}</button>)}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 reveal-stagger is-revealed">
           {localizedFiltered.map(p=> <PressCard key={p.slug} item={p} locale={isEnglish ? 'en-US' : 'es-AR'} />)}
         </div>
       </Card>

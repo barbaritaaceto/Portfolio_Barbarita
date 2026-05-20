@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
+import { useReveal } from '../hooks/useReveal'
 
 const EN = {
   title: 'About',
@@ -76,6 +77,12 @@ export default function About() {
 
   const c = isEnglish ? EN : ES
 
+  const refIntro     = useReveal<HTMLElement>()
+  const refValues    = useReveal<HTMLElement>({ rootMargin: '0px 0px -30px 0px' })
+  const refExp       = useReveal<HTMLElement>({ rootMargin: '0px 0px -30px 0px' })
+  const refInterests = useReveal<HTMLElement>({ rootMargin: '0px 0px -30px 0px' })
+  const refContact   = useReveal<HTMLElement>({ rootMargin: '0px 0px -30px 0px' })
+
   return (
     <>
       <Helmet><title>{c.metaTitle}</title></Helmet>
@@ -83,7 +90,7 @@ export default function About() {
       <div className="max-w-2xl mx-auto py-8 px-4 space-y-10">
 
         {/* Intro */}
-        <section>
+        <section ref={refIntro} className="reveal">
           <h1 className="text-2xl md:text-3xl font-serif font-semibold mb-5" style={{ color: 'var(--text-primary)' }}>
             {c.title}
           </h1>
@@ -96,11 +103,11 @@ export default function About() {
         </section>
 
         {/* How I work */}
-        <section>
+        <section ref={refValues} className="reveal">
           <h2 className="text-xs font-semibold tracking-widest uppercase mb-4" style={{ color: 'var(--accent-primary)' }}>
             {c.valuesTitle}
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 reveal-stagger is-revealed">
             {c.values.map(v => (
               <div
                 key={v.label}
@@ -115,7 +122,7 @@ export default function About() {
         </section>
 
         {/* Career path */}
-        <section>
+        <section ref={refExp} className="reveal">
           <h2 className="text-xs font-semibold tracking-widest uppercase mb-4" style={{ color: 'var(--accent-primary)' }}>
             {c.experienceTitle}
           </h2>
@@ -137,7 +144,7 @@ export default function About() {
         </section>
 
         {/* Beyond product */}
-        <section>
+        <section ref={refInterests} className="reveal">
           <h2 className="text-xs font-semibold tracking-widest uppercase mb-3" style={{ color: 'var(--accent-primary)' }}>
             {c.interestsTitle}
           </h2>
@@ -145,7 +152,7 @@ export default function About() {
         </section>
 
         {/* Contact nudge */}
-        <section className="pt-2">
+        <section ref={refContact} className="reveal pt-2">
           <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
             {c.contactLabel}{' '}
             <a

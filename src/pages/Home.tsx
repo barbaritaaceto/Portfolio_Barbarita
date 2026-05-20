@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import press from '../data/press';
 import notesData from '../data/notes';
 import HomeTour from '../components/HomeTour';
+import { useReveal } from '../hooks/useReveal';
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -200,6 +201,11 @@ export default function Home() {
     },
   };
   const featuredCard = localizedNewsCards[0] ?? null;
+
+  const refWhy      = useReveal<HTMLElement>()
+  const refNews     = useReveal<HTMLElement>({ threshold: 0.08 })
+  const refNoteGrid = useReveal<HTMLDivElement>({ threshold: 0.08 })
+  const refSecGrid  = useReveal<HTMLDivElement>({ threshold: 0.08 })
   const secondaryCards = localizedNewsCards.slice(1);
 
   const linkedInNotes = notesData
@@ -357,7 +363,7 @@ export default function Home() {
           <button
             type="button"
             onClick={scrollToWhyAndWork}
-            className="w-11 h-11 rounded-full animate-bounce flex items-center justify-center cursor-pointer"
+            className="w-11 h-11 rounded-full scroll-arrow flex items-center justify-center cursor-pointer"
             style={{
               backgroundColor: '#FFFFFF',
               border: '1px solid var(--border-base)',
@@ -377,8 +383,9 @@ export default function Home() {
         {/* WHY I BUILD */}
         {/* ════════════════════════════════════ */}
         <section
+          ref={refWhy}
           id="why-work-start"
-          className="w-full mt-4 md:mt-6 py-7 md:py-10 px-4"
+          className="reveal w-full mt-4 md:mt-6 py-7 md:py-10 px-4"
         >
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10 items-stretch">
@@ -482,7 +489,7 @@ export default function Home() {
         {/* ════════════════════════════════════ */}
         {/* PENSAMIENTO */}
         {/* ════════════════════════════════════ */}
-        <section id="news-start" className="w-full py-16 md:py-24 px-4" style={{ marginTop: '-5rem' }}>
+        <section ref={refNews} id="news-start" className="reveal w-full py-16 md:py-24 px-4" style={{ marginTop: '-5rem' }}>
           <div className="max-w-6xl mx-auto">
 
             {/* Section header */}
@@ -491,7 +498,7 @@ export default function Home() {
                 <button
                   type="button"
                   onClick={scrollToNews}
-                  className="w-11 h-11 rounded-full animate-bounce flex items-center justify-center"
+                  className="w-11 h-11 rounded-full scroll-arrow flex items-center justify-center"
                   style={{
                     backgroundColor: '#FFFFFF',
                     border: '1px solid var(--border-base)',
@@ -515,7 +522,7 @@ export default function Home() {
 
             {/* LinkedIn notes grid */}
             {linkedInNotes.length > 0 && (
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5 md:mb-6">
+              <div ref={refNoteGrid} className="reveal-stagger grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5 md:mb-6">
                 {linkedInNotes.map((note) => (
                   <a
                     key={note.slug}
@@ -525,18 +532,40 @@ export default function Home() {
                     className="block"
                   >
                     <article
-                      className="h-full rounded-xl border overflow-hidden flex flex-col"
-                      style={{ borderColor: 'var(--border-base)', backgroundColor: 'var(--card-bg)', transition: 'border-color 0.2s ease' }}
-                      onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(58,125,107,0.4)' }}
-                      onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border-base)' }}
+                      className="h-full rounded-2xl border overflow-hidden flex flex-col"
+                      style={{
+                        borderColor: 'var(--border-base)',
+                        backgroundColor: 'var(--card-bg)',
+                        transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease',
+                      }}
+                      onMouseEnter={e => {
+                        const el = e.currentTarget
+                        el.style.transform = 'translateY(-2px)'
+                        el.style.boxShadow = '0 8px 28px rgba(30,42,56,0.09)'
+                        el.style.borderColor = 'rgba(74,127,121,0.25)'
+                        const img = el.querySelector('img') as HTMLImageElement | null
+                        if (img) img.style.transform = 'scale(1.015)'
+                      }}
+                      onMouseLeave={e => {
+                        const el = e.currentTarget
+                        el.style.transform = ''
+                        el.style.boxShadow = ''
+                        el.style.borderColor = 'var(--border-base)'
+                        const img = el.querySelector('img') as HTMLImageElement | null
+                        if (img) img.style.transform = ''
+                      }}
                     >
                       {note.image && (
-                        <div className="w-full overflow-hidden" style={{ height: '140px' }}>
+                        <div className="w-full overflow-hidden" style={{ height: '144px' }}>
                           <img
                             src={note.image}
                             alt={note.title}
                             className="w-full h-full object-cover"
-                            style={{ objectPosition: 'center top', filter: 'brightness(0.88) contrast(0.92)' }}
+                            style={{
+                              objectPosition: 'center top',
+                              filter: 'saturate(0.92) contrast(0.98) brightness(0.99)',
+                              transition: 'transform 0.35s ease',
+                            }}
                             loading="lazy"
                           />
                         </div>
@@ -617,7 +646,7 @@ export default function Home() {
 
             {/* Secondary grid */}
             {secondaryCards.length > 0 && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5 md:mb-6">
+              <div ref={refSecGrid} className="reveal-stagger grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5 md:mb-6">
                 {secondaryCards.map((item, i) => (
                   <a
                     key={`${item.slug}-${i}`}
@@ -628,9 +657,19 @@ export default function Home() {
                   >
                     <article
                       className="h-full rounded-xl border p-5 flex flex-col"
-                      style={{ borderColor: 'var(--border-base)', backgroundColor: 'var(--card-bg)', transition: 'border-color 0.2s ease' }}
-                      onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(58,125,107,0.4)'; }}
-                      onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border-base)'; }}
+                      style={{ borderColor: 'var(--border-base)', backgroundColor: 'var(--card-bg)', transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease' }}
+                      onMouseEnter={e => {
+                        const el = e.currentTarget
+                        el.style.transform = 'translateY(-2px)'
+                        el.style.boxShadow = '0 8px 28px rgba(30,42,56,0.09)'
+                        el.style.borderColor = 'rgba(74,127,121,0.25)'
+                      }}
+                      onMouseLeave={e => {
+                        const el = e.currentTarget
+                        el.style.transform = ''
+                        el.style.boxShadow = ''
+                        el.style.borderColor = 'var(--border-base)'
+                      }}
                     >
                       <span
                         className="inline-block text-[10px] font-semibold mb-2.5"

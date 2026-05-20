@@ -914,7 +914,7 @@ export default function Projects() {
                         return (
                           <div
                             key={postUrl}
-                            className="rounded-xl border p-4"
+                            className="rounded-2xl border p-4"
                             style={{ borderColor: 'var(--border-base)', backgroundColor: 'var(--card-bg)' }}
                           >
                             <p
@@ -939,7 +939,7 @@ export default function Projects() {
                         const lm = getLinkMetaFromUrl(localizedProject.links!.demo as string)
                         return (
                           <div
-                            className="rounded-xl border p-4"
+                            className="rounded-2xl border p-4"
                             style={{ borderColor: 'var(--border-base)', backgroundColor: 'var(--card-bg)' }}
                           >
                             <p
@@ -964,7 +964,7 @@ export default function Projects() {
                         const lm = getLinkMetaFromUrl(localizedProject.links!.repo as string)
                         return (
                           <div
-                            className="rounded-xl border p-4"
+                            className="rounded-2xl border p-4"
                             style={{ borderColor: 'var(--border-base)', backgroundColor: 'var(--card-bg)' }}
                           >
                             <p

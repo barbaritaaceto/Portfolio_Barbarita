@@ -4,6 +4,7 @@ import notesData from '../data/notes'
 import NoteCard from '../components/NoteCard'
 import Input from '../components/ui/Input'
 import Card from '../components/ui/Card'
+import { useReveal } from '../hooks/useReveal'
 
 export default function Notes(){
   const [isEnglish, setIsEnglish] = useState(() => {
@@ -160,7 +161,7 @@ export default function Notes(){
           ))}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 reveal-stagger is-revealed">
           {filtered.map(n=> <NoteCard key={n.slug} note={n} minuteLabel={uiText.minuteLabel} locale={isEnglish ? 'en-US' : 'es-AR'} />)}
         </div>
 

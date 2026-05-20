@@ -23,6 +23,13 @@
 
   --border-base: #E6E2DD;
   --border-accent: rgba(216, 138, 148, 0.35);
+
+  /* Radius system */
+  --radius-xs:  8px;
+  --radius-sm:  12px;
+  --radius-md:  18px;
+  --radius-lg:  24px;   /* cards */
+  --radius-xl:  32px;   /* modals, large sections */
 }
 
 html,body,#root{height:100%;}
@@ -36,12 +43,11 @@ body{
 
 a{
   color: var(--accent-primary);
-  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+  transition: color 0.25s ease, text-decoration-color 0.25s ease, opacity 0.25s ease;
 }
 
 a:hover{
   color: var(--accent-primary-hover);
-  text-decoration: underline;
 }
 
 /* Headline serif for editorial feel */
@@ -63,11 +69,13 @@ h1,h2,h3,.serif-heading{
   @apply rounded-2xl shadow-sm border p-6;
   background-color: var(--card-bg);
   border-color: var(--border-base);
-  transition: box-shadow 0.2s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
 .card:hover{
-  @apply shadow-md;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(30,42,56,0.09);
+  border-color: rgba(74,127,121,0.25);
 }
 
 @keyframes slideUp {
@@ -92,12 +100,14 @@ h1,h2,h3,.serif-heading{
   font-size: 0.875rem;
   font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
 }
 
 .btn-primary:hover {
   background-color: var(--accent-primary-hover);
   color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(74,127,121,0.28);
 }
 
 .btn-ghost{ 
@@ -109,11 +119,13 @@ h1,h2,h3,.serif-heading{
   font-size: 0.875rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
 }
 
 .btn-ghost:hover {
   background-color: rgba(47,127,120,0.08);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(74,127,121,0.15);
 }
 
 .btn-link {
@@ -124,12 +136,12 @@ h1,h2,h3,.serif-heading{
   font-size: 0.875rem;
   font-weight: 500;
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: color 0.25s ease, opacity 0.25s ease;
 }
 
 .btn-link:hover {
   color: var(--accent-primary-hover);
-  text-decoration: underline;
+  opacity: 0.85;
 }
 
 /* Headline tweaks */
@@ -173,15 +185,91 @@ h3{ font-size: 1.25rem; line-height: 1.4; }
     @apply rounded-2xl p-8 shadow-sm border;
     background-color: var(--card-bg);
     border-color: var(--border-base);
-    transition: box-shadow 0.2s ease;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   }
 
   .featured-note:hover {
-    @apply shadow-md;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(30,42,56,0.09);
+    border-color: rgba(74,127,121,0.25);
+  }
+
+  /* Scroll arrow breathing */
+  @keyframes arrowBreathe {
+    0%, 100% { opacity: 0.5; transform: translateY(0); }
+    50% { opacity: 0.9; transform: translateY(4px); }
+  }
+
+  .scroll-arrow {
+    animation: arrowBreathe 2s ease-in-out infinite;
   }
 
   .accent-coral-bg {
     background-color: var(--accent-soft-bg);
+  }
+}
+
+/* ─────────────────────────────────────────
+   REVEAL / MOTION SYSTEM
+   Usage:
+     Add class `reveal` (or variant) to any element.
+     useReveal() hook adds `is-revealed` when it enters viewport.
+────────────────────────────────────────── */
+
+/* Base: element starts invisible, transitions to revealed state */
+.reveal,
+.reveal-up,
+.reveal-fade {
+  opacity: 0;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+/* Fade up (default — most common) */
+.reveal,
+.reveal-up {
+  transform: translateY(22px);
+}
+
+/* Pure fade (for elements that should not move) */
+.reveal-fade {
+  transform: none;
+}
+
+/* Revealed state — added by useReveal hook */
+.reveal.is-revealed,
+.reveal-up.is-revealed,
+.reveal-fade.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Stagger children ──────────────────── */
+/* Apply to a container; children get staggered delays */
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-stagger.is-revealed > *:nth-child(1)  { opacity: 1; transform: none; transition-delay: 0ms; }
+.reveal-stagger.is-revealed > *:nth-child(2)  { opacity: 1; transform: none; transition-delay: 70ms; }
+.reveal-stagger.is-revealed > *:nth-child(3)  { opacity: 1; transform: none; transition-delay: 140ms; }
+.reveal-stagger.is-revealed > *:nth-child(4)  { opacity: 1; transform: none; transition-delay: 210ms; }
+.reveal-stagger.is-revealed > *:nth-child(5)  { opacity: 1; transform: none; transition-delay: 280ms; }
+.reveal-stagger.is-revealed > *:nth-child(6)  { opacity: 1; transform: none; transition-delay: 350ms; }
+.reveal-stagger.is-revealed > *:nth-child(n+7){ opacity: 1; transform: none; transition-delay: 400ms; }
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-up, .reveal-fade,
+  .reveal-stagger > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }
 

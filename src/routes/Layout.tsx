@@ -82,12 +82,18 @@ const Layout: React.FC = () => {
           onClick={() => setIsAssistantOpen(true)}
           className="w-14 h-14 rounded-full flex items-center justify-center ai-btn-float"
           style={{
-            backgroundColor: isAssistantOpen ? 'var(--accent-primary)' : '#FFFFFF',
-            border: `1.5px solid ${isAssistantOpen ? 'var(--accent-primary)' : 'rgba(58, 125, 107, 0.3)'}`,
-            boxShadow: '0 4px 14px rgba(30, 42, 56, 0.10)',
+            backgroundColor: isAssistantOpen
+              ? 'var(--accent-primary)'
+              : 'rgba(255,255,255,0.75)',
+            backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)',
+            border: `1px solid ${isAssistantOpen ? 'rgba(74,127,121,0.6)' : 'rgba(74,127,121,0.18)'}`,
+            boxShadow: isAssistantOpen
+              ? '0 6px 24px rgba(74,127,121,0.30)'
+              : '0 4px 18px rgba(30,42,56,0.10), inset 0 1px 0 rgba(255,255,255,0.8)',
           }}
         >
-          <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <circle cx="13" cy="7" r="3" fill={isAssistantOpen ? 'white' : 'var(--accent-primary)'} />
             <circle cx="6" cy="20" r="2" fill={isAssistantOpen ? 'white' : 'var(--accent-primary)'} opacity="0.65" />
             <circle cx="20" cy="20" r="2" fill={isAssistantOpen ? 'white' : 'var(--accent-primary)'} opacity="0.65" />
@@ -98,12 +104,19 @@ const Layout: React.FC = () => {
         </button>
         <div
           role="tooltip"
-          className="ai-btn-tooltip pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-200 mr-1"
+          className="ai-btn-tooltip pointer-events-none opacity-0 group-hover:opacity-100 mr-1"
           style={{ whiteSpace: 'nowrap' }}
         >
           <span
             className="text-xs font-medium px-3 py-1.5 rounded-full block"
-            style={{ backgroundColor: '#1E2A38', color: '#F5F2EC', letterSpacing: '0.01em' }}
+            style={{
+              backgroundColor: 'rgba(30,42,40,0.88)',
+              backdropFilter: 'blur(8px)',
+              WebkitBackdropFilter: 'blur(8px)',
+              color: '#F5F2EC',
+              letterSpacing: '0.02em',
+              border: '1px solid rgba(74,127,121,0.15)',
+            }}
           >
             {tooltip}
           </span>
@@ -119,15 +132,31 @@ const Layout: React.FC = () => {
       )}
 
       <style>{`
+        @keyframes aiFloat {
+          0%, 100% { transform: translateY(0px); }
+          50%       { transform: translateY(-4px); }
+        }
+
         .ai-btn-float {
-          transition: transform 0.25s ease, box-shadow 0.25s ease;
+          animation: aiFloat 4s ease-in-out infinite;
+          transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.25s ease, border-color 0.25s ease;
         }
         .ai-btn-float:hover {
-          transform: scale(1.08);
-          box-shadow: 0 6px 20px rgba(30, 42, 56, 0.20) !important;
+          animation-play-state: paused;
+          transform: translateY(-4px) scale(1.07);
+          box-shadow: 0 12px 32px rgba(74, 127, 121, 0.26), inset 0 1px 0 rgba(255,255,255,0.6) !important;
+        }
+        .ai-btn-float:active {
+          animation-play-state: paused;
+          transform: scale(0.96);
         }
         .ai-btn-tooltip {
-          transition: opacity 0.2s ease;
+          transition: opacity 0.25s ease, transform 0.25s ease;
+          transform: translateY(4px);
+        }
+        .group:hover .ai-btn-tooltip {
+          opacity: 1;
+          transform: translateY(0);
         }
       `}</style>
     </div>

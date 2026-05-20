@@ -70,8 +70,16 @@ export default function NoteDetail(){
       <Helmet><title>{localizedNote.title} — {uiText.pageSuffix}</title></Helmet>
       <Card>
         {localizedNote.image && (
-          <div className="w-full h-56 md:h-72 rounded-xl overflow-hidden mb-4 border" style={{ borderColor: 'var(--border-base)', backgroundColor: '#F3F2EF' }}>
-            <img src={localizedNote.image} alt={localizedNote.title} className="w-full h-full object-cover" />
+          <div className="w-full h-56 md:h-72 rounded-2xl overflow-hidden mb-4 border" style={{ borderColor: 'var(--border-base)', backgroundColor: '#F3F2EF' }}>
+            <img
+              src={localizedNote.image}
+              alt={localizedNote.title}
+              className="w-full h-full object-cover"
+              style={{
+                objectPosition: localizedNote.imagePosition ?? 'center',
+                filter: 'saturate(0.92) contrast(0.98) brightness(0.99)',
+              }}
+            />
           </div>
         )}
         <h1 className="text-2xl font-semibold">{localizedNote.title}</h1>
