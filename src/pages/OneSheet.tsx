@@ -195,8 +195,7 @@ export default function OneSheet() {
 
   useEffect(() => {
     if (!isPdfMode) return
-    const timer = window.setTimeout(() => { window.print() }, 350)
-    return () => window.clearTimeout(timer)
+    window.print()
   }, [isPdfMode])
 
   const SectionLabel = ({ children }: { children: React.ReactNode }) => (
@@ -229,7 +228,7 @@ export default function OneSheet() {
         </Link>
         <button
           type="button"
-          onClick={() => { setTimeout(() => window.print(), 0) }}
+          onClick={() => window.print()}
           className="inline-flex items-center gap-1.5 text-sm font-medium px-3 py-1.5 rounded-lg transition-colors"
           style={{ backgroundColor: 'var(--accent-primary)', color: '#fff' }}
         >
