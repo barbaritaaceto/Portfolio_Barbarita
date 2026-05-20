@@ -236,7 +236,7 @@ export default function OneSheet() {
         >
 
           {/* ── HEADER ── */}
-          <div className="px-8 pt-8 pb-6" style={{ borderBottom: '1px solid var(--border-base)' }}>
+          <div className="px-8 pt-10 pb-8" style={{ borderBottom: '1px solid var(--border-base)' }}>
             <div className="flex flex-col sm:flex-row sm:items-center gap-5">
               <img
                 src="/barbi.png"
@@ -273,13 +273,13 @@ export default function OneSheet() {
               </div>
             </div>
             {/* Tagline */}
-            <p className="mt-5 text-sm leading-relaxed italic" style={{ color: 'var(--text-secondary)', borderLeft: '2px solid var(--accent-primary)', paddingLeft: '0.875rem' }}>
+            <p className="mt-7 text-sm leading-relaxed italic" style={{ color: 'var(--text-secondary)', borderLeft: '2px solid var(--accent-primary)', paddingLeft: '0.875rem' }}>
               {c.tagline}
             </p>
           </div>
 
           {/* ── SUMMARY ── */}
-          <div className="px-8 py-6" style={{ borderBottom: '1px solid var(--border-base)' }}>
+          <div className="px-8 py-8" style={{ borderBottom: '1px solid var(--border-base)' }}>
             <SectionLabel>{c.summaryTitle}</SectionLabel>
             <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
               {c.summary}
@@ -287,7 +287,7 @@ export default function OneSheet() {
           </div>
 
           {/* ── EXPERIENCE ── */}
-          <div className="px-8 py-6" style={{ borderBottom: '1px solid var(--border-base)' }}>
+          <div className="px-8 py-8" style={{ borderBottom: '1px solid var(--border-base)' }}>
             <SectionLabel>{c.experienceTitle}</SectionLabel>
             <div className="space-y-5">
               {c.experience.map((exp) => (
