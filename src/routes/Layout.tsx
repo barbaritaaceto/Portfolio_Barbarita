@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom'
+import { Analytics } from '@vercel/analytics/react'
 import AIAssistant from '../components/AIAssistant'
 import Footer from '../components/Footer'
 
@@ -39,6 +40,7 @@ const Layout: React.FC = () => {
       </main>
 
       <Footer />
+      <Analytics />
 
       {/* Language toggle */}
       <div id="layout-lang-toggle" className="fixed top-4 right-4 md:top-8 md:right-8 z-[65]">
