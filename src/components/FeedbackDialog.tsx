@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import emailjs from '@emailjs/browser'
+import { track } from '../lib/analytics'
 
 interface FeedbackDialogProps {
   isOpen: boolean
@@ -42,6 +43,7 @@ export default function FeedbackDialog({ isOpen, onClose, isEnglish }: FeedbackD
 
   const reset = () => {
     onClose()
+    track.closeFeedback()
     setTimeout(() => {
       setName('')
       setEmail('')
@@ -66,7 +68,7 @@ export default function FeedbackDialog({ isOpen, onClose, isEnglish }: FeedbackD
         },
         import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       )
-      .then(() => setIsSubmitted(true))
+      .then(() => { setIsSubmitted(true); track.submitFeedback(!!feedback.trim()) })
       .catch(() => setSubmitError(true))
   }
 

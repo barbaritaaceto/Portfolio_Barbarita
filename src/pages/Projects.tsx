@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import projectsData from '../data/projects'
 import TimeEvolution from '../components/TimeEvolution'
+import { track } from '../lib/analytics'
+import { useScrollDepth } from '../hooks/useAnalytics'
 
 // ─── Company metadata ─────────────────────────────────────────────────────────
 const companyMeta: Record<string, { emoji: string; accent: string; primary: boolean }> = {
@@ -135,6 +137,17 @@ export default function Projects() {
       window.removeEventListener('app-language-change', syncLanguage as EventListener)
     }
   }, [])
+
+  useScrollDepth()
+
+  useEffect(() => {
+    track.sectionView('proyectos')
+  }, [])
+
+  useEffect(() => {
+    const project = projectsData.find(p => p.slug === selectedSlug)
+    if (project) track.projectCardView(project.title, companyYears[selectedSlug] ?? 0, selectedSlug)
+  }, [selectedSlug])
 
   const uiText = isEnglish
     ? {
@@ -557,7 +570,7 @@ export default function Projects() {
                   return (
                     <button
                       key={project.slug}
-                      onClick={() => setSelectedSlug(project.slug)}
+                      onClick={() => { setSelectedSlug(project.slug); track.clickProjectCard(project.title, companyYears[project.slug] ?? 0, project.slug) }}
                       className="relative w-full text-left pb-3 pt-0.5 pr-2 focus:outline-none rounded-lg transition-colors duration-200"
                       aria-pressed={isActive}
                       style={{ backgroundColor: isActive ? `${meta.accent}0D` : 'transparent' }}
@@ -634,7 +647,7 @@ export default function Projects() {
                   return (
                     <button
                       key={project.slug}
-                      onClick={() => setSelectedSlug(project.slug)}
+                      onClick={() => { setSelectedSlug(project.slug); track.clickProjectCard(project.title, companyYears[project.slug] ?? 0, project.slug) }}
                       className="relative w-full text-left pb-3 pt-0.5 pr-2 focus:outline-none rounded-lg transition-colors duration-200"
                       aria-pressed={isActive}
                       style={{ backgroundColor: isActive ? `${meta.accent}0D` : 'transparent' }}
@@ -1016,6 +1029,7 @@ export default function Projects() {
                               href={postUrl}
                               target="_blank"
                               rel="noopener noreferrer"
+                              onClick={() => track.clickProjectCTA(localizedProject.title, selectedSlug, postUrl)}
                               className="font-serif text-base leading-snug transition-colors"
                               style={{ color: 'var(--accent-primary)' }}
                             >
@@ -1051,6 +1065,7 @@ export default function Projects() {
                               href={localizedProject.links!.demo}
                               target="_blank"
                               rel="noopener noreferrer"
+                              onClick={() => track.clickProjectCTA(localizedProject.title, selectedSlug, localizedProject.links!.demo as string)}
                               className="font-serif text-base leading-snug transition-colors"
                               style={{ color: 'var(--accent-primary)' }}
                             >
@@ -1086,6 +1101,7 @@ export default function Projects() {
                               href={localizedProject.links!.repo}
                               target="_blank"
                               rel="noopener noreferrer"
+                              onClick={() => track.clickProjectCTA(localizedProject.title, selectedSlug, localizedProject.links!.repo as string)}
                               className="font-serif text-base leading-snug transition-colors"
                               style={{ color: 'var(--accent-primary)' }}
                             >

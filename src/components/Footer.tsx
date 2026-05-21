@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import FeedbackDialog from './FeedbackDialog'
+import { track } from '../lib/analytics'
 
 export default function Footer() {
   const [isOpen, setIsOpen] = useState(false)
@@ -30,6 +31,7 @@ export default function Footer() {
             href="https://docs.google.com/viewer?url=https://portfolio-barbarita.vercel.app/proceso.pdf"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => track.clickExternalLink('Cómo se construyó este portfolio', 'https://portfolio-barbarita.vercel.app/proceso.pdf', 'footer')}
             className="btn-ghost px-5 text-sm"
             style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
           >
@@ -39,7 +41,7 @@ export default function Footer() {
           <button
             id="footer-feedback-btn"
             type="button"
-            onClick={() => setIsOpen(true)}
+            onClick={() => { setIsOpen(true); track.openFeedback() }}
             className="btn-primary px-6"
           >
             {isEnglish ? '+ Leave feedback' : '+ Dejar feedback'}

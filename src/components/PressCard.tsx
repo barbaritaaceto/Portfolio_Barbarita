@@ -1,7 +1,7 @@
 import React from 'react'
 import { PressItem } from '../data/types'
 
-export default function PressCard({item, locale = 'en-US'}:{item:PressItem; locale?: string}){
+export default function PressCard({item, locale = 'en-US', onClick}:{item:PressItem; locale?: string; onClick?: () => void}){
   const content = (
     <div
       className="bg-white rounded-2xl border p-4 shadow-sm"
@@ -51,7 +51,7 @@ export default function PressCard({item, locale = 'en-US'}:{item:PressItem; loca
   )
 
   if (item.url) {
-    return <a href={item.url} target="_blank" rel="noopener noreferrer" className="block" style={{ textDecoration: 'none' }}>{content}</a>
+    return <a href={item.url} target="_blank" rel="noopener noreferrer" onClick={onClick} className="block" style={{ textDecoration: 'none' }}>{content}</a>
   }
   return content
 }

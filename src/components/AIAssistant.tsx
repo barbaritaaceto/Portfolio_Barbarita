@@ -7,6 +7,7 @@ import {
   defaultSuggestionsES,
   defaultSuggestionsEN,
 } from '../data/assistant'
+import { track } from '../lib/analytics'
 
 type MessageRole = 'assistant' | 'user'
 
@@ -260,6 +261,7 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
     if (!text.trim() || isTyping) return
     if (tourStep >= 0) skipTour()
     const query = text.trim()
+    track.aiQuestionSent(query.length, isEnglish ? 'en' : 'es')
     setInput('')
     if (inputRef.current) { inputRef.current.style.height = 'auto' }
     setMessages(prev => [...prev, { id: `u-${Date.now()}`, role: 'user', text: query }])
@@ -304,6 +306,7 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
           clearInterval(streamIntervalRef.current!)
           streamIntervalRef.current = null
           setMessages(prev => prev.map(m => m.id === msgId ? { ...m, text: words.join(' '), streaming: false, navLinks, chips } : m))
+          track.aiResponseReceived(intent?.id, effectiveEnglish ? 'en' : 'es')
         } else {
           setMessages(prev => prev.map(m => m.id === msgId ? { ...m, text: words.slice(0, wordIdx).join(' ') } : m))
         }
@@ -427,7 +430,7 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
                 {msg.chips && msg.chips.length > 0 && (
                   <div className="flex flex-wrap gap-1.5">
                     {msg.chips.map((chip, ci) => (
-                      <button key={ci} type="button" onClick={() => sendMessage(chip)}
+                      <button key={ci} type="button" onClick={() => { track.aiSuggestedQuestionClick(chip.length, isEnglish ? 'en' : 'es'); sendMessage(chip) }}
                         className="ai-chip text-xs px-3 py-1.5 rounded-full"
                         style={{ color: 'var(--text-secondary)', backgroundColor: '#FFFFFF', border: '1px solid var(--border-base)' }}>
                         {chip}

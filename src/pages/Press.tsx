@@ -4,12 +4,20 @@ import pressData from '../data/press'
 import PressCard from '../components/PressCard'
 import Card from '../components/ui/Card'
 import { useReveal } from '../hooks/useReveal'
+import { track } from '../lib/analytics'
+import { useScrollDepth } from '../hooks/useAnalytics'
 
 export default function Press(){
   const [isEnglish, setIsEnglish] = useState(() => {
     if (typeof window === 'undefined') return false
     return window.localStorage.getItem('lang') === 'en'
   })
+
+  useScrollDepth()
+
+  useEffect(() => {
+    track.sectionView('prensa')
+  }, [])
 
   useEffect(() => {
     const syncLanguage = () => {
@@ -64,7 +72,7 @@ export default function Press(){
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 reveal-stagger is-revealed">
-          {localizedFiltered.map(p=> <PressCard key={p.slug} item={p} locale={isEnglish ? 'en-US' : 'es-AR'} />)}
+          {localizedFiltered.map(p=> <PressCard key={p.slug} item={p} locale={isEnglish ? 'en-US' : 'es-AR'} onClick={() => track.clickContentCard(p.title, 'press', p.url || '', 'prensa')} />)}
         </div>
       </Card>
     </div>

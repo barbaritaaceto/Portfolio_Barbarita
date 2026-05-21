@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/react'
 import AIAssistant from '../components/AIAssistant'
 import Footer from '../components/Footer'
+import { track } from '../lib/analytics'
+
+declare function gtag(...args: unknown[]): void
 
 const Layout: React.FC = () => {
+  const location = useLocation()
   const [isAssistantOpen, setIsAssistantOpen] = useState(false)
   const [isEnglish, setIsEnglish] = useState(() => {
     if (typeof window === 'undefined') return false
@@ -13,12 +17,26 @@ const Layout: React.FC = () => {
   })
 
   const setLanguage = (english: boolean) => {
+    const from = isEnglish ? 'en' : 'es'
+    const to = english ? 'en' : 'es'
+    if (from !== to) track.changeLanguage(from, to)
     setIsEnglish(english)
     if (typeof window !== 'undefined') {
       window.localStorage.setItem('lang', english ? 'en' : 'es')
       window.dispatchEvent(new CustomEvent('app-language-change', { detail: { isEnglish: english } }))
     }
   }
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && typeof gtag === 'function') {
+      gtag('config', 'G-5TKFXFTX24', { page_path: location.pathname })
+    }
+    track.pageView(
+      location.pathname,
+      document.title,
+      isEnglish ? 'en' : 'es',
+    )
+  }, [location.pathname])
 
   useEffect(() => {
     const onStorage = () => {
@@ -91,7 +109,7 @@ const Layout: React.FC = () => {
           id="layout-ai-btn"
           type="button"
           aria-label={ariaLabel}
-          onClick={() => setIsAssistantOpen(true)}
+          onClick={() => { setIsAssistantOpen(true); track.openAIAssistant('floating_button') }}
           className="w-14 h-14 rounded-full flex items-center justify-center ai-btn-float"
           style={{
             backgroundColor: isAssistantOpen
@@ -139,7 +157,7 @@ const Layout: React.FC = () => {
       {isAssistantOpen && (
         <AIAssistant
           isEnglish={isEnglish}
-          onClose={() => setIsAssistantOpen(false)}
+          onClose={() => { setIsAssistantOpen(false); track.closeAIAssistant() }}
         />
       )}
 

@@ -5,6 +5,8 @@ import press from '../data/press';
 import notesData from '../data/notes';
 import HomeTour from '../components/HomeTour';
 import { useReveal } from '../hooks/useReveal';
+import { track } from '../lib/analytics'
+import { useScrollDepth } from '../hooks/useAnalytics'
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -46,6 +48,40 @@ export default function Home() {
       newsStartElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
+
+  useScrollDepth()
+
+  useEffect(() => {
+    track.heroView()
+    track.sectionView('hero')
+
+    const makeObserver = (id: string, onVisible: () => void) => {
+      const el = document.getElementById(id)
+      if (!el) return null
+      let fired = false
+      const obs = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting && !fired) {
+          fired = true
+          onVisible()
+          obs.disconnect()
+        }
+      }, { threshold: 0.4 })
+      obs.observe(el)
+      return obs
+    }
+
+    const observers = [
+      makeObserver('why-work-start', () => {
+        track.sectionView('porque_construyo')
+        track.sectionView('como_trabajo')
+        const steps = ['discovery', 'hypothesis', 'delivery', 'learning_loop'] as const
+        steps.forEach(s => track.workStepView(s))
+      }),
+      makeObserver('news-start', () => track.sectionView('noticias')),
+    ].filter(Boolean) as IntersectionObserver[]
+
+    return () => observers.forEach(obs => obs.disconnect())
+  }, [])
 
   const homeText = isEnglish
     ? {
@@ -331,13 +367,14 @@ export default function Home() {
                 <div className="flex flex-col gap-2">
                   <Link 
                     id="home-btn-projects"
-                    to="/projects" 
+                    to="/projects"
+                    onClick={() => track.clickViewProjects('profile_card')}
                     className="btn-primary text-center px-4 text-sm"
                   >
                     {profileContent.projectsCta}
                   </Link>
                   <button 
-                    onClick={() => setIsModalOpen(true)}
+                    onClick={() => { setIsModalOpen(true); track.openContactModal('profile_card') }}
                     className="btn-ghost text-center px-4 text-sm"
                   >
                     {profileContent.contactCta}
@@ -345,6 +382,7 @@ export default function Home() {
                   <a
                     href="/cv.pdf"
                     download="Barbara_Aceto_CV.pdf"
+                    onClick={() => track.clickDownloadCV('profile_card')}
                     className="btn-link text-center text-sm"
                   >
                     {profileContent.cvCta}
@@ -361,7 +399,7 @@ export default function Home() {
         <div className="w-full flex justify-center mt-2 mb-4 md:mb-5 relative z-50">
           <button
             type="button"
-            onClick={scrollToWhyAndWork}
+            onClick={() => { scrollToWhyAndWork(); track.clickScrollToSection('porque_construyo') }}
             className="w-11 h-11 rounded-full scroll-arrow flex items-center justify-center cursor-pointer"
             style={{
               backgroundColor: '#FFFFFF',
@@ -442,6 +480,9 @@ export default function Home() {
                         onMouseEnter={e => {
                           e.currentTarget.style.borderLeftColor = 'var(--accent-primary)'
                           e.currentTarget.style.backgroundColor = 'rgba(58,125,107,0.04)'
+                          const stepKeys = { '01': 'discovery', '02': 'hypothesis', '03': 'delivery', '04': 'learning_loop' } as const
+                          const s = stepKeys[step.number as keyof typeof stepKeys]
+                          if (s) track.workStepView(s)
                         }}
                         onMouseLeave={e => {
                           e.currentTarget.style.borderLeftColor = 'transparent'
@@ -496,7 +537,7 @@ export default function Home() {
               <div className="flex justify-center mt-1 mb-5">
                 <button
                   type="button"
-                  onClick={scrollToNews}
+                  onClick={() => { scrollToNews(); track.clickScrollToSection('noticias') }}
                   className="w-11 h-11 rounded-full scroll-arrow flex items-center justify-center"
                   style={{
                     backgroundColor: '#FFFFFF',
@@ -529,6 +570,12 @@ export default function Home() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block"
+                    onClick={() => track.clickContentCard(
+                      isEnglish ? (noteCardMeta[note.slug]?.titleEn ?? note.title) : note.title,
+                      'note',
+                      note.url,
+                      'noticias',
+                    )}
                   >
                     <article
                       className="h-full rounded-2xl border overflow-hidden flex flex-col"
@@ -596,6 +643,7 @@ export default function Home() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block mb-5 md:mb-6"
+                onClick={() => track.clickContentCard(featuredCard.title, 'article', featuredCard.url, 'noticias')}
               >
                 <article
                   className="rounded-2xl border overflow-hidden"
@@ -653,6 +701,7 @@ export default function Home() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block"
+                    onClick={() => track.clickContentCard(item.title, 'article', item.url, 'noticias')}
                   >
                     <article
                       className="h-full rounded-xl border p-5 flex flex-col"
@@ -701,7 +750,7 @@ export default function Home() {
           <div
             className="fixed inset-0 z-50 flex items-end md:items-center justify-center p-0 md:p-4"
             style={{ backgroundColor: 'rgba(20,32,28,0.55)', backdropFilter: 'blur(4px)' }}
-            onClick={e => { if (e.target === e.currentTarget) setIsModalOpen(false) }}
+            onClick={e => { if (e.target === e.currentTarget) { setIsModalOpen(false); track.closeContactModal() } }}
           >
             <div
               className="w-full md:max-w-lg rounded-t-3xl md:rounded-3xl overflow-hidden shadow-2xl"
@@ -719,7 +768,7 @@ export default function Home() {
                     {homeText.modalTitle}
                   </h2>
                   <button
-                    onClick={() => setIsModalOpen(false)}
+                    onClick={() => { setIsModalOpen(false); track.closeContactModal() }}
                     className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-colors mt-0.5"
                     style={{ backgroundColor: 'var(--border-base)', color: 'var(--text-muted)' }}
                     aria-label={homeText.closeModalAria}
@@ -744,6 +793,7 @@ export default function Home() {
                     href="https://wa.me/5491162093765"
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => track.clickContactOption('whatsapp', 'contact_modal')}
                     className="flex items-center gap-3 px-4 py-3 rounded-xl transition-all group"
                     style={{ backgroundColor: 'var(--card-bg)', border: '1px solid var(--border-base)' }}
                     onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(74,127,121,0.4)'; e.currentTarget.style.backgroundColor = 'rgba(74,127,121,0.05)' }}
@@ -778,7 +828,7 @@ export default function Home() {
                       <p className="text-sm font-medium truncate" style={{ color: 'var(--text-primary)' }}>aceto.barbara@gmail.com</p>
                     </div>
                     <button
-                      onClick={() => { navigator.clipboard.writeText('aceto.barbara@gmail.com'); setEmailCopied(true); setTimeout(() => setEmailCopied(false), 2000) }}
+                      onClick={() => { navigator.clipboard.writeText('aceto.barbara@gmail.com'); setEmailCopied(true); setTimeout(() => setEmailCopied(false), 2000); track.clickContactOption('email', 'contact_modal') }}
                       className="flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-colors"
                       style={{ color: 'var(--text-muted)' }}
                       title="Copiar email"
@@ -801,6 +851,7 @@ export default function Home() {
                     href="https://linkedin.com/in/barbaraaceto"
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => track.clickContactOption('linkedin', 'contact_modal')}
                     className="flex items-center gap-3 px-4 py-3 rounded-xl transition-all"
                     style={{ backgroundColor: 'var(--card-bg)', border: '1px solid var(--border-base)' }}
                     onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(74,127,121,0.4)'; e.currentTarget.style.backgroundColor = 'rgba(74,127,121,0.05)' }}
