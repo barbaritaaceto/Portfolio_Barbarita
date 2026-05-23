@@ -73,8 +73,8 @@ export const intents: AssistantIntent[] = [
       "Welcome! I'm Boconcino. Barbara Aceto is a PM with 10+ years building digital products in banking, e-commerce, and AI.\n\nAsk me anything: background, projects, how she leads, her AI vision, or availability.\n\nWhat would you like to know?",
       "Hey! Boconcino here. You're in Barbara Aceto's portfolio — a product leader with a systemic mindset and a taste for hard problems.\n\nWhat would you like to know?",
     ],
-    suggestionsES: ['¿Qué hizo en Santander?', '¿Cómo usa AI?', '¿Está disponible?'],
-    suggestionsEN: ['Santander experience', 'How she uses AI', 'Is she available?'],
+    suggestionsES: ['¿Cómo usa AI?', '¿Cómo lidera?', '¿Cómo trabaja?'],
+    suggestionsEN: ['How she uses AI?', 'How she leads?', 'How she works?'],
   },
   {
     id: 'who_is_barbara',
@@ -90,8 +90,8 @@ export const intents: AssistantIntent[] = [
       "Barbara started in SEO — learning that the smallest changes can have the biggest impact on how people find you. From there, she moved into product, and never stopped growing.\n\n10+ years building in banking, e-commerce, insurtech, and digital consulting. What defines her isn't the industry or the titles — it's the belief that products are built by people, not methodologies.\n\nToday she leads at redbee, combining AI applied to product with the very human challenge of helping each person on her team become their best version.",
       "Barbara connects the dots where business, technology, and people tend to speak different languages.\n\n10+ years building products in banking, e-commerce, insurtech, and digital consulting. Today she leads at redbee with a focus on AI applied to product and teams.\n\nWhat defines her: she doesn't stack features. She creates the conditions for teams to build seriously.",
     ],
-    suggestionsES: ['¿Fintech?', '¿Cómo lidera?', '¿Ver proyectos?'],
-    suggestionsEN: ['Fintech?', 'How she leads?', 'See her projects?'],
+    suggestionsES: ['¿Ver proyectos?', '¿Metodología?', '¿Experiencia?'],
+    suggestionsEN: ['See her projects?', 'Her methodology?', 'Her experience?'],
   },
   {
     id: 'experience',
@@ -99,8 +99,8 @@ export const intents: AssistantIntent[] = [
     keywordsEN: ['experience', 'years', 'background', 'career', 'trajectory', 'history', 'resume'],
     responseES: 'Lleva más de 10 años en producto digital. Su trayectoria:\n\n- **redbee studios** · Product leadership en ecosistema digital\n- **Santander Argentina** · Product Manager — Cobranzas y Pagos (4 años)\n- **Mercado Libre** · Product Senior — Darwin Project LATAM (2 años)\n- **123Seguro** · Growth Marketing Manager — insurtech\n- **Cognizant** · Account Strategist — proyecto Google (2 años)\n- **MeLi · Globant** · SEO Semi Senior Analyst — primeros pasos en digital\n\nEmpezó en SEO y marketing digital, migró a producto y lleva varios años liderando squads cross-funcionales.',
     responseEN: 'She has 10+ years in digital product. Her trajectory:\n\n- **redbee studios** · Product leadership in digital ecosystem\n- **Santander Argentina** · Product Manager — Collections & Payments (4 years)\n- **Mercado Libre** · Senior Product — Darwin Project LATAM (2 years)\n- **123Seguro** · Growth Marketing Manager — insurtech\n- **Cognizant** · Account Strategist — Google project (2 years)\n- **MeLi · Globant** · SEO Semi Senior Analyst — first steps in digital\n\nShe started in SEO and digital marketing, moved into product, and has been leading cross-functional squads for several years.',
-    suggestionsES: ['¿Santander?', '¿Mercado Libre?', '¿Cómo trabaja?'],
-    suggestionsEN: ['Santander?', 'Mercado Libre?', 'How she works?'],
+    suggestionsES: ['¿redbee?', '¿Santander?', '¿Mercado Libre?'],
+    suggestionsEN: ['redbee?', 'Santander?', 'Mercado Libre?'],
     navLinks: [{ labelES: '→ Ver Proyectos', labelEN: '→ See Projects', route: '/projects' }],
   },
   {
@@ -154,8 +154,8 @@ export const intents: AssistantIntent[] = [
     keywordsEN: ['redbee', 'redbee studios', 'current', 'current company', 'where she works', 'works now', 'consulting', 'consulting firm', 'currently', 'studio'],
     responseES: 'Hoy trabaja en redbee studios — una consultora digital de alto impacto.\n\nEs donde está descubriendo el enorme desafío — y la responsabilidad — de liderar equipos. Acompañar a cada persona para que crezca y se convierta en su mejor versión, mientras construyen juntos productos complejos.\n\nY en paralelo, construyendo con AI: el desafío ya no es solo tecnológico, sino entender cómo cambia la forma en que decidimos, construimos y colaboramos.\n\nSu iniciativa más destacada: "Humanos y Algoritmos", un curso sobre AI aplicada a producto, UX y tecnología.',
     responseEN: "She currently works at redbee studios — a high-impact digital consulting firm.\n\nIt's where she's discovering the enormous challenge — and responsibility — of leading teams. Accompanying each person so they can grow and become their best version, while building complex products together.\n\nAnd in parallel, building with AI: the challenge isn't just technological anymore — it's understanding how it changes the way we decide, build, and collaborate.\n\nHer most notable initiative: 'Humans and Algorithms', a course on AI applied to product, UX, and technology.",
-    suggestionsES: ['¿Humanos y Algoritmos?', '¿Cómo usa AI?', '¿Sus proyectos?'],
-    suggestionsEN: ['Humans & Algorithms?', 'How she uses AI?', 'Her projects?'],
+    suggestionsES: ['¿Sus charlas?', '¿Sus notas?', '¿Humanos y Algoritmos?'],
+    suggestionsEN: ['Her talks?', 'Her notes?', 'Humans & Algorithms?'],
   },
   {
     id: 'ai_product',
