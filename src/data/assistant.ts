@@ -134,8 +134,8 @@ export const intents: AssistantIntent[] = [
     id: 'cognizant',
     keywordsES: ['cognizant', 'google', 'account strategist', 'account strategy', 'globant', 'meli globant', 'inicios', 'comienzos', 'primeros trabajos', 'primera empresa', 'imanaging', 'fulbright', 'inicio carrera', 'carrera inicial', 'seo analyst', 'semi senior'],
     keywordsEN: ['cognizant', 'google', 'account strategist', 'account strategy', 'globant', 'early career', 'first jobs', 'first company', 'imanaging', 'fulbright', 'career start', 'beginnings', 'seo analyst', 'semi senior'],
-    responseES: 'En **Cognizant** fue Account Strategist en un proyecto para Google durante 2 años — estrategia digital y crecimiento de cuentas para anunciantes de Google Ads.\n\nAntes de eso, fue **SEO Semi Senior Analyst en Globant / MeLi** — sus primeros pasos en el mundo digital, construyendo bases en analytics, SEO y marketing de performance.\n\nEsa etapa le dio la visión de negocio y el contexto de escala que hoy aplica en producto.',
-    responseEN: 'At **Cognizant** she was Account Strategist on a Google project for 2 years — digital strategy and account growth for Google Ads advertisers.\n\nBefore that, she was **SEO Semi Senior Analyst at Globant / MeLi** — her first steps in the digital world, building her foundations in analytics, SEO, and performance marketing.\n\nThat stage gave her the business vision and scale context she applies to product today.',
+    responseES: 'En **Cognizant** fue Account Strategist en un proyecto para Google durante 2 años — estrategia digital y crecimiento de cuentas para anunciantes de Google Ads. Aprendió a tomar decisiones con datos incompletos, y también qué pasa cuando el dato existe en abundancia: el valor no está en la cantidad, sino en saber para qué sirve.\n\nAntes de eso, fue **SEO Semi Senior Analyst en Globant / MeLi** — sus primeros pasos en el mundo digital. Fue donde descubrió que los cambios más pequeños pueden generar el impacto más grande en cómo la gente te encuentra. Y donde nació su curiosidad por el producto: cada métrica que se movía tenía detrás una decisión humana.',
+    responseEN: "At **Cognizant** she was Account Strategist on a Google project for 2 years — digital strategy and account growth for Google Ads advertisers. She learned to make decisions with incomplete data, and also what happens when data exists in abundance: the value isn't in the quantity — it's in knowing what it's for.\n\nBefore that, she was **SEO Semi Senior Analyst at Globant / MeLi** — her first steps in the digital world. That's where she discovered that the smallest changes can have the biggest impact on how people find you. And where her curiosity for product was born: every metric that moved had a human decision behind it.",
     suggestionsES: ['¿123Seguro?', '¿Mercado Libre?', '¿Trayectoria completa?'],
     suggestionsEN: ['123Seguro?', 'Mercado Libre?', 'Full background?'],
   },
@@ -272,8 +272,8 @@ export const intents: AssistantIntent[] = [
     id: 'challenge',
     keywordsES: ['desafio', 'desafío', 'reto', 'problema complejo', 'dificil', 'difícil', 'mas complejo', 'más complejo', 'caso complejo', 'situacion dificil', 'situación difícil'],
     keywordsEN: ['challenge', 'complex', 'difficult', 'hard problem', 'toughest', 'most complex', 'hardest'],
-    responseES: 'Uno de los desafíos más complejos: digitalizar procesos de onboarding empresarial en un banco, con restricciones de compliance, múltiples sistemas legacy y stakeholders con prioridades distintas.\n\nLo que lo hizo difícil no fue la tecnología — fue alinear a un equipo cross-funcional en un entorno donde cada área defendía su propia lógica.\n\nLo que lo resolvió: empezar por definir métricas compartidas y claridad de decisión antes de hablar de roadmap.',
-    responseEN: 'One of the most complex challenges: digitalizing business onboarding processes at a bank, with compliance constraints, multiple legacy systems, and stakeholders with competing priorities.\n\nWhat made it hard wasn\'t the technology — it was aligning a cross-functional team in an environment where every area defended its own logic.\n\nWhat resolved it: starting with shared metrics and decision clarity before talking about the roadmap.',
+    responseES: 'Uno de los desafíos más complejos: digitalizar procesos de onboarding empresarial en un banco, con restricciones de compliance, múltiples sistemas legacy y stakeholders que tiraban para distintos lados.\n\nLo difícil no fue la tecnología. Fue crear las condiciones para que personas con lógicas muy distintas pudieran colaborar — donde cada área llegaba con su propia verdad y había que encontrar una dirección común.\n\nLo que lo resolvió: empezar por métricas compartidas y claridad de decisión antes de hablar de roadmap. Cuando todos saben qué se mide y quién decide, el resto fluye.',
+    responseEN: "One of the most complex challenges: digitalizing business onboarding at a bank, with compliance constraints, multiple legacy systems, and stakeholders pulling in different directions.\n\nThe hard part wasn't the technology. It was creating the conditions for people with very different logics to collaborate — where every team arrived with their own truth and you had to find a shared direction.\n\nWhat resolved it: shared metrics and decision clarity before talking roadmap. When everyone knows what's being measured and who decides, the rest follows.",
     suggestionsES: ['¿Cómo lidera?', '¿Santander?', '¿Metodología?'],
     suggestionsEN: ['How she leads?', 'Santander?', 'Her methodology?'],
   },
@@ -335,8 +335,8 @@ export const intents: AssistantIntent[] = [
   },
 ]
 
-export const fallbackES = 'Mmm, no llegué a entender eso. Podés preguntarme sobre experiencia, proyectos, cómo trabaja, su visión sobre AI o cómo contactarla.\n\n¿Por cuál empezamos?'
-export const fallbackEN = "Hmm, I didn't quite get that. You can ask about her experience, projects, how she works, her AI vision, or how to reach her.\n\nWhere would you like to start?"
+export const fallbackES = 'No llegué a entender bien eso — pero no importa, arrancamos de nuevo. Podés preguntarme sobre su experiencia, proyectos, cómo lidera, visión sobre AI o cómo contactarla.\n\n¿Por dónde querés ir?'
+export const fallbackEN = "Didn't quite catch that — but no worries, let's try again. You can ask about her experience, projects, how she leads, her AI vision, or how to reach her.\n\nWhere would you like to go?"
 
 export const defaultSuggestionsES = [
   '¿Quién es Barbara?',
