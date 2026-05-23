@@ -70,8 +70,8 @@ const timelinePhrases: Record<string, { es: string; en: string }> = {
 // ─── Editorial learnings ──────────────────────────────────────────────────────
 const learnings: Record<string, { es: string; en: string }> = {
   'redbee': {
-    es: 'La IA nos atraviesa por todos lados, y el desafío no es solo tecnológico: es entender cómo cambia la forma en que construimos, decidimos y colaboramos. Estoy en el centro de eso, y lo disfruto.',
-    en: 'AI is everywhere, and the challenge is not just technical: it is understanding how it changes the way we build, decide and collaborate. I am right in the middle of that, and I enjoy it.',
+    es: 'La IA nos atraviesa por todos lados, y el desafío ya no es solo tecnológico: es entender cómo cambia la forma en que construimos, decidimos y colaboramos. También estoy descubriendo el enorme desafío —y la responsabilidad— de liderar equipos, acompañando a cada persona para que pueda crecer, potenciarse y convertirse en su mejor versión mientras construimos productos complejos juntos.',
+    en: 'AI is everywhere, and the challenge is no longer just technical: it is understanding how it changes the way we build, decide and collaborate. I am also discovering the enormous challenge — and responsibility — of leading teams, supporting each person so they can grow, develop and become their best version while we build complex products together.',
   },
   'santander-argentina': {
     es: 'Los productos no los construyen solo las metodologías o la tecnología: los construyen las personas. Disfrutar lo que uno hace, compartir conocimiento, contagiar energía y trabajar con un propósito claro termina haciendo la diferencia. Pero para que un producto realmente crezca, también hacen falta equipos alineados, comunicación transparente, confianza y un entorno sano donde las personas puedan construir y equivocarse sin miedo. Ahí es donde aparecen los productos que realmente dejan huella.',
@@ -900,6 +900,24 @@ export default function Projects() {
                   </p>
                 </section>
 
+                {/* Lo que aprendí */}
+                {currentLearning && (
+                  <section className="mb-10">
+                    {sectionLabel(selectedSlug === 'redbee' ? (isEnglish ? 'What I\'m Learning' : 'Lo que estoy aprendiendo') : uiText.learningLabel)}
+                    <div
+                      className="border-l-2 pl-5 py-3 rounded-r-xl"
+                      style={{ borderColor: currentMeta.accent, backgroundColor: `${currentMeta.accent}07` }}
+                    >
+                      <p
+                        className="font-serif italic text-base md:text-lg leading-relaxed"
+                        style={{ color: 'var(--text-primary)' }}
+                      >
+                        {isEnglish ? currentLearning.en : currentLearning.es}
+                      </p>
+                    </div>
+                  </section>
+                )}
+
                 {/* Roles */}
                 {localizedProject.roles && localizedProject.roles.length > 0 && (
                   <section className="mb-10">
@@ -948,24 +966,6 @@ export default function Projects() {
                           )}
                         </div>
                       ))}
-                    </div>
-                  </section>
-                )}
-
-                {/* Lo que aprendí */}
-                {currentLearning && (
-                  <section className="mb-10">
-                    {sectionLabel(uiText.learningLabel)}
-                    <div
-                      className="border-l-2 pl-5 py-3 rounded-r-xl"
-                      style={{ borderColor: currentMeta.accent, backgroundColor: `${currentMeta.accent}07` }}
-                    >
-                      <p
-                        className="font-serif italic text-base md:text-lg leading-relaxed"
-                        style={{ color: 'var(--text-primary)' }}
-                      >
-                        {isEnglish ? currentLearning.en : currentLearning.es}
-                      </p>
                     </div>
                   </section>
                 )}
