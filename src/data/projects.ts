@@ -178,7 +178,7 @@ const projects: Project[] = [
     slug: 'globant',
     title: 'Mercado Libre - Globant',
     summary: 'SEO Semi Senior Analyst at Mercadolibre Inc.',
-    description: 'SEO Semi Senior Analyst at Mercadolibre with focus on Classifieds Business Unit (Motors, Real Estate & Services). Specialist in keyword research and opportunity detection; started as Analyst Trainee.',
+    description: 'I began my journey in digital marketing within the Classifieds team. I learned the organic positioning mindset, opportunity detection through keyword research and the analytical, bold approach that digital marketing requires.',
     tech: ['SEO','Keyword Research','UX','Strategic Thinking','Innovation'],
     featured: true,
     images: ['/placeholder.png'],
