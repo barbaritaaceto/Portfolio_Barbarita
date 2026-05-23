@@ -5,7 +5,7 @@ const projects: Project[] = [
     slug: 'redbee',
     title: 'redbee',
     summary: 'Product leadership within a high-impact digital ecosystem.',
-    description: 'Traversing the opportunity to challenge myself professionally building a home banking product, creating with AI, and shaping product and team processes.',
+    description: 'Challenging myself professionally in building a corporate home banking, creating with AI, product and team processes.',
     tech: ['Product Management','Digital Products','Fintech','AI Product Strategy','UX Strategy','Discovery & Delivery','Agile','Stakeholder Management','Roadmapping','AI Assisted Delivery','User Experience','Product Discovery','Data-Driven Decision Making','Design Thinking','Scrum','Cross-functional Leadership','Banking Products','Conversational AI','Product Strategy','Team Leadership'],
     featured: true,
     images: ['/placeholder.png'],
@@ -30,7 +30,7 @@ const projects: Project[] = [
     slug: 'santander-argentina',
     title: 'Santander',
     summary: 'Product leadership across the Collections & Payments digital ecosystem.',
-    description: 'Defined and executed onboarding strategy, aligned cross-functional teams, and built data-driven measurement frameworks to accelerate digital transformation and optimize performance.',
+    description: 'Started in the Home Banking CORE team, working on key features and processes for corporate digital channels. Then in the Collections & Payments Tribe, I led digitalization initiatives, product strategy and continuous improvement for product acquisition onboarding.',
     tech: ['Product Strategy','Fintech','Digital Transformation','Agile Leadership','Data & Analytics'],
     links: {
       posts: [
@@ -48,38 +48,42 @@ const projects: Project[] = [
     duration: 'Aug 2021 - Jul 2025 · 4 yrs',
     roles: [
       {
-        title: 'Product Manager',
-        period: 'Aug 2023 – Jul 2025',
+        title: 'Product Manager at Collections and Payments Tribe',
+        period: 'Aug 2023 - Jul 2025 · 2 yrs',
         responsibilities: [
-          'Defined vision and roadmap for the Onboarding Squad, aligning business, compliance and user experience.',
-          'Drove end-to-end digitalization of onboarding flows across collections and payments.',
-          'Led cross-functional agile teams (UX, Tech, Data, Compliance).',
-          'Designed and implemented measurement frameworks to optimize conversion and performance.',
-          'Enabled cross-selling opportunities through ecosystem integration.'
+          'Defined product vision and roadmap for the Onboarding Squad',
+          'Led cross-functional teams using agile methodologies (Scrum)',
+          'Drove end-to-end digitalization of collections and payments onboarding',
+          'Collaborated with partners to enable cross-selling and up-selling',
+          'Built the measurement and analytics strategy',
+          'Used data to track performance and optimize continuously',
         ],
         focus: ''
       },
       {
-        title: 'Senior Product Lead',
-        period: 'Aug 2021 – Aug 2023',
+        title: 'Sr. Product Lead on One Product Team',
+        period: 'Aug 2021 - Aug 2023 · 2 yrs 1 mo',
         responsibilities: [
-          'Translated business objectives into structured product roadmaps.',
-          'Gathered stakeholder insights and aligned cross-functional teams.',
-          'Facilitated agile ceremonies and ensured delivery quality.',
-          'Defined key metrics and leveraged user feedback for continuous iteration.',
-          'Connected product strategy with evolving market trends and customer needs.'
+          'Defined and prioritized the product backlog aligned with business goals',
+          'Gathered requirements and insights from key stakeholders and users',
+          'Communicated product vision to IT and cross-functional teams',
+          'Managed the product roadmap and delivery timelines',
+          'Facilitated agile ceremonies (sprint planning, reviews, retros, etc.)',
+          'Tracked key metrics and user feedback to drive iterations',
+          'Aligned strategy with market trends and customer needs',
         ],
         focus: ''
       }
     ],
     talks: [
-      'Product fundamentals for Product Owners',
+      'Basic concepts of a Product Owner',
       'Token App for businesses',
-      'Metrics & Measurement frameworks',
-      'Google Analytics & GA4',
+      'Metrics and measurement',
+      'Google Analytics and Tarot',
+      'Basic GA4',
       'Google Tag Manager',
-      'Looker Studio',
-      'UX basics for product teams'
+      'Google Looker Studio',
+      'UX basics',
     ]
   },
   {
