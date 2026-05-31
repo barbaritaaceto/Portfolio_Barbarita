@@ -32,7 +32,7 @@ export const track = {
   clickContact(source_section = 'hero') {
     trackEvent('click_contact', { source_section })
   },
-  clickDownloadCV(source_section = 'hero', file_name = 'Barbara_Aceto_CV.pdf') {
+  clickDownloadCV(source_section = 'hero', file_name = 'CV - Aceto Barbara.png') {
     trackEvent('click_download_cv', { source_section, file_name })
     trackEvent('cv_download_started', { source_section, file_name })
   },

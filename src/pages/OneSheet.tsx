@@ -358,6 +358,7 @@ export default function OneSheet() {
 
           /* Hide everything except the article */
           .one-sheet-actionbar,
+          #layout-lang-toggle,
           nav, header, footer,
           #layout-ai-btn,
           [data-tour], [data-feedback] { display: none !important; }

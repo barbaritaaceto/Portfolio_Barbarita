@@ -380,9 +380,9 @@ export default function Home() {
                     {profileContent.contactCta}
                   </button>
                   <a
-                    href="/cv.pdf"
-                    download="Barbara_Aceto_CV.pdf"
-                    onClick={() => track.clickDownloadCV('profile_card')}
+                    href="/One%20Sheet%20Aceto%20Barbara.png"
+                    download="CV - Aceto Barbara.png"
+                    onClick={() => track.clickDownloadCV('profile_card', 'CV - Aceto Barbara.png')}
                     className="btn-link text-center text-sm"
                   >
                     {profileContent.cvCta}

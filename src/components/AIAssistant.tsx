@@ -1,22 +1,31 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
+  intents,
   matchIntent,
   fallbackES,
   fallbackEN,
   defaultSuggestionsES,
   defaultSuggestionsEN,
+  type AssistantIntent,
 } from '../data/assistant'
 import { track } from '../lib/analytics'
 
 type MessageRole = 'assistant' | 'user'
+
+interface SuggestedChip {
+  label: string
+  intentId?: string
+  isEnglish: boolean
+}
 
 interface Message {
   id: string
   role: MessageRole
   text: string
   navLinks?: { labelES: string; labelEN: string; route: string }[]
-  chips?: string[]
+  chips?: SuggestedChip[]
+  isEnglish?: boolean
   streaming?: boolean
   intentId?: string
 }
@@ -116,15 +125,29 @@ function renderText(text: string): React.ReactNode {
 }
 
 function detectInputLanguage(text: string): 'en' | 'es' | 'unknown' {
-  const lower = text.toLowerCase()
-  const words = lower.split(/\s+/)
+  const lower = text
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s]/g, ' ')
+  const words = lower.split(/\s+/).filter(Boolean)
   const EN_EXCLUSIVE = new Set(['the', 'she', 'her', 'his', 'they', 'you', 'your', 'does', 'has', 'have', 'what', 'how', 'tell', 'about', 'where', 'when', 'did', 'can', 'could', 'would', 'should', 'are', 'were', 'was'])
-  const ES_EXCLUSIVE = new Set(['qué', 'cómo', 'está', 'tiene', 'hace', 'también', 'cuál', 'trabaja', 'podés', 'querés', 'sabés', 'conóces', 'qué', 'dónde', 'cuándo', 'tenés', 'sos'])
+  const ES_EXCLUSIVE = new Set(['que', 'como', 'esta', 'tiene', 'hace', 'tambien', 'cual', 'trabaja', 'podes', 'queres', 'sabes', 'conoces', 'donde', 'cuando', 'tenes', 'sos', 'lidera', 'liderar', 'liderazgo'])
   const enCount = words.filter(w => EN_EXCLUSIVE.has(w)).length
   const esCount = words.filter(w => ES_EXCLUSIVE.has(w)).length
   if (enCount >= 2 || (enCount === 1 && esCount === 0)) return 'en'
   if (esCount >= 1 && enCount === 0) return 'es'
   return 'unknown'
+}
+
+function buildChips(labels: string[], isEnglish: boolean): SuggestedChip[] {
+  return labels
+    .filter(Boolean)
+    .map(label => ({
+      label,
+      isEnglish,
+      intentId: matchIntent(label, isEnglish, undefined)?.id,
+    }))
 }
 
 function TypingDots() {
@@ -189,7 +212,7 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
   const [messages, setMessages] = useState<Message[]>([{
     id: 'onboarding', role: 'assistant',
     text: isEnglish ? onboardingEN : onboardingES,
-    chips: isEnglish ? initialChipsEN : initialChipsES,
+    chips: buildChips(isEnglish ? initialChipsEN : initialChipsES, isEnglish),
   }])
   const [input, setInput] = useState('')
   const [isTyping, setIsTyping] = useState(false)
@@ -229,7 +252,7 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
     if (tourStep < 0) return {}
     const active = tourStep === 0 ? 'input' : tourStep === 1 ? 'messages' : 'chips'
     if (active === spotlight) return { transition: 'opacity 0.25s' }
-    return { opacity: 0.12, pointerEvents: 'none', filter: 'blur(0.5px)', transition: 'opacity 0.25s, filter 0.25s' }
+    return { opacity: 0.12, filter: 'blur(0.5px)', transition: 'opacity 0.25s, filter 0.25s' }
   }
 
   useEffect(() => { setTimeout(() => inputRef.current?.focus(), 100) }, [])
@@ -251,17 +274,17 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
     return () => window.removeEventListener('keydown', onKey)
   }, [onClose])
 
-  const pickResponse = (intent: NonNullable<ReturnType<typeof matchIntent>>, lang: boolean): string => {
+  const pickResponse = (intent: AssistantIntent, lang: boolean): string => {
     const variants = lang ? intent.variantsEN : intent.variantsES
     if (variants?.length) return variants[Math.floor(Math.random() * variants.length)]
     return lang ? intent.responseEN : intent.responseES
   }
 
-  const sendMessage = useCallback((text: string) => {
+  const sendMessage = useCallback((text: string, forcedIntentId?: string, forcedEnglish?: boolean) => {
     if (!text.trim() || isTyping) return
     if (tourStep >= 0) skipTour()
     const query = text.trim()
-    track.aiQuestionSent(query.length, isEnglish ? 'en' : 'es')
+    track.aiQuestionSent(query.length, (forcedEnglish ?? isEnglish) ? 'en' : 'es')
     setInput('')
     if (inputRef.current) { inputRef.current.style.height = 'auto' }
     setMessages(prev => [...prev, { id: `u-${Date.now()}`, role: 'user', text: query }])
@@ -270,17 +293,27 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
       // Auto-detect language: if user types in the other language, respond accordingly
       const detectedLang = detectInputLanguage(query)
       const effectiveEnglish = detectedLang !== 'unknown' ? detectedLang === 'en' : isEnglish
-      const intent = matchIntent(query, effectiveEnglish, lastIntentIdRef.current)
-      let responseText: string, chips: string[], navLinks: Message['navLinks']
+      let responseEnglish = forcedEnglish ?? effectiveEnglish
+      let intent = forcedIntentId
+        ? intents.find(item => item.id === forcedIntentId) ?? null
+        : matchIntent(query, responseEnglish, lastIntentIdRef.current)
+      if (!intent) {
+        const alternateIntent = matchIntent(query, !responseEnglish, lastIntentIdRef.current)
+        if (alternateIntent) {
+          intent = alternateIntent
+          responseEnglish = !responseEnglish
+        }
+      }
+      let responseText: string, chips: SuggestedChip[], navLinks: Message['navLinks']
       if (intent) {
-        responseText = pickResponse(intent, effectiveEnglish)
+        responseText = pickResponse(intent, responseEnglish)
         // Dynamic chips: filter out already-seen intents
-        const rawChips = effectiveEnglish ? intent.suggestionsEN : intent.suggestionsES
-        const filtered = rawChips.filter(chip => {
-          const m = matchIntent(chip, effectiveEnglish, undefined)
-          return !m || !seenIntentsRef.current.has(m.id)
+        const rawChips = responseEnglish ? intent.suggestionsEN : intent.suggestionsES
+        const preparedChips = buildChips(rawChips, responseEnglish)
+        const filtered = preparedChips.filter(chip => {
+          return !chip.intentId || (chip.intentId !== intent.id && !seenIntentsRef.current.has(chip.intentId))
         })
-        chips = filtered.length >= 2 ? filtered : rawChips
+        chips = filtered.length >= 2 ? filtered : preparedChips
         navLinks = intent.navLinks
         lastIntentIdRef.current = intent.id
         seenIntentsRef.current.add(intent.id)
@@ -291,12 +324,12 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
           const existing: { q: string; t: number }[] = JSON.parse(localStorage.getItem(key) || '[]')
           localStorage.setItem(key, JSON.stringify([...existing, { q: query, t: Date.now() }].slice(-50)))
         } catch {}
-        responseText = effectiveEnglish ? fallbackEN : fallbackES
-        chips = effectiveEnglish ? defaultSuggestionsEN : defaultSuggestionsES
+        responseText = responseEnglish ? fallbackEN : fallbackES
+        chips = buildChips(responseEnglish ? defaultSuggestionsEN : defaultSuggestionsES, responseEnglish)
       }
       const msgId = `a-${Date.now()}`
       setIsTyping(false)
-      setMessages(prev => [...prev, { id: msgId, role: 'assistant', text: '', streaming: true, intentId: intent?.id }])
+      setMessages(prev => [...prev, { id: msgId, role: 'assistant', text: '', isEnglish: responseEnglish, streaming: true, intentId: intent?.id }])
       if (streamIntervalRef.current) clearInterval(streamIntervalRef.current)
       const words = responseText.split(' ')
       let wordIdx = 0
@@ -306,7 +339,7 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
           clearInterval(streamIntervalRef.current!)
           streamIntervalRef.current = null
           setMessages(prev => prev.map(m => m.id === msgId ? { ...m, text: words.join(' '), streaming: false, navLinks, chips } : m))
-          track.aiResponseReceived(intent?.id, effectiveEnglish ? 'en' : 'es')
+          track.aiResponseReceived(intent?.id, responseEnglish ? 'en' : 'es')
         } else {
           setMessages(prev => prev.map(m => m.id === msgId ? { ...m, text: words.slice(0, wordIdx).join(' ') } : m))
         }
@@ -364,7 +397,7 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
         {/* Header — dimmed on step 0, 1, 2 */}
         <div
           className="flex items-center justify-between px-5 py-4 flex-shrink-0"
-          style={{ borderBottom: '1px solid var(--border-base)', ...(tourStep >= 0 ? { opacity: 0.12, pointerEvents: 'none' as const, filter: 'blur(0.5px)', transition: 'opacity 0.25s, filter 0.25s' } : {}) }}
+          style={{ borderBottom: '1px solid var(--border-base)', ...(tourStep >= 0 ? { opacity: 0.12, filter: 'blur(0.5px)', transition: 'opacity 0.25s, filter 0.25s' } : {}) }}
         >
           <div>
             <div className="flex items-center gap-2">
@@ -404,9 +437,9 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
               <div key={msg.id} className="ai-msg flex flex-col gap-2.5">
                 {msg.intentId && intentMeta[msg.intentId] && intentMeta[msg.intentId].labelES !== '' && (
                   <div style={{ display: 'flex', alignItems: 'center', gap: '5px', marginLeft: '2px', marginBottom: '-2px' }}>
-                    <span style={{ fontSize: '11px', lineHeight: 1 }}>{intentMeta[msg.intentId].emoji}</span>
+                    <span style={{ fontSize: '11px', lineHeight: 1 }}>{intentMeta[msg.intentId]?.emoji ?? ''}</span>
                     <span style={{ fontSize: '10px', fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '0.05em', textTransform: 'uppercase' as const }}>
-                      {isEnglish ? intentMeta[msg.intentId].labelEN : intentMeta[msg.intentId].labelES}
+                      {(msg.isEnglish ?? isEnglish) ? intentMeta[msg.intentId]?.labelEN ?? '' : intentMeta[msg.intentId]?.labelES ?? ''}
                     </span>
                   </div>
                 )}
@@ -414,26 +447,26 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
                   style={{ backgroundColor: 'var(--bg)', color: 'var(--text-secondary)', border: '1px solid var(--border-base)', ...(tourStep === 1 && msg.id === 'onboarding' ? { opacity: 0.1, filter: 'blur(0.5px)', transition: 'opacity 0.25s, filter 0.25s' } : {}) }}>
                   {renderText(msg.text)}{msg.streaming && <span className="ai-cursor" aria-hidden="true" />}
                 </div>
-                {msg.navLinks && msg.navLinks.length > 0 && (
+                {Array.isArray(msg.navLinks) && msg.navLinks.length > 0 && (
                   <div className="flex flex-wrap gap-1.5">
-                    {msg.navLinks.map((link, j) => (
+                    {msg.navLinks.filter(link => link && link.labelEN && link.labelES && link.route).map((link, j) => (
                       <button key={j} type="button" onClick={() => { navigate(link.route); onClose() }}
                         className="text-xs px-3 py-1.5 rounded-full transition-colors"
                         style={{ color: 'var(--accent-primary)', border: '1px solid rgba(74,127,121,0.28)', backgroundColor: 'rgba(74,127,121,0.06)' }}
                         onMouseEnter={e => { e.currentTarget.style.backgroundColor = 'rgba(74,127,121,0.12)' }}
                         onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'rgba(74,127,121,0.06)' }}>
-                        {isEnglish ? link.labelEN : link.labelES} →
+                        {(msg.isEnglish ?? isEnglish) ? link.labelEN : link.labelES} →
                       </button>
                     ))}
                   </div>
                 )}
-                {msg.chips && msg.chips.length > 0 && (
+                {Array.isArray(msg.chips) && msg.chips.length > 0 && (
                   <div className="flex flex-wrap gap-1.5">
-                    {msg.chips.map((chip, ci) => (
-                      <button key={ci} type="button" onClick={() => { track.aiSuggestedQuestionClick(chip.length, isEnglish ? 'en' : 'es'); sendMessage(chip) }}
+                    {msg.chips.filter(chip => chip?.label).map((chip, ci) => (
+                      <button key={ci} type="button" onClick={() => { track.aiSuggestedQuestionClick(chip.label.length, chip.isEnglish ? 'en' : 'es'); sendMessage(chip.label, chip.intentId, chip.isEnglish) }}
                         className="ai-chip text-xs px-3 py-1.5 rounded-full"
                         style={{ color: 'var(--text-secondary)', backgroundColor: '#FFFFFF', border: '1px solid var(--border-base)' }}>
-                        {chip}
+                        {chip.label}
                       </button>
                     ))}
                   </div>
@@ -471,7 +504,7 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
           style={{
             borderTop: '1px solid var(--border-base)',
             paddingBottom: 'max(1rem, calc(env(safe-area-inset-bottom, 0px) + 0.75rem))',
-            ...(tourStep === 1 ? { opacity: 0.12, pointerEvents: 'none', filter: 'blur(0.5px)', transition: 'opacity 0.25s, filter 0.25s' } : { transition: 'opacity 0.25s' }),
+            ...(tourStep === 1 ? { opacity: 0.12, filter: 'blur(0.5px)', transition: 'opacity 0.25s, filter 0.25s' } : { transition: 'opacity 0.25s' }),
           }}
         >
           {/* Step 0 callout — above input bar */}
@@ -493,7 +526,7 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
           {/* Input form — first, dimmed during step 2 */}
           <div
             className="mb-2.5"
-            style={(tourStep === 1 || tourStep === 2) ? { opacity: 0.2, pointerEvents: 'none', transition: 'opacity 0.25s' } : {}}
+            style={(tourStep === 1 || tourStep === 2) ? { opacity: 0.2, transition: 'opacity 0.25s' } : {}}
           >
             <form onSubmit={handleSubmit}>
               <div className="ai-inp-wrap flex items-center gap-3 px-4 py-2.5 rounded-2xl"
@@ -538,7 +571,7 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
             className="mt-2"
             style={{
               display: 'flex', gap: '6px', flexWrap: 'wrap' as const,
-              ...((tourStep === 0 || tourStep === 1) ? { opacity: 0.1, pointerEvents: 'none', filter: 'blur(0.5px)', transition: 'opacity 0.25s, filter 0.25s' } : tourStep === 2 ? { transition: 'opacity 0.25s' } : {}),
+              ...((tourStep === 0 || tourStep === 1) ? { opacity: 0.1, filter: 'blur(0.5px)', transition: 'opacity 0.25s, filter 0.25s' } : tourStep === 2 ? { transition: 'opacity 0.25s' } : {}),
             }}
           >
             {/* Step 2 callout — above the chips */}
