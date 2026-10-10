@@ -1,9 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
 
 export default function NotFound(){
   return (
     <div className="relative min-h-[70vh] flex items-center justify-center overflow-hidden" style={{ backgroundColor: 'var(--bg)' }}>
+      {/* La página de error no debe aparecer en buscadores */}
+      <Helmet>
+        <title>Página no encontrada — Barbara Aceto</title>
+        <meta name="robots" content="noindex" />
+      </Helmet>
       <img src="/fodo limones.png" alt="" aria-hidden="true" className="pointer-events-none absolute inset-0 w-full h-full object-cover opacity-20" />
 
       <div className="relative z-10 text-center px-6 max-w-lg mx-auto">

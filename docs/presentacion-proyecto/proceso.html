@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Presentación proyecto portfolio</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap" />
+<style>
+  @page { size: 1200px 800px; margin: 0; }
+  :root{--bg:#FAF8F5;--card:#fff;--t1:#1F2E2A;--t2:#4A5552;--t3:#6B6F6A;--accent:#4A7F79;--deep:#2F4F46;--border:#E6E2DD;--soft:#C76A5A;--softbg:#F6E8EA;--tint:#EEF4F2}
+  *{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  html,body{margin:0;background:var(--bg);font-family:Inter,system-ui,sans-serif;color:var(--t2)}
+  .slide{width:1200px;height:800px;padding:56px 60px;position:relative;overflow:hidden;page-break-after:always;break-after:page;background:var(--bg);display:flex;gap:44px}
+  .slide.col{flex-direction:column;gap:0}
+  h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:600;color:var(--t1);margin:0;letter-spacing:-.01em}
+  h1{font-size:68px;line-height:1.02}
+  h2{font-size:42px;line-height:1.12}
+  h2 em,h1 em{font-style:italic;color:var(--accent);font-weight:500}
+  h3{font-size:18px}
+  p{margin:0}
+  .eyebrow{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  .lead{font-size:17px;line-height:1.55;margin-top:16px}
+  .lead b{color:var(--accent)}
+  .left{width:400px;flex:none;display:flex;flex-direction:column;justify-content:center}
+  .right{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:16px}
+  .shot{border-radius:16px;border:1px solid var(--border);box-shadow:0 18px 44px rgba(30,42,56,.12);overflow:hidden;background:#fff}
+  .shot img{display:block;width:100%}
+  .list{margin:22px 0 0;padding:0;list-style:none}
+  .list li{display:flex;gap:14px;padding:11px 0;border-top:1px solid var(--border);font-size:14px;line-height:1.45}
+  .list li:first-child{border-top:0}
+  .list b{display:block;color:var(--t1);font-size:15px}
+  .ic{flex:none;width:38px;height:38px;border-radius:50%;background:var(--tint);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:17px}
+  .quote{margin-top:22px;background:var(--tint);border-radius:16px;padding:18px 22px;font-family:'Playfair Display',serif;font-size:17px;line-height:1.45;color:var(--t1)}
+  .quote em{color:var(--accent)}
+  .cards{display:grid;gap:14px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px 18px}
+  .card p{font-size:13px;line-height:1.5;margin-top:5px}
+  .pill{display:inline-block;font-size:11px;font-weight:700;border-radius:999px;padding:4px 11px;background:var(--tint);color:var(--deep)}
+  .foot{position:absolute;left:60px;right:60px;bottom:26px;display:flex;justify-content:space-between;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#A9A49C}
+  .ba{font-family:'Playfair Display',serif;font-size:26px;color:var(--t1);letter-spacing:.02em}
+
+  /* portada */
+  .cover .collage{position:relative;flex:1}
+  .cover .collage .shot{position:absolute}
+  .chips4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:30px}
+  .chips4 div{font-size:11px;line-height:1.4}
+  .chips4 b{display:block;font-size:13px;color:var(--t1);margin-bottom:2px}
+  .stack{margin-top:26px;display:inline-flex;gap:14px;align-items:center;background:#fff;border:1px solid var(--border);border-radius:999px;padding:9px 18px;font-size:12px;font-weight:600;color:var(--t1)}
+
+  /* arquitectura */
+  .journey{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+  .journey .step{background:#fff;border:1px solid var(--border);border-radius:14px;padding:12px 10px;text-align:center;position:relative}
+  .journey .n{width:24px;height:24px;border-radius:50%;background:var(--deep);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 8px}
+  .journey b{display:block;font-family:'Playfair Display',serif;font-size:14px;color:var(--t1)}
+  .journey span{font-size:11px;color:var(--t3)}
+  table{width:100%;border-collapse:collapse;margin-top:10px;font-size:11.5px}
+  td,th{padding:8px 8px;border-top:1px solid var(--border);text-align:center;vertical-align:top;line-height:1.35}
+  th{text-align:left;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);width:92px}
+  .sw{display:flex;gap:8px;margin-top:8px}
+  .sw div{flex:1;height:44px;border-radius:10px;border:1px solid var(--border)}
+  .swl{display:flex;gap:8px;font-size:9px;color:var(--t3);margin-top:4px}
+  .swl span{flex:1;text-align:center}
+
+  /* stack */
+  .tools{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .tool{background:#fff;border:1px solid var(--border);border-radius:14px;padding:14px 16px;display:flex;gap:14px;align-items:flex-start}
+  .tool .logo{flex:none;width:40px;height:40px;border-radius:10px;background:var(--tint);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--deep);font-size:13px}
+  .tool b{font-family:'Playfair Display',serif;font-size:16px;color:var(--t1)}
+  .tool p{font-size:12px;line-height:1.45;margin-top:2px}
+  .tool.wide{grid-column:1/-1;background:var(--tint);border-color:transparent}
+
+  /* guía */
+  .flow4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .flow4 .card{padding:13px 14px}
+  .flow4 .n{font-size:11px;font-weight:700;color:var(--accent);letter-spacing:.08em}
+  .flow4 b{display:block;font-family:'Playfair Display',serif;font-size:14.5px;color:var(--t1);margin:3px 0}
+  .flow4 p{font-size:11.5px;margin:0;line-height:1.45}
+
+  /* días */
+  .days li{padding:9px 0}
+  .day{flex:none;width:44px;height:44px;border-radius:50%;border:1.5px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:8px;font-weight:700;letter-spacing:.08em;color:var(--t3);background:#fff}
+  .day b{font-size:14px;color:var(--deep);display:block;line-height:1}
+
+  /* loop */
+  .loop{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .loop .card{padding:12px 14px;font-size:12.5px;color:var(--t1);font-weight:500;display:flex;gap:10px;align-items:center}
+  .loop .n{flex:none;width:26px;height:26px;border-radius:50%;background:var(--tint);color:var(--deep);font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center}
+  .iter{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:8px}
+  .iter b{display:block;font-family:'Playfair Display',serif;color:var(--t1);font-size:15px;margin-bottom:6px}
+  .iter p{font-size:12px;line-height:1.5}
+  .iter .ba2{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+
+  /* números */
+  .nums{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+  .num{background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px 14px}
+  .num b{display:block;font-family:'Playfair Display',serif;font-size:34px;color:var(--deep);line-height:1}
+  .num span{display:block;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--t1);margin-top:8px}
+  .num small{display:block;font-size:11px;color:var(--t3);margin-top:3px;line-height:1.35}
+</style>
+</head>
+<body>
+
+<!-- 1 · PORTADA -->
+<section class="slide cover">
+  <div class="left">
+    <div class="ba" style="position:absolute;top:44px;left:60px">BA.</div>
+    <h1>Portfolio<br>Profesional</h1>
+    <p style="font-family:'Playfair Display',serif;font-style:italic;font-size:30px;color:var(--accent);margin-top:14px">Barbara Aceto</p>
+    <p class="lead">Entre <b>humanos</b> y <b>algoritmos</b>,<br>lidero productos, equipos y nuevas formas de trabajar.</p>
+    <div class="chips4">
+      <div><b>Producto</b>Estrategia con impacto real</div>
+      <div><b>Personas</b>Equipos y usuarios en el centro</div>
+      <div><b>IA</b>Mi copiloto, no mi reemplazo</div>
+      <div><b>Ejecución</b>Del roadmap a producción</div>
+    </div>
+    <div><span class="stack">React · Vite · Tailwind CSS · Vercel · IA</span></div>
+  </div>
+  <div class="collage">
+    <div class="shot" style="left:0;top:20px;width:560px"><img src="hero.jpg" alt=""></div>
+    <div class="shot" style="right:-20px;top:250px;width:400px"><img src="asistente.jpg" alt=""></div>
+    <div class="shot" style="left:30px;bottom:6px;width:400px"><img src="trayectoria.jpg" alt=""></div>
+  </div>
+</section>
+
+<!-- 2 · EL PROBLEMA -->
+<section class="slide">
+  <div class="left" style="width:470px">
+    <p class="eyebrow">El problema</p>
+    <h2>El portfolio tradicional <em>no me representaba.</em></h2>
+    <ul class="list">
+      <li><span class="ic">i</span><div><b>Qué no me gustaba de los portfolios clásicos</b>Demasiados datos, poco contexto y cero conexión.</div></li>
+      <li><span class="ic">◎</span><div><b>Qué sentía que faltaba mostrar</b>Mi forma de pensar, decidir, priorizar y construir.</div></li>
+      <li><span class="ic">⇄</span><div><b>Por qué quería contar procesos y no solamente cargos</b>Porque el impacto está en cómo se construyen las cosas.</div></li>
+      <li><span class="ic">▤</span><div><b>Diferencia entre un CV visual y un producto vivo</b>Un CV informa. Un producto vivo demuestra.</div></li>
+      <li><span class="ic">✦</span><div><b>Necesidad de mostrar criterio y forma de trabajar</b>Quería que se entienda mi mirada, mis decisiones y mi forma de colaborar.</div></li>
+    </ul>
+  </div>
+  <div class="right">
+    <p class="pill" style="align-self:flex-start">El CV sigue existiendo, pero como una pieza más</p>
+    <div class="shot"><img src="onesheet.jpg" alt=""></div>
+    <p style="font-size:12px;color:var(--t3)">El One Sheet resume la experiencia en una hoja descargable. El portfolio cuenta lo que una hoja no puede: por qué y cómo.</p>
+  </div>
+  <div class="foot"><span>Barbara Aceto · Portfolio</span><span>02</span></div>
+</section>
+
+<!-- 3 · LA VISIÓN -->
+<section class="slide">
+  <div class="left" style="width:430px">
+    <p class="eyebrow">La visión del producto</p>
+    <h2>La idea no era diseñar un sitio. <em>Era diseñar una experiencia.</em></h2>
+    <p class="lead">Quería crear un espacio que <b>reflejara quién soy</b>, <b>cómo pienso</b> y <b>cómo construyo</b>.</p>
+    <ul class="list" style="margin-top:14px">
+      <li><span class="ic">♡</span><div>Una experiencia humana, clara y honesta.</div></li>
+      <li><span class="ic">◉</span><div>Que muestre mi forma de trabajar, no solo lo que hice.</div></li>
+      <li><span class="ic">✧</span><div>Que conecte estrategia, producto, tecnología y sensibilidad.</div></li>
+      <li><span class="ic">☺</span><div>Que genere confianza y deje ganas de trabajar juntos.</div></li>
+      <li><span class="ic">↻</span><div>Que evolucione conmigo y con lo que construyo.</div></li>
+    </ul>
+    <div class="quote">No quería un portfolio estático. Quería un <em>producto vivo</em> que contara mi historia y cómo trabajo.</div>
+  </div>
+  <div class="right">
+    <div class="shot"><img src="ideas.jpg" alt=""></div>
+    <div class="shot" style="width:78%;align-self:flex-end;margin-top:-90px"><img src="aprendizajes.jpg" alt=""></div>
+  </div>
+  <div class="foot"><span>Barbara Aceto · Portfolio</span><span>03</span></div>
+</section>
+
+<!-- 4 · ESTRATEGIA Y DISEÑO -->
+<section class="slide col">
+  <p class="eyebrow">Estrategia y diseño</p>
+  <h2>Un <em>sistema</em>, una <em>experiencia</em>, una <em>identidad</em>.</h2>
+  <p class="lead" style="margin-top:8px;font-size:15px">Todo el recorrido vive en una sola página, pensada para leerse de arriba hacia abajo.</p>
+  <div style="display:flex;gap:28px;margin-top:22px;flex:1">
+    <div style="flex:1.75">
+      <div class="card" style="height:100%">
+        <h3>Arquitectura de experiencia</h3>
+        <p style="margin-bottom:12px">El recorrido de quien entra, de la primera impresión a la conversación.</p>
+        <div class="journey">
+          <div class="step"><div class="n">1</div><b>Inicio</b><span>Conexión inicial</span></div>
+          <div class="step"><div class="n">2</div><b>Ideas desde la trinchera</b><span>Charlas y reflexiones</span></div>
+          <div class="step"><div class="n">3</div><b>Por qué construyo</b><span>Mirada y aprendizajes</span></div>
+          <div class="step"><div class="n">4</div><b>Trayectoria</b><span>Etapas y decisiones</span></div>
+          <div class="step"><div class="n">5</div><b>¿Hablamos?</b><span>Siguiente paso</span></div>
+        </div>
+        <table>
+          <tr><th>Rol principal</th><td>Atraer y dar contexto</td><td>Mostrar criterio en público</td><td>Explicar cómo pienso</td><td>Demostrar recorrido</td><td>Facilitar la conversación</td></tr>
+          <tr><th>Contenido clave</th><td>Propuesta de valor y primer vistazo</td><td>Charla, videos y notas</td><td>Relato y ocho aprendizajes con datos</td><td>Línea de tiempo interactiva</td><td>Contacto, CV y LinkedIn</td></tr>
+          <tr><th>Intención</th><td>Entender rápido quién soy</td><td>Ver ideas en acción</td><td>Comprender criterio</td><td>Validar experiencia</td><td>Dar el próximo paso</td></tr>
+        </table>
+        <p style="margin-top:12px"><span class="pill">Acompañan todo el recorrido</span> &nbsp;Bocconcino, el guía con respuestas sobre mí · One Sheet descargable · Tour de bienvenida · Español e inglés</p>
+      </div>
+    </div>
+    <div style="flex:1">
+      <div class="card" style="height:100%">
+        <h3>Identidad visual</h3>
+        <p style="font-style:italic">“Diseñando una identidad propia.”</p>
+        <p class="eyebrow" style="margin:16px 0 6px">Tipografía</p>
+        <p style="font-family:'Playfair Display',serif;font-size:30px;color:var(--t1);line-height:1">Aa <span style="font-size:13px;font-family:Inter">Playfair Display · títulos con carácter</span></p>
+        <p style="font-size:30px;color:var(--t1);line-height:1;margin-top:8px">Aa <span style="font-size:13px">Inter · texto claro y legible</span></p>
+        <p class="eyebrow" style="margin:18px 0 0">Paleta de colores</p>
+        <div class="sw"><div style="background:#2F4F46"></div><div style="background:#4A7F79"></div><div style="background:#8FAE9D"></div><div style="background:#FAF8F5"></div><div style="background:#C76A5A"></div><div style="background:#C8A24C"></div></div>
+        <div class="swl"><span>#2F4F46</span><span>#4A7F79</span><span>#8FAE9D</span><span>#FAF8F5</span><span>#C76A5A</span><span>#C8A24C</span></div>
+        <p class="eyebrow" style="margin:18px 0 6px">Principios</p>
+        <p style="font-size:12.5px;line-height:1.6">Navegación intuitiva · Componentes reutilizables · Consistencia visual · Narrativa progresiva</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Barbara Aceto · Portfolio</span><span>04</span></div>
+</section>
+
+<!-- 5 · STACK -->
+<section class="slide">
+  <div class="left" style="width:360px">
+    <p class="eyebrow">Stack completo</p>
+    <h2>El stack no fue casual. <em>Cada herramienta tuvo un propósito.</em></h2>
+    <p class="lead" style="font-size:15px">Elegí tecnologías modernas, simples y escalables que me permitieron moverme <b>rápido</b> sin sacrificar <b>calidad</b> ni <b>performance</b>.</p>
+    <div class="quote" style="font-size:15px">No se trató de usar lo más nuevo. Se trató de usar lo que mejor me permitía construir lo que tenía en mente, <em>en tiempo real</em>.</div>
+  </div>
+  <div class="right">
+    <div class="tools">
+      <div class="tool"><div class="logo">Re</div><div><b>React</b><p>Interfaces reactivas y componentes reutilizables.</p></div></div>
+      <div class="tool"><div class="logo">Vi</div><div><b>Vite</b><p>Build rápido que acorta los tiempos de espera.</p></div></div>
+      <div class="tool"><div class="logo">Tw</div><div><b>Tailwind CSS</b><p>Interfaces consistentes y responsivas.</p></div></div>
+      <div class="tool"><div class="logo">Gh</div><div><b>GitHub</b><p>Control de versiones, historial y backup.</p></div></div>
+      <div class="tool"><div class="logo">▲</div><div><b>Vercel</b><p>Cada push a main publica el sitio en menos de un minuto.</p></div></div>
+      <div class="tool"><div class="logo">@</div><div><b>EmailJS</b><p>Formulario de feedback sin backend propio.</p></div></div>
+      <div class="tool"><div class="logo">GA</div><div><b>Google Analytics</b><p>Qué se mira, qué se toca y qué le preguntan al guía.</p></div></div>
+      <div class="tool"><div class="logo">IA</div><div><b>ChatGPT y Gemini</b><p>Brainstorming, estructura, copy e investigación.</p></div></div>
+      <div class="tool wide"><div class="logo" style="background:#fff">✳</div><div><b>Claude Code y Codex en VS Code</b><p>Asistencia de IA directamente sobre el código: refactorización, debugging, pruebas en el navegador y despliegues. Mi mejor combo para construir.</p></div></div>
+    </div>
+  </div>
+  <div class="foot"><span>Barbara Aceto · Portfolio</span><span>05</span></div>
+</section>
+
+<!-- 6 · EL GUÍA -->
+<section class="slide">
+  <div class="left" style="width:380px">
+    <p class="eyebrow">Construcción del guía</p>
+    <h2>Bocconcino, <em>el guía del portfolio.</em></h2>
+    <p class="lead" style="font-size:15px">Sumé una capa conversacional para que quien visita explore mi trabajo con sus propias palabras. Sin backend, sin costos, sin modelo de IA externo.</p>
+    <ul class="list" style="margin-top:12px">
+      <li><span class="ic">✎</span><div><b>45 respuestas escritas a mano</b>Sobre mí, mi trayectoria y mis ideas, en español e inglés.</div></li>
+      <li><span class="ic">?</span><div><b>Si duda, pregunta</b>Cuando la coincidencia es débil, ofrece temas en vez de arriesgar.</div></li>
+      <li><span class="ic">✉</span><div><b>Si no sabe, lo dice</b>Y ofrece escribirme directamente.</div></li>
+      <li><span class="ic">⌂</span><div><b>100 % en el navegador</b>Contenido curado, sin API keys ni datos a terceros.</div></li>
+    </ul>
+  </div>
+  <div class="right">
+    <div class="shot"><img src="asistente.jpg" alt=""></div>
+    <div class="flow4">
+      <div class="card"><span class="n">1</span><b>Elige o escribe</b><p>Botones de temas o una pregunta libre.</p></div>
+      <div class="card"><span class="n">2</span><b>Busca el tema</b><p>Compara con palabras clave y puntúa cada respuesta.</p></div>
+      <div class="card"><span class="n">3</span><b>Responde o aclara</b><p>Clara: responde. Dudosa: pregunta. Ninguna: deriva.</p></div>
+      <div class="card"><span class="n">4</span><b>Conecta</b><p>Sugiere temas, lleva a una sección o abre el contacto.</p></div>
+    </div>
+  </div>
+  <div class="foot"><span>Barbara Aceto · Portfolio</span><span>06</span></div>
+</section>
+
+<!-- 7 · 5 DÍAS -->
+<section class="slide">
+  <div class="left" style="width:380px">
+    <h2>De idea a producción en <em>5 días</em></h2>
+    <p style="font-family:'Playfair Display',serif;font-style:italic;color:var(--accent);font-size:17px;margin-top:10px">“Reduciendo el ciclo entre pensar y construir.”</p>
+    <ul class="list days" style="margin-top:14px">
+      <li><span class="day">DÍA<b>1</b></span><div><b>Research</b>Entiendo el problema, usuarios y contexto.</div></li>
+      <li><span class="day">DÍA<b>1</b></span><div><b>PRD</b>Defino objetivos, alcance y requisitos clave.</div></li>
+      <li><span class="day">DÍA<b>2</b></span><div><b>Wireframes</b>Estructuro la solución y el flujo principal.</div></li>
+      <li><span class="day">DÍA<b>2-3</b></span><div><b>Desarrollo</b>Paso de diseño a código con foco en valor.</div></li>
+      <li><span class="day">DÍA<b>3-4</b></span><div><b>Integraciones</b>Conecto servicios y datos necesarios.</div></li>
+      <li><span class="day">DÍA<b>4</b></span><div><b>GitHub + Vercel</b>Deploy continuo en cada cambio.</div></li>
+      <li><span class="day">DÍA<b>5+</b></span><div><b>Iteración continua</b>Mido, aprendo y mejoro en ciclos cortos.</div></li>
+    </ul>
+  </div>
+  <div class="right">
+    <div class="shot"><img src="hero.jpg" alt=""></div>
+    <div style="display:flex;gap:16px;align-items:flex-start">
+      <div class="shot" style="width:150px;flex:none"><img src="mobile.jpg" alt=""></div>
+      <div class="card" style="flex:1"><h3>La primera versión salió en cinco días.</h3><p>Desde entonces el sitio no dejó de cambiar: la versión de hoy es una sola página, con trayectoria interactiva, guía conversacional y un CV descargable, pensada también para celular.</p></div>
+    </div>
+  </div>
+  <div class="foot"><span>Barbara Aceto · Portfolio</span><span>07</span></div>
+</section>
+
+<!-- 8 · LOOP -->
+<section class="slide col">
+  <p class="eyebrow">El loop continuo de iteración</p>
+  <div style="display:flex;gap:40px;align-items:flex-start">
+    <div style="width:330px;flex:none">
+      <h2 style="font-size:36px">Iterar fue el camino para lograr <em>la mejor versión.</em></h2>
+      <p class="lead" style="font-size:14px">Cada ciclo de observación, construcción y mejora acerca el producto al resultado que buscamos.</p>
+    </div>
+    <div style="flex:1">
+      <div class="loop">
+        <div class="card"><span class="n">1</span>Observar un problema o tener una idea</div>
+        <div class="card"><span class="n">2</span>Describírselo a la IA con contexto preciso</div>
+        <div class="card"><span class="n">3</span>Recibir una propuesta o un boceto</div>
+        <div class="card"><span class="n">4</span>Probar en local</div>
+        <div class="card"><span class="n">5</span>Commit y push</div>
+        <div class="card"><span class="n">6</span>Vercel publica en menos de un minuto</div>
+        <div class="card"><span class="n">7</span>Observar en producción</div>
+        <div class="card"><span class="n">8</span>¿Funciona como esperaba?</div>
+        <div class="card"><span class="n">9</span>Corregir el pedido o el código, y volver a empezar</div>
+      </div>
+    </div>
+  </div>
+  <p class="eyebrow" style="margin:30px 0 4px">Iteraciones reales del proyecto</p>
+  <div class="iter">
+    <div class="card"><b>1 · Todo en una página</b><p><span class="ba2" style="color:var(--soft)">Antes</span> Trayectoria vivía en otra página.<br><span class="ba2" style="color:var(--accent)">Después</span> Es una sección del Home: se elige una etapa y el detalle se abre ahí mismo.</p></div>
+    <div class="card"><b>2 · Del asistente al guía</b><p><span class="ba2" style="color:var(--soft)">Antes</span> Hablaba como si fuera yo y arriesgaba respuestas.<br><span class="ba2" style="color:var(--accent)">Después</span> Bocconcino habla sobre mí, pregunta cuando duda y deriva cuando no sabe.</p></div>
+    <div class="card"><b>3 · Datos que cuentan algo</b><p><span class="ba2" style="color:var(--soft)">Antes</span> “Por qué construyo” era un texto abstracto.<br><span class="ba2" style="color:var(--accent)">Después</span> Ocho aprendizajes, cada uno con un dato concreto y una reflexión.</p></div>
+    <div class="card"><b>4 · Un CV que acompaña</b><p><span class="ba2" style="color:var(--soft)">Antes</span> “Descargar CV” bajaba una imagen.<br><span class="ba2" style="color:var(--accent)">Después</span> Un One Sheet alineado con LinkedIn, descargable en PDF.</p></div>
+  </div>
+  <div style="display:flex;gap:14px;margin-top:16px">
+    <div class="shot" style="flex:1;height:170px"><img src="trayectoria.jpg" alt="" style="height:100%;object-fit:cover;object-position:top left"></div>
+    <div class="shot" style="flex:1;height:170px"><img src="asistente.jpg" alt="" style="height:100%;object-fit:cover;object-position:center 45%"></div>
+    <div class="shot" style="flex:1;height:170px"><img src="aprendizajes.jpg" alt="" style="height:100%;object-fit:cover;object-position:right 30%"></div>
+    <div class="shot" style="flex:1;height:170px"><img src="onesheet.jpg" alt="" style="height:100%;object-fit:cover;object-position:center 22%"></div>
+  </div>
+  <div class="foot"><span>Barbara Aceto · Portfolio</span><span>08</span></div>
+</section>
+
+<!-- 9 · PROBLEMAS Y APRENDIZAJES -->
+<section class="slide">
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
+    <p class="eyebrow" style="color:var(--soft)">Problemas reales</p>
+    <h2>Producción también significa <em>frustración.</em></h2>
+    <ul class="list" style="margin-top:16px">
+      <li><span class="ic" style="background:var(--softbg);color:var(--soft)">✕</span><div><b>Builds rotos</b>Dependencias que rompen el build sin aviso.</div></li>
+      <li><span class="ic" style="background:var(--softbg);color:var(--soft)">⇪</span><div><b>Deploys fallando</b>Deploys que se caen a último momento.</div></li>
+      <li><span class="ic" style="background:var(--softbg);color:var(--soft)">□</span><div><b>Responsive inconsistente</b>Se ve bien en tu pantalla, pero falla en otras.</div></li>
+      <li><span class="ic" style="background:var(--softbg);color:var(--soft)">✱</span><div><b>Contenido de relleno publicado</b>Plantillas y páginas sin enlaces que nadie había revisado.</div></li>
+      <li><span class="ic" style="background:var(--softbg);color:var(--soft)">⚡</span><div><b>Decisiones rápidas bajo presión</b>Decidir con información incompleta y asumir riesgos para avanzar.</div></li>
+    </ul>
+  </div>
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;border-left:1px solid var(--border);padding-left:44px">
+    <p class="eyebrow">Aprendizajes</p>
+    <h2>Construir esto cambió mi <em>forma de trabajar.</em></h2>
+    <ul class="list" style="margin-top:16px">
+      <li><span class="ic">◔</span><div><b>La IA amplifica velocidad y complejidad</b>Permite construir más rápido, pero también sistemas más difíciles de mantener. Entender el contexto es clave.</div></li>
+      <li><span class="ic">◎</span><div><b>UX es intención</b>No se trata de que se vea bien, sino de que tenga sentido y resuelva un problema real.</div></li>
+      <li><span class="ic">➹</span><div><b>Publicar enseña más que planear</b>Nada reemplaza ver tu producto en manos reales.</div></li>
+      <li><span class="ic">↻</span><div><b>Iterar mejora el criterio</b>Cada iteración refina el producto y el juicio propio.</div></li>
+      <li><span class="ic">☺</span><div><b>La tecnología necesita dirección humana</b>Sin visión, criterio y propósito, las herramientas no generan impacto real.</div></li>
+    </ul>
+  </div>
+  <div class="foot"><span>Barbara Aceto · Portfolio</span><span>09</span></div>
+</section>
+
+<!-- 10 · PRODUCCIÓN -->
+<section class="slide col">
+  <p class="eyebrow">Producción</p>
+  <div style="display:flex;gap:40px;align-items:center">
+    <div style="width:430px;flex:none">
+      <h2>El momento donde <em>dejó de ser una idea.</em></h2>
+      <p class="lead" style="font-size:15px">Después de iterar, testear y ajustar cada detalle, llegó el momento de llevar el proyecto al mundo real. De local a <b>producción</b>.</p>
+      <div class="quote" style="font-size:15px">No solo es subir archivos. Es asegurarse de que todo funcione, se vea bien y sea rápido para cualquier persona, en cualquier lugar.</div>
+    </div>
+    <div class="shot" style="flex:1"><img src="trayectoria.jpg" alt=""></div>
+  </div>
+  <div class="nums" style="margin-top:26px">
+    <div class="num"><b>+90</b><span>Commits</span><small>en producción</small></div>
+    <div class="num"><b>26</b><span>Archivos</span><small>TypeScript / TSX</small></div>
+    <div class="num"><b>~6.600</b><span>Líneas de código</span><small>sin contar estilos ni configuración</small></div>
+    <div class="num"><b>45</b><span>Respuestas</span><small>en la base del guía, en dos idiomas</small></div>
+    <div class="num"><b>12</b><span>Días</span><small>con actividad de commits (jun 2025 – oct 2026)</small></div>
+    <div class="num"><b>0</b><span>Backends propios</span><small>todo estático</small></div>
+  </div>
+  <div class="card" style="margin-top:14px;display:flex;gap:26px;align-items:center">
+    <div style="flex:none"><p class="eyebrow" style="margin:0">El día más intenso</p><p style="font-family:'Playfair Display',serif;font-size:22px;color:var(--t1)">13 de mayo de 2026 · <b style="color:var(--deep)">26 commits</b></p></div>
+    <p style="font-size:13px;line-height:1.5">El día más activo no fue el inicio ni el final: fue el momento en que todo se conectó. Trabajar con un loop tan corto hace que cada cambio se pruebe en vivo antes de pasar al siguiente. No es caos, es ritmo de producto.</p>
+  </div>
+  <div class="foot"><span>Barbara Aceto · Portfolio</span><span>10</span></div>
+</section>
+
+<!-- 11 · CIERRE -->
+<section class="slide" style="align-items:center">
+  <div class="left" style="width:380px">
+    <h1 style="font-size:64px">¿Lo navegamos <em>juntos?</em></h1>
+    <p class="lead" style="margin-top:26px">portfolio-barbarita.vercel.app</p>
+    <p style="font-size:13px;color:var(--t3);margin-top:6px">linkedin.com/in/barbaraaceto</p>
+  </div>
+  <div class="right">
+    <div class="shot"><img src="hero.jpg" alt=""></div>
+    <div class="shot" style="width:70%;align-self:flex-end;margin-top:-70px"><img src="cierre.jpg" alt=""></div>
+  </div>
+</section>
+
+</body>
+</html>

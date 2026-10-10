@@ -582,7 +582,7 @@ export default function Home() {
                 <span className="text-[10px] font-semibold uppercase" style={{ color: 'var(--accent-primary)', letterSpacing: '0.14em' }}>
                   {homeText.whyTitle}
                 </span>
-                <h2 className="text-3xl lg:text-4xl font-serif font-semibold leading-tight mt-2.5 mb-6" style={{ color: 'var(--text-primary)' }}>
+                <h2 id="home-why-title" className="text-3xl lg:text-4xl font-serif font-semibold leading-tight mt-2.5 mb-6" style={{ color: 'var(--text-primary)' }}>
                   {homeText.whyStory.lead}
                 </h2>
 
@@ -755,7 +755,7 @@ export default function Home() {
           <div className="max-w-6xl mx-auto">
 
             {/* Section header */}
-            <div className="text-center mb-10 md:mb-12">
+            <div id="home-ideas-header" className="text-center mb-10 md:mb-12">
               <h2 className="text-3xl md:text-4xl font-serif font-semibold mb-3" style={{ color: 'var(--text-primary)' }}>
                 {homeText.newsTitle}
               </h2>

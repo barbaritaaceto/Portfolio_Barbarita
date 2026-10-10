@@ -4,6 +4,14 @@ const DONE_KEY = 'home-tour-done'
 const REQUEST_KEY = 'home-tour-requested'
 const PAD = 5
 
+// El tour se muestra solo una sola vez por navegador (antes volvía en cada pestaña nueva).
+function isTourDone(): boolean {
+  try { return window.localStorage.getItem(DONE_KEY) === '1' } catch { return true }
+}
+function markTourDone(): void {
+  try { window.localStorage.setItem(DONE_KEY, '1') } catch {}
+}
+
 interface Step {
   targetId: string | null
   emoji: string
@@ -17,12 +25,32 @@ const STEPS: Step[] = [
   {
     targetId: 'home-profile-card',
     emoji: '👋',
-    titleES: 'Bienvenido al portfolio de Barbara',
+    titleES: 'Te doy la bienvenida al portfolio de Barbara',
     titleEN: "Welcome to Barbara's portfolio",
     bodyES:
       'Barbi es Product & AI Leader con +10 años liderando productos, equipos y nuevas formas de trabajar. Recorramos juntos lo que tiene para mostrar.',
     bodyEN:
       "Barbi is a Product & AI Leader with 10+ years leading products, teams and new ways of working. Let's explore what she has to show.",
+  },
+  {
+    targetId: 'home-ideas-header',
+    emoji: '💡',
+    titleES: 'Ideas desde la trinchera',
+    titleEN: 'Ideas From The Field',
+    bodyES:
+      'Charlas, videos y reflexiones sobre producto, IA y liderazgo. Arriba está su charla en Agile Summit Uruguay.',
+    bodyEN:
+      'Talks, videos and reflections on product, AI and leadership. At the top is her talk at Agile Summit Uruguay.',
+  },
+  {
+    targetId: 'home-why-title',
+    emoji: '🌱',
+    titleES: 'Por qué construyo',
+    titleEN: 'Why I Build',
+    bodyES:
+      'Su mirada sobre el momento que vivimos, ocho aprendizajes del camino con datos concretos y cómo trabaja, paso a paso.',
+    bodyEN:
+      'Her view of the moment we are living through, eight lessons from the journey with concrete data, and how she works, step by step.',
   },
   {
     targetId: 'home-trayectoria-timeline',
@@ -35,22 +63,24 @@ const STEPS: Step[] = [
       'Pick a stage on the timeline to open the details: context, decisions and learnings from each experience.',
   },
   {
-    targetId: 'layout-ai-btn',
-    emoji: '🤖',
-    titleES: 'Tu Guía',
-    titleEN: 'Your Guide',
+    targetId: 'contacto',
+    emoji: '✉️',
+    titleES: '¿Hablamos?',
+    titleEN: 'Let’s talk',
     bodyES:
-      'Pensá con Barbara desde el asistente: traé un desafío de producto, IA, liderazgo o cambio organizacional.',
+      'Desde acá podés escribirle a Barbi, descargar su CV o ir a su LinkedIn.',
     bodyEN:
-      'Think with Barbara through the assistant — bring a product, AI, leadership or organizational challenge.',
+      'From here you can write to Barbi, download her CV or go to her LinkedIn.',
   },
   {
-    targetId: 'layout-lang-toggle',
-    emoji: '🌐',
-    titleES: 'Español · Inglés',
-    titleEN: 'Spanish · English',
-    bodyES: 'El portfolio está disponible en los dos idiomas. Cambiá cuando quieras con este selector.',
-    bodyEN: 'The portfolio is available in both languages. Switch anytime with this toggle.',
+    targetId: 'layout-ai-btn',
+    emoji: '🤖',
+    titleES: 'Bocconcino, tu guía',
+    titleEN: 'Bocconcino, your guide',
+    bodyES:
+      'Es el guía del portfolio: tiene respuestas sobre Barbi, su trayectoria y sus ideas. Elegí un tema o escribile tu pregunta.',
+    bodyEN:
+      'The portfolio guide: it has answers about Barbi, her career path and her ideas. Pick a topic or type your question.',
   },
   {
     targetId: 'footer-feedback-btn',
@@ -68,9 +98,9 @@ const STEPS: Step[] = [
     titleES: 'Ya viste todo',
     titleEN: "You've seen it all",
     bodyES:
-      'Podés reiniciar este tour cuando quieras desde el asistente — chip "Tour del portfolio" — o tocando "Pensá con Barbara".',
+      'Podés repetir este tour cuando quieras: abrí a Bocconcino y tocá "Tour del portfolio".',
     bodyEN:
-      'Restart this tour anytime from the assistant — chip "Tour the portfolio" — or by tapping "Think with Barbara".',
+      'You can repeat this tour anytime: open Bocconcino and tap "Tour the portfolio".',
   },
 ]
 
@@ -221,7 +251,7 @@ export default function HomeTour({ isEnglish }: HomeTourProps) {
   useEffect(() => {
     const checkAndStart = () => {
       const requested = sessionStorage.getItem(REQUEST_KEY) === '1'
-      const done = sessionStorage.getItem(DONE_KEY) === '1'
+      const done = isTourDone()
       if (requested || !done) {
         if (requested) sessionStorage.removeItem(REQUEST_KEY)
         setStep(0)
@@ -278,7 +308,7 @@ export default function HomeTour({ isEnglish }: HomeTourProps) {
   const nextStep = useCallback(() => {
     if (step >= STEPS.length - 1) {
       setActive(false)
-      sessionStorage.setItem(DONE_KEY, '1')
+      markTourDone()
     } else {
       setStep(s => s + 1)
     }
@@ -290,7 +320,7 @@ export default function HomeTour({ isEnglish }: HomeTourProps) {
 
   const skip = useCallback(() => {
     setActive(false)
-    sessionStorage.setItem(DONE_KEY, '1')
+    markTourDone()
   }, [])
 
   if (!active) return null

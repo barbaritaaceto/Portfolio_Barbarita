@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Note } from '../data/types'
 
-export default function NoteCard({note, locale = 'en-US', minuteLabel = 'min'}:{note:Note; locale?: string; minuteLabel?: string}){
+export default function NoteCard({note, locale = 'en-US', minuteLabel = 'min', tagLabels = {}}:{note:Note; locale?: string; minuteLabel?: string; tagLabels?: Record<string, string>}){
   return (
     <Link to={`/notes/${note.slug}`} className="block group"> 
       <div
@@ -56,7 +56,7 @@ export default function NoteCard({note, locale = 'en-US', minuteLabel = 'min'}:{
           })} · {note.readingTime} {minuteLabel}
         </div>
         <div className="mt-2 flex gap-2">
-          {note.tags.map(t=> <span key={t} className="text-xs bg-[rgba(228,107,140,0.08)] px-2 py-1 rounded-full">{t}</span>)}
+          {note.tags.map(t=> <span key={t} className="text-xs bg-[rgba(228,107,140,0.08)] px-2 py-1 rounded-full">{tagLabels[t] ?? t}</span>)}
         </div>
       </div>
     </Link>

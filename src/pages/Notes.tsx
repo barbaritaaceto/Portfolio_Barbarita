@@ -137,8 +137,8 @@ export default function Notes(){
   }
 
   const tagLabels: Record<string, string> = isEnglish
-    ? {}
-    : { 'AI': 'IA', 'Metrics': 'Métricas', 'Ops': 'Ops', 'Design': 'Diseño', 'Ethics': 'Ética', 'People': 'Personas', 'Research': 'Research', 'Strategy': 'Estrategia', 'Data': 'Datos', 'Liderazgo': 'Liderazgo', 'Producto': 'Producto' }
+    ? { 'AI': 'AI', 'Metrics': 'Metrics', 'Liderazgo': 'Leadership', 'Producto': 'Product', 'Agilidad': 'Agility', 'Transformación': 'Transformation', 'Speaker': 'Speaker', 'Personas': 'People', 'Reflexión': 'Reflection' }
+    : { 'AI': 'IA', 'Metrics': 'Métricas', 'Liderazgo': 'Liderazgo', 'Producto': 'Producto', 'Agilidad': 'Agilidad', 'Transformación': 'Transformación', 'Speaker': 'Speaker', 'Personas': 'Personas', 'Reflexión': 'Reflexión' }
 
   const localizedNotes = useMemo(
     () => notesData.map((note) => {
@@ -174,7 +174,7 @@ export default function Notes(){
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 reveal-stagger is-revealed">
-          {filtered.map(n=> <NoteCard key={n.slug} note={n} minuteLabel={uiText.minuteLabel} locale={isEnglish ? 'en-US' : 'es-AR'} />)}
+          {filtered.map(n=> <NoteCard key={n.slug} note={n} tagLabels={tagLabels} minuteLabel={uiText.minuteLabel} locale={isEnglish ? 'en-US' : 'es-AR'} />)}
         </div>
 
         {filtered.length===0 && <div className="text-sm text-gray-600 mt-4">{uiText.noMatches}</div>}
