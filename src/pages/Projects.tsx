@@ -362,7 +362,6 @@ export default function Projects({ embedded = false }: { embedded?: boolean }) {
     'Token App for businesses': 'Token App para empresas',
     'Metrics & Measurement frameworks': 'Métricas y marcos de medición',
     'Google Analytics & GA4': 'Google Analytics y GA4',
-    'Google Tag Manager': 'Google Tag Manager',
     'Looker Studio': 'Looker Studio',
     'UX basics for product teams': 'Bases de UX para equipos de producto',
     'Product Leadership': 'Liderazgo de Producto',

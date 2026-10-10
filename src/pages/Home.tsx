@@ -914,7 +914,7 @@ export default function Home() {
                   rel="noopener noreferrer"
                   className="inline-block text-sm font-medium"
                   style={{ color: 'var(--accent-primary)' }}
-                  onClick={() => track.clickContentCard(featuredIdea.title, featuredIdea.type, featuredIdea.url, 'noticias')}
+                  onClick={() => track.clickContentCard(featuredIdea.title, featuredIdea.type, featuredIdea.url ?? '', 'noticias')}
                 >
                   {featuredIdea.slug === 'agile-summit-uruguay'
                     ? (isEnglish ? 'Read the reflection on LinkedIn →' : 'Leer la reflexión en LinkedIn →')
@@ -1125,7 +1125,7 @@ export default function Home() {
                         rel="noopener noreferrer"
                         className="inline-block mt-6 text-sm font-medium"
                         style={{ color: 'var(--accent-primary)' }}
-                        onClick={() => track.clickContentCard(wideIdea.title, wideIdea.type, wideIdea.url, 'noticias')}
+                        onClick={() => track.clickContentCard(wideIdea.title, wideIdea.type, wideIdea.url ?? '', 'noticias')}
                       >
                         {homeText.readArticle}
                       </a>
