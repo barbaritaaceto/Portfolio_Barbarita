@@ -751,7 +751,7 @@ export default function Home() {
         {/* ════════════════════════════════════ */}
         {/* PENSAMIENTO */}
         {/* ════════════════════════════════════ */}
-        <div className="order-1" style={{ background: 'linear-gradient(180deg, rgba(74,127,121,0.20) 0%, rgba(74,127,121,0.12) 100%)' }}>
+        <div className="order-1">
         <section ref={refNews} id="news-start" className="reveal order-1 w-full pt-7 pb-16 md:pt-10 md:pb-20 px-4">
           <div className="max-w-6xl mx-auto">
 
