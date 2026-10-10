@@ -158,7 +158,10 @@ export default function Notes(){
 
   return (
     <div>
-      <Helmet><title>{uiText.pageTitle} — Barbara Aceto</title></Helmet>
+      <Helmet>
+        <title>{uiText.pageTitle} — Barbara Aceto</title>
+        <meta name="description" content={isEnglish ? 'Notes, talks and reflections by Barbara Aceto on product, AI, teams and leadership.' : 'Notas, charlas y reflexiones de Barbara Aceto sobre producto, IA, equipos y liderazgo.'} />
+      </Helmet>
       <div className="mb-4 flex items-center justify-between">
         <h1 className="text-2xl font-semibold">{uiText.pageTitle}</h1>
         <div className="w-1/3"><Input placeholder={uiText.searchPlaceholder} value={q} onChange={e=>setQ(e.target.value)} /></div>

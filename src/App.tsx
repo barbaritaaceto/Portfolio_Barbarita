@@ -1,16 +1,12 @@
 import React, { lazy, Suspense } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Navigate, Routes, Route } from 'react-router-dom'
 import Layout from './routes/Layout'
 import Home from './pages/Home'
 
-const About       = lazy(() => import('./pages/About'))
 const Projects    = lazy(() => import('./pages/Projects'))
-const ProjectDetail = lazy(() => import('./pages/ProjectDetail'))
 const Notes       = lazy(() => import('./pages/Notes'))
 const NoteDetail  = lazy(() => import('./pages/NoteDetail'))
-const Press       = lazy(() => import('./pages/Press'))
 const OneSheet    = lazy(() => import('./pages/OneSheet'))
-const NewsLinks   = lazy(() => import('./pages/NewsLinks'))
 const NotFound    = lazy(() => import('./pages/NotFound'))
 
 function PageLoader() {
@@ -27,18 +23,19 @@ export default function App(){
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
-        <Route path="about" element={<Suspense fallback={<PageLoader />}><About /></Suspense>} />
+        {/* Páginas retiradas: su contenido vive en el Home y en el One Sheet */}
+        <Route path="about" element={<Navigate to="/" replace />} />
         <Route path="projects">
           <Route index element={<Suspense fallback={<PageLoader />}><Projects /></Suspense>} />
-          <Route path=":slug" element={<Suspense fallback={<PageLoader />}><ProjectDetail /></Suspense>} />
+          <Route path=":slug" element={<Navigate to="/projects" replace />} />
         </Route>
         <Route path="notes">
           <Route index element={<Suspense fallback={<PageLoader />}><Notes /></Suspense>} />
           <Route path=":slug" element={<Suspense fallback={<PageLoader />}><NoteDetail /></Suspense>} />
         </Route>
-        <Route path="press"      element={<Suspense fallback={<PageLoader />}><Press /></Suspense>} />
+        <Route path="press"      element={<Navigate to="/" replace />} />
         <Route path="one-sheet"  element={<Suspense fallback={<PageLoader />}><OneSheet /></Suspense>} />
-        <Route path="news-links" element={<Suspense fallback={<PageLoader />}><NewsLinks /></Suspense>} />
+        <Route path="news-links" element={<Navigate to="/" replace />} />
         <Route path="*"          element={<Suspense fallback={<PageLoader />}><NotFound /></Suspense>} />
       </Route>
     </Routes>

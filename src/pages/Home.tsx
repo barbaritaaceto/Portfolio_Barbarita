@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { lazy, Suspense, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import press from '../data/press';
 import notesData from '../data/notes';
 import HomeTour from '../components/HomeTour';
@@ -43,6 +44,12 @@ export default function Home() {
       whyStartElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
+  // El guía del portfolio puede pedir que se abra el contacto
+  useEffect(() => {
+    const onOpenContact = () => setIsModalOpen(true)
+    window.addEventListener('open-contact-modal', onOpenContact)
+    return () => window.removeEventListener('open-contact-modal', onOpenContact)
+  }, [])
   useEffect(() => {
     if (!isModalOpen) return
     const onKeyDown = (e: KeyboardEvent) => {
@@ -117,7 +124,7 @@ export default function Home() {
             { emoji: '🛍️', title: 'Building also means opening possibilities.', before: 'In e-commerce, we developed tools that brought digital marketing closer to sellers in Argentina, Mexico and Brazil. ', value: 'Three countries', after: ', different needs and one shared challenge: simplifying.' },
             { emoji: '🏦', title: 'Behind every product there are people.', before: 'In banking, I took part in solutions that today have an impact on ', value: 'more than 200,000 SMEs', after: '. That is where I understood that what we design on a screen has consequences in real life.' },
             { emoji: '🧱', title: 'Starting from scratch is a chance to rethink everything.', before: 'We built ', value: 'a digital bank from scratch', after: ' with a hybrid team. From the login to the APIs, the experience and every word. I learned that the product is in the details.' },
-            { emoji: '❤️', title: 'Leading is not about having all the answers.', before: 'I supported teams of ', value: 'more than 20 people', after: ', with different profiles and points of view. I learned that the best solutions appear when we make room for others to shine too.' },
+            { emoji: '❤️', title: 'Leading is not about having all the answers.', before: 'I supported teams of ', value: '15+ people', after: ', with different profiles and points of view. I learned that the best solutions appear when we make room for others to shine too.' },
             { emoji: '🎓', title: 'Teaching is also a way of learning.', before: 'I shared experiences about product, AI and leadership with teams from ', value: '5 industries', after: '. Every session reminded me that knowledge grows when it circulates.' },
             { emoji: '🎤', title: 'Saying ideas out loud is also building.', before: 'I took the stage at ', value: 'Agile Summit Uruguay', after: ' to talk about Agile After Agile. I learned that an idea gets better when it dares to leave your head and meet other people.' },
             { emoji: '🤖', title: 'Experimenting is the best way to keep learning.', before: 'I recently built an AI agent in ', value: 'under 40 minutes', after: '. Not because I had all the answers, but because I dared to try.' },
@@ -148,6 +155,7 @@ export default function Home() {
         scrollNewsAria: 'Scroll to Ideas From The Field',
         showAllIdeas: 'See all ideas',
         showFewerIdeas: 'See fewer',
+        allNotes: 'See all notes →',
         closingTitle: 'Let’s talk',
         closingText: 'An idea, an opportunity, or just a conversation about product and AI.',
         closingWrite: 'Write to me',
@@ -179,7 +187,7 @@ export default function Home() {
             { emoji: '🛍️', title: 'Que construir también es abrir posibilidades.', before: 'En e-commerce, desarrollamos herramientas que acercaron el marketing digital a sellers de Argentina, México y Brasil. ', value: 'Tres países', after: ', distintas necesidades y un mismo desafío: simplificar.' },
             { emoji: '🏦', title: 'Que detrás de cada producto hay personas.', before: 'En banca, participé en soluciones que hoy impactan en ', value: 'más de 200 mil pymes', after: '. Ahí entendí que lo que diseñamos en una pantalla tiene consecuencias en la vida real.' },
             { emoji: '🧱', title: 'Que empezar de cero es una oportunidad para repensarlo todo.', before: 'Construimos ', value: 'un banco digital desde cero', after: ' con un equipo híbrido. Desde el login hasta las APIs, la experiencia y cada palabra. Aprendí que el producto está en los detalles.' },
-            { emoji: '❤️', title: 'Que liderar no es tener todas las respuestas.', before: 'Acompañé equipos de ', value: 'más de 20 personas', after: ', con perfiles y miradas diferentes. Aprendí que las mejores soluciones aparecen cuando generamos espacio para que otros también brillen.' },
+            { emoji: '❤️', title: 'Que liderar no es tener todas las respuestas.', before: 'Acompañé equipos de ', value: '+15 personas', after: ', con perfiles y miradas diferentes. Aprendí que las mejores soluciones aparecen cuando generamos espacio para que otros también brillen.' },
             { emoji: '🎓', title: 'Que enseñar también es una forma de aprender.', before: 'Compartí experiencias sobre producto, IA y liderazgo con equipos de ', value: '5 industrias', after: '. Cada encuentro me recordó que el conocimiento crece cuando circula.' },
             { emoji: '🎤', title: 'Que decir las ideas en voz alta también es construir.', before: 'Subí al escenario de ', value: 'Agile Summit Uruguay', after: ' a hablar de Agile después del Agile. Aprendí que una idea mejora cuando se anima a salir de la cabeza y encontrarse con otros.' },
             { emoji: '🤖', title: 'Que experimentar es la mejor manera de seguir aprendiendo.', before: 'Hace poco construí un agente de IA en ', value: 'menos de 40 minutos', after: '. No porque tuviera todas las respuestas, sino porque me animé a probar.' },
@@ -210,6 +218,7 @@ export default function Home() {
         scrollNewsAria: 'Ir a la sección de noticias',
         showAllIdeas: 'Ver todas las ideas',
         showFewerIdeas: 'Ver menos',
+        allNotes: 'Ver todas las notas →',
         closingTitle: '¿Hablamos?',
         closingText: 'Una idea, una oportunidad o ganas de conversar sobre producto e IA.',
         closingWrite: 'Escribime',
@@ -719,14 +728,13 @@ export default function Home() {
             >
               {homeText.closingWrite}
             </button>
-            <a
-              href="/cv.pdf"
-              download="CV - Aceto Barbara.pdf"
-              onClick={() => track.clickDownloadCV('closing', 'CV - Aceto Barbara.pdf')}
+            <Link
+              to="/one-sheet"
+              onClick={() => track.clickDownloadCV('closing', 'one-sheet')}
               className="closing-link"
             >
               {homeText.closingCv}
-            </a>
+            </Link>
             <a
               href="https://linkedin.com/in/barbaraaceto"
               target="_blank"
@@ -1250,6 +1258,12 @@ export default function Home() {
               >
                 {showAllIdeas ? homeText.showFewerIdeas : homeText.showAllIdeas} {showAllIdeas ? '↑' : '↓'}
               </button>
+            </div>
+
+            <div className="flex justify-center mt-5">
+              <Link to="/notes" className="text-sm font-semibold" style={{ color: 'var(--accent-primary)' }}>
+                {homeText.allNotes}
+              </Link>
             </div>
 
 

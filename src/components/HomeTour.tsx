@@ -183,7 +183,7 @@ function TourCard({ emoji, title, body, step, total, onNext, onBack, onClose, is
             }}
           >
             <span>✨</span>
-            {isEnglish ? '¿How was this portfolio built?' : '¿Cómo se construyó este portfolio?'}
+            {isEnglish ? 'How was this portfolio built?' : '¿Cómo se construyó este portfolio?'}
           </a>
         )}
       </div>

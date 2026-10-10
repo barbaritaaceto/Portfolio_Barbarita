@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/react'
 import AIAssistant from '../components/AIAssistant'
@@ -52,12 +53,16 @@ const Layout: React.FC = () => {
   }, [isEnglish])
 
   const tooltip = isEnglish
-    ? 'Think with Barbara'
-    : 'Pensá con Barbara'
-  const ariaLabel = isEnglish ? 'Think with Barbara' : 'Pensá con Barbara'
+    ? 'Ask Bocconcino'
+    : 'Preguntale a Bocconcino'
+  const ariaLabel = isEnglish ? 'Open Bocconcino, the portfolio guide' : 'Abrir a Bocconcino, el guía del portfolio'
 
   return (
     <div className="min-h-screen flex flex-col">
+      {/* Cada página se declara como su propia URL canónica */}
+      <Helmet>
+        <link rel="canonical" href={`https://portfolio-barbarita.vercel.app${location.pathname}`} />
+      </Helmet>
       <main className="flex-1 container mx-auto px-4 pt-4 pb-8">
         <Outlet />
       </main>

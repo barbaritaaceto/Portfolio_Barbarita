@@ -77,7 +77,10 @@ export default function NoteDetail(){
 
   return (
     <div>
-      <Helmet><title>{localizedNote.title} — {uiText.pageSuffix}</title></Helmet>
+      <Helmet>
+        <title>{localizedNote.title} — {uiText.pageSuffix}</title>
+        {localizedNote.excerpt && <meta name="description" content={localizedNote.excerpt} />}
+      </Helmet>
       <Card>
         {localizedNote.image && (
           <div className="w-full h-56 md:h-72 rounded-2xl overflow-hidden mb-4 border" style={{ borderColor: 'var(--border-base)', backgroundColor: '#F3F2EF' }}>

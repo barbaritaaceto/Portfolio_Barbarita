@@ -603,7 +603,12 @@ export default function Projects({ embedded = false }: { embedded?: boolean }) {
 
   return (
     <>
-      {!embedded && <Helmet><title>Projects — Barbara Aceto</title></Helmet>}
+      {!embedded && (
+        <Helmet>
+          <title>{isEnglish ? 'Career path' : 'Trayectoria'} — Barbara Aceto</title>
+          <meta name="description" content={isEnglish ? "Barbara Aceto's career path: banking, e-commerce, insurance and AI, stage by stage, with what she did and what she learned." : 'La trayectoria de Barbara Aceto: banca, e-commerce, seguros e IA, etapa por etapa, con qué hizo y qué aprendió.'} />
+        </Helmet>
+      )}
 
       {/* Keyframe animation for panel */}
       <style>{`

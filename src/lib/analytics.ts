@@ -108,6 +108,10 @@ export const track = {
   aiSuggestedQuestionClick(question_length: number, language: string) {
     trackEvent('ai_suggested_question_click', { question_length, language })
   },
+  /** Pregunta que el guía no pudo responder ('no_match') o tuvo que aclarar ('clarify'). */
+  aiFallback(question: string, language: string, kind: 'no_match' | 'clarify') {
+    trackEvent('ai_fallback', { question: question.slice(0, 100), language, kind })
+  },
   aiResponseReceived(intent_id: string | undefined, language: string) {
     trackEvent('ai_response_received', { question_type: intent_id ?? 'unknown', language })
   },

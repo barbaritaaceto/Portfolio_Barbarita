@@ -19,8 +19,8 @@ export default function FeedbackDialog({ isOpen, onClose, isEnglish }: FeedbackD
     ? {
         title: 'Do you have feedback about this page?',
         subtitle: 'I would love to read you to keep improving it.',
-        nameLabel: 'Name (optional)',
-        emailLabel: 'Email (optional)',
+        nameLabel: 'Name',
+        emailLabel: 'Email',
         feedbackLabel: 'Feedback',
         feedbackPlaceholder: 'Tell me what you would improve...',
         submit: 'Send feedback',
@@ -31,8 +31,8 @@ export default function FeedbackDialog({ isOpen, onClose, isEnglish }: FeedbackD
     : {
         title: '¿Tenés feedback sobre esta página?',
         subtitle: 'Me encantaría leerte para seguir mejorándola.',
-        nameLabel: 'Nombre (opcional)',
-        emailLabel: 'Email (opcional)',
+        nameLabel: 'Nombre',
+        emailLabel: 'Email',
         feedbackLabel: 'Feedback',
         feedbackPlaceholder: 'Contame qué mejorarías...',
         submit: 'Enviar feedback',
@@ -55,14 +55,14 @@ export default function FeedbackDialog({ isOpen, onClose, isEnglish }: FeedbackD
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (!feedback.trim()) return
+    if (!name.trim() || !email.trim() || !feedback.trim()) return
     emailjs
       .send(
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
         import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
         {
-          from_name: name || 'Anónimo',
-          from_email: email || 'Sin email',
+          from_name: name.trim(),
+          from_email: email.trim(),
           message: feedback,
           page_url: window.location.href,
         },
@@ -91,25 +91,31 @@ export default function FeedbackDialog({ isOpen, onClose, isEnglish }: FeedbackD
         {!isSubmitted ? (
           <form className="mt-4 space-y-3" onSubmit={handleSubmit}>
             <div>
-              <label className="text-xs font-medium" style={{ color: 'var(--text-secondary)' }}>
+              <label htmlFor="feedback-name" className="text-xs font-medium" style={{ color: 'var(--text-secondary)' }}>
                 {t.nameLabel}
               </label>
               <input
+                id="feedback-name"
                 type="text"
                 value={name}
                 onChange={e => setName(e.target.value)}
+                required
+                autoComplete="name"
                 className="mt-1 w-full rounded-lg border px-3 py-2 text-sm outline-none"
                 style={{ borderColor: 'var(--border-base)' }}
               />
             </div>
             <div>
-              <label className="text-xs font-medium" style={{ color: 'var(--text-secondary)' }}>
+              <label htmlFor="feedback-email" className="text-xs font-medium" style={{ color: 'var(--text-secondary)' }}>
                 {t.emailLabel}
               </label>
               <input
+                id="feedback-email"
                 type="email"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
+                required
+                autoComplete="email"
                 className="mt-1 w-full rounded-lg border px-3 py-2 text-sm outline-none"
                 style={{ borderColor: 'var(--border-base)' }}
               />

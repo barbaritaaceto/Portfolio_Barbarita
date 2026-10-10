@@ -1,10 +1,14 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import {
   intents,
   matchIntent,
-  defaultSuggestionsES,
-  defaultSuggestionsEN,
+  resolveIntent,
+  clarifyES,
+  clarifyEN,
+  fallbackES,
+  fallbackEN,
+  defaultNext,
   type AssistantIntent,
 } from '../data/assistant'
 import { track } from '../lib/analytics'
@@ -26,6 +30,7 @@ interface Message {
   isEnglish?: boolean
   streaming?: boolean
   intentId?: string
+  contact?: boolean
 }
 
 interface AIAssistantProps {
@@ -50,11 +55,11 @@ const initialChipsEN = [
   'I want to apply AI, where do I start?',
 ]
 
-const onboardingES = 'Hola, soy Bocconcino 👋✨ el asistente de este portfolio. Puedo ayudarte a conocer a Barbi, recorrer sus ideas sobre producto, IA 🤖 y liderazgo ❤️, o pensar con vos un problema real de equipo, estrategia o ejecución 🚀.'
-const onboardingEN = "Hi, I'm Bocconcino 👋✨ the assistant for this portfolio. I can help you get to know Barbi, explore her ideas on product, AI 🤖 and leadership ❤️, or think through a real problem around teams, strategy or execution 🚀."
+const onboardingES = 'Hola, soy Bocconcino 👋 el guía de este portfolio. Tengo respuestas preparadas sobre Barbi: quién es, su trayectoria, cómo trabaja y qué piensa sobre producto, IA 🤖 y liderazgo ❤️. Elegí un tema o escribime tu pregunta.'
+const onboardingEN = "Hi, I'm Bocconcino 👋 the guide to this portfolio. I have prepared answers about Barbi: who she is, her career path, how she works and what she thinks about product, AI 🤖 and leadership ❤️. Pick a topic or type your question."
 
-const placeholdersES = ['Contame tu desafío, una pregunta o el tipo de problema que querés pensar con Barbi…']
-const placeholdersEN = ['Tell me your challenge, a question, or the kind of problem you want to think through with Barbi…']
+const placeholdersES = ['Escribí tu pregunta sobre Barbi…']
+const placeholdersEN = ['Type your question about Barbi…']
 
 const intentMeta: Record<string, { emoji: string; labelES: string; labelEN: string }> = {
   greeting:       { emoji: '👋', labelES: 'Hola',            labelEN: 'Hello' },
@@ -72,7 +77,7 @@ const intentMeta: Record<string, { emoji: string; labelES: string; labelEN: stri
   organizational_learning: { emoji: '🔁', labelES: 'Aprendizaje', labelEN: 'Learning' },
   thinking:       { emoji: '🧠', labelES: 'Cómo piensa',     labelEN: 'How she thinks' },
   who_is_barbara: { emoji: '👩‍💼', labelES: 'Sobre Barbi',  labelEN: 'About Barbi' },
-  experience:     { emoji: '📋', labelES: 'Experiencia aplicada', labelEN: 'Applied experience' },
+  experience:     { emoji: '📋', labelES: 'Trayectoria', labelEN: 'Career path' },
   banking_experience: { emoji: '🏦', labelES: 'Banca digital', labelEN: 'Digital banking' },
   ecommerce_experience: { emoji: '🛍️', labelES: 'E-commerce', labelEN: 'E-commerce' },
   insurtech_growth: { emoji: '📈', labelES: 'Growth', labelEN: 'Growth' },
@@ -85,7 +90,7 @@ const intentMeta: Record<string, { emoji: string; labelES: string; labelEN: stri
   projects:       { emoji: '🚀', labelES: 'Proyectos',       labelEN: 'Projects' },
   contact_cv:     { emoji: '📩', labelES: 'Contacto',        labelEN: 'Contact' },
   motivation:     { emoji: '✨', labelES: 'Motivación',      labelEN: 'Motivation' },
-  ai_opinion:     { emoji: '💡', labelES: 'Visión AI',       labelEN: 'AI Vision' },
+  ai_opinion:     { emoji: '💡', labelES: 'Visión sobre IA', labelEN: 'View on AI' },
   talks:          { emoji: '🎙️', labelES: 'Charlas',         labelEN: 'Talks' },
   challenge:      { emoji: '⚡', labelES: 'Desafío',         labelEN: 'Challenge' },
   differentiator: { emoji: '⭐', labelES: 'Diferenciador',   labelEN: 'Differentiator' },
@@ -101,6 +106,7 @@ const intentMeta: Record<string, { emoji: string; labelES: string; labelEN: stri
   education:      { emoji: '🎓', labelES: 'Formación',      labelEN: 'Education' },
   tools_stack:    { emoji: '🛠️', labelES: 'Herramientas',   labelEN: 'Tools' },
   location_remote:{ emoji: '📍', labelES: 'Ubicación',      labelEN: 'Location' },
+  availability: { emoji: '🤝', labelES: 'Trabajar juntos', labelEN: 'Work together' },
 }
 
 const quickIntentByLabel: Record<string, string> = {
@@ -261,6 +267,15 @@ function buildChips(labels: string[], isEnglish: boolean): SuggestedChip[] {
     })
 }
 
+function chipsFromIds(ids: string[], isEnglish: boolean): SuggestedChip[] {
+  return ids
+    .filter(id => intentMeta[id]?.labelES)
+    .map(id => {
+      const meta = intentMeta[id]
+      return { label: `${meta.emoji} ${isEnglish ? meta.labelEN : meta.labelES}`, isEnglish, intentId: id }
+    })
+}
+
 function TypingDots() {
   return (
     <div className="flex justify-start">
@@ -273,16 +288,27 @@ function TypingDots() {
   )
 }
 
-function buildAdvisorFallback(query: string, isEnglish: boolean): string {
-  if (isEnglish) {
-    return `If Barbi approached this, she probably would not start with a solution.\n\n**1. Understand the context.** What changed, who is affected, what constraints exist, and what would make this problem worth solving now?\n\n**2. Identify the tensions.** Usually the hard part is not one variable. It is speed vs. quality, autonomy vs. alignment, business urgency vs. technical debt, or AI potential vs. organizational readiness.\n\n**3. Choose a small learning move.** Before building a big answer, she would look for the smallest experiment that can reduce uncertainty: a customer signal, an operational metric, a prototype, a workflow test, or a decision checkpoint.\n\n**4. Make the decision criteria explicit.** What evidence would tell us to continue, stop, simplify, or change direction?\n\nTo think it through better: what is the main constraint in your case right now: people, time, data, technology, alignment, or business pressure?`
-  }
-
-  return `Si Barbi abordara esto, probablemente no empezaría por la solución.\n\n**1. Primero entendería el contexto.** Qué cambió, a quién afecta, qué restricciones existen y por qué este problema importa ahora.\n\n**2. Después miraría las tensiones.** Casi nunca el problema es una sola variable: suele haber velocidad vs. calidad, autonomía vs. alineación, urgencia de negocio vs. deuda técnica, o potencial de IA vs. madurez organizacional.\n\n**3. Buscaría un movimiento chico de aprendizaje.** Antes de construir una gran respuesta, intentaría reducir incertidumbre con una señal concreta: un dato de usuario, una métrica operativa, un prototipo, una prueba de flujo o una decisión acotada.\n\n**4. Haría explícito el criterio de decisión.** Qué evidencia nos diría si conviene seguir, frenar, simplificar o cambiar de dirección.\n\nPara pensarlo mejor: en tu caso, ¿la restricción principal hoy está en personas, tiempo, datos, tecnología, alineación o presión de negocio?`
-}
-
 export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
   const navigate = useNavigate()
+  const location = useLocation()
+
+  // Los links pueden ser una página ("/notes") o una sección del Home ("/#trayectoria").
+  const goTo = (route: string) => {
+    const [path, hash] = route.split('#')
+    onClose()
+    if (!hash) { navigate(path); return }
+    const scroll = () => document.getElementById(hash)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    if (location.pathname === '/') { setTimeout(scroll, 150); return }
+    navigate('/')
+    setTimeout(scroll, 600)
+  }
+
+  const openContact = () => {
+    track.openContactModal('ai_assistant')
+    onClose()
+    if (location.pathname !== '/') navigate('/')
+    setTimeout(() => window.dispatchEvent(new CustomEvent('open-contact-modal')), location.pathname === '/' ? 150 : 600)
+  }
   const [messages, setMessages] = useState<Message[]>([{
     id: 'onboarding', role: 'assistant',
     text: isEnglish ? onboardingEN : onboardingES,
@@ -324,7 +350,8 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
   }
 
   const sendMessage = useCallback((text: string, forcedIntentId?: string, forcedEnglish?: boolean) => {
-    if (!text.trim() || isTyping) return
+    // Mientras una respuesta se está escribiendo no se acepta otra pregunta, para no cortarla a la mitad
+    if (!text.trim() || isTyping || streamIntervalRef.current) return
     const query = text.trim()
     track.aiQuestionSent(query.length, (forcedEnglish ?? isEnglish) ? 'en' : 'es')
     setInput('')
@@ -336,38 +363,50 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
       const detectedLang = detectInputLanguage(query)
       const effectiveEnglish = detectedLang !== 'unknown' ? detectedLang === 'en' : isEnglish
       let responseEnglish = forcedEnglish ?? effectiveEnglish
-      let intent = forcedIntentId
-        ? intents.find(item => item.id === forcedIntentId) ?? null
-        : matchIntent(query, responseEnglish, lastIntentIdRef.current)
-      if (!intent) {
-        const alternateIntent = matchIntent(query, !responseEnglish, lastIntentIdRef.current)
-        if (alternateIntent) {
-          intent = alternateIntent
-          responseEnglish = !responseEnglish
+      let intent: AssistantIntent | null = null
+      let candidates: AssistantIntent[] = []
+      if (forcedIntentId) {
+        intent = intents.find(item => item.id === forcedIntentId) ?? null
+      } else {
+        let resolution = resolveIntent(query, responseEnglish, lastIntentIdRef.current)
+        if (!resolution.intent && !resolution.candidates.length) {
+          const alternate = resolveIntent(query, !responseEnglish, lastIntentIdRef.current)
+          if (alternate.intent || alternate.candidates.length) {
+            resolution = alternate
+            responseEnglish = !responseEnglish
+          }
         }
+        intent = resolution.intent
+        candidates = resolution.candidates
       }
       let responseText: string, chips: SuggestedChip[], navLinks: Message['navLinks']
+      let contact = false
       if (intent) {
-        responseText = pickResponse(intent, responseEnglish)
-        // Dynamic chips: filter out already-seen intents
-        const rawChips = responseEnglish ? intent.suggestionsEN : intent.suggestionsES
-        const preparedChips = buildChips(rawChips, responseEnglish)
-        const filtered = preparedChips.filter(chip => {
-          return !chip.intentId || (chip.intentId !== intent.id && !seenIntentsRef.current.has(chip.intentId))
-        })
-        chips = filtered.length >= 2 ? filtered : preparedChips
-        navLinks = intent.navLinks
-        lastIntentIdRef.current = intent.id
-        seenIntentsRef.current.add(intent.id)
+        const matched = intent
+        responseText = pickResponse(matched, responseEnglish)
+        // No repetir temas que la persona ya vio
+        const unseen = matched.next.filter(id => id !== matched.id && !seenIntentsRef.current.has(id))
+        chips = chipsFromIds(unseen.length >= 2 ? unseen : matched.next, responseEnglish)
+        navLinks = matched.navLinks
+        contact = !!matched.contact
+        lastIntentIdRef.current = matched.id
+        seenIntentsRef.current.add(matched.id)
+      } else if (candidates.length) {
+        // Coincidencia débil: en vez de arriesgar una respuesta, preguntamos por el tema
+        responseText = responseEnglish ? clarifyEN : clarifyES
+        chips = chipsFromIds(candidates.map(c => c.id), responseEnglish)
+        track.aiFallback(query, responseEnglish ? 'en' : 'es', 'clarify')
       } else {
-        // Log unmatched queries for continuous improvement
+        // Sin respuesta: queda registrado para poder sumar el tema más adelante
         try {
           const key = 'ai-fallback-log'
           const existing: { q: string; t: number }[] = JSON.parse(localStorage.getItem(key) || '[]')
           localStorage.setItem(key, JSON.stringify([...existing, { q: query, t: Date.now() }].slice(-50)))
         } catch {}
-        responseText = buildAdvisorFallback(query, responseEnglish)
-        chips = buildChips(responseEnglish ? defaultSuggestionsEN : defaultSuggestionsES, responseEnglish)
+        track.aiFallback(query, responseEnglish ? 'en' : 'es', 'no_match')
+        responseText = responseEnglish ? fallbackEN : fallbackES
+        chips = chipsFromIds(defaultNext, responseEnglish)
+        contact = true
       }
       const msgId = `a-${Date.now()}`
       setIsTyping(false)
@@ -380,7 +419,7 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
         if (wordIdx >= words.length) {
           clearInterval(streamIntervalRef.current!)
           streamIntervalRef.current = null
-          setMessages(prev => prev.map(m => m.id === msgId ? { ...m, text: words.join(' '), streaming: false, navLinks, chips } : m))
+          setMessages(prev => prev.map(m => m.id === msgId ? { ...m, text: words.join(' '), streaming: false, navLinks, chips, contact } : m))
           track.aiResponseReceived(intent?.id, responseEnglish ? 'en' : 'es')
         } else {
           setMessages(prev => prev.map(m => m.id === msgId ? { ...m, text: words.slice(0, wordIdx).join(' ') } : m))
@@ -425,7 +464,7 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
       {/* Panel */}
       <div
         role="dialog" aria-modal="true"
-        aria-label={isEnglish ? "Explore how Barbi thinks" : 'Explorá cómo piensa Barbi'}
+        aria-label={isEnglish ? 'Bocconcino, the portfolio guide' : 'Bocconcino, el guía del portfolio'}
         className="ai-panel fixed z-[61] flex flex-col inset-x-0 bottom-0 rounded-t-[28px] md:inset-auto md:bottom-auto md:top-[5vh] md:left-1/2 md:-translate-x-1/2 md:w-[580px] md:rounded-[24px]"
         style={{
           backgroundColor: '#FFFFFF',
@@ -445,11 +484,11 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full" style={{ backgroundColor: 'var(--accent-primary)' }} />
               <span style={{ fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 600, fontSize: '15px', color: 'var(--text-primary)', letterSpacing: '-0.01em' }}>
-                {isEnglish ? 'Explore how Barbi thinks' : 'Explorá cómo piensa Barbi'}
+                {isEnglish ? 'Bocconcino · Portfolio guide' : 'Bocconcino · Guía del portfolio'}
               </span>
             </div>
             <p className="ml-4 mt-0.5" style={{ fontSize: '10px', color: 'var(--text-muted)', letterSpacing: '0.04em' }}>
-              {isEnglish ? 'Product · AI · Leadership · Change' : 'Producto · IA · Liderazgo · Cambio'}
+              {isEnglish ? 'Answers about Barbi, her career path and her ideas' : 'Respuestas sobre Barbi, su trayectoria y sus ideas'}
             </p>
           </div>
           <button type="button" onClick={onClose} aria-label={isEnglish ? 'Close' : 'Cerrar'}
@@ -492,14 +531,23 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
                 {Array.isArray(msg.navLinks) && msg.navLinks.length > 0 && (
                   <div className="flex flex-wrap gap-1.5">
                     {msg.navLinks.filter(link => link && link.labelEN && link.labelES && link.route).map((link, j) => (
-                      <button key={j} type="button" onClick={() => { navigate(link.route); onClose() }}
+                      <button key={j} type="button" onClick={() => goTo(link.route)}
                         className="text-xs px-3 py-1.5 rounded-full transition-colors"
                         style={{ color: 'var(--accent-primary)', border: '1px solid rgba(74,127,121,0.28)', backgroundColor: 'rgba(74,127,121,0.06)' }}
                         onMouseEnter={e => { e.currentTarget.style.backgroundColor = 'rgba(74,127,121,0.12)' }}
                         onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'rgba(74,127,121,0.06)' }}>
-                        {(msg.isEnglish ?? isEnglish) ? link.labelEN : link.labelES} →
+                        {(msg.isEnglish ?? isEnglish) ? link.labelEN : link.labelES}
                       </button>
                     ))}
+                  </div>
+                )}
+                {msg.contact && (
+                  <div>
+                    <button type="button" onClick={openContact}
+                      className="text-xs font-semibold px-3.5 py-1.5 rounded-full"
+                      style={{ color: '#FFFFFF', backgroundColor: 'var(--accent-primary)' }}>
+                      ✉️ {(msg.isEnglish ?? isEnglish) ? 'Write to Barbi' : 'Escribile a Barbi'}
+                    </button>
                   </div>
                 )}
                 {Array.isArray(msg.chips) && msg.chips.length > 0 && (
