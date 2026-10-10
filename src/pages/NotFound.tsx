@@ -10,7 +10,7 @@ export default function NotFound(){
         <title>Página no encontrada — Barbara Aceto</title>
         <meta name="robots" content="noindex" />
       </Helmet>
-      <img src="/fodo limones.png" alt="" aria-hidden="true" className="pointer-events-none absolute inset-0 w-full h-full object-cover opacity-20" />
+      <img src="/fodo limones.webp" alt="" aria-hidden="true" className="pointer-events-none absolute inset-0 w-full h-full object-cover opacity-20" />
 
       <div className="relative z-10 text-center px-6 max-w-lg mx-auto">
 

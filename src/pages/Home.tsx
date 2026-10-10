@@ -369,7 +369,7 @@ export default function Home() {
         ? 'How we combine Figma and Claude Code to shorten the path from design to first commit, so both can move forward in parallel without losing quality.'
         : 'Cómo combinamos Figma y Claude Code para acortar el camino entre el diseño y el primer commit, haciendo que ambos avancen en paralelo sin resignar calidad.',
       url: 'https://es.linkedin.com/posts/redbeestudios_redbee-ai-claudecode-activity-7499184702747111427-s4zw',
-      image: '/design-development-video.png',
+      image: '/design-development-video.webp',
       isVideo: true,
     },
     {
@@ -476,7 +476,7 @@ export default function Home() {
         <div className="relative overflow-hidden">
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <img
-              src="/fodo limones.png"
+              src="/fodo limones.webp"
               alt=""
               aria-hidden="true"
               className="w-full h-full object-cover opacity-45"
@@ -498,8 +498,9 @@ export default function Home() {
                 <div className="relative z-10 flex flex-col sm:flex-row gap-6 items-stretch">
                   <div className="relative sm:w-1/3 flex-shrink-0 -mx-6 -mt-6 sm:-m-6 sm:mr-0">
                     <img
-                      src="/limones saco.png"
+                      src="/limones saco.webp"
                       alt="Barbara Aceto"
+                      fetchPriority="high"
                       className="w-full h-80 sm:h-full sm:min-h-[280px] object-cover object-top sm:rounded-l-2xl"
                     />
                     <div className="absolute inset-x-0 bottom-4 md:bottom-6 flex justify-center">
@@ -866,6 +867,8 @@ export default function Home() {
                       <img
                         src="/agile-summit-stage.jpg"
                         alt=""
+                        loading="lazy"
+                        decoding="async"
                         className="absolute inset-0 w-full h-full object-cover"
                       />
                       <span

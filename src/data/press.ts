@@ -9,7 +9,7 @@ const press: PressItem[] = [
     date: '2023-11-10',
     excerpt: 'Barbara Aceto, manager en redbee, reflexiona sobre el verdadero reto de las organizaciones: no la falta de información, sino la capacidad de procesarla y convertirla en conocimiento accionable con NotebookLM.',
     url: 'https://www.linkedin.com/posts/redbeestudios_redbee-ai-notebooklm-activity-7427701274923421696-gMoQ?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAO9lWcBYTOMHR-JOYdfU2v4CZ_xUqB85qc',
-    image: '/barbi en redbee.png'
+    image: '/barbi en redbee.webp'
   },
   {
     slug: 'press-5',
@@ -19,7 +19,7 @@ const press: PressItem[] = [
     date: '2022-06-30',
     excerpt: 'Ayer cerramos la cursada de Humanos y Algoritmos con foco en IA aplicada a producto, UX y tecnología: desde fundamentos de LLMs y prompting estratégico hasta agentes, métricas, ética y negocio. Recorriendo de la teoría a la práctica, vimos cómo pasar del problema al producto y sostener decisiones con datos. Lo más valioso fue ver ideas que nacieron en equipo, iteración real y personas en el centro.',
     url: 'https://www.linkedin.com/posts/barbaraaceto_humanosabryabralgoritmos-activity-7397209812960280577-C3J-?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAO9lWcBYTOMHR-JOYdfU2v4CZ_xUqB85qc',
-    image: '/ai es.png'
+    image: '/ai es.webp'
   },
   {
     slug: 'press-6',

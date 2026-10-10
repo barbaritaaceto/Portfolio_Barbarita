@@ -33,8 +33,8 @@ export default function TimeEvolution({ isEnglish, width = 160 }: Props) {
       }}
     >
       <ImageComparisonSlider
-        imgBefore="/barbi-baby-aligned.png"
-        imgAfter="/barbi-adult-aligned.png"
+        imgBefore="/barbi-baby-aligned.webp"
+        imgAfter="/barbi-adult-aligned.webp"
         altBefore="Barbara de niña"
         altAfter="Barbara hoy"
         initialPosition={50}
