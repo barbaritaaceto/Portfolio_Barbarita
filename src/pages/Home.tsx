@@ -110,17 +110,23 @@ export default function Home() {
           ],
           thesis: 'They change when they develop new capabilities to learn, decide and adapt.',
           after: 'That is why I care about products, but also about the teams, systems and ways of working that make them possible.',
+          proofLead: 'Some things I learned along the way',
+          proofIntro: 'I have worked across different industries, teams and challenges. And from each experience I took something that is now part of how I work.',
           proof: [
-            { value: '~200K', label: 'SMEs using the business online banking I worked on' },
-            { value: '1 bank', label: 'built from scratch: web, iOS and Android' },
-            { value: '3 countries', label: 'where we launched marketing tools for online stores: Argentina, Mexico and Brazil' },
-            { value: '#1 in 24 h', label: 'from page 2 to the top organic result with one SEO change' },
-            { value: '<40 min', label: 'to build a working AI agent' },
-            { value: '20', label: 'people on the teams I lead today' },
+            { emoji: '🔎', title: 'Small changes can create big results.', before: 'In SEO, one adjustment took a result from the second page to the top spot in just ', value: '24 hours', after: '. I learned that impact does not always depend on the size of the solution.' },
+            { emoji: '🛍️', title: 'Building also means opening possibilities.', before: 'In e-commerce, we developed tools that brought digital marketing closer to sellers in Argentina, Mexico and Brazil. ', value: 'Three countries', after: ', different needs and one shared challenge: simplifying.' },
+            { emoji: '🏦', title: 'Behind every product there are people.', before: 'In banking, I took part in solutions that today have an impact on ', value: 'more than 200,000 SMEs', after: '. That is where I understood that what we design on a screen has consequences in real life.' },
+            { emoji: '🧱', title: 'Starting from scratch is a chance to rethink everything.', before: 'We built ', value: 'a digital bank from scratch', after: ' with a hybrid team. From the login to the APIs, the experience and every word. I learned that the product is in the details.' },
+            { emoji: '❤️', title: 'Leading is not about having all the answers.', before: 'I supported teams of ', value: 'more than 20 people', after: ', with different profiles and points of view. I learned that the best solutions appear when we make room for others to shine too.' },
+            { emoji: '🎓', title: 'Teaching is also a way of learning.', before: 'I shared experiences about product, AI and leadership with teams from ', value: '5 industries', after: '. Every session reminded me that knowledge grows when it circulates.' },
+            { emoji: '🎤', title: 'Saying ideas out loud is also building.', before: 'I took the stage at ', value: 'Agile Summit Uruguay', after: ' to talk about Agile After Agile. I learned that an idea gets better when it dares to leave your head and meet other people.' },
+            { emoji: '🤖', title: 'Experimenting is the best way to keep learning.', before: 'I recently built an AI agent in ', value: 'under 40 minutes', after: '. Not because I had all the answers, but because I dared to try.' },
           ],
+          proofClosingLead: 'And perhaps the most important lesson…',
+          proofClosing: 'I did none of this alone. It was always with teams.',
+          proofClosingText: 'Because products are built between people. And technology is a tool to make possible things that once seemed difficult.',
           turn: 'And that is why I do not start with the solution.',
           turnEmphasis: 'I start by understanding what is changing.',
-          closing: 'Because when an organization learns faster, it can build better. And when it builds better, the impact goes beyond any single product.',
           imageAlt: 'Barbara Aceto giving a talk, sitting on the edge of the stage',
         },
         newsTitle: 'Ideas From The Field',
@@ -166,17 +172,23 @@ export default function Home() {
           ],
           thesis: 'Cambian cuando desarrollan nuevas capacidades para aprender, decidir y adaptarse.',
           after: 'Por eso me interesan los productos, pero también los equipos, los sistemas y las formas de trabajo que los hacen posibles.',
+          proofLead: 'Algunas cosas que aprendí en el camino',
+          proofIntro: 'Pasé por distintas industrias, equipos y desafíos. Y de cada experiencia me llevé algo que hoy forma parte de mi manera de trabajar.',
           proof: [
-            { value: '~200 mil', label: 'pymes usando el home banking de empresas en el que trabajé' },
-            { value: '1 banco', label: 'construido desde cero: web, iOS y Android' },
-            { value: '3 países', label: 'donde lanzamos herramientas de marketing para tiendas online: Argentina, México y Brasil' },
-            { value: '#1 en 24 h', label: 'de la página 2 al primer resultado orgánico con un cambio de SEO' },
-            { value: '<40 min', label: 'para crear un agente de IA funcionando' },
-            { value: '20', label: 'personas en los equipos que lidero hoy' },
+            { emoji: '🔎', title: 'Que los pequeños cambios pueden generar grandes resultados.', before: 'En SEO, un ajuste llevó un resultado de la segunda página al primer puesto en apenas ', value: '24 horas', after: '. Aprendí que el impacto no siempre depende del tamaño de la solución.' },
+            { emoji: '🛍️', title: 'Que construir también es abrir posibilidades.', before: 'En e-commerce, desarrollamos herramientas que acercaron el marketing digital a sellers de Argentina, México y Brasil. ', value: 'Tres países', after: ', distintas necesidades y un mismo desafío: simplificar.' },
+            { emoji: '🏦', title: 'Que detrás de cada producto hay personas.', before: 'En banca, participé en soluciones que hoy impactan en ', value: 'más de 200 mil pymes', after: '. Ahí entendí que lo que diseñamos en una pantalla tiene consecuencias en la vida real.' },
+            { emoji: '🧱', title: 'Que empezar de cero es una oportunidad para repensarlo todo.', before: 'Construimos ', value: 'un banco digital desde cero', after: ' con un equipo híbrido. Desde el login hasta las APIs, la experiencia y cada palabra. Aprendí que el producto está en los detalles.' },
+            { emoji: '❤️', title: 'Que liderar no es tener todas las respuestas.', before: 'Acompañé equipos de ', value: 'más de 20 personas', after: ', con perfiles y miradas diferentes. Aprendí que las mejores soluciones aparecen cuando generamos espacio para que otros también brillen.' },
+            { emoji: '🎓', title: 'Que enseñar también es una forma de aprender.', before: 'Compartí experiencias sobre producto, IA y liderazgo con equipos de ', value: '5 industrias', after: '. Cada encuentro me recordó que el conocimiento crece cuando circula.' },
+            { emoji: '🎤', title: 'Que decir las ideas en voz alta también es construir.', before: 'Subí al escenario de ', value: 'Agile Summit Uruguay', after: ' a hablar de Agile después del Agile. Aprendí que una idea mejora cuando se anima a salir de la cabeza y encontrarse con otros.' },
+            { emoji: '🤖', title: 'Que experimentar es la mejor manera de seguir aprendiendo.', before: 'Hace poco construí un agente de IA en ', value: 'menos de 40 minutos', after: '. No porque tuviera todas las respuestas, sino porque me animé a probar.' },
           ],
+          proofClosingLead: 'Y quizás el aprendizaje más importante…',
+          proofClosing: 'Nada de esto lo hice sola. Siempre fue con equipos.',
+          proofClosingText: 'Porque los productos los construimos entre personas. Y la tecnología es una herramienta para hacer posibles cosas que antes parecían difíciles.',
           turn: 'Y por eso no empiezo por la solución.',
           turnEmphasis: 'Empiezo por entender qué está cambiando.',
-          closing: 'Porque cuando una organización aprende más rápido, puede construir mejor. Y cuando construye mejor, el impacto trasciende cualquier producto individual.',
           imageAlt: 'Barbara Aceto dando una charla sentada al borde del escenario',
         },
         newsTitle: 'Ideas desde la trinchera',
@@ -577,17 +589,40 @@ export default function Home() {
                   {homeText.whyStory.after}
                 </p>
 
-                <dl
-                  className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-6 mt-8 py-6"
-                  style={{ borderTop: '1px solid var(--border-base)', borderBottom: '1px solid var(--border-base)' }}
-                >
-                  {homeText.whyStory.proof.map((item) => (
-                    <div key={item.label} className="flex flex-col-reverse justify-end">
-                      <dt className="text-xs leading-snug mt-1.5" style={{ color: 'var(--text-muted)' }}>{item.label}</dt>
-                      <dd className="font-serif font-semibold text-2xl md:text-3xl leading-none m-0" style={{ color: 'var(--accent-primary)' }}>{item.value}</dd>
-                    </div>
-                  ))}
-                </dl>
+                <div className="rounded-2xl mt-8 px-5 py-6 md:px-7 md:py-7" style={{ backgroundColor: 'rgba(74,127,121,0.07)' }}>
+                  <p className="font-serif font-semibold text-xl md:text-2xl leading-snug" style={{ color: 'var(--text-primary)' }}>
+                    {homeText.whyStory.proofLead}
+                  </p>
+                  <p className="text-sm leading-relaxed mt-2 mb-6" style={{ color: 'var(--text-secondary)' }}>
+                    {homeText.whyStory.proofIntro}
+                  </p>
+                  <ol className="list-none m-0 p-0 grid grid-cols-1 sm:grid-cols-2 gap-x-7 gap-y-6">
+                    {homeText.whyStory.proof.map((item) => (
+                      <li key={item.value}>
+                        <p className="font-serif font-semibold text-base leading-snug" style={{ color: 'var(--text-primary)' }}>
+                          <span aria-hidden="true" className="mr-1.5">{item.emoji}</span>
+                          {item.title}
+                        </p>
+                        <p className="text-sm leading-relaxed mt-1.5" style={{ color: 'var(--text-secondary)' }}>
+                          {item.before}
+                          <strong className="font-semibold" style={{ color: 'var(--accent-primary)' }}>{item.value}</strong>
+                          {item.after}
+                        </p>
+                      </li>
+                    ))}
+                  </ol>
+                  <div className="mt-8 pt-7 text-center" style={{ borderTop: '1px solid rgba(74,127,121,0.2)' }}>
+                    <p className="text-xs font-semibold uppercase" style={{ color: 'var(--accent-primary)', letterSpacing: '0.1em' }}>
+                      {homeText.whyStory.proofClosingLead}
+                    </p>
+                    <p className="font-serif italic text-xl md:text-2xl leading-snug mt-3" style={{ color: 'var(--text-primary)' }}>
+                      {homeText.whyStory.proofClosing}
+                    </p>
+                    <p className="text-sm leading-relaxed mt-3 mx-auto" style={{ color: 'var(--text-secondary)', maxWidth: '46ch' }}>
+                      {homeText.whyStory.proofClosingText}
+                    </p>
+                  </div>
+                </div>
 
                 <p className="font-serif text-xl lg:text-2xl leading-snug mt-10 mb-6" style={{ color: 'var(--text-primary)' }}>
                   {homeText.whyStory.turn}{' '}
@@ -630,9 +665,6 @@ export default function Home() {
                   ))}
                 </ol>
 
-                <p className="text-base leading-relaxed mt-10" style={{ color: 'var(--text-secondary)' }}>
-                  {homeText.whyStory.closing}
-                </p>
               </div>
             </article>
           </div>
