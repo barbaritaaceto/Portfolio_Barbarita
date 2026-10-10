@@ -561,7 +561,7 @@ export default function Home() {
             >
               <figure className="relative m-0 lg:col-span-5 aspect-[4/3] sm:aspect-[16/9] lg:aspect-auto lg:min-h-[320px] rounded-2xl overflow-hidden">
                 <img
-                  src="/barbi fuego.png"
+                  src="/barbi-fuego-2x.jpg"
                   alt={homeText.whyStory.imageAlt}
                   className="absolute inset-0 w-full h-full object-cover"
                   style={{ objectPosition: '12% center' }}
@@ -618,7 +618,7 @@ export default function Home() {
                     <p className="font-serif italic text-xl md:text-2xl leading-snug mt-3" style={{ color: 'var(--text-primary)' }}>
                       {homeText.whyStory.proofClosing}
                     </p>
-                    <p className="text-sm leading-relaxed mt-3 mx-auto" style={{ color: 'var(--text-secondary)', maxWidth: '46ch' }}>
+                    <p className="text-sm leading-relaxed mt-3 mx-auto" style={{ color: 'var(--text-secondary)', maxWidth: '80ch', textWrap: 'balance' }}>
                       {homeText.whyStory.proofClosingText}
                     </p>
                   </div>
@@ -756,30 +756,19 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-10 gap-6 lg:gap-5 mb-8 md:mb-10 items-stretch">
+            <div
+              className="grid grid-cols-1 lg:grid-cols-10 gap-6 lg:gap-8 mb-8 md:mb-10 items-stretch rounded-3xl border p-5 md:p-7"
+              style={{
+                borderColor: 'var(--border-base)',
+                backgroundColor: 'var(--card-bg)',
+                boxShadow: '0 16px 44px rgba(30,42,56,0.065)',
+              }}
+            >
             {featuredIdea && (
-              <div className="lg:col-span-3 h-full">
-                <article
-                  className="h-full rounded-3xl border overflow-hidden"
-                  style={{
-                    borderColor: 'var(--border-base)',
-                    backgroundColor: 'var(--card-bg)',
-                    boxShadow: '0 16px 44px rgba(30,42,56,0.065)',
-                    transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease',
-                  }}
-                  onMouseEnter={e => {
-                    e.currentTarget.style.transform = 'translateY(-2px)'
-                    e.currentTarget.style.boxShadow = '0 20px 54px rgba(30,42,56,0.09)'
-                    e.currentTarget.style.borderColor = 'rgba(58,125,107,0.32)'
-                  }}
-                  onMouseLeave={e => {
-                    e.currentTarget.style.transform = ''
-                    e.currentTarget.style.boxShadow = '0 16px 44px rgba(30,42,56,0.065)'
-                    e.currentTarget.style.borderColor = 'var(--border-base)'
-                  }}
-                >
+              <div className="lg:col-span-4 h-full">
+                <article className="h-full">
                   <div className="h-full flex flex-col">
-                    <div className="order-2 p-6 flex flex-col justify-between flex-1">
+                    <div className="order-2 pt-5 flex flex-col justify-between flex-1">
                       <div>
                         <span
                           className="inline-block text-[10px] font-semibold mb-3"
@@ -790,56 +779,18 @@ export default function Home() {
                         <h3 className="text-2xl font-serif font-semibold mb-3 leading-tight" style={{ color: 'var(--text-primary)' }}>
                           {featuredIdea.title}
                         </h3>
-                        <p className="text-sm md:text-base leading-relaxed" style={{ color: 'var(--text-secondary)', maxWidth: '56ch' }}>
+                        <p className="text-sm md:text-base leading-relaxed text-justify" style={{ color: 'var(--text-secondary)', hyphens: 'auto' }}>
                           {featuredIdea.description}
                         </p>
                       </div>
-                      <div className="mt-6 flex flex-col items-start gap-2">
-                        {featuredIdea.deckUrl && (
-                          <a
-                            href={featuredIdea.deckUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-block text-sm font-medium"
-                            style={{ color: 'var(--accent-primary)' }}
-                            onClick={() => track.clickExternalLink(isEnglish ? 'View presentation' : 'Ver presentación', featuredIdea.deckUrl ?? '', 'noticias')}
-                          >
-                            {isEnglish ? 'View presentation →' : 'Ver presentación →'}
-                          </a>
-                        )}
-                        <a
-                          href={featuredIdea.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-block text-sm font-medium"
-                          style={{ color: 'var(--accent-primary)' }}
-                          onClick={() => track.clickContentCard(featuredIdea.title, featuredIdea.type, featuredIdea.url, 'noticias')}
-                        >
-                          {featuredIdea.slug === 'agile-summit-uruguay'
-                            ? (isEnglish ? 'Read the reflection on LinkedIn →' : 'Leer la reflexión en LinkedIn →')
-                            : (featuredIdea.type === 'note' ? homeText.readNote : homeText.readArticle)}
-                        </a>
-                        {featuredIdea.slug === 'agile-summit-uruguay' && (
-                          <a
-                            href="https://www.youtube.com/watch?v=KnaG_BjSB8U&t=7350s"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-block text-sm font-medium"
-                            style={{ color: 'var(--accent-primary)' }}
-                            onClick={() => track.clickExternalLink(homeText.summitVideoTitle, 'https://www.youtube.com/watch?v=KnaG_BjSB8U&t=7350s', 'noticias')}
-                          >
-                            {isEnglish ? 'Watch the full talk on YouTube →' : 'Ver la charla completa en YouTube →'}
-                          </a>
-                        )}
-                      </div>
                     </div>
                     {featuredIdea.image && (
-                      <div className="order-1 relative overflow-hidden" style={{ minHeight: '210px' }}>
+                      <div className="order-1 relative overflow-hidden rounded-2xl" style={{ aspectRatio: '16 / 9' }}>
                         <img
                           src={featuredIdea.image}
                           alt={featuredIdea.title}
                           className="absolute inset-0 w-full h-full object-cover"
-                          style={{ objectPosition: '44% 18%', filter: 'brightness(0.9) contrast(0.94) saturate(0.92)' }}
+                          style={{ objectPosition: 'left center', filter: 'brightness(0.9) contrast(0.94) saturate(0.92)' }}
                           loading="lazy"
                         />
                         <div
@@ -854,8 +805,8 @@ export default function Home() {
             )}
 
             {featuredIdea?.slug === 'agile-summit-uruguay' && (
-              <section className="lg:col-span-7 flex flex-col" aria-labelledby="agile-summit-video-title">
-                <div className="mt-auto mb-4">
+              <section className="lg:col-span-6 flex flex-col" aria-labelledby="agile-summit-video-title">
+                <div className="mb-7">
                   <div>
                     <p
                       className="text-[10px] font-semibold mb-2"
@@ -879,7 +830,7 @@ export default function Home() {
                   className="relative w-full overflow-hidden border"
                   style={{
                     aspectRatio: '16 / 9',
-                    borderRadius: '8px',
+                    borderRadius: '16px',
                     borderColor: 'rgba(74,127,121,0.18)',
                     backgroundColor: '#171b1a',
                     boxShadow: '0 14px 38px rgba(30,42,56,0.08)',
@@ -932,6 +883,46 @@ export default function Home() {
                 </div>
               </section>
             )}
+            {featuredIdea && (
+              <div className="lg:col-span-10 flex flex-wrap items-center gap-x-8 gap-y-2 pt-5" style={{ borderTop: '1px solid var(--border-base)' }}>
+                {featuredIdea.deckUrl && (
+                  <a
+                    href={featuredIdea.deckUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block text-sm font-medium"
+                    style={{ color: 'var(--accent-primary)' }}
+                    onClick={() => track.clickExternalLink(isEnglish ? 'View presentation' : 'Ver presentación', featuredIdea.deckUrl ?? '', 'noticias')}
+                  >
+                    {isEnglish ? 'View presentation →' : 'Ver presentación →'}
+                  </a>
+                )}
+                <a
+                  href={featuredIdea.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block text-sm font-medium"
+                  style={{ color: 'var(--accent-primary)' }}
+                  onClick={() => track.clickContentCard(featuredIdea.title, featuredIdea.type, featuredIdea.url, 'noticias')}
+                >
+                  {featuredIdea.slug === 'agile-summit-uruguay'
+                    ? (isEnglish ? 'Read the reflection on LinkedIn →' : 'Leer la reflexión en LinkedIn →')
+                    : (featuredIdea.type === 'note' ? homeText.readNote : homeText.readArticle)}
+                </a>
+                {featuredIdea.slug === 'agile-summit-uruguay' && (
+                  <a
+                    href="https://www.youtube.com/watch?v=KnaG_BjSB8U&t=7350s"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block text-sm font-medium"
+                    style={{ color: 'var(--accent-primary)' }}
+                    onClick={() => track.clickExternalLink(homeText.summitVideoTitle, 'https://www.youtube.com/watch?v=KnaG_BjSB8U&t=7350s', 'noticias')}
+                  >
+                    {isEnglish ? 'Watch the full talk on YouTube →' : 'Ver la charla completa en YouTube →'}
+                  </a>
+                )}
+              </div>
+            )}
             </div>
 
             {featuredIdea?.slug === 'agile-summit-uruguay' && (
@@ -964,7 +955,7 @@ export default function Home() {
                       <h3 className="text-lg font-serif font-semibold mb-3 leading-snug" style={{ color: 'var(--text-primary)' }}>
                         {link.title}
                       </h3>
-                      <p className="text-sm leading-relaxed flex-1" style={{ color: 'var(--text-secondary)' }}>
+                      <p className="text-sm leading-relaxed flex-1 text-justify" style={{ color: 'var(--text-secondary)', hyphens: 'auto' }}>
                         {link.description}
                       </p>
                       <a
@@ -1061,7 +1052,7 @@ export default function Home() {
                       <h3 className="text-lg font-serif font-semibold mb-3 leading-snug" style={{ color: 'var(--text-primary)' }}>
                         {item.title}
                       </h3>
-                      <p className="text-sm leading-relaxed flex-1" style={{ color: 'var(--text-secondary)' }}>
+                      <p className="text-sm leading-relaxed flex-1 text-justify" style={{ color: 'var(--text-secondary)', hyphens: 'auto' }}>
                         {item.description}
                       </p>
                       <a

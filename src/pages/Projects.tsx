@@ -684,7 +684,7 @@ export default function Projects({ embedded = false }: { embedded?: boolean }) {
                       <span
                         className={`block ${embedded ? 'text-[11px]' : 'text-[10px]'} leading-none mb-0.5 font-semibold`}
                         style={{ color: isActive ? meta.accent : 'var(--text-muted)', opacity: isActive ? 0.75 : 0.55, letterSpacing: '0.08em' }}
-                      >{year}</span>
+                      >{project.slug === 'redbee' ? (isEnglish ? 'Present' : 'Actualidad') : year}</span>
                       <span
                         className={`block ${embedded ? 'text-sm' : 'text-xs'} font-medium leading-snug transition-colors`}
                         style={{ color: isActive ? meta.accent : 'var(--text-primary)' }}
