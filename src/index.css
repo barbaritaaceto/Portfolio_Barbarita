@@ -156,27 +156,31 @@ h1, h2, h3, .serif-heading{
 
 p { color: var(--text-secondary); }
 
-.profile-card-actions {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.55rem;
+.btn-outline-accent {
+  border: 1.5px solid var(--accent-primary);
+  color: var(--accent-primary);
+  background: transparent;
+  border-radius: 9999px;
+  padding: 0.5rem 1.25rem;
+  font-weight: 600;
+  cursor: pointer;
 }
 
-.profile-card-actions .btn-primary,
-.profile-card-actions .btn-ghost {
-  min-height: 38px;
-  padding-top: 0.45rem;
-  padding-bottom: 0.45rem;
+.closing-link {
+  display: inline-block;
+  border: 1.5px solid rgba(255,255,255,0.65);
+  color: #FFFFFF;
+  border-radius: 9999px;
+  padding: 0.56rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
-.profile-card-actions .btn-link {
-  grid-column: 1 / -1;
-  padding-top: 0.2rem;
-}
-
-@media (max-width: 520px) {
-  .profile-card-actions { grid-template-columns: 1fr; }
-  .profile-card-actions .btn-link { grid-column: auto; }
+.closing-link:hover {
+  color: #FFFFFF;
+  background-color: rgba(255,255,255,0.14);
+  transform: translateY(-2px);
 }
 
 h1{ font-size: 2.25rem; line-height: 1.2; }

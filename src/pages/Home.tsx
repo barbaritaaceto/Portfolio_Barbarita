@@ -11,6 +11,7 @@ const Projects = lazy(() => import('./Projects'))
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showAllIdeas, setShowAllIdeas] = useState(false);
   const [emailCopied, setEmailCopied] = useState(false);
   const [isSummitVideoPlaying, setIsSummitVideoPlaying] = useState(false);
   const [isEnglish, setIsEnglish] = useState(() => {
@@ -42,6 +43,14 @@ export default function Home() {
       whyStartElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
+  useEffect(() => {
+    if (!isModalOpen) return
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') { setIsModalOpen(false); track.closeContactModal() }
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [isModalOpen])
   const scrollToTrayectoria = () => {
     const trayectoriaElement = document.getElementById('trayectoria-start');
     if (trayectoriaElement) {
@@ -101,6 +110,14 @@ export default function Home() {
           ],
           thesis: 'They change when they develop new capabilities to learn, decide and adapt.',
           after: 'That is why I care about products, but also about the teams, systems and ways of working that make them possible.',
+          proof: [
+            { value: '~200K', label: 'SMEs using the business online banking I worked on' },
+            { value: '1 bank', label: 'built from scratch: web, iOS and Android' },
+            { value: '3 countries', label: 'where we launched marketing tools for online stores: Argentina, Mexico and Brazil' },
+            { value: '#1 in 24 h', label: 'from page 2 to the top organic result with one SEO change' },
+            { value: '<40 min', label: 'to build a working AI agent' },
+            { value: '20', label: 'people on the teams I lead today' },
+          ],
           turn: 'And that is why I do not start with the solution.',
           turnEmphasis: 'I start by understanding what is changing.',
           closing: 'Because when an organization learns faster, it can build better. And when it builds better, the impact goes beyond any single product.',
@@ -108,12 +125,12 @@ export default function Home() {
         },
         newsTitle: 'Ideas From The Field',
         newsSubtitle: 'Reflections, experiments and learnings from building products, working with AI and supporting organizations in motion.',
-        readArticle: 'Read publication →',
+        readArticle: 'Read the article →',
         noteLabel: 'NOTE',
-        readNote: 'See on LinkedIn →',
+        readNote: 'View on LinkedIn →',
         summitVideoEyebrow: 'FULL TALK',
         summitVideoTitle: 'In my own words…',
-        summitVideoDescription: 'My participation from the moment I am introduced and step onto the stage.',
+        summitVideoDescription: 'My talk, from the moment I am introduced and step on stage.',
         summitVideoLink: 'Open on YouTube →',
         playSummitVideo: 'Play talk',
         fieldNotesTitle: 'Product, AI and leadership in practice',
@@ -122,7 +139,13 @@ export default function Home() {
         viewPost: 'View post →',
         scrollWhyAria: 'Scroll to Why I Build',
         scrollTrayectoriaAria: 'Scroll to career path',
-        scrollNewsAria: 'Scroll to news section',
+        scrollNewsAria: 'Scroll to Ideas From The Field',
+        showAllIdeas: 'See all ideas',
+        showFewerIdeas: 'See fewer',
+        closingTitle: 'Let’s talk',
+        closingText: 'An idea, an opportunity, or just a conversation about product and AI.',
+        closingWrite: 'Write to me',
+        closingCv: 'Download CV',
         closeModalAria: 'Close modal',
         modalTitle: "Let's build something meaningful.",
         modalSubtitle: "If you're building a product, leading a team or exploring how to apply AI in real contexts, I'd love to connect.",
@@ -143,6 +166,14 @@ export default function Home() {
           ],
           thesis: 'Cambian cuando desarrollan nuevas capacidades para aprender, decidir y adaptarse.',
           after: 'Por eso me interesan los productos, pero también los equipos, los sistemas y las formas de trabajo que los hacen posibles.',
+          proof: [
+            { value: '~200 mil', label: 'pymes usando el home banking de empresas en el que trabajé' },
+            { value: '1 banco', label: 'construido desde cero: web, iOS y Android' },
+            { value: '3 países', label: 'donde lanzamos herramientas de marketing para tiendas online: Argentina, México y Brasil' },
+            { value: '#1 en 24 h', label: 'de la página 2 al primer resultado orgánico con un cambio de SEO' },
+            { value: '<40 min', label: 'para crear un agente de IA funcionando' },
+            { value: '20', label: 'personas en los equipos que lidero hoy' },
+          ],
           turn: 'Y por eso no empiezo por la solución.',
           turnEmphasis: 'Empiezo por entender qué está cambiando.',
           closing: 'Porque cuando una organización aprende más rápido, puede construir mejor. Y cuando construye mejor, el impacto trasciende cualquier producto individual.',
@@ -165,6 +196,12 @@ export default function Home() {
         scrollWhyAria: 'Ir a Por qué construyo',
         scrollTrayectoriaAria: 'Ir a la trayectoria',
         scrollNewsAria: 'Ir a la sección de noticias',
+        showAllIdeas: 'Ver todas las ideas',
+        showFewerIdeas: 'Ver menos',
+        closingTitle: '¿Hablamos?',
+        closingText: 'Una idea, una oportunidad o ganas de conversar sobre producto e IA.',
+        closingWrite: 'Escribime',
+        closingCv: 'Descargar CV',
         closeModalAria: 'Cerrar modal',
         modalTitle: 'Construyamos algo con sentido.',
         modalSubtitle: 'Si estás construyendo un producto, liderando un equipo o explorando cómo aplicar IA en contextos reales, me encantará conversar.',
@@ -295,7 +332,7 @@ export default function Home() {
       label: isEnglish ? 'WORKSHOP CLIP' : 'FRAGMENTO DE WORKSHOP',
       title: isEnglish ? 'What Will We Build With the Time We Recover?' : '¿Qué vamos a construir con el tiempo que recuperamos?',
       description: isEnglish
-        ? 'A fragment from the intro of “The Last Manual User Story”, on using AI to imagine better products, ask better questions and make better decisions.'
+        ? 'A clip from the intro of “The Last Manual User Story”, on using AI to imagine better products, ask better questions and make better decisions.'
         : 'Un fragmento de la intro del workshop “La Última Historia de Usuario Manual”, sobre usar IA para imaginar mejores productos, hacer mejores preguntas y tomar mejores decisiones.',
       url: 'https://www.linkedin.com/feed/update/urn:li:activity:7482074144654946304/',
       isVideo: true,
@@ -457,9 +494,9 @@ export default function Home() {
 
                   <div className="flex-1 flex flex-col justify-center text-left sm:py-2 sm:pr-2">
                     <div className="mb-4">
-                      <h2 className="font-serif text-xl sm:text-lg md:text-xl leading-tight" style={{ color: '#1E2A38' }}>
+                      <h1 className="font-serif text-xl sm:text-lg md:text-xl leading-tight" style={{ color: '#1E2A38' }}>
                         {profileContent.heroLine1}<br />{profileContent.heroLine2}
-                      </h2>
+                      </h1>
                       <div className="mt-3" style={{ color: '#4A5552' }}>
                         <p className="text-sm sm:text-xs md:text-sm leading-relaxed font-medium">{profileContent.summaryTitle}</p>
                         <ul className="mt-2 space-y-1.5">
@@ -540,6 +577,18 @@ export default function Home() {
                   {homeText.whyStory.after}
                 </p>
 
+                <dl
+                  className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-6 mt-8 py-6"
+                  style={{ borderTop: '1px solid var(--border-base)', borderBottom: '1px solid var(--border-base)' }}
+                >
+                  {homeText.whyStory.proof.map((item) => (
+                    <div key={item.label} className="flex flex-col-reverse justify-end">
+                      <dt className="text-xs leading-snug mt-1.5" style={{ color: 'var(--text-muted)' }}>{item.label}</dt>
+                      <dd className="font-serif font-semibold text-2xl md:text-3xl leading-none m-0" style={{ color: 'var(--accent-primary)' }}>{item.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+
                 <p className="font-serif text-xl lg:text-2xl leading-snug mt-10 mb-6" style={{ color: 'var(--text-primary)' }}>
                   {homeText.whyStory.turn}{' '}
                   <em style={{ color: 'var(--accent-primary)' }}>{homeText.whyStory.turnEmphasis}</em>
@@ -612,6 +661,50 @@ export default function Home() {
           <Suspense fallback={null}>
             <Projects embedded />
           </Suspense>
+        </section>
+
+        {/* ════════════════════════════════════ */}
+        {/* CIERRE */}
+        {/* ════════════════════════════════════ */}
+        <section
+          id="contacto"
+          className="order-6 w-full mt-8 md:mt-12 mb-4 rounded-3xl px-6 py-10 md:py-14 text-center"
+          style={{ backgroundColor: 'var(--accent-primary)' }}
+          aria-labelledby="home-closing-title"
+        >
+          <h2 id="home-closing-title" className="font-serif font-semibold text-3xl md:text-4xl" style={{ color: '#FFFFFF' }}>
+            {homeText.closingTitle}
+          </h2>
+          <p className="mt-3 text-base md:text-lg" style={{ color: 'rgba(255,255,255,0.88)' }}>
+            {homeText.closingText}
+          </p>
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
+            <button
+              type="button"
+              onClick={() => { setIsModalOpen(true); track.openContactModal('closing') }}
+              className="rounded-full bg-white font-semibold text-sm px-6 py-2.5 transition-transform duration-200 hover:-translate-y-0.5"
+              style={{ color: 'var(--accent-primary)' }}
+            >
+              {homeText.closingWrite}
+            </button>
+            <a
+              href="/cv.pdf"
+              download="CV - Aceto Barbara.pdf"
+              onClick={() => track.clickDownloadCV('closing', 'CV - Aceto Barbara.pdf')}
+              className="closing-link"
+            >
+              {homeText.closingCv}
+            </a>
+            <a
+              href="https://linkedin.com/in/barbaraaceto"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => track.clickExternalLink('LinkedIn', 'https://linkedin.com/in/barbaraaceto', 'closing')}
+              className="closing-link"
+            >
+              LinkedIn
+            </a>
+          </div>
         </section>
 
         {/* ════════════════════════════════════ */}
@@ -858,6 +951,7 @@ export default function Home() {
               </div>
             )}
 
+            <div id="home-more-ideas" className={showAllIdeas ? '' : 'hidden md:block'}>
             <div className="mb-6 md:mb-8">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
                 {fieldNotes.map((item) => (
@@ -1121,6 +1215,19 @@ export default function Home() {
                 ))}
               </div>
             )}
+            </div>
+
+            <div className="md:hidden flex justify-center">
+              <button
+                type="button"
+                onClick={() => setShowAllIdeas(v => !v)}
+                aria-expanded={showAllIdeas}
+                aria-controls="home-more-ideas"
+                className="btn-outline-accent text-sm"
+              >
+                {showAllIdeas ? homeText.showFewerIdeas : homeText.showAllIdeas} {showAllIdeas ? '↑' : '↓'}
+              </button>
+            </div>
 
 
           </div>
@@ -1150,6 +1257,9 @@ export default function Home() {
             onClick={e => { if (e.target === e.currentTarget) { setIsModalOpen(false); track.closeContactModal() } }}
           >
             <div
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="home-contact-title"
               className="w-full md:max-w-lg rounded-t-3xl md:rounded-3xl overflow-hidden shadow-2xl"
               style={{
                 backgroundColor: 'var(--bg)',
@@ -1161,7 +1271,7 @@ export default function Home() {
               {/* Header stripe */}
               <div className="px-6 pt-6 pb-5" style={{ borderBottom: '1px solid var(--border-base)' }}>
                 <div className="flex items-start justify-between gap-3 mb-4">
-                  <h2 className="font-serif font-semibold text-xl md:text-2xl leading-snug" style={{ color: 'var(--text-primary)' }}>
+                  <h2 id="home-contact-title" className="font-serif font-semibold text-xl md:text-2xl leading-snug" style={{ color: 'var(--text-primary)' }}>
                     {homeText.modalTitle}
                   </h2>
                   <button

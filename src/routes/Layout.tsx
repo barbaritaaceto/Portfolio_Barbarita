@@ -47,6 +47,10 @@ const Layout: React.FC = () => {
     return () => window.removeEventListener('storage', onStorage)
   }, [])
 
+  useEffect(() => {
+    document.documentElement.lang = isEnglish ? 'en' : 'es'
+  }, [isEnglish])
+
   const tooltip = isEnglish
     ? 'Think with Barbara'
     : 'Pensá con Barbara'

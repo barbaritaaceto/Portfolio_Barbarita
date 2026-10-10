@@ -562,6 +562,7 @@ export default function Projects({ embedded = false }: { embedded?: boolean }) {
   )
 
   // ─── Render ───────────────────────────────────────────────────────────────
+  const IntroHeading = embedded ? 'h2' : 'h1'
   const introBlock = (
     <div className="mb-10 pb-8" style={{ borderBottom: '1px solid var(--border-base)' }}>
       {/* Decorative line */}
@@ -574,25 +575,22 @@ export default function Projects({ embedded = false }: { embedded?: boolean }) {
           background: 'linear-gradient(90deg, var(--accent-primary) 0%, transparent 100%)',
         }}
       />
-      <h1
-        className="font-serif leading-[1.15] mb-4"
-        style={{
-          color: 'var(--text-primary)',
-          fontSize: 'clamp(1.65rem, 3.5vw, 2.25rem)',
-          fontWeight: 600,
-          letterSpacing: '-0.01em',
-        }}
+      <IntroHeading
+        className={embedded ? 'font-serif font-semibold text-3xl md:text-4xl mb-4' : 'font-serif leading-[1.15] mb-4'}
+        style={embedded
+          ? { color: 'var(--text-primary)' }
+          : { color: 'var(--text-primary)', fontSize: 'clamp(1.65rem, 3.5vw, 2.25rem)', fontWeight: 600, letterSpacing: '-0.01em' }}
       >
         {uiText.heroTitle}
-      </h1>
+      </IntroHeading>
       <div className="space-y-3" style={{ maxWidth: embedded ? undefined : 560 }}>
         {uiText.heroLines.map((line, index) => (
           <p
             key={line}
-            className={index === 1 ? 'font-serif italic leading-relaxed' : 'text-sm leading-relaxed'}
+            className={index === 1 ? 'font-serif italic leading-relaxed' : `${embedded ? 'text-base' : 'text-sm'} leading-relaxed`}
             style={{
               color: index === 1 ? 'var(--accent-primary)' : 'var(--text-secondary)',
-              fontSize: index === 1 ? '1rem' : undefined,
+              fontSize: index === 1 ? (embedded ? '1.2rem' : '1rem') : undefined,
               opacity: index === 1 ? 0.85 : undefined,
             }}
           >
@@ -645,6 +643,14 @@ export default function Projects({ embedded = false }: { embedded?: boolean }) {
 
               {/* Vertical timeline — line starts from below the image */}
               <div className={embedded ? 'relative min-w-0 w-[150px] sm:w-[190px] mt-1' : 'relative flex-1 min-w-0 sm:flex-none mt-0 sm:mt-3'} style={{ paddingLeft: 20 }}>
+                {embedded && (
+                  <p
+                    className="text-[11px] font-semibold uppercase mb-3"
+                    style={{ color: 'var(--accent-primary)', letterSpacing: '0.1em' }}
+                  >
+                    {isEnglish ? 'Pick a stage' : 'Elegí una etapa'}
+                  </p>
+                )}
                 {/* Vertical line */}
                 <div
                   className="absolute top-0 bottom-0"
@@ -660,7 +666,7 @@ export default function Projects({ embedded = false }: { embedded?: boolean }) {
                     <button
                       key={project.slug}
                       onClick={() => { selectSlug(project.slug); track.clickProjectCard(project.title, companyYears[project.slug] ?? 0, project.slug) }}
-                      className="relative w-full text-left pb-3 pt-0.5 pr-2 focus:outline-none rounded-lg transition-colors duration-200"
+                      className={`relative w-full text-left pb-3 pt-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] rounded-lg transition-colors duration-200 ${embedded ? 'pr-6' : 'pr-2'}`}
                       aria-pressed={isActive}
                       style={{ backgroundColor: isActive ? `${meta.accent}0D` : 'transparent' }}
                       onMouseEnter={e => { if (!isActive) e.currentTarget.style.backgroundColor = `${meta.accent}07` }}
@@ -676,13 +682,20 @@ export default function Projects({ embedded = false }: { embedded?: boolean }) {
                         }}
                       />
                       <span
-                        className="block text-[10px] leading-none mb-0.5 font-semibold"
+                        className={`block ${embedded ? 'text-[11px]' : 'text-[10px]'} leading-none mb-0.5 font-semibold`}
                         style={{ color: isActive ? meta.accent : 'var(--text-muted)', opacity: isActive ? 0.75 : 0.55, letterSpacing: '0.08em' }}
                       >{year}</span>
                       <span
-                        className="block text-xs font-medium leading-snug transition-colors"
+                        className={`block ${embedded ? 'text-sm' : 'text-xs'} font-medium leading-snug transition-colors`}
                         style={{ color: isActive ? meta.accent : 'var(--text-primary)' }}
                       >{tValue(project.title)}</span>
+                      {embedded && (
+                        <span
+                          aria-hidden="true"
+                          className="absolute right-2 top-1/2 -translate-y-1/2 text-sm transition-transform duration-200"
+                          style={{ color: isActive ? meta.accent : 'var(--accent-primary)', opacity: isActive ? 1 : 0.55, transform: `translateY(-50%) rotate(${isActive ? 90 : 0}deg)` }}
+                        >›</span>
+                      )}
                     </button>
                   )
                 })}
@@ -690,7 +703,7 @@ export default function Projects({ embedded = false }: { embedded?: boolean }) {
                 {/* Early-career toggle */}
                 <button
                   onClick={() => setShowEarlyCareer(v => !v)}
-                  className="relative w-full text-left pt-1 pb-3 focus:outline-none"
+                  className="relative w-full text-left pt-1 pb-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] rounded-lg"
                   aria-pressed={showEarlyCareer}
                 >
                   <div className="flex items-center gap-2">
@@ -737,7 +750,7 @@ export default function Projects({ embedded = false }: { embedded?: boolean }) {
                     <button
                       key={project.slug}
                       onClick={() => { selectSlug(project.slug); track.clickProjectCard(project.title, companyYears[project.slug] ?? 0, project.slug) }}
-                      className="relative w-full text-left pb-3 pt-0.5 pr-2 focus:outline-none rounded-lg transition-colors duration-200"
+                      className={`relative w-full text-left pb-3 pt-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] rounded-lg transition-colors duration-200 ${embedded ? 'pr-6' : 'pr-2'}`}
                       aria-pressed={isActive}
                       style={{ backgroundColor: isActive ? `${meta.accent}0D` : 'transparent' }}
                       onMouseEnter={e => { if (!isActive) e.currentTarget.style.backgroundColor = `${meta.accent}07` }}
@@ -753,13 +766,20 @@ export default function Projects({ embedded = false }: { embedded?: boolean }) {
                         }}
                       />
                       <span
-                        className="block text-[10px] leading-none mb-0.5 font-semibold"
+                        className={`block ${embedded ? 'text-[11px]' : 'text-[10px]'} leading-none mb-0.5 font-semibold`}
                         style={{ color: isActive ? meta.accent : 'var(--text-muted)', opacity: isActive ? 0.75 : 0.55, letterSpacing: '0.08em' }}
                       >{year}</span>
                       <span
-                        className="block text-xs font-medium leading-snug transition-colors"
+                        className={`block ${embedded ? 'text-sm' : 'text-xs'} font-medium leading-snug transition-colors`}
                         style={{ color: isActive ? meta.accent : 'var(--text-secondary)' }}
                       >{tValue(project.title)}</span>
+                      {embedded && (
+                        <span
+                          aria-hidden="true"
+                          className="absolute right-2 top-1/2 -translate-y-1/2 text-sm transition-transform duration-200"
+                          style={{ color: isActive ? meta.accent : 'var(--accent-primary)', opacity: isActive ? 1 : 0.55, transform: `translateY(-50%) rotate(${isActive ? 90 : 0}deg)` }}
+                        >›</span>
+                      )}
                     </button>
                   )
                 })}
@@ -767,7 +787,7 @@ export default function Projects({ embedded = false }: { embedded?: boolean }) {
                 {/* ── Formación toggle ──────────────────────────────── */}
                 <button
                   onClick={() => setShowFormacion(v => !v)}
-                  className="relative w-full text-left pt-1 pb-3 focus:outline-none"
+                  className="relative w-full text-left pt-1 pb-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] rounded-lg"
                   aria-pressed={showFormacion}
                 >
                   <div className="flex items-center gap-2">
