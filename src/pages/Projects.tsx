@@ -153,8 +153,12 @@ export default function Projects() {
     ? {
         backHome: 'Back to home',
         heroTitle: 'Making noise since 1989',
-        heroSubtitle: 'The context changed. Not the essence.',
-        heroThirdLine: 'Each stage evolved the way I build product.',
+        heroLines: [
+          'Technology changed. Industries changed.',
+          'My work stayed the same:',
+          'understanding complex problems, aligning people and building products that create real impact.',
+          'Each stage added a different layer: users, operations, business, technology, scale, regulation, artificial intelligence and leadership.',
+        ],
         contextLabel: 'Context',
         rolesLabel: 'Roles & Responsibilities',
         focusLabel: 'Focus',
@@ -172,8 +176,12 @@ export default function Projects() {
     : {
         backHome: 'Volver al inicio',
         heroTitle: 'Haciendo ruido desde 1989',
-        heroSubtitle: 'Cambió el contexto. No la esencia.',
-        heroThirdLine: 'Cada etapa evolucionó mi forma de construir producto.',
+        heroLines: [
+          'Cambió la tecnología. Cambiaron las industrias.',
+          'Mi trabajo siguió siendo el mismo:',
+          'entender problemas complejos, alinear personas y construir productos que generen impacto real.',
+          'Cada etapa sumó una capa distinta: usuarios, operaciones, negocio, tecnología, escala, regulación, inteligencia artificial y liderazgo.',
+        ],
         contextLabel: 'Contexto',
         rolesLabel: 'Roles y Responsabilidades',
         focusLabel: 'Foco',
@@ -826,15 +834,21 @@ export default function Projects() {
                 >
                   {uiText.heroTitle}
                 </h1>
-                <p
-                  className="font-serif italic leading-relaxed mb-2"
-                  style={{ color: 'var(--accent-primary)', fontSize: '1rem', opacity: 0.85 }}
-                >
-                  {uiText.heroSubtitle}
-                </p>
-                <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)', maxWidth: 460 }}>
-                  {uiText.heroThirdLine}
-                </p>
+                <div className="space-y-3" style={{ maxWidth: 560 }}>
+                  {uiText.heroLines.map((line, index) => (
+                    <p
+                      key={line}
+                      className={index === 1 ? 'font-serif italic leading-relaxed' : 'text-sm leading-relaxed'}
+                      style={{
+                        color: index === 1 ? 'var(--accent-primary)' : 'var(--text-secondary)',
+                        fontSize: index === 1 ? '1rem' : undefined,
+                        opacity: index === 1 ? 0.85 : undefined,
+                      }}
+                    >
+                      {line}
+                    </p>
+                  ))}
+                </div>
               </div>
 
               {/* Experience panel */}

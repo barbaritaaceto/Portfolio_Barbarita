@@ -42,13 +42,23 @@ export default function NoteDetail(){
     'data-strategy': { title: 'Fundamentos de estrategia de datos', excerpt: 'Construir datos como producto.', content: 'Contenido completo de referencia.' },
     'humanos-algoritmos': { title: 'Entre humanos y algoritmos', excerpt: 'Reflexiones sobre inteligencia artificial, equipos y el desafío real de las organizaciones hoy.', content: 'Reflexiones sobre inteligencia artificial, equipos y el desafío real de las organizaciones hoy.' },
     'claude-code': { title: 'Claude Code — usando AI para construir en serio', excerpt: 'Explorando cómo Claude Code cambia la forma de construir productos y herramientas digitales.', content: 'Explorando cómo Claude Code cambia la forma de construir productos y herramientas digitales.' },
+    'agile-summit-uruguay': {
+      title: 'Agile después del Agile',
+      excerpt: 'Speaker en Agile Summit Uruguay: una mirada sobre cómo rediseñar formas de trabajo cuando cambian el contexto, las reglas y la manera de combinar producto, tecnología, datos, UX, QA, personas y negocio.',
+      content: 'Participación como speaker en Agile Summit Uruguay con la charla Agile después del Agile.\n\nLa conversación propone volver a mirar la agilidad desde el contexto actual: no como una receta cerrada, sino como una forma de combinar mejor producto, tecnología, datos, UX, QA, personas y negocio.\n\nLa pregunta de fondo no es si Agile murió. Es qué capacidades necesitamos construir para trabajar mejor cuando cambian las reglas, aumenta la complejidad y las organizaciones necesitan aprender más rápido.',
+    },
     'women-in-tech': { title: 'Women in Tech · Product Management · redbee', excerpt: 'Sobre liderazgo femenino en tecnología y producto — lo que cambió, lo que sigue pendiente y lo que construimos.', content: 'Sobre liderazgo femenino en tecnología y producto — lo que cambió, lo que sigue pendiente y lo que construimos.' },
     'reinventandome': { title: 'Reinventándome', excerpt: 'Un momento de pausa, reflexión y reinvención personal — sobre cambiar el rumbo con intención.', content: 'Un momento de pausa, reflexión y reinvención personal — sobre cambiar el rumbo con intención.' },
   }
 
-  const enBySlug: Record<string, { title: string; excerpt: string }> = {
+  const enBySlug: Record<string, { title: string; excerpt: string; content?: string }> = {
     'humanos-algoritmos': { title: 'Between humans and algorithms', excerpt: 'Reflections on artificial intelligence, teams and the real challenge organizations face today.' },
     'claude-code': { title: 'My learnings using Claude in the last 72 hours', excerpt: 'Exploring how Claude changes the way we build digital products and tools.' },
+    'agile-summit-uruguay': {
+      title: 'Agile After Agile',
+      excerpt: 'Speaker at Agile Summit Uruguay: a perspective on redesigning ways of working when context, rules and the way we combine product, technology, data, UX, QA, people and business have changed.',
+      content: 'Participation as a speaker at Agile Summit Uruguay with the talk Agile After Agile.\n\nThe conversation invites teams to look at agility from today’s context: not as a closed recipe, but as a way to better combine product, technology, data, UX, QA, people and business.\n\nThe real question is not whether Agile is dead. It is which capabilities we need to build to work better when rules change, complexity increases and organizations need to learn faster.',
+    },
     'women-in-tech': { title: 'Women in Tech · Product Management · redbee', excerpt: 'On female leadership in tech and product — what changed, what remains, and what we build.' },
     'reinventandome': { title: 'Reinventing myself', excerpt: 'A moment of pause, reflection and personal reinvention — on changing direction with intention.' },
   }
@@ -60,8 +70,8 @@ export default function NoteDetail(){
   }, [isEnglish, note])
 
   const uiText = isEnglish
-    ? { notFound: 'Note not found', pageSuffix: 'Note', minuteLabel: 'min', sourceLabel: 'View source post' }
-    : { notFound: 'Nota no encontrada', pageSuffix: 'Nota', minuteLabel: 'min', sourceLabel: 'Ver publicación original' }
+    ? { notFound: 'Note not found', pageSuffix: 'Note', minuteLabel: 'min', sourceLabel: 'View source post', deckLabel: 'View presentation' }
+    : { notFound: 'Nota no encontrada', pageSuffix: 'Nota', minuteLabel: 'min', sourceLabel: 'Ver publicación original', deckLabel: 'Ver presentación' }
 
   if(!localizedNote) return <div>{uiText.notFound}</div>
 
@@ -91,17 +101,30 @@ export default function NoteDetail(){
           })} · {localizedNote.readingTime} {uiText.minuteLabel}
         </div>
         <div className="mt-4 text-gray-700 whitespace-pre-line">{localizedNote.content}</div>
-        {localizedNote.url && (
-          <a
-            href={localizedNote.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex mt-4 text-sm font-medium underline"
-            style={{ color: 'var(--accent-primary)' }}
-          >
-            {uiText.sourceLabel}
-          </a>
-        )}
+        <div className="mt-4 flex flex-wrap gap-4">
+          {localizedNote.url && (
+            <a
+              href={localizedNote.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex text-sm font-medium underline"
+              style={{ color: 'var(--accent-primary)' }}
+            >
+              {uiText.sourceLabel}
+            </a>
+          )}
+          {localizedNote.deckUrl && (
+            <a
+              href={localizedNote.deckUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex text-sm font-medium underline"
+              style={{ color: 'var(--accent-primary)' }}
+            >
+              {uiText.deckLabel}
+            </a>
+          )}
+        </div>
       </Card>
     </div>
   )

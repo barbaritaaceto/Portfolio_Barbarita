@@ -42,6 +42,18 @@ const notes: Note[] = [
     url: 'https://www.linkedin.com/posts/barbaraaceto_claude-code-activity-7455573110348574721-YuDv?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAO9lWcBYTOMHR-JOYdfU2v4CZ_xUqB85qc',
   },
   {
+    slug: 'agile-summit-uruguay',
+    title: 'Agile después del Agile',
+    excerpt: 'Speaker en Agile Summit Uruguay: una mirada sobre cómo rediseñar formas de trabajo cuando cambian el contexto, las reglas y la manera de combinar producto, tecnología, datos, UX, QA, personas y negocio.',
+    date: '2026-06-14',
+    readingTime: 3,
+    tags: ['Agilidad', 'Transformación', 'Speaker'],
+    content: 'Participación como speaker en Agile Summit Uruguay con la charla Agile después del Agile.\n\nLa conversación propone volver a mirar la agilidad desde el contexto actual: no como una receta cerrada, sino como una forma de combinar mejor producto, tecnología, datos, UX, QA, personas y negocio.\n\nLa pregunta de fondo no es si Agile murió. Es qué capacidades necesitamos construir para trabajar mejor cuando cambian las reglas, aumenta la complejidad y las organizaciones necesitan aprender más rápido.',
+    image: '/agile-summit-uruguay.png',
+    url: 'https://www.linkedin.com/feed/update/urn:li:activity:7495804396262449152/',
+    deckUrl: '/agile-summit-uruguay.pdf',
+  },
+  {
     slug: 'women-in-tech',
     title: 'Women in Tech · Product Management · redbee',
     excerpt: 'Sobre liderazgo femenino en tecnología y producto — lo que cambió, lo que sigue pendiente y lo que construimos.',

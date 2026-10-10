@@ -11,11 +11,11 @@ import { useScrollDepth } from '../hooks/useAnalytics'
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [emailCopied, setEmailCopied] = useState(false);
+  const [isSummitVideoPlaying, setIsSummitVideoPlaying] = useState(false);
   const [isEnglish, setIsEnglish] = useState(() => {
     if (typeof window === 'undefined') return false;
     return window.localStorage.getItem('lang') === 'en';
   });
-
   useEffect(() => {
     const syncLanguage = () => {
       if (typeof window === 'undefined') return;
@@ -29,17 +29,16 @@ export default function Home() {
       window.removeEventListener('app-language-change', syncLanguage as EventListener);
     };
   }, []);
-  const scrollToWhyAndWork = () => {
-    const whyStartElement = document.getElementById('why-work-start');
-    if (whyStartElement) {
-      const targetTop = whyStartElement.getBoundingClientRect().top + window.pageYOffset - 12;
-      window.scrollTo({ top: targetTop, behavior: 'smooth' });
-    }
-  };
   const scrollToEnd = () => {
     const endElement = document.getElementById('home-end');
     if (endElement) {
       endElement.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+  };
+  const scrollToWhy = () => {
+    const whyStartElement = document.getElementById('why-work-start');
+    if (whyStartElement) {
+      whyStartElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
   const scrollToNews = () => {
@@ -86,17 +85,34 @@ export default function Home() {
   const homeText = isEnglish
     ? {
         whyTitle: 'Why I Build',
-        wayTitle: 'The Way I Work',
-        whyLine1: 'Over the years I understood that most of the work in product is not just about ideas.',
-        whyLine2: 'It lives in understanding context, aligning people, testing hypotheses and making decisions while things keep changing.',
-        whyHighlight: 'That is where I like to work.',
-        wayIntro: 'My way of working evolved over the years. Today I prioritize context, learning and decisions with clear direction.',
-        newsTitle: 'Thinking, Product & Shared Learning',
-        newsSubtitle: 'A curated selection of notes, publications and conversations on product, AI, strategy and teams.',
+        whyStory: {
+          lead: 'We are living through a unique moment.',
+          intro: [
+            'Artificial intelligence is transforming tools, processes and professions at a pace that is hard to grasp. Yet after years of building products, I learned that the most important challenge is still human.',
+            'Organizations do not change because they adopt a new technology.',
+          ],
+          thesis: 'They change when they develop new capabilities to learn, decide and adapt.',
+          after: 'That is why I care about products, but also about the teams, systems and ways of working that make them possible.',
+          turn: 'And that is why I do not start with the solution.',
+          turnEmphasis: 'I start by understanding what is changing.',
+          closing: 'Because when an organization learns faster, it can build better. And when it builds better, the impact goes beyond any single product.',
+          imageAlt: 'Barbara Aceto giving a talk, sitting on the edge of the stage',
+        },
+        newsTitle: 'Ideas From The Field',
+        newsSubtitle: 'Reflections, experiments and learnings from building products, working with AI and supporting organizations in motion.',
         readArticle: 'Read publication →',
         noteLabel: 'NOTE',
         readNote: 'See on LinkedIn →',
-        scrollWhyAria: 'Scroll to Why I Build and The Way I Work',
+        summitVideoEyebrow: 'FULL TALK',
+        summitVideoTitle: 'In my own words…',
+        summitVideoDescription: 'My participation from the moment I am introduced and step onto the stage.',
+        summitVideoLink: 'Open on YouTube →',
+        playSummitVideo: 'Play talk',
+        fieldNotesTitle: 'Product, AI and leadership in practice',
+        fieldNotesSubtitle: 'Experiments, videos and reflections on how work changes when human judgment meets new tools.',
+        watchVideo: 'Watch video →',
+        viewPost: 'View post →',
+        scrollWhyAria: 'Scroll to Why I Build',
         scrollNewsAria: 'Scroll to news section',
         closeModalAria: 'Close modal',
         modalTitle: "Let's build something meaningful.",
@@ -110,17 +126,34 @@ export default function Home() {
       }
     : {
         whyTitle: 'Por qué construyo',
-        wayTitle: 'Cómo trabajo',
-        whyLine1: 'Con el tiempo entendí que gran parte del trabajo en producto no está solo en las ideas.',
-        whyLine2: 'Está en entender contexto, alinear personas, validar hipótesis y tomar decisiones mientras las cosas cambian.',
-        whyHighlight: 'Ahí es donde más me gusta trabajar.',
-        wayIntro: 'Mi forma de trabajar fue cambiando con los años. Hoy priorizo contexto, aprendizaje y decisiones con dirección.',
-        newsTitle: 'Pensamiento, producto y aprendizaje compartido',
-        newsSubtitle: 'Una selección de notas, publicaciones y conversaciones sobre producto, AI, estrategia y equipos.',
+        whyStory: {
+          lead: 'Vivimos un momento único.',
+          intro: [
+            'La inteligencia artificial está transformando herramientas, procesos y profesiones a una velocidad difícil de dimensionar. Sin embargo, después de años construyendo productos, aprendí que el desafío más importante sigue siendo humano.',
+            'Las organizaciones no cambian porque incorporan una nueva tecnología.',
+          ],
+          thesis: 'Cambian cuando desarrollan nuevas capacidades para aprender, decidir y adaptarse.',
+          after: 'Por eso me interesan los productos, pero también los equipos, los sistemas y las formas de trabajo que los hacen posibles.',
+          turn: 'Y por eso no empiezo por la solución.',
+          turnEmphasis: 'Empiezo por entender qué está cambiando.',
+          closing: 'Porque cuando una organización aprende más rápido, puede construir mejor. Y cuando construye mejor, el impacto trasciende cualquier producto individual.',
+          imageAlt: 'Barbara Aceto dando una charla sentada al borde del escenario',
+        },
+        newsTitle: 'Ideas desde la trinchera',
+        newsSubtitle: 'Reflexiones, experimentos y aprendizajes surgidos de construir productos, trabajar con IA y acompañar organizaciones en movimiento.',
         readArticle: 'Leer publicación →',
         noteLabel: 'NOTA',
         readNote: 'Ver en LinkedIn →',
-        scrollWhyAria: 'Ir a Por qué construyo y Mi forma de trabajar',
+        summitVideoEyebrow: 'CHARLA COMPLETA',
+        summitVideoTitle: 'En primera persona…',
+        summitVideoDescription: 'Mi participación desde el momento en que me presentan y subo al escenario.',
+        summitVideoLink: 'Abrir en YouTube →',
+        playSummitVideo: 'Reproducir charla',
+        fieldNotesTitle: 'Producto, IA y liderazgo en práctica',
+        fieldNotesSubtitle: 'Experimentos, videos y reflexiones sobre cómo cambia el trabajo cuando combinamos criterio humano y nuevas herramientas.',
+        watchVideo: 'Ver video →',
+        viewPost: 'Ver publicación →',
+        scrollWhyAria: 'Ir a Por qué construyo',
         scrollNewsAria: 'Ir a la sección de noticias',
         closeModalAria: 'Cerrar modal',
         modalTitle: 'Construyamos algo con sentido.',
@@ -137,162 +170,240 @@ export default function Home() {
     ? [
         {
           number: '01',
-          label: 'DISCOVERY',
-          title: 'Understand before building',
-          description: 'Before moving a roadmap, I need to understand how business, users, operations and technology coexist.',
+          label: 'CONTEXT',
+          title: 'Understand before acting',
+          description: 'Before defining a roadmap, I need to understand how business, technology, operations and users coexist.',
           highlight: false,
         },
         {
           number: '02',
-          label: 'HYPOTHESES',
-          title: 'Validate hypotheses',
-          description: 'I use signals, behavior and continuous learning to reduce uncertainty and make better decisions.',
+          label: 'DIRECTION',
+          title: 'Reduce uncertainty',
+          description: 'I work with hypotheses, evidence and continuous learning. My goal is not to be right: it is to learn fast enough to move forward with confidence.',
           highlight: false,
         },
         {
           number: '03',
-          label: 'DELIVERY',
-          title: 'Build close to reality',
-          description: 'I prefer teams connected to the problem over perfect processes disconnected from real impact.',
+          label: 'EXECUTION',
+          title: 'Build capabilities, not just deliverables',
+          description: 'I aim to create systems, teams and dynamics that can sustain results even when conditions change.',
           highlight: false,
         },
         {
           number: '04',
-          label: 'LEARNING LOOP',
-          title: 'Evolve continuously',
-          description: 'Experimenting, iterating and learning is not a phase. It is part of the product.',
+          label: 'EVOLUTION',
+          title: 'Learning as a competitive advantage',
+          description: 'Adaptation is not a phase of the process. It is part of the work.',
           highlight: true,
         },
       ]
     : [
         {
           number: '01',
-          label: 'DISCOVERY',
-          title: 'Entender antes de construir',
-          description: 'Antes de mover un roadmap, necesito entender cómo conviven negocio, usuarios, operación y tecnología.',
+          label: 'CONTEXTO',
+          title: 'Entender antes de actuar',
+          description: 'Antes de definir un roadmap, necesito comprender cómo conviven negocio, tecnología, operación y usuarios.',
           highlight: false,
         },
         {
           number: '02',
-          label: 'HIPÓTESIS',
-          title: 'Validar hipótesis',
-          description: 'Uso señales, comportamiento y aprendizaje continuo para reducir incertidumbre y tomar mejores decisiones.',
+          label: 'DIRECCIÓN',
+          title: 'Reducir incertidumbre',
+          description: 'Trabajo con hipótesis, evidencia y aprendizaje continuo. Mi objetivo no es tener razón: es aprender lo suficientemente rápido para avanzar con confianza.',
           highlight: false,
         },
         {
           number: '03',
-          label: 'DELIVERY',
-          title: 'Construir cerca de la realidad',
-          description: 'Prefiero equipos conectados al problema antes que procesos perfectos alejados del impacto real.',
+          label: 'EJECUCIÓN',
+          title: 'Construir capacidades, no solo entregables',
+          description: 'Busco crear sistemas, equipos y dinámicas que puedan sostener resultados incluso cuando las condiciones cambian.',
           highlight: false,
         },
         {
           number: '04',
-          label: 'LEARNING LOOP',
-          title: 'Evolucionar continuamente',
-          description: 'Experimentar, iterar y aprender no es una etapa del proceso. Es parte del producto.',
+          label: 'EVOLUCIÓN',
+          title: 'Aprender como ventaja competitiva',
+          description: 'La adaptación no es una fase del proceso. Es parte del trabajo.',
           highlight: true,
         },
       ];
 
-  const dateLocale = isEnglish ? 'en-US' : 'es-AR';
+  const notebookLm = press.find((item) => item.slug === 'press-4');
+  const agileSummit = notesData.find((item) => item.slug === 'agile-summit-uruguay');
+  const claudeCode = notesData.find((item) => item.slug === 'claude-code');
+  const womenInTech = notesData.find((item) => item.slug === 'women-in-tech');
 
-  const newsCards = [
-    ...press.filter((item) => item.title !== 'Leader in AI Product').slice(0, 6).map((item) => ({
-      slug: item.slug,
-      outlet: item.outlet,
-      title: item.title,
-      excerpt: item.excerpt,
-      url: item.url,
-      date: item.date,
-      image: item.image,
-    })),
-  ].slice(0, 3);
+  const featuredIdea = agileSummit
+    ? {
+        slug: agileSummit.slug,
+        type: 'note' as const,
+        label: isEnglish ? 'SPEAKER / AGILE SUMMIT URUGUAY' : 'SPEAKER / AGILE SUMMIT URUGUAY',
+        title: isEnglish ? 'Agile After Agile' : agileSummit.title,
+        description: isEnglish
+          ? 'Reflections from Agile Summit Uruguay on redesigning ways of working when context, rules and the way we combine product, technology, data, UX, QA, people and business have changed.'
+          : 'Reflexiones desde Agile Summit Uruguay sobre cómo rediseñar formas de trabajo cuando cambian el contexto, las reglas y la manera de combinar producto, tecnología, datos, UX, QA, personas y negocio.',
+        url: agileSummit.url,
+        image: agileSummit.image,
+        deckUrl: agileSummit.deckUrl,
+      }
+    : null;
 
-  const localizedNewsCards = newsCards.map((item) => ({
-    ...item,
-    outlet: isEnglish ? (item as { outletEn?: string }).outletEn || item.outlet : item.outlet,
-    title: isEnglish ? (item as { titleEn?: string }).titleEn || item.title : item.title,
-    excerpt: isEnglish ? (item as { excerptEn?: string }).excerptEn || item.excerpt : item.excerpt,
-  }));
+  const wideIdea = notebookLm
+    ? {
+        slug: notebookLm.slug,
+        type: 'article' as const,
+        label: isEnglish ? 'APPLIED AI' : 'IA APLICADA',
+        title: isEnglish ? 'NotebookLM and the New Organizational Challenge' : notebookLm.title,
+        description: isEnglish
+          ? 'How AI can help teams transform scattered information into shared understanding, actionable learning and better decisions inside an organization.'
+          : 'Cómo la IA puede ayudar a transformar información dispersa en entendimiento compartido, aprendizaje accionable y mejores decisiones dentro de una organización.',
+        url: notebookLm.url,
+        image: notebookLm.image,
+      }
+    : null;
 
-  const newsCardMeta: Record<string, { label: string; shortExcerpt: string }> = {
-    'press-4': {
-      label: 'FEATURED ARTICLE',
-      shortExcerpt: isEnglish
-        ? 'How to transform scattered information into actionable learning using AI inside real organizations.'
-        : 'Cómo transformar información dispersa en aprendizaje accionable usando AI dentro de organizaciones reales.',
+  const agileSummitRelatedLinks = [
+    {
+      label: isEnglish ? 'TEAMWORK' : 'EQUIPOS',
+      title: isEnglish ? 'Collaboration Is Not Doing Everyone Else’s Job' : 'Colaborar no es hacer el trabajo del otro',
+      description: isEnglish
+        ? 'A reflection on roles, trust and giving each discipline enough space to contribute from what it knows best.'
+        : 'Una reflexión sobre roles, confianza y dar espacio para que cada disciplina aporte desde lo que mejor sabe hacer.',
+      url: 'https://www.linkedin.com/feed/update/urn:li:activity:7489061689414443008/',
+      isVideo: false,
     },
-    'press-5': {
-      label: 'TALK',
-      shortExcerpt: isEnglish
-        ? 'AI applied to product, UX and technology — from fundamentals to real practice and shared learning.'
-        : 'IA aplicada a producto, UX y tecnología — desde fundamentos hasta práctica real y aprendizaje compartido.',
+    {
+      label: isEnglish ? 'LEADERSHIP' : 'LIDERAZGO',
+      title: isEnglish ? 'Leadership Happens When You Are Not in the Room' : 'Liderar cuando no estás en la sala',
+      description: isEnglish
+        ? 'A story about autonomy, fear and the invisible systems leaders create when every decision has to wait for permission.'
+        : 'Una historia sobre autonomía, miedo y los sistemas invisibles que construye el liderazgo cuando cada decisión necesita permiso.',
+      url: 'https://www.linkedin.com/feed/update/urn:li:activity:7486384764505997312/',
+      isVideo: false,
     },
-    'press-6': {
-      label: 'LINKEDIN POST',
-      shortExcerpt: isEnglish
-        ? 'Strategy and product mindset: each move has impact, and real mastery lives in intention.'
-        : 'Estrategia y mindset de producto: cada jugada tiene impacto y la maestría real está en la intención.',
+    {
+      label: isEnglish ? 'WORKSHOP CLIP' : 'FRAGMENTO DE WORKSHOP',
+      title: isEnglish ? 'What Will We Build With the Time We Recover?' : '¿Qué vamos a construir con el tiempo que recuperamos?',
+      description: isEnglish
+        ? 'A fragment from the intro of “The Last Manual User Story”, on using AI to imagine better products, ask better questions and make better decisions.'
+        : 'Un fragmento de la intro del workshop “La Última Historia de Usuario Manual”, sobre usar IA para imaginar mejores productos, hacer mejores preguntas y tomar mejores decisiones.',
+      url: 'https://www.linkedin.com/feed/update/urn:li:activity:7482074144654946304/',
+      isVideo: true,
     },
-  };
-  const featuredCard = localizedNewsCards[0] ?? null;
+  ];
+
+  const fieldNotes = [
+    {
+      slug: 'figma-claude-code',
+      label: isEnglish ? 'VIDEO · APPLIED AI' : 'VIDEO · IA APLICADA',
+      title: isEnglish ? 'When Design and Development Stop Waiting for Each Other' : 'Cuando diseño y desarrollo dejan de esperarse',
+      description: isEnglish
+        ? 'How we combine Figma and Claude Code to shorten the path from design to first commit, so both can move forward in parallel without losing quality.'
+        : 'Cómo combinamos Figma y Claude Code para acortar el camino entre el diseño y el primer commit, haciendo que ambos avancen en paralelo sin resignar calidad.',
+      url: 'https://es.linkedin.com/posts/redbeestudios_redbee-ai-claudecode-activity-7499184702747111427-s4zw',
+      image: '/design-development-video.png',
+      isVideo: true,
+    },
+    {
+      slug: 'crear-el-camino',
+      label: isEnglish ? 'LEADERSHIP · LEARNING' : 'LIDERAZGO · APRENDIZAJE',
+      title: isEnglish ? 'When the Path Does Not Exist Yet' : 'Cuando el camino todavía no existe',
+      description: isEnglish
+        ? 'A reflection inspired by Forbes Power Women on inventing a professional path, learning and moving forward even without a map or close role models.'
+        : 'Una reflexión inspirada en Forbes Power Women sobre inventar un camino profesional, aprender y avanzar incluso sin mapa ni referentes cercanos.',
+      url: 'https://es.linkedin.com/posts/barbaraaceto_quiero-ser-astronauta-pero-no-activity-7510758263848857601-g-ZA',
+      image: '/crear-el-camino.jpg',
+      isVideo: false,
+    },
+    {
+      slug: 'contexto-md',
+      label: isEnglish ? 'VIDEO · APPLIED AI' : 'VIDEO · IA APLICADA',
+      title: isEnglish ? 'Your Next Prompt Can Be Three Lines Long' : 'Tu próximo prompt puede tener tres líneas',
+      description: isEnglish
+        ? 'How a context.md file can preserve goals, decisions and constraints so ChatGPT, Gemini and Claude start each conversation with the context they need.'
+        : 'Cómo un archivo contexto.md puede guardar objetivos, decisiones y restricciones para que ChatGPT, Gemini y Claude empiecen cada conversación con lo que necesitan saber.',
+      url: 'https://es.linkedin.com/posts/barbaraaceto_tu-pr%C3%B3ximo-prompt-puede-tener-3-l%C3%ADneas-activity-7506458444640690176-At6_',
+      image: '/contexto-md-video.jpg',
+      isVideo: true,
+    },
+  ];
+
+  const secondaryIdeas = [
+    claudeCode && {
+      slug: claudeCode.slug,
+      type: 'note' as const,
+      label: isEnglish ? 'EXPERIMENT' : 'EXPERIMENTO',
+      title: isEnglish ? 'My Learnings Using Claude in the Last 72 Hours' : claudeCode.title,
+      description: isEnglish
+        ? 'A practical exploration of how AI-assisted coding changes product discovery, iteration and tool building.'
+        : 'Una exploración práctica sobre cómo el desarrollo asistido por IA cambia la forma de descubrir, iterar y construir herramientas digitales.',
+      url: claudeCode.url,
+      image: claudeCode.image,
+    },
+    womenInTech && {
+      slug: womenInTech.slug,
+      type: 'note' as const,
+      label: isEnglish ? 'LEADERSHIP' : 'LIDERAZGO',
+      title: isEnglish ? 'Women in Tech · Product Management · redbee' : womenInTech.title,
+      description: isEnglish
+        ? 'A reflection on product leadership, representation and the capabilities teams need to keep building better technology.'
+        : 'Una reflexión sobre liderazgo en producto, representación y las capacidades que los equipos necesitan para seguir construyendo mejor tecnología.',
+      url: womenInTech.url,
+      image: womenInTech.image,
+    },
+  ].filter(Boolean) as Array<{
+    slug: string;
+    type: 'article' | 'note';
+    label: string;
+    title: string;
+    description: string;
+    url?: string;
+    image?: string;
+    deckUrl?: string;
+  }>;
 
   const refWhy      = useReveal<HTMLElement>()
   const refNews     = useReveal<HTMLElement>({ threshold: 0.08 })
-  const refNoteGrid = useReveal<HTMLDivElement>({ threshold: 0.08 })
   const refSecGrid  = useReveal<HTMLDivElement>({ threshold: 0.08 })
-  const secondaryCards = localizedNewsCards.slice(1);
-
-  const linkedInNotes = notesData
-    .filter((n) => ['women-in-tech', 'claude-code', 'reinventandome'].includes(n.slug))
-    .sort((a, b) => ['women-in-tech', 'claude-code', 'reinventandome'].indexOf(a.slug) - ['women-in-tech', 'claude-code', 'reinventandome'].indexOf(b.slug));
-
-  const noteCardMeta: Record<string, { labelEs: string; labelEn: string; titleEn: string }> = {
-    'women-in-tech': {
-      labelEs: 'MUJERES EN TECH',
-      labelEn: 'WOMEN IN TECH',
-      titleEn: 'Women in Tech · Product Management · redbee',
-    },
-    'claude-code': {
-      labelEs: 'APRENDIZAJES',
-      labelEn: 'LEARNING',
-      titleEn: 'My learnings using Claude in the last 72 hours',
-    },
-    'reinventandome': {
-      labelEs: 'REFLEXIÓN',
-      labelEn: 'REFLECTION',
-      titleEn: 'Reinventing myself',
-    },
-  };
   const profileContent = isEnglish
     ? {
         heroLine1: 'Between humans and algorithms,',
-        heroLine2: 'I build what truly matters.',
-        descLine1: '+10 years building digital products, supporting teams',
-        descLine2: 'and connecting strategy with execution.',
-        role: 'Product Leader · AI & Digital Strategy',
+        heroLine2: 'I lead products, teams and new ways of working.',
+        summaryTitle: '10+ years turning ideas into digital products, supporting teams and connecting strategy with execution.',
+        summaryBullets: [
+          '🚀 Strategy that becomes products with impact',
+          '❤️ Teams that grow with trust and autonomy',
+          '🤖 Applied AI to create, decide and learn better',
+        ],
+        role: 'Product & AI Leader',
         projectsCta: 'View Projects',
-        contactCta: 'Get in touch',
-        cvCta: 'Download CV',
+        contactCta: 'Let’s talk',
       }
     : {
         heroLine1: 'Entre humanos y algoritmos,',
-        heroLine2: 'construyo lo que de verdad importa.',
-        descLine1: '+10 años construyendo productos digitales, acompañando equipos',
-        descLine2: 'y conectando estrategia con ejecución.',
-        role: 'Líder de Producto · IA y Estrategia Digital',
+        heroLine2: 'lidero productos, equipos y nuevas formas de trabajar.',
+        summaryTitle: '+10 años transformando ideas en productos digitales, acompañando equipos y conectando estrategia con ejecución.',
+        summaryBullets: [
+          '🚀 Estrategia que se convierte en productos con impacto',
+          '❤️ Equipos que crecen con confianza y autonomía',
+          '🤖 IA aplicada para crear, decidir y aprender mejor',
+        ],
+        role: 'Product & AI Leader',
         projectsCta: 'Ver proyectos',
-        contactCta: 'Contactame',
-        cvCta: 'Descargar CV',
+        contactCta: '¿Hablamos?',
       };
 
   return (
     <>
       <HomeTour isEnglish={isEnglish} />
       <Helmet>
-        <title>Barbara Aceto | Builder of Things That Matter</title>
-        <meta name="description" content="Barbara Aceto — Products that understand people and services that make them feel better." />
+        <title>Barbara Aceto | Product &amp; AI Leader</title>
+        <meta
+          name="description"
+          content={isEnglish
+            ? 'Between humans and algorithms, I lead products, teams and new ways of working. 10+ years turning ideas into digital products.'
+            : 'Entre humanos y algoritmos, lidero productos, equipos y nuevas formas de trabajar. +10 años transformando ideas en productos digitales.'}
+        />
       </Helmet>
 
       <div className="w-full relative" style={{ backgroundColor: 'var(--bg)' }}>
@@ -303,111 +414,72 @@ export default function Home() {
               alt=""
               aria-hidden="true"
               className="w-full h-full object-cover opacity-45"
-              style={{ objectPosition: 'center 76%' }}
+              style={{ objectPosition: 'center 76%', transform: 'scale(1.04)' }}
             />
           </div>
 
-        {/* ════════════════════════════════════ */}
-        {/* HERO SECTION */}
-        {/* ════════════════════════════════════ */}
-        <section className="relative w-full flex items-center justify-center pt-20 pb-32 px-4">
-          {/* Hero content */}
-          <div className="relative z-20 max-w-3xl text-center">
-            {/* Subtle separator */}
-            <div className="flex justify-center mt-8 mb-8">
-              <div className="stationery-sep"></div>
-            </div>
-          </div>
-        </section>
-
-        {/* ════════════════════════════════════ */}
-        {/* PROFILE CARD */}
-        {/* ════════════════════════════════════ */}
-        <section className="w-full px-4 py-16 md:py-20 relative z-40 -mt-24 sm:-mt-40 md:-mt-64">
-          <div className="max-w-6xl mx-auto">
-          <div id="home-profile-card" className="card w-full max-w-xl relative overflow-hidden mx-auto">
-            <div className="relative z-10 flex flex-row gap-5 items-stretch">
-
-              {/* Foto izquierda */}
-              <div className="w-2/5 flex-shrink-0 -m-6 mr-0">
-                <img 
-                  src="/limones saco.png" 
-                  alt="Barbara Aceto" 
-                  className="w-full h-full object-cover object-top rounded-l-2xl"
-                  style={{ minHeight: '280px' }}
-                />
+          <section className="relative w-full flex items-center justify-center pt-20 pb-32 px-4">
+            <div className="relative z-20 max-w-3xl text-center">
+              <div className="flex justify-center mt-8 mb-8">
+                <div className="stationery-sep"></div>
               </div>
+            </div>
+          </section>
 
-              {/* Contenido derecha */}
-              <div className="flex-1 flex flex-col justify-center text-left py-2 pr-2">
+          <section className="w-full px-4 py-16 md:py-20 relative z-40 -mt-24 sm:-mt-40 md:-mt-64">
+            <div className="max-w-6xl mx-auto">
+              <div id="home-profile-card" className="card w-full max-w-3xl relative overflow-hidden mx-auto">
+                <div className="relative z-10 flex flex-col sm:flex-row gap-6 items-stretch">
+                  <div className="relative sm:w-1/3 flex-shrink-0 -mx-6 -mt-6 sm:-m-6 sm:mr-0">
+                    <img
+                      src="/limones saco.png"
+                      alt="Barbara Aceto"
+                      className="w-full h-80 sm:h-full sm:min-h-[280px] object-cover object-top sm:rounded-l-2xl"
+                    />
+                    <div className="absolute inset-x-0 bottom-4 md:bottom-6 flex justify-center">
+                      <button
+                        onClick={() => { setIsModalOpen(true); track.openContactModal('profile_card') }}
+                        className="rounded-full bg-white font-semibold text-center whitespace-nowrap text-sm px-5 py-2 transition-transform duration-200 hover:-translate-y-0.5"
+                        style={{ color: 'var(--accent-primary)', boxShadow: '0 6px 18px rgba(20,32,28,0.28)' }}
+                      >
+                        {profileContent.contactCta}
+                      </button>
+                    </div>
+                  </div>
 
-                <div className="mb-4">
-                  <h2 className="font-serif text-lg md:text-xl leading-tight" style={{ color: '#1E2A38' }}>
-                    {profileContent.heroLine1}
-                    <br />
-                    {profileContent.heroLine2}
-                  </h2>
-                  <p className="text-xs md:text-sm leading-relaxed mt-2" style={{ color: '#4A5552' }}>
-                    {profileContent.descLine1} {profileContent.descLine2}
-                  </p>
-                </div>
+                  <div className="flex-1 flex flex-col justify-center text-left sm:py-2 sm:pr-2">
+                    <div className="mb-4">
+                      <h2 className="font-serif text-xl sm:text-lg md:text-xl leading-tight" style={{ color: '#1E2A38' }}>
+                        {profileContent.heroLine1}<br />{profileContent.heroLine2}
+                      </h2>
+                      <div className="mt-3" style={{ color: '#4A5552' }}>
+                        <p className="text-sm sm:text-xs md:text-sm leading-relaxed font-medium">{profileContent.summaryTitle}</p>
+                        <ul className="mt-2 space-y-1.5">
+                          {profileContent.summaryBullets.map((item) => (
+                            <li key={item} className="pl-5 text-[13px] sm:text-[11px] md:text-xs leading-snug md:whitespace-nowrap">{item}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
 
-                <p className="text-base font-bold mb-0.5" style={{ color: 'var(--accent-primary)' }}>
-                  Barbara Aceto
-                </p>
-                <p className="text-xs font-medium mb-0.5" style={{ color: 'var(--text-secondary)' }}>
-                  {profileContent.role}
-                </p>
-                <p className="text-xs mb-4" style={{ color: 'var(--text-muted)' }}>
-                  Buenos Aires, Argentina
-                </p>
+                    <div className="stationery-sep mb-4"></div>
 
-                <div className="stationery-sep mb-4"></div>
-
-                <div className="flex flex-col gap-2">
-                  <Link 
-                    id="home-btn-projects"
-                    to="/projects"
-                    onClick={() => track.clickViewProjects('profile_card')}
-                    className="btn-primary text-center px-4 text-sm"
-                  >
-                    {profileContent.projectsCta}
-                  </Link>
-                  <button 
-                    onClick={() => { setIsModalOpen(true); track.openContactModal('profile_card') }}
-                    className="btn-ghost text-center px-4 text-sm"
-                  >
-                    {profileContent.contactCta}
-                  </button>
-                  <a
-                    href="/One%20Sheet%20Aceto%20Barbara.png"
-                    download="CV - Aceto Barbara.png"
-                    onClick={() => track.clickDownloadCV('profile_card', 'CV - Aceto Barbara.png')}
-                    className="btn-link text-center text-sm"
-                  >
-                    {profileContent.cvCta}
-                  </a>
+                    <p className="text-base font-bold mb-0.5" style={{ color: 'var(--accent-primary)' }}>Barbara Aceto</p>
+                    <p className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>{profileContent.role}</p>
+                  </div>
                 </div>
               </div>
-
             </div>
-          </div>
-          </div>
-        </section>
+          </section>
         </div>
 
         <div className="w-full flex justify-center mt-2 mb-4 md:mb-5 relative z-50">
           <button
             type="button"
-            onClick={() => { scrollToWhyAndWork(); track.clickScrollToSection('porque_construyo') }}
+            onClick={() => { scrollToNews(); track.clickScrollToSection('noticias') }}
             className="w-11 h-11 rounded-full scroll-arrow flex items-center justify-center cursor-pointer"
-            style={{
-              backgroundColor: '#FFFFFF',
-              border: '1px solid var(--border-base)',
-              boxShadow: '0 2px 8px rgba(30, 42, 56, 0.08)',
-              color: 'var(--accent-primary)',
-            }}
-            aria-label={homeText.scrollWhyAria}
+            style={{ backgroundColor: '#FFFFFF', border: '1px solid var(--border-base)', boxShadow: '0 2px 8px rgba(30, 42, 56, 0.08)', color: 'var(--accent-primary)' }}
+            aria-label={homeText.scrollNewsAria}
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v14m0 0l-6-6m6 6l6-6" />
@@ -415,173 +487,527 @@ export default function Home() {
           </button>
         </div>
 
-        <div style={{ background: 'linear-gradient(180deg, rgba(30,42,56,0.12) 0%, rgba(30,42,56,0.08) 45%, rgba(30,42,56,0.05) 100%)' }}>
+        <div className="flex flex-col">
         {/* ════════════════════════════════════ */}
         {/* WHY I BUILD */}
         {/* ════════════════════════════════════ */}
+        <div className="order-3">
         <section
           ref={refWhy}
           id="why-work-start"
-          className="reveal w-full mt-4 md:mt-6 py-7 md:py-10 px-4"
+          className="reveal w-full mt-0 pb-7 md:pb-10"
         >
-          <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10 items-stretch">
-              <div className="relative rounded-3xl overflow-hidden border w-full max-w-xl mx-auto md:mx-0 md:col-span-5 h-full min-h-[220px] md:min-h-[480px]" style={{ borderColor: 'var(--border-base)' }}>
+          <div>
+            <article
+              className="rounded-3xl border p-6 md:p-8 lg:p-11 grid grid-cols-1 lg:grid-cols-12 gap-7 lg:gap-11 items-stretch"
+              style={{ borderColor: 'var(--border-base)', backgroundColor: 'var(--card-bg)' }}
+            >
+              <figure className="relative m-0 lg:col-span-5 aspect-[4/3] sm:aspect-[16/9] lg:aspect-auto lg:min-h-[320px] rounded-2xl overflow-hidden">
                 <img
                   src="/barbi fuego.png"
-                  alt="Barbara"
-                  className="w-full h-full object-cover"
-                  style={{ objectPosition: '18% center', filter: 'brightness(0.84) contrast(0.92)' }}
+                  alt={homeText.whyStory.imageAlt}
+                  className="absolute inset-0 w-full h-full object-cover"
+                  style={{ objectPosition: '12% center' }}
+                  loading="lazy"
                 />
-                <div
-                  className="absolute inset-0 pointer-events-none"
-                  style={{ background: 'linear-gradient(160deg, rgba(20,32,44,0.28) 0%, rgba(20,32,44,0.06) 52%, rgba(20,32,44,0.22) 100%)' }}
-                />
-              </div>
+              </figure>
 
-            <div className="text-center md:text-left w-full rounded-3xl border p-5 md:p-6 md:col-span-7 h-full md:min-h-[480px] flex flex-col" style={{ borderColor: 'var(--border-base)', background: 'linear-gradient(180deg, var(--card-bg) 0%, var(--bg) 100%)' }}>
-              <header className="mb-4 md:mb-5">
-                <h2 className="text-xl md:text-2xl font-serif font-semibold leading-tight" style={{ color: 'var(--accent-primary)' }}>
+              <div className="lg:col-span-7 min-w-0 text-left">
+                <span className="text-[10px] font-semibold uppercase" style={{ color: 'var(--accent-primary)', letterSpacing: '0.14em' }}>
                   {homeText.whyTitle}
+                </span>
+                <h2 className="text-3xl lg:text-4xl font-serif font-semibold leading-tight mt-2.5 mb-6" style={{ color: 'var(--text-primary)' }}>
+                  {homeText.whyStory.lead}
                 </h2>
-              </header>
-              <div
-                style={{
-                  color: 'var(--text-secondary)',
-                  fontSize: '0.9rem',
-                  lineHeight: 1.7,
-                }}
-              >
-                <div className="space-y-3 mb-5">
-                  <p style={{ maxWidth: '52ch' }}>{homeText.whyLine1}</p>
-                  <p style={{ maxWidth: '52ch' }}>{homeText.whyLine2}</p>
-                </div>
-                <div className="border-l-2 pl-5 py-1" style={{ borderColor: 'var(--accent-primary)', color: 'var(--text-primary)' }}>
-                  <p className="font-serif italic text-sm md:text-base leading-relaxed">{homeText.whyHighlight}</p>
-                </div>
-              </div>
 
-              <div className="mt-5 md:mt-6 flex-1 flex flex-col">
-                <header className="mb-3 md:mb-4">
-                  <h2 className="text-base md:text-lg font-serif font-semibold" style={{ color: 'var(--accent-primary)' }}>
-                    {homeText.wayTitle}
-                  </h2>
-                  <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>
-                    {homeText.wayIntro}
-                  </p>
-                </header>
-
-                <div className="flex flex-col w-full">
-                  {workSteps.map((step, i) => (
-                    <div key={step.number}>
-                      <article
-                        className="group flex gap-3 py-2.5 px-3 rounded-xl transition-all duration-200"
-                        style={{ borderLeft: '2px solid transparent' }}
-                        onMouseEnter={e => {
-                          e.currentTarget.style.borderLeftColor = 'var(--accent-primary)'
-                          e.currentTarget.style.backgroundColor = 'rgba(58,125,107,0.04)'
-                          const stepKeys = { '01': 'discovery', '02': 'hypothesis', '03': 'delivery', '04': 'learning_loop' } as const
-                          const s = stepKeys[step.number as keyof typeof stepKeys]
-                          if (s) track.workStepView(s)
-                        }}
-                        onMouseLeave={e => {
-                          e.currentTarget.style.borderLeftColor = 'transparent'
-                          e.currentTarget.style.backgroundColor = 'transparent'
-                        }}
-                      >
-                        <div className="flex-1 min-w-0">
-                          <span
-                            className="inline-block text-[10px] font-semibold mb-1.5"
-                            style={{ color: 'var(--accent-primary)', opacity: 0.65, letterSpacing: '0.13em' }}
-                          >
-                            {step.label}
-                          </span>
-                          <h3 className="text-sm md:text-base font-serif font-semibold mb-1 leading-snug" style={{ color: 'var(--text-primary)' }}>
-                            {step.title}
-                          </h3>
-                          {step.highlight ? (
-                            <p className="text-sm font-serif italic leading-relaxed" style={{ color: 'var(--accent-primary)', opacity: 0.82 }}>
-                              {step.description}
-                            </p>
-                          ) : (
-                            <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                              {step.description}
-                            </p>
-                          )}
-                        </div>
-                      </article>
-                      {i < workSteps.length - 1 && (
-                        <div className="flex items-center pl-4 py-0.5" aria-hidden="true">
-                          <svg width="10" height="14" viewBox="0 0 10 14" fill="none">
-                            <path d="M5 0v9M1.5 6.5L5 10.5l3.5-4" stroke="var(--accent-primary)" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" opacity="0.3"/>
-                          </svg>
-                        </div>
-                      )}
-                    </div>
+                <div className="space-y-4 text-base leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                  {homeText.whyStory.intro.map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
                   ))}
                 </div>
+                <p className="font-serif italic text-2xl lg:text-[1.75rem] leading-snug mt-2 mb-7" style={{ color: 'var(--accent-primary)' }}>
+                  {homeText.whyStory.thesis}
+                </p>
+                <p className="text-base leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                  {homeText.whyStory.after}
+                </p>
+
+                <p className="font-serif text-xl lg:text-2xl leading-snug mt-10 mb-6" style={{ color: 'var(--text-primary)' }}>
+                  {homeText.whyStory.turn}{' '}
+                  <em style={{ color: 'var(--accent-primary)' }}>{homeText.whyStory.turnEmphasis}</em>
+                </p>
+
+                <ol className="list-none m-0 pl-8" style={{ borderLeft: '1.5px solid rgba(74,127,121,0.35)' }}>
+                  {workSteps.map((step, i) => (
+                    <li
+                      key={step.number}
+                      className={`relative ${i < workSteps.length - 1 ? 'pb-6' : ''}`}
+                      onMouseEnter={() => {
+                        const stepKeys = { '01': 'discovery', '02': 'hypothesis', '03': 'delivery', '04': 'learning_loop' } as const
+                        const s = stepKeys[step.number as keyof typeof stepKeys]
+                        if (s) track.workStepView(s)
+                      }}
+                    >
+                      <span
+                        className="absolute rounded-full"
+                        aria-hidden="true"
+                        style={{
+                          left: '-38.5px',
+                          top: '8px',
+                          width: '11px',
+                          height: '11px',
+                          border: '2px solid var(--accent-primary)',
+                          backgroundColor: i === workSteps.length - 1 ? 'var(--accent-primary)' : 'var(--card-bg)',
+                        }}
+                      />
+                      <span className="text-[11px] font-semibold" style={{ color: 'var(--accent-primary)', letterSpacing: '0.12em' }}>
+                        {step.number} · {step.label}
+                      </span>
+                      <h3 className="text-lg md:text-xl font-serif font-semibold leading-snug mt-0.5 mb-1.5" style={{ color: 'var(--text-primary)' }}>
+                        {step.title}
+                      </h3>
+                      <p className="text-base leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                        {step.description}
+                      </p>
+                    </li>
+                  ))}
+                </ol>
+
+                <p className="text-base leading-relaxed mt-10" style={{ color: 'var(--text-secondary)' }}>
+                  {homeText.whyStory.closing}{' '}
+                  <Link
+                    id="home-btn-projects"
+                    to="/projects"
+                    onClick={() => track.clickViewProjects('why_build')}
+                    className="font-semibold whitespace-nowrap"
+                    style={{ color: 'var(--accent-primary)', borderBottom: '1.5px solid rgba(74,127,121,0.4)' }}
+                  >
+                    {profileContent.projectsCta} →
+                  </Link>
+                </p>
               </div>
-            </div>
-            </div>
+            </article>
           </div>
         </section>
+        </div>
 
         {/* ════════════════════════════════════ */}
         {/* PENSAMIENTO */}
         {/* ════════════════════════════════════ */}
-        <section ref={refNews} id="news-start" className="reveal w-full py-16 md:py-24 px-4" style={{ marginTop: '-5rem' }}>
+        <div className="order-1" style={{ background: 'linear-gradient(180deg, rgba(74,127,121,0.20) 0%, rgba(74,127,121,0.12) 100%)' }}>
+        <section ref={refNews} id="news-start" className="reveal order-1 w-full pt-7 pb-16 md:pt-10 md:pb-20 px-4">
           <div className="max-w-6xl mx-auto">
 
             {/* Section header */}
-            <div className="text-center mb-12 md:mb-16">
-              <div className="flex justify-center mt-1 mb-5">
-                <button
-                  type="button"
-                  onClick={() => { scrollToNews(); track.clickScrollToSection('noticias') }}
-                  className="w-11 h-11 rounded-full scroll-arrow flex items-center justify-center"
-                  style={{
-                    backgroundColor: '#FFFFFF',
-                    border: '1px solid var(--border-base)',
-                    boxShadow: '0 2px 8px rgba(30, 42, 56, 0.08)',
-                    color: 'var(--accent-primary)',
-                  }}
-                  aria-label={homeText.scrollNewsAria}
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v14m0 0l-6-6m6 6l6-6" />
-                  </svg>
-                </button>
-              </div>
+            <div className="text-center mb-10 md:mb-12">
               <h2 className="text-3xl md:text-4xl font-serif font-semibold mb-3" style={{ color: 'var(--text-primary)' }}>
                 {homeText.newsTitle}
               </h2>
-              <p className="text-sm md:text-base max-w-lg mx-auto" style={{ color: 'var(--text-muted)' }}>
+              <p className="text-base md:text-lg leading-relaxed max-w-2xl mx-auto" style={{ color: 'var(--text-muted)' }}>
                 {homeText.newsSubtitle}
               </p>
             </div>
 
-            {/* LinkedIn notes grid */}
-            {linkedInNotes.length > 0 && (
-              <div ref={refNoteGrid} className="reveal-stagger grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5 md:mb-6">
-                {linkedInNotes.map((note) => (
-                  <a
-                    key={note.slug}
-                    href={note.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block"
-                    onClick={() => track.clickContentCard(
-                      isEnglish ? (noteCardMeta[note.slug]?.titleEn ?? note.title) : note.title,
-                      'note',
-                      note.url,
-                      'noticias',
+            <div className="grid grid-cols-1 lg:grid-cols-10 gap-6 lg:gap-5 mb-8 md:mb-10 items-stretch">
+            {featuredIdea && (
+              <div className="lg:col-span-3 h-full">
+                <article
+                  className="h-full rounded-3xl border overflow-hidden"
+                  style={{
+                    borderColor: 'var(--border-base)',
+                    backgroundColor: 'var(--card-bg)',
+                    boxShadow: '0 16px 44px rgba(30,42,56,0.065)',
+                    transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease',
+                  }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.transform = 'translateY(-2px)'
+                    e.currentTarget.style.boxShadow = '0 20px 54px rgba(30,42,56,0.09)'
+                    e.currentTarget.style.borderColor = 'rgba(58,125,107,0.32)'
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.transform = ''
+                    e.currentTarget.style.boxShadow = '0 16px 44px rgba(30,42,56,0.065)'
+                    e.currentTarget.style.borderColor = 'var(--border-base)'
+                  }}
+                >
+                  <div className="h-full flex flex-col">
+                    <div className="order-2 p-6 flex flex-col justify-between flex-1">
+                      <div>
+                        <span
+                          className="inline-block text-[10px] font-semibold mb-3"
+                          style={{ color: 'var(--accent-primary)', letterSpacing: '0.13em', opacity: 0.65 }}
+                        >
+                          {featuredIdea.label}
+                        </span>
+                        <h3 className="text-2xl font-serif font-semibold mb-3 leading-tight" style={{ color: 'var(--text-primary)' }}>
+                          {featuredIdea.title}
+                        </h3>
+                        <p className="text-sm md:text-base leading-relaxed" style={{ color: 'var(--text-secondary)', maxWidth: '56ch' }}>
+                          {featuredIdea.description}
+                        </p>
+                      </div>
+                      <div className="mt-6 flex flex-col items-start gap-2">
+                        {featuredIdea.deckUrl && (
+                          <a
+                            href={featuredIdea.deckUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-block text-sm font-medium"
+                            style={{ color: 'var(--accent-primary)' }}
+                            onClick={() => track.clickExternalLink(isEnglish ? 'View presentation' : 'Ver presentación', featuredIdea.deckUrl ?? '', 'noticias')}
+                          >
+                            {isEnglish ? 'View presentation →' : 'Ver presentación →'}
+                          </a>
+                        )}
+                        <a
+                          href={featuredIdea.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-block text-sm font-medium"
+                          style={{ color: 'var(--accent-primary)' }}
+                          onClick={() => track.clickContentCard(featuredIdea.title, featuredIdea.type, featuredIdea.url, 'noticias')}
+                        >
+                          {featuredIdea.slug === 'agile-summit-uruguay'
+                            ? (isEnglish ? 'Read the reflection on LinkedIn →' : 'Leer la reflexión en LinkedIn →')
+                            : (featuredIdea.type === 'note' ? homeText.readNote : homeText.readArticle)}
+                        </a>
+                        {featuredIdea.slug === 'agile-summit-uruguay' && (
+                          <a
+                            href="https://www.youtube.com/watch?v=KnaG_BjSB8U&t=7350s"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-block text-sm font-medium"
+                            style={{ color: 'var(--accent-primary)' }}
+                            onClick={() => track.clickExternalLink(homeText.summitVideoTitle, 'https://www.youtube.com/watch?v=KnaG_BjSB8U&t=7350s', 'noticias')}
+                          >
+                            {isEnglish ? 'Watch the full talk on YouTube →' : 'Ver la charla completa en YouTube →'}
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                    {featuredIdea.image && (
+                      <div className="order-1 relative overflow-hidden" style={{ minHeight: '210px' }}>
+                        <img
+                          src={featuredIdea.image}
+                          alt={featuredIdea.title}
+                          className="absolute inset-0 w-full h-full object-cover"
+                          style={{ objectPosition: '44% 18%', filter: 'brightness(0.9) contrast(0.94) saturate(0.92)' }}
+                          loading="lazy"
+                        />
+                        <div
+                          className="absolute inset-0 pointer-events-none"
+                          style={{ background: 'linear-gradient(to bottom, transparent 72%, rgba(255,255,255,0.16) 100%)' }}
+                        />
+                      </div>
                     )}
-                  >
+                  </div>
+                </article>
+              </div>
+            )}
+
+            {featuredIdea?.slug === 'agile-summit-uruguay' && (
+              <section className="lg:col-span-7 flex flex-col" aria-labelledby="agile-summit-video-title">
+                <div className="mt-auto mb-4">
+                  <div>
+                    <p
+                      className="text-[10px] font-semibold mb-2"
+                      style={{ color: 'var(--accent-primary)', letterSpacing: '0.13em', opacity: 0.72 }}
+                    >
+                      {homeText.summitVideoEyebrow}
+                    </p>
+                    <h3
+                      id="agile-summit-video-title"
+                      className="text-xl md:text-2xl font-serif font-semibold leading-snug"
+                      style={{ color: 'var(--text-primary)' }}
+                    >
+                      {homeText.summitVideoTitle}
+                    </h3>
+                    <p className="text-xs mt-1 lg:whitespace-nowrap" style={{ color: 'var(--text-secondary)' }}>
+                      {homeText.summitVideoDescription}
+                    </p>
+                  </div>
+                </div>
+                <div
+                  className="relative w-full overflow-hidden border"
+                  style={{
+                    aspectRatio: '16 / 9',
+                    borderRadius: '8px',
+                    borderColor: 'rgba(74,127,121,0.18)',
+                    backgroundColor: '#171b1a',
+                    boxShadow: '0 14px 38px rgba(30,42,56,0.08)',
+                  }}
+                >
+                  {isSummitVideoPlaying ? (
+                    <iframe
+                      className="absolute inset-0 w-full h-full"
+                      src="https://www.youtube-nocookie.com/embed/KnaG_BjSB8U?start=7350&rel=0&autoplay=1"
+                      title={homeText.summitVideoTitle}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      allowFullScreen
+                    />
+                  ) : (
+                    <button
+                      type="button"
+                      className="absolute inset-0 w-full h-full group"
+                      onClick={() => {
+                        setIsSummitVideoPlaying(true)
+                        track.clickExternalLink(homeText.playSummitVideo, 'https://www.youtube.com/watch?v=KnaG_BjSB8U&t=7350s', 'noticias')
+                      }}
+                      aria-label={homeText.playSummitVideo}
+                    >
+                      <img
+                        src="/agile-summit-stage.jpg"
+                        alt=""
+                        className="absolute inset-0 w-full h-full object-cover"
+                      />
+                      <span
+                        className="absolute inset-0 flex items-center justify-center"
+                        aria-hidden="true"
+                        style={{ backgroundColor: 'rgba(14,25,22,0.16)' }}
+                      >
+                        <span
+                          className="w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center transition-transform duration-200 group-hover:scale-105"
+                          style={{
+                            backgroundColor: 'rgba(255,255,255,0.94)',
+                            color: 'var(--accent-primary)',
+                            boxShadow: '0 6px 24px rgba(20,32,28,0.28)',
+                          }}
+                        >
+                          <svg className="w-7 h-7 md:w-8 md:h-8 ml-1" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
+                        </span>
+                      </span>
+                    </button>
+                  )}
+                </div>
+              </section>
+            )}
+            </div>
+
+            {featuredIdea?.slug === 'agile-summit-uruguay' && (
+              <div className="mb-6 md:mb-8">
+                <div className="mb-4">
+                  <h3 className="text-xl md:text-2xl font-serif font-semibold" style={{ color: 'var(--text-primary)' }}>
+                    {homeText.fieldNotesTitle}
+                  </h3>
+                  <p className="text-sm mt-1 max-w-2xl" style={{ color: 'var(--text-secondary)' }}>
+                    {homeText.fieldNotesSubtitle}
+                  </p>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {agileSummitRelatedLinks.map((link) => (
                     <article
-                      className="h-full rounded-2xl border overflow-hidden flex flex-col"
+                      key={link.url}
+                      className="rounded-2xl border p-5 flex flex-col"
                       style={{
-                        borderColor: 'var(--border-base)',
-                        backgroundColor: 'var(--card-bg)',
+                        borderColor: 'rgba(74,127,121,0.16)',
+                        backgroundColor: 'rgba(255,255,255,0.72)',
+                        minHeight: '190px',
+                      }}
+                    >
+                      <span
+                        className="inline-block text-[10px] font-semibold mb-2.5"
+                        style={{ color: 'var(--accent-primary)', letterSpacing: '0.13em', opacity: 0.65 }}
+                      >
+                        {link.label}
+                      </span>
+                      <h3 className="text-lg font-serif font-semibold mb-3 leading-snug" style={{ color: 'var(--text-primary)' }}>
+                        {link.title}
+                      </h3>
+                      <p className="text-sm leading-relaxed flex-1" style={{ color: 'var(--text-secondary)' }}>
+                        {link.description}
+                      </p>
+                      <a
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block mt-4 text-xs font-medium"
+                        style={{ color: 'var(--accent-primary)' }}
+                        onClick={() => track.clickExternalLink(link.title, link.url, 'noticias')}
+                      >
+                        {link.isVideo ? homeText.watchVideo : homeText.readNote}
+                      </a>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div className="mb-6 md:mb-8">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
+                {fieldNotes.map((item) => (
+                  <article
+                    key={item.slug}
+                    className="border overflow-hidden flex flex-col"
+                    style={{
+                      borderColor: 'rgba(74,127,121,0.16)',
+                      backgroundColor: 'rgba(255,255,255,0.72)',
+                      borderRadius: '8px',
+                      transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease',
+                    }}
+                    onMouseEnter={e => {
+                      e.currentTarget.style.transform = 'translateY(-2px)'
+                      e.currentTarget.style.boxShadow = '0 10px 30px rgba(30,42,56,0.09)'
+                      e.currentTarget.style.borderColor = 'rgba(74,127,121,0.28)'
+                    }}
+                    onMouseLeave={e => {
+                      e.currentTarget.style.transform = ''
+                      e.currentTarget.style.boxShadow = ''
+                      e.currentTarget.style.borderColor = 'rgba(74,127,121,0.16)'
+                    }}
+                  >
+                    <a
+                      href={item.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="relative block overflow-hidden"
+                      style={{ height: '172px', backgroundColor: '#eef1ed' }}
+                      onClick={() => track.clickExternalLink(item.title, item.url, 'noticias')}
+                      aria-label={`${item.isVideo ? homeText.watchVideo : homeText.viewPost}: ${item.title}`}
+                    >
+                      <img
+                        src={item.image}
+                        alt=""
+                        className="w-full h-full object-cover"
+                        style={{
+                          objectPosition:
+                            item.slug === 'crear-el-camino'
+                              ? 'center center'
+                              : item.slug === 'figma-claude-code'
+                                ? 'center 24%'
+                                : item.slug === 'contexto-md'
+                                  ? 'center 42%'
+                                : 'center top',
+                          filter: 'saturate(0.9) contrast(0.96) brightness(0.96)',
+                          transition: 'transform 0.35s ease',
+                        }}
+                        loading="lazy"
+                      />
+                      {item.isVideo && (
+                        <span
+                          className="absolute inset-0 flex items-center justify-center"
+                          aria-hidden="true"
+                          style={{ backgroundColor: 'rgba(22,39,35,0.12)' }}
+                        >
+                          <span
+                            className="w-12 h-12 rounded-full flex items-center justify-center"
+                            style={{ backgroundColor: 'rgba(255,255,255,0.94)', color: 'var(--accent-primary)', boxShadow: '0 4px 18px rgba(30,42,56,0.18)' }}
+                          >
+                            <svg className="w-5 h-5 ml-0.5" viewBox="0 0 24 24" fill="currentColor">
+                              <path d="M8 5v14l11-7z" />
+                            </svg>
+                          </span>
+                        </span>
+                      )}
+                    </a>
+                    <div className="p-5 flex flex-col flex-1">
+                      <span
+                        className="inline-block text-[10px] font-semibold mb-2.5"
+                        style={{ color: 'var(--accent-primary)', letterSpacing: '0.13em', opacity: 0.72 }}
+                      >
+                        {item.label}
+                      </span>
+                      <h3 className="text-lg font-serif font-semibold mb-3 leading-snug" style={{ color: 'var(--text-primary)' }}>
+                        {item.title}
+                      </h3>
+                      <p className="text-sm leading-relaxed flex-1" style={{ color: 'var(--text-secondary)' }}>
+                        {item.description}
+                      </p>
+                      <a
+                        href={item.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block mt-4 text-xs font-medium"
+                        style={{ color: 'var(--accent-primary)' }}
+                        onClick={() => track.clickExternalLink(item.title, item.url, 'noticias')}
+                      >
+                        {item.isVideo ? homeText.watchVideo : homeText.viewPost}
+                      </a>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+
+            {wideIdea && (
+              <div className="block mb-6 md:mb-8">
+                <article
+                  className="rounded-3xl border overflow-hidden"
+                  style={{
+                    borderColor: 'var(--border-base)',
+                    backgroundColor: 'var(--card-bg)',
+                    boxShadow: '0 16px 44px rgba(30,42,56,0.055)',
+                    transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease',
+                  }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.transform = 'translateY(-2px)'
+                    e.currentTarget.style.boxShadow = '0 20px 54px rgba(30,42,56,0.08)'
+                    e.currentTarget.style.borderColor = 'rgba(58,125,107,0.32)'
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.transform = ''
+                    e.currentTarget.style.boxShadow = '0 16px 44px rgba(30,42,56,0.055)'
+                    e.currentTarget.style.borderColor = 'var(--border-base)'
+                  }}
+                >
+                  <div className="grid grid-cols-1 md:grid-cols-12">
+                    <div className="md:col-span-7 p-7 md:p-10 flex flex-col justify-between" style={{ minHeight: '300px' }}>
+                      <div>
+                        <span
+                          className="inline-block text-[10px] font-semibold mb-3"
+                          style={{ color: 'var(--accent-primary)', letterSpacing: '0.13em', opacity: 0.65 }}
+                        >
+                          {wideIdea.label}
+                        </span>
+                        <h3 className="text-2xl md:text-3xl font-serif font-semibold mb-4 leading-tight" style={{ color: 'var(--text-primary)' }}>
+                          {wideIdea.title}
+                        </h3>
+                        <p className="text-sm md:text-base leading-relaxed" style={{ color: 'var(--text-secondary)', maxWidth: '56ch' }}>
+                          {wideIdea.description}
+                        </p>
+                      </div>
+                      <a
+                        href={wideIdea.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block mt-6 text-sm font-medium"
+                        style={{ color: 'var(--accent-primary)' }}
+                        onClick={() => track.clickContentCard(wideIdea.title, wideIdea.type, wideIdea.url, 'noticias')}
+                      >
+                        {homeText.readArticle}
+                      </a>
+                    </div>
+                    {wideIdea.image && (
+                      <div className="md:col-span-5 relative overflow-hidden" style={{ minHeight: '240px' }}>
+                        <img
+                          src={wideIdea.image}
+                          alt={wideIdea.title}
+                          className="absolute inset-0 w-full h-full object-cover"
+                          style={{ objectPosition: 'center 18%', filter: 'brightness(0.9) contrast(0.94) saturate(0.92)' }}
+                          loading="lazy"
+                        />
+                        <div
+                          className="absolute inset-0 pointer-events-none hidden md:block"
+                          style={{ background: 'linear-gradient(to right, var(--card-bg) 0%, transparent 30%)' }}
+                        />
+                      </div>
+                    )}
+                  </div>
+                </article>
+              </div>
+            )}
+
+            {secondaryIdeas.length > 0 && (
+              <div ref={refSecGrid} className="reveal-stagger grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5 mb-5 md:mb-6">
+                {secondaryIdeas.map((item) => (
+                  <div key={item.slug} className="block">
+                    <article
+                      className={`h-full rounded-2xl border overflow-hidden ${item.slug === 'women-in-tech' ? 'md:grid md:grid-cols-[42%_58%]' : 'flex flex-col'}`}
+                      style={{
+                        borderColor: 'rgba(74,127,121,0.16)',
+                        backgroundColor: 'rgba(255,255,255,0.72)',
                         transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease',
                       }}
                       onMouseEnter={e => {
@@ -597,145 +1023,78 @@ export default function Home() {
                         el.style.transform = ''
                         el.style.boxShadow = ''
                         el.style.borderColor = 'var(--border-base)'
-                        const img = el.querySelector('img') as HTMLImageElement | null
-                        if (img) img.style.transform = ''
                       }}
                     >
-                      {note.image && (
-                        <div className="w-full overflow-hidden" style={{ height: '144px' }}>
+                      {item.image && (
+                        <div
+                          className={`w-full overflow-hidden ${item.slug === 'women-in-tech' ? 'h-72 md:h-full md:min-h-[330px]' : ''}`}
+                          style={{
+                            height: item.slug === 'women-in-tech' ? undefined : item.slug === 'agile-summit-uruguay' ? '180px' : '132px',
+                            backgroundColor: item.slug === 'agile-summit-uruguay' ? '#111' : item.slug === 'women-in-tech' ? '#fff' : 'transparent',
+                          }}
+                        >
                           <img
-                            src={note.image}
-                            alt={note.title}
-                            className="w-full h-full object-cover"
+                            src={item.image}
+                            alt={item.title}
+                            className={`w-full h-full ${item.slug === 'women-in-tech' ? 'object-contain md:object-cover' : ''}`}
                             style={{
+                              objectFit: item.slug === 'women-in-tech' ? undefined : item.slug === 'agile-summit-uruguay' ? 'contain' : 'cover',
                               objectPosition: 'center top',
-                              filter: 'saturate(0.92) contrast(0.98) brightness(0.99)',
+                              filter: 'saturate(0.9) contrast(0.96) brightness(0.98)',
                               transition: 'transform 0.35s ease',
                             }}
                             loading="lazy"
                           />
                         </div>
                       )}
-                      <div className="p-5 flex flex-col flex-1">
-                        <span
-                          className="inline-block text-[10px] font-semibold mb-2.5"
-                          style={{ color: 'var(--accent-primary)', letterSpacing: '0.13em', opacity: 0.65 }}
+                      <div className="p-5 md:p-6 flex flex-col flex-1">
+                        <a
+                          href={item.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block flex-1"
+                          onClick={() => track.clickContentCard(item.title, item.type, item.url ?? '', 'noticias')}
                         >
-                          {isEnglish ? (noteCardMeta[note.slug]?.labelEn ?? homeText.noteLabel) : (noteCardMeta[note.slug]?.labelEs ?? homeText.noteLabel)}
-                        </span>
-                        <h3 className="text-base font-serif font-semibold mb-2 leading-snug flex-1" style={{ color: 'var(--text-primary)' }}>
-                          {isEnglish ? (noteCardMeta[note.slug]?.titleEn ?? note.title) : note.title}
-                        </h3>
-                        <span className="inline-block mt-3 text-xs font-medium" style={{ color: 'var(--accent-primary)' }}>
-                          {homeText.readNote}
-                        </span>
+                          <span
+                            className="inline-block text-[10px] font-semibold mb-2.5"
+                            style={{ color: 'var(--accent-primary)', letterSpacing: '0.13em', opacity: 0.65 }}
+                          >
+                            {item.label}
+                          </span>
+                          <h3 className="text-lg font-serif font-semibold mb-3 leading-snug" style={{ color: 'var(--text-primary)' }}>
+                            {item.title}
+                          </h3>
+                          <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                            {item.description}
+                          </p>
+                        </a>
+                        <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2">
+                          <a
+                            href={item.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-block text-xs font-medium"
+                            style={{ color: 'var(--accent-primary)' }}
+                            onClick={() => track.clickContentCard(item.title, item.type, item.url ?? '', 'noticias')}
+                          >
+                            {item.type === 'note' ? homeText.readNote : homeText.readArticle}
+                          </a>
+                          {item.deckUrl && (
+                            <a
+                              href={item.deckUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-block text-xs font-medium"
+                              style={{ color: 'var(--accent-primary)' }}
+                              onClick={() => track.clickExternalLink(isEnglish ? 'View presentation' : 'Ver presentación', item.deckUrl ?? '', 'noticias')}
+                            >
+                              {isEnglish ? 'View presentation' : 'Ver presentación'}
+                            </a>
+                          )}
+                        </div>
                       </div>
                     </article>
-                  </a>
-                ))}
-              </div>
-            )}
-
-            {/* Featured card */}
-            {featuredCard && (
-              <a
-                href={featuredCard.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block mb-5 md:mb-6"
-                onClick={() => track.clickContentCard(featuredCard.title, 'article', featuredCard.url, 'noticias')}
-              >
-                <article
-                  className="rounded-2xl border overflow-hidden"
-                  style={{ borderColor: 'var(--border-base)', backgroundColor: 'var(--card-bg)', transition: 'border-color 0.2s ease' }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(58,125,107,0.4)'; }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border-base)'; }}
-                >
-                  <div className="grid grid-cols-1 md:grid-cols-12">
-                    <div className="md:col-span-7 p-6 md:p-8 flex flex-col justify-between" style={{ minHeight: '280px' }}>
-                      <div>
-                        <span
-                          className="inline-block text-[10px] font-semibold mb-3"
-                          style={{ color: 'var(--accent-primary)', letterSpacing: '0.13em', opacity: 0.65 }}
-                        >
-                          {newsCardMeta[featuredCard.slug]?.label ?? 'ARTICLE'}
-                        </span>
-                        <h3 className="text-xl md:text-2xl font-serif font-semibold mb-3 leading-snug" style={{ color: 'var(--text-primary)' }}>
-                          {featuredCard.title}
-                        </h3>
-                        <p className="text-sm md:text-base leading-relaxed" style={{ color: 'var(--text-secondary)', maxWidth: '52ch' }}>
-                          {newsCardMeta[featuredCard.slug]?.shortExcerpt ?? featuredCard.excerpt}
-                        </p>
-                      </div>
-                      <span className="inline-block mt-6 text-sm font-medium" style={{ color: 'var(--accent-primary)' }}>
-                        {homeText.readArticle}
-                      </span>
-                    </div>
-                    {featuredCard.image && (
-                      <div className="md:col-span-5 relative overflow-hidden" style={{ minHeight: '220px' }}>
-                        <img
-                          src={featuredCard.image}
-                          alt={featuredCard.title}
-                          className="absolute inset-0 w-full h-full object-cover"
-                          style={{ objectPosition: 'center top', filter: 'brightness(0.88) contrast(0.92)' }}
-                          loading="lazy"
-                        />
-                        <div
-                          className="absolute inset-0 pointer-events-none hidden md:block"
-                          style={{ background: 'linear-gradient(to right, var(--card-bg) 0%, transparent 30%)' }}
-                        />
-                      </div>
-                    )}
                   </div>
-                </article>
-              </a>
-            )}
-
-            {/* Secondary grid */}
-            {secondaryCards.length > 0 && (
-              <div ref={refSecGrid} className="reveal-stagger grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5 md:mb-6">
-                {secondaryCards.map((item, i) => (
-                  <a
-                    key={`${item.slug}-${i}`}
-                    href={item.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block"
-                    onClick={() => track.clickContentCard(item.title, 'article', item.url, 'noticias')}
-                  >
-                    <article
-                      className="h-full rounded-xl border p-5 flex flex-col"
-                      style={{ borderColor: 'var(--border-base)', backgroundColor: 'var(--card-bg)', transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease' }}
-                      onMouseEnter={e => {
-                        const el = e.currentTarget
-                        el.style.transform = 'translateY(-2px)'
-                        el.style.boxShadow = '0 8px 28px rgba(30,42,56,0.09)'
-                        el.style.borderColor = 'rgba(74,127,121,0.25)'
-                      }}
-                      onMouseLeave={e => {
-                        const el = e.currentTarget
-                        el.style.transform = ''
-                        el.style.boxShadow = ''
-                        el.style.borderColor = 'var(--border-base)'
-                      }}
-                    >
-                      <span
-                        className="inline-block text-[10px] font-semibold mb-2.5"
-                        style={{ color: 'var(--accent-primary)', letterSpacing: '0.13em', opacity: 0.65 }}
-                      >
-                        {newsCardMeta[item.slug]?.label ?? item.outlet}
-                      </span>
-                      <h3 className="text-base font-serif font-semibold mb-2 leading-snug" style={{ color: 'var(--text-primary)' }}>
-                        {item.title}
-                      </h3>
-                      <p className="text-sm leading-relaxed flex-1" style={{ color: 'var(--text-secondary)' }}>
-                        {newsCardMeta[item.slug]?.shortExcerpt ?? item.excerpt}
-                      </p>
-                      <span className="inline-block mt-4 text-xs font-medium" style={{ color: 'var(--accent-primary)' }}>
-                        {homeText.readArticle}
-                      </span>
-                    </article>
-                  </a>
                 ))}
               </div>
             )}
@@ -743,6 +1102,21 @@ export default function Home() {
 
           </div>
         </section>
+        </div>
+
+        <div className="order-2 w-full flex justify-center my-4 md:my-5 relative z-50">
+          <button
+            type="button"
+            onClick={() => { scrollToWhy(); track.clickScrollToSection('porque_construyo') }}
+            className="w-11 h-11 rounded-full scroll-arrow flex items-center justify-center cursor-pointer"
+            style={{ backgroundColor: '#FFFFFF', border: '1px solid var(--border-base)', boxShadow: '0 2px 8px rgba(30, 42, 56, 0.08)', color: 'var(--accent-primary)' }}
+            aria-label={homeText.scrollWhyAria}
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v14m0 0l-6-6m6 6l6-6" />
+            </svg>
+          </button>
+        </div>
         </div>
 
         {/* CONTACT MODAL */}
@@ -830,7 +1204,6 @@ export default function Home() {
                     <button
                       onClick={() => { navigator.clipboard.writeText('aceto.barbara@gmail.com'); setEmailCopied(true); setTimeout(() => setEmailCopied(false), 2000); track.clickContactOption('email', 'contact_modal') }}
                       className="flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-colors"
-                      style={{ color: 'var(--text-muted)' }}
                       title="Copiar email"
                       onMouseEnter={e => { if (!emailCopied) { e.currentTarget.style.backgroundColor = 'rgba(74,127,121,0.10)'; e.currentTarget.style.color = 'var(--accent-primary)' } }}
                       onMouseLeave={e => { if (!emailCopied) { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = 'var(--text-muted)' } }}

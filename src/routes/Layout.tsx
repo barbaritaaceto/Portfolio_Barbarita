@@ -48,9 +48,9 @@ const Layout: React.FC = () => {
   }, [])
 
   const tooltip = isEnglish
-    ? 'Ask me about Barbi'
-    : 'Preguntame sobre Barbi'
-  const ariaLabel = isEnglish ? "Barbara's AI Assistant" : 'AI Assistant de Barbara'
+    ? 'Think with Barbara'
+    : 'Pensá con Barbara'
+  const ariaLabel = isEnglish ? 'Think with Barbara' : 'Pensá con Barbara'
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -194,4 +194,3 @@ const Layout: React.FC = () => {
 }
 
 export default Layout
-

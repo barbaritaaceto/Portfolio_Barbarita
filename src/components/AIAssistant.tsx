@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import {
   intents,
   matchIntent,
-  fallbackES,
-  fallbackEN,
   defaultSuggestionsES,
   defaultSuggestionsEN,
   type AssistantIntent,
@@ -35,24 +33,53 @@ interface AIAssistantProps {
   onClose: () => void
 }
 
-const initialChipsES = ['Experiencia', 'Proyectos', 'Producto + AI', 'Disponibilidad']
-const initialChipsEN = ['Experience', 'Projects', 'Product + AI', 'Availability']
+const initialChipsES = [
+  'Conocer a Barbi',
+  '¿Qué es Humanos + IA?',
+  '¿Qué plantea Agile después del Agile?',
+  '¿Qué dice sobre NotebookLM?',
+  '¿Qué piensa sobre liderazgo?',
+  'Quiero aplicar IA, ¿por dónde empiezo?',
+]
+const initialChipsEN = [
+  'Get to know Barbi',
+  'What is Humans + AI?',
+  'What is Agile After Agile about?',
+  'What does she say about NotebookLM?',
+  'What does she think about leadership?',
+  'I want to apply AI, where do I start?',
+]
 
-const onboardingES = 'Hola 👋 Soy Boconcino, tu guía. Podés preguntarme cómo trabaja Barbara, cómo aplica AI en producto, qué proyectos hizo o cómo lidera equipos.'
-const onboardingEN = "Hi 👋 I'm Boconcino, your guide. Ask me how Barbara works, how she applies AI to product, what projects she's done, or how she leads teams."
+const onboardingES = 'Hola, soy Bocconcino 👋✨ el asistente de este portfolio. Puedo ayudarte a conocer a Barbi, recorrer sus ideas sobre producto, IA 🤖 y liderazgo ❤️, o pensar con vos un problema real de equipo, estrategia o ejecución 🚀.'
+const onboardingEN = "Hi, I'm Bocconcino 👋✨ the assistant for this portfolio. I can help you get to know Barbi, explore her ideas on product, AI 🤖 and leadership ❤️, or think through a real problem around teams, strategy or execution 🚀."
 
-const placeholdersES = ['Preguntame sobre producto, AI o equipos…', '¿Cómo usa AI en producto?', '¿Está disponible?', '¿Cuál es su metodología?']
-const placeholdersEN = ['Ask me about product, AI or teams…', 'How does she use AI in product?', 'Is she available?', 'What is her methodology?']
+const placeholdersES = ['Contame tu desafío, una pregunta o el tipo de problema que querés pensar con Barbi…']
+const placeholdersEN = ['Tell me your challenge, a question, or the kind of problem you want to think through with Barbi…']
 
 const intentMeta: Record<string, { emoji: string; labelES: string; labelEN: string }> = {
   greeting:       { emoji: '👋', labelES: 'Hola',            labelEN: 'Hello' },
-  who_is_barbara: { emoji: '👩‍💼', labelES: 'Sobre Barbara',  labelEN: 'About Barbara' },
-  experience:     { emoji: '📋', labelES: 'Experiencia',     labelEN: 'Experience' },
-  santander:      { emoji: '🏦', labelES: 'Santander',       labelEN: 'Santander' },
-  mercadolibre:   { emoji: '🛒', labelES: 'Mercado Libre',   labelEN: 'Mercado Libre' },
-  redbee:         { emoji: '🔴', labelES: 'redbee',          labelEN: 'redbee' },
-  ai_product:     { emoji: '🤖', labelES: 'Producto + AI',   labelEN: 'Product + AI' },
-  leadership:     { emoji: '👥', labelES: 'Liderazgo',       labelEN: 'Leadership' },
+  team_not_delivering: { emoji: '👥', labelES: 'Equipo trabado', labelEN: 'Stuck team' },
+  product_idea_validation: { emoji: '🚀', labelES: 'Validar producto', labelEN: 'Product validation' },
+  ai_pm_role:     { emoji: '🤖', labelES: 'IA y rol PM',     labelEN: 'AI and PM role' },
+  financial_products_learning: { emoji: '🏦', labelES: 'Producto financiero', labelEN: 'Financial product' },
+  speed_quality:  { emoji: '⚖️', labelES: 'Velocidad y calidad', labelEN: 'Speed and quality' },
+  ambiguity_leadership: { emoji: '🌫️', labelES: 'Ambigüedad', labelEN: 'Ambiguity' },
+  misaligned_stakeholders: { emoji: '🧩', labelES: 'Alineación', labelEN: 'Alignment' },
+  roadmap_chaos: { emoji: '🗺️', labelES: 'Roadmap', labelEN: 'Roadmap' },
+  ai_without_strategy: { emoji: '🤖', labelES: 'IA con criterio', labelEN: 'AI with judgment' },
+  what_not_to_do: { emoji: '⛔', labelES: 'Qué evitar',      labelEN: 'What to avoid' },
+  metrics_decision: { emoji: '📊', labelES: 'Métricas',      labelEN: 'Metrics' },
+  organizational_learning: { emoji: '🔁', labelES: 'Aprendizaje', labelEN: 'Learning' },
+  thinking:       { emoji: '🧠', labelES: 'Cómo piensa',     labelEN: 'How she thinks' },
+  who_is_barbara: { emoji: '👩‍💼', labelES: 'Sobre Barbi',  labelEN: 'About Barbi' },
+  experience:     { emoji: '📋', labelES: 'Experiencia aplicada', labelEN: 'Applied experience' },
+  banking_experience: { emoji: '🏦', labelES: 'Banca digital', labelEN: 'Digital banking' },
+  ecommerce_experience: { emoji: '🛍️', labelES: 'E-commerce', labelEN: 'E-commerce' },
+  insurtech_growth: { emoji: '📈', labelES: 'Growth', labelEN: 'Growth' },
+  early_career: { emoji: '🔎', labelES: 'Inicios', labelEN: 'Early career' },
+  current_work: { emoji: '🧭', labelES: 'Trabajo actual', labelEN: 'Current work' },
+  ai_product:     { emoji: '🤖', labelES: 'IA y trabajo',    labelEN: 'AI and work' },
+  leadership:     { emoji: '❤️', labelES: 'Liderazgo',       labelEN: 'Leadership' },
   methodology:    { emoji: '🎯', labelES: 'Metodología',     labelEN: 'Methodology' },
   fintech:        { emoji: '💳', labelES: 'Fintech',         labelEN: 'Fintech' },
   projects:       { emoji: '🚀', labelES: 'Proyectos',       labelEN: 'Projects' },
@@ -62,14 +89,88 @@ const intentMeta: Record<string, { emoji: string; labelES: string; labelEN: stri
   talks:          { emoji: '🎙️', labelES: 'Charlas',         labelEN: 'Talks' },
   challenge:      { emoji: '⚡', labelES: 'Desafío',         labelEN: 'Challenge' },
   differentiator: { emoji: '⭐', labelES: 'Diferenciador',   labelEN: 'Differentiator' },
-  seguro123:      { emoji: '🛡️', labelES: '123Seguro',       labelEN: '123Seguro' },
+  agile_after_agile: { emoji: '🔄', labelES: 'Agile después del Agile', labelEN: 'Agile After Agile' },
+  spec_driven_ai: { emoji: '🧾', labelES: 'Specs con IA', labelEN: 'AI specs' },
+  ai_agents:      { emoji: '🤖', labelES: 'Agentes de IA', labelEN: 'AI agents' },
+  three_amigos:   { emoji: '👥', labelES: 'Three Amigos', labelEN: 'Three Amigos' },
+  qa_product:     { emoji: '✅', labelES: 'QA y producto', labelEN: 'QA and product' },
+  speaker_story:  { emoji: '🎤', labelES: 'Speaker', labelEN: 'Speaker' },
   notes_press:    { emoji: '📝', labelES: 'Notas & Prensa',  labelEN: 'Notes & Press' },
   short_ack:      { emoji: '✅', labelES: '',                labelEN: '' },
   help_menu:      { emoji: '📋', labelES: 'Menú',           labelEN: 'Menu' },
   education:      { emoji: '🎓', labelES: 'Formación',      labelEN: 'Education' },
   tools_stack:    { emoji: '🛠️', labelES: 'Herramientas',   labelEN: 'Tools' },
   location_remote:{ emoji: '📍', labelES: 'Ubicación',      labelEN: 'Location' },
-  cognizant:      { emoji: '🌐', labelES: 'Cognizant · Google', labelEN: 'Cognizant · Google' },
+}
+
+const quickIntentByLabel: Record<string, string> = {
+  'conocer a barbi': 'who_is_barbara',
+  'conocer a barbara': 'who_is_barbara',
+  'get to know barbi': 'who_is_barbara',
+  'get to know barbara': 'who_is_barbara',
+  'que es humanos ia': 'ai_product',
+  'what is humans ai': 'ai_product',
+  'que aprendio en agile summit uruguay': 'speaker_story',
+  'what did she learn at agile summit uruguay': 'speaker_story',
+  'que plantea agile despues del agile': 'agile_after_agile',
+  'what is agile after agile about': 'agile_after_agile',
+  'que dice sobre notebooklm': 'organizational_learning',
+  'what does she say about notebooklm': 'organizational_learning',
+  'que piensa sobre liderazgo': 'leadership',
+  'what does she think about leadership': 'leadership',
+  'quiero aplicar ia por donde empiezo': 'ai_without_strategy',
+  'i want to apply ai where do i start': 'ai_without_strategy',
+  'tengo muchas ideas como priorizo': 'roadmap_chaos',
+  'i have too many ideas how do i prioritize': 'roadmap_chaos',
+  'negocio y tecnologia no estan alineados que hago': 'misaligned_stakeholders',
+  'business and technology are not aligned what should i do': 'misaligned_stakeholders',
+  'como bajo una estrategia a ejecucion': 'methodology',
+  'how do i turn strategy into execution': 'methodology',
+  'que pregunta deberia hacer antes de construir': 'product_idea_validation',
+  'what question should i ask before building': 'product_idea_validation',
+  'como piensa': 'thinking',
+  'how she thinks': 'thinking',
+  'como construye producto': 'methodology',
+  'how she builds product': 'methodology',
+  'ia y futuro del trabajo': 'ai_product',
+  'ai and the future of work': 'ai_product',
+  'como lidera equipos': 'leadership',
+  'how she leads teams': 'leadership',
+  'casos reales y aprendizajes': 'projects',
+  'real cases and learnings': 'projects',
+  'podemos trabajar juntos': 'availability',
+  'can we work together': 'availability',
+  'mi equipo no esta entregando por donde empezarias': 'team_not_delivering',
+  'my team isn t delivering where would you start': 'team_not_delivering',
+  'tengo una idea de producto como validarias si vale la pena construirla': 'product_idea_validation',
+  'i have a product idea how would you validate whether it is worth building': 'product_idea_validation',
+  'como cambia la ia el rol de product manager': 'ai_pm_role',
+  'how does ai change the product manager role': 'ai_pm_role',
+  'que aprendiste construyendo productos financieros': 'financial_products_learning',
+  'what did you learn building financial products': 'financial_products_learning',
+  'como equilibras velocidad y calidad': 'speed_quality',
+  'how do you balance speed and quality': 'speed_quality',
+  'como lideras en contextos ambiguos': 'ambiguity_leadership',
+  'how do you lead in ambiguous contexts': 'ambiguity_leadership',
+  'stakeholders desalineados': 'misaligned_stakeholders',
+  'misaligned stakeholders': 'misaligned_stakeholders',
+  'roadmap caotico': 'roadmap_chaos',
+  'chaotic roadmap': 'roadmap_chaos',
+  'ia sin estrategia': 'ai_without_strategy',
+  'ai without strategy': 'ai_without_strategy',
+  'que no haria barbara': 'what_not_to_do',
+  'what would barbara not do': 'what_not_to_do',
+  'que metricas mirarias': 'metrics_decision',
+  'what metrics would you watch': 'metrics_decision',
+  'aprendizaje organizacional': 'organizational_learning',
+  'organizational learning': 'organizational_learning',
+  'specs con ia': 'spec_driven_ai',
+  'ai specs': 'spec_driven_ai',
+  'agentes de ia': 'ai_agents',
+  'ai agents': 'ai_agents',
+  'qa desde origen': 'qa_product',
+  'quality from the start': 'qa_product',
+  'three amigos': 'three_amigos',
 }
 
 function renderInline(text: string): React.ReactNode[] {
@@ -143,11 +244,21 @@ function detectInputLanguage(text: string): 'en' | 'es' | 'unknown' {
 function buildChips(labels: string[], isEnglish: boolean): SuggestedChip[] {
   return labels
     .filter(Boolean)
-    .map(label => ({
-      label,
-      isEnglish,
-      intentId: matchIntent(label, isEnglish, undefined)?.id,
-    }))
+    .map(label => {
+      const normalized = label
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9\s]/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim()
+
+      return {
+        label,
+        isEnglish,
+        intentId: quickIntentByLabel[normalized] ?? matchIntent(label, isEnglish, undefined)?.id,
+      }
+    })
 }
 
 function TypingDots() {
@@ -162,49 +273,12 @@ function TypingDots() {
   )
 }
 
-// Tour callout card
-function TourCard({ emoji, title, body, onNext, nextLabel, onBack, backLabel, onClose }: {
-  emoji: string; title: string; body: string
-  onNext: () => void; nextLabel: string
-  onBack?: () => void; backLabel?: string
-  onClose?: () => void
-}) {
-  return (
-    <div style={{
-      background: '#FFFFFF',
-      border: '2px solid var(--accent-primary)',
-      borderRadius: '16px',
-      padding: '14px 16px',
-      boxShadow: '0 0 0 4px rgba(74,127,121,0.12)',
-    }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '7px', marginBottom: '6px' }}>
-        <span style={{ fontSize: '16px', lineHeight: 1 }}>{emoji}</span>
-        <span style={{ fontWeight: 700, fontSize: '13px', color: 'var(--text-primary)', flex: 1 }}>{title}</span>
-        {onClose && (
-          <button type="button" onClick={onClose} aria-label="Cerrar" style={{ background: 'none', border: 'none', padding: '2px', cursor: 'pointer', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-              <line x1="1.5" y1="1.5" x2="10.5" y2="10.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-              <line x1="10.5" y1="1.5" x2="1.5" y2="10.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-            </svg>
-          </button>
-        )}
-      </div>
-      <p style={{ fontSize: '12px', color: 'var(--text-secondary)', lineHeight: '1.6', margin: '0 0 12px' }}>{body}</p>
-      <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-        {onBack && (
-          <button type="button" onClick={onBack} style={{ background: 'none', border: '1px solid var(--border-base)', borderRadius: '20px', color: 'var(--text-muted)', fontSize: '11px', padding: '4px 12px', cursor: 'pointer' }}>
-            {backLabel ?? '← Atrás'}
-          </button>
-        )}
-        <button
-          type="button" onClick={onNext}
-          style={{ backgroundColor: 'var(--accent-primary)', color: '#fff', border: 'none', borderRadius: '20px', padding: '5px 16px', fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}
-        >
-          {nextLabel}
-        </button>
-      </div>
-    </div>
-  )
+function buildAdvisorFallback(query: string, isEnglish: boolean): string {
+  if (isEnglish) {
+    return `If Barbi approached this, she probably would not start with a solution.\n\n**1. Understand the context.** What changed, who is affected, what constraints exist, and what would make this problem worth solving now?\n\n**2. Identify the tensions.** Usually the hard part is not one variable. It is speed vs. quality, autonomy vs. alignment, business urgency vs. technical debt, or AI potential vs. organizational readiness.\n\n**3. Choose a small learning move.** Before building a big answer, she would look for the smallest experiment that can reduce uncertainty: a customer signal, an operational metric, a prototype, a workflow test, or a decision checkpoint.\n\n**4. Make the decision criteria explicit.** What evidence would tell us to continue, stop, simplify, or change direction?\n\nTo think it through better: what is the main constraint in your case right now: people, time, data, technology, alignment, or business pressure?`
+  }
+
+  return `Si Barbi abordara esto, probablemente no empezaría por la solución.\n\n**1. Primero entendería el contexto.** Qué cambió, a quién afecta, qué restricciones existen y por qué este problema importa ahora.\n\n**2. Después miraría las tensiones.** Casi nunca el problema es una sola variable: suele haber velocidad vs. calidad, autonomía vs. alineación, urgencia de negocio vs. deuda técnica, o potencial de IA vs. madurez organizacional.\n\n**3. Buscaría un movimiento chico de aprendizaje.** Antes de construir una gran respuesta, intentaría reducir incertidumbre con una señal concreta: un dato de usuario, una métrica operativa, un prototipo, una prueba de flujo o una decisión acotada.\n\n**4. Haría explícito el criterio de decisión.** Qué evidencia nos diría si conviene seguir, frenar, simplificar o cambiar de dirección.\n\nPara pensarlo mejor: en tu caso, ¿la restricción principal hoy está en personas, tiempo, datos, tecnología, alineación o presión de negocio?`
 }
 
 export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
@@ -217,43 +291,12 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
   const [input, setInput] = useState('')
   const [isTyping, setIsTyping] = useState(false)
   const [placeholderIdx, setPlaceholderIdx] = useState(0)
-  const [tourStep, setTourStep] = useState<number>(() => {
-    if (typeof window === 'undefined') return -1
-    return window.sessionStorage.getItem('ai-tour-done') ? -1 : 0
-  })
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const lastIntentIdRef = useRef<string | undefined>(undefined)
   const seenIntentsRef = useRef<Set<string>>(new Set())
   const streamIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const placeholders = isEnglish ? placeholdersEN : placeholdersES
-
-  const nextTour = () => {
-    if (tourStep >= 2) {
-      setTourStep(-1)
-      if (typeof window !== 'undefined') window.sessionStorage.setItem('ai-tour-done', '1')
-    } else {
-      setTourStep(s => s + 1)
-    }
-  }
-  const prevTour = () => setTourStep(s => Math.max(0, s - 1))
-  const skipTour = () => {
-    setTourStep(-1)
-    if (typeof window !== 'undefined') window.sessionStorage.setItem('ai-tour-done', '1')
-  }
-  const restartTour = () => {
-    if (typeof window !== 'undefined') window.sessionStorage.removeItem('ai-tour-done')
-    setTourStep(0)
-  }
-
-  // Returns style to dim a section that is NOT the spotlight for this tourStep
-  // spotlight: 'messages' | 'input' | 'chips-row' — what's visible
-  const sectionDim = (spotlight: 'messages' | 'input' | 'chips'): React.CSSProperties => {
-    if (tourStep < 0) return {}
-    const active = tourStep === 0 ? 'input' : tourStep === 1 ? 'messages' : 'chips'
-    if (active === spotlight) return { transition: 'opacity 0.25s' }
-    return { opacity: 0.12, filter: 'blur(0.5px)', transition: 'opacity 0.25s, filter 0.25s' }
-  }
 
   useEffect(() => { setTimeout(() => inputRef.current?.focus(), 100) }, [])
   useEffect(() => { messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' }) }, [messages, isTyping])
@@ -282,7 +325,6 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
 
   const sendMessage = useCallback((text: string, forcedIntentId?: string, forcedEnglish?: boolean) => {
     if (!text.trim() || isTyping) return
-    if (tourStep >= 0) skipTour()
     const query = text.trim()
     track.aiQuestionSent(query.length, (forcedEnglish ?? isEnglish) ? 'en' : 'es')
     setInput('')
@@ -324,7 +366,7 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
           const existing: { q: string; t: number }[] = JSON.parse(localStorage.getItem(key) || '[]')
           localStorage.setItem(key, JSON.stringify([...existing, { q: query, t: Date.now() }].slice(-50)))
         } catch {}
-        responseText = responseEnglish ? fallbackEN : fallbackES
+        responseText = buildAdvisorFallback(query, responseEnglish)
         chips = buildChips(responseEnglish ? defaultSuggestionsEN : defaultSuggestionsES, responseEnglish)
       }
       const msgId = `a-${Date.now()}`
@@ -345,7 +387,7 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
         }
       }, 32)
     }, 650)
-  }, [isEnglish, isTyping, tourStep])
+  }, [isEnglish, isTyping])
 
   const handleSubmit = (e: React.FormEvent) => { e.preventDefault(); sendMessage(input) }
 
@@ -383,7 +425,7 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
       {/* Panel */}
       <div
         role="dialog" aria-modal="true"
-        aria-label={isEnglish ? "Boconcino — Barbara's Guide" : 'Boconcino — Guía de Barbara'}
+        aria-label={isEnglish ? "Explore how Barbi thinks" : 'Explorá cómo piensa Barbi'}
         className="ai-panel fixed z-[61] flex flex-col inset-x-0 bottom-0 rounded-t-[28px] md:inset-auto md:bottom-auto md:top-[5vh] md:left-1/2 md:-translate-x-1/2 md:w-[580px] md:rounded-[24px]"
         style={{
           backgroundColor: '#FFFFFF',
@@ -394,20 +436,20 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
         onClick={e => e.stopPropagation()}
       >
 
-        {/* Header — dimmed on step 0, 1, 2 */}
+        {/* Header */}
         <div
           className="flex items-center justify-between px-5 py-4 flex-shrink-0"
-          style={{ borderBottom: '1px solid var(--border-base)', ...(tourStep >= 0 ? { opacity: 0.12, filter: 'blur(0.5px)', transition: 'opacity 0.25s, filter 0.25s' } : {}) }}
+          style={{ borderBottom: '1px solid var(--border-base)' }}
         >
           <div>
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full" style={{ backgroundColor: 'var(--accent-primary)' }} />
               <span style={{ fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 600, fontSize: '15px', color: 'var(--text-primary)', letterSpacing: '-0.01em' }}>
-                Boconcino
+                {isEnglish ? 'Explore how Barbi thinks' : 'Explorá cómo piensa Barbi'}
               </span>
             </div>
             <p className="ml-4 mt-0.5" style={{ fontSize: '10px', color: 'var(--text-muted)', letterSpacing: '0.04em' }}>
-              {isEnglish ? 'Barbara Aceto · Product Leader · AI & Digital Strategy' : 'Barbara Aceto · Líder de Producto · IA y Estrategia Digital'}
+              {isEnglish ? 'Product · AI · Leadership · Change' : 'Producto · IA · Liderazgo · Cambio'}
             </p>
           </div>
           <button type="button" onClick={onClose} aria-label={isEnglish ? 'Close' : 'Cerrar'}
@@ -420,10 +462,10 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
           </button>
         </div>
 
-        {/* Messages area — spotlight on step 0 */}
+        {/* Messages area */}
         <div
           className="flex-1 overflow-y-auto px-4 py-4 flex flex-col gap-3"
-          style={{ scrollbarWidth: 'thin', scrollbarColor: 'var(--border-base) transparent', ...sectionDim('messages') }}
+          style={{ scrollbarWidth: 'thin', scrollbarColor: 'var(--border-base) transparent' }}
         >
           {messages.map(msg =>
             msg.role === 'user' ? (
@@ -444,7 +486,7 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
                   </div>
                 )}
                 <div className="self-start max-w-[88%] px-4 py-3 rounded-2xl rounded-tl-sm text-sm leading-relaxed"
-                  style={{ backgroundColor: 'var(--bg)', color: 'var(--text-secondary)', border: '1px solid var(--border-base)', ...(tourStep === 1 && msg.id === 'onboarding' ? { opacity: 0.1, filter: 'blur(0.5px)', transition: 'opacity 0.25s, filter 0.25s' } : {}) }}>
+                  style={{ backgroundColor: 'var(--bg)', color: 'var(--text-secondary)', border: '1px solid var(--border-base)' }}>
                   {renderText(msg.text)}{msg.streaming && <span className="ai-cursor" aria-hidden="true" />}
                 </div>
                 {Array.isArray(msg.navLinks) && msg.navLinks.length > 0 && (
@@ -477,57 +519,18 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
 
           {isTyping && <TypingDots />}
 
-          {/* Step 1 callout — inside messages area, highlights content chips */}
-          {tourStep === 1 && (
-            <div className="ai-msg mt-1">
-              <TourCard
-                emoji="☝️"
-                title={isEnglish ? 'Quick topics' : 'Temas rápidos'}
-                body={isEnglish
-                  ? 'Tap any chip to explore a topic instantly — no typing needed.'
-                  : 'Tocá cualquier pastilla para explorar un tema al toque, sin escribir nada.'}
-                onBack={prevTour}
-                backLabel={isEnglish ? '← Back' : '← Atrás'}
-                onNext={nextTour}
-                nextLabel={isEnglish ? 'Next →' : 'Siguiente →'}
-                onClose={skipTour}
-              />
-            </div>
-          )}
-
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Input area — spotlight on step 1 and 2 */}
+        {/* Input area */}
         <div
           className="flex-shrink-0 px-4 pt-3"
           style={{
             borderTop: '1px solid var(--border-base)',
             paddingBottom: 'max(1rem, calc(env(safe-area-inset-bottom, 0px) + 0.75rem))',
-            ...(tourStep === 1 ? { opacity: 0.12, filter: 'blur(0.5px)', transition: 'opacity 0.25s, filter 0.25s' } : { transition: 'opacity 0.25s' }),
           }}
         >
-          {/* Step 0 callout — above input bar */}
-          {tourStep === 0 && (
-            <div className="mb-3">
-              <TourCard
-                emoji="✍️"
-                title={isEnglish ? 'Ask me anything' : 'Preguntame lo que querés'}
-                body={isEnglish
-                  ? 'Type a question below — experience, projects, AI, availability, or anything you\'re curious about.'
-                  : 'Escribí tu pregunta acá — experiencia, proyectos, AI, disponibilidad, o lo que quieras saber.'}
-                onNext={nextTour}
-                nextLabel={isEnglish ? 'Next →' : 'Siguiente →'}
-                onClose={skipTour}
-              />
-            </div>
-          )}
-
-          {/* Input form — first, dimmed during step 2 */}
-          <div
-            className="mb-2.5"
-            style={(tourStep === 1 || tourStep === 2) ? { opacity: 0.2, transition: 'opacity 0.25s' } : {}}
-          >
+          <div className="mb-2.5">
             <form onSubmit={handleSubmit}>
               <div className="ai-inp-wrap flex items-center gap-3 px-4 py-2.5 rounded-2xl"
                 style={{ border: '1.5px solid var(--border-base)', backgroundColor: 'var(--bg)' }}>
@@ -566,31 +569,12 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
             </form>
           </div>
 
-          {/* Tour chips row — spotlight on step 2, dimmed on step 1 */}
           <div
             className="mt-2"
             style={{
               display: 'flex', gap: '6px', flexWrap: 'wrap' as const,
-              ...((tourStep === 0 || tourStep === 1) ? { opacity: 0.1, filter: 'blur(0.5px)', transition: 'opacity 0.25s, filter 0.25s' } : tourStep === 2 ? { transition: 'opacity 0.25s' } : {}),
             }}
           >
-            {/* Step 2 callout — above the chips */}
-            {tourStep === 2 && (
-              <div style={{ width: '100%', marginBottom: '8px' }}>
-                <TourCard
-                  emoji="🔖"
-                  title={isEnglish ? 'Always here when you need them' : 'Siempre disponibles'}
-                  body={isEnglish
-                    ? 'These two chips are always here. "Tour the portfolio" takes you through the site. "Tour the guide" restarts this walkthrough anytime.'
-                    : 'Estos dos chips siempre están acá. "Tour del portfolio" te lleva por el sitio. "Tour del asistente" reinicia esta guía cuando quieras.'}
-                  onBack={prevTour}
-                  backLabel={isEnglish ? '← Back' : '← Atrás'}
-                  onNext={nextTour}
-                  nextLabel={isEnglish ? '✓ Got it' : '✓ Entendido'}
-                  onClose={skipTour}
-                />
-              </div>
-            )}
             <button
               type="button"
               onClick={() => {
@@ -603,9 +587,8 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
               style={{
                 color: 'var(--text-muted)',
                 borderWidth: '1px', borderStyle: 'solid',
-                borderColor: tourStep === 2 ? 'var(--accent-primary)' : 'var(--border-base)',
+                borderColor: 'var(--border-base)',
                 backgroundColor: 'transparent',
-                ...(tourStep === 2 ? { boxShadow: '0 0 0 3px rgba(74,127,121,0.18)' } : {}),
               }}
             >
               <svg width="9" height="9" viewBox="0 0 14 14" fill="none" aria-hidden="true">
@@ -613,24 +596,6 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
                 <path d="M7 4v3.5L9 9" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
               </svg>
               {isEnglish ? 'Tour the portfolio' : 'Tour del portfolio'}
-            </button>
-            <button
-              type="button"
-              onClick={restartTour}
-              className="ai-tour text-[10px] px-3 py-1 rounded-full flex items-center gap-1.5 transition-all"
-              style={{
-                color: 'var(--text-muted)',
-                borderWidth: '1px', borderStyle: 'solid',
-                borderColor: tourStep === 2 ? 'var(--accent-primary)' : 'var(--border-base)',
-                backgroundColor: 'transparent',
-                ...(tourStep === 2 ? { boxShadow: '0 0 0 3px rgba(74,127,121,0.18)' } : {}),
-              }}
-            >
-              <svg width="9" height="9" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                <path d="M2 7a5 5 0 1 0 1-3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-                <path d="M2 3v4h4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-              {isEnglish ? 'Tour the guide' : 'Tour del asistente'}
             </button>
           </div>
         </div>

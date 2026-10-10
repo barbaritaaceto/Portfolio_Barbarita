@@ -96,6 +96,11 @@ export default function Notes(){
       excerpt: 'Explorando cómo Claude Code cambia la forma de construir productos y herramientas digitales.',
       content: 'Explorando cómo Claude Code cambia la forma de construir productos y herramientas digitales.',
     },
+    'agile-summit-uruguay': {
+      title: 'Agile después del Agile',
+      excerpt: 'Speaker en Agile Summit Uruguay: una mirada sobre cómo rediseñar formas de trabajo cuando cambian el contexto, las reglas y la manera de combinar producto, tecnología, datos, UX, QA, personas y negocio.',
+      content: 'Participación como speaker en Agile Summit Uruguay con la charla Agile después del Agile.\n\nLa conversación propone volver a mirar la agilidad desde el contexto actual: no como una receta cerrada, sino como una forma de combinar mejor producto, tecnología, datos, UX, QA, personas y negocio.\n\nLa pregunta de fondo no es si Agile murió. Es qué capacidades necesitamos construir para trabajar mejor cuando cambian las reglas, aumenta la complejidad y las organizaciones necesitan aprender más rápido.',
+    },
     'women-in-tech': {
       title: 'Women in Tech · Product Management · redbee',
       excerpt: 'Sobre liderazgo femenino en tecnología y producto — lo que cambió, lo que sigue pendiente y lo que construimos.',
@@ -116,6 +121,10 @@ export default function Notes(){
     'claude-code': {
       title: 'My learnings using Claude in the last 72 hours',
       excerpt: 'What I discovered building seriously with AI — and what surprised me.',
+    },
+    'agile-summit-uruguay': {
+      title: 'Agile After Agile',
+      excerpt: 'Speaker at Agile Summit Uruguay: a perspective on redesigning ways of working when context, rules and the way we combine product, technology, data, UX, QA, people and business have changed.',
     },
     'women-in-tech': {
       title: 'Women in Tech · Product Management · redbee',

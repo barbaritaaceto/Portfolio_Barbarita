@@ -20,9 +20,9 @@ const STEPS: Step[] = [
     titleES: 'Bienvenido al portfolio de Barbara',
     titleEN: "Welcome to Barbara's portfolio",
     bodyES:
-      'Barbara es PM y estratega de producto con +10 años construyendo productos digitales. Recorramos juntos lo que tiene para mostrar.',
+      'Barbi es Product & AI Leader con +10 años liderando productos, equipos y nuevas formas de trabajar. Recorramos juntos lo que tiene para mostrar.',
     bodyEN:
-      "Barbara is a PM and product strategist with 10+ years building digital products. Let's explore what she has to show.",
+      "Barbi is a Product & AI Leader with 10+ years leading products, teams and new ways of working. Let's explore what she has to show.",
   },
   {
     targetId: 'home-btn-projects',
@@ -40,9 +40,9 @@ const STEPS: Step[] = [
     titleES: 'Tu Guía',
     titleEN: 'Your Guide',
     bodyES:
-      'Chateá con el asistente para conocer más sobre Barbara — experiencia, proyectos, AI, disponibilidad o lo que quieras preguntar.',
+      'Pensá con Barbara desde el asistente: traé un desafío de producto, IA, liderazgo o cambio organizacional.',
     bodyEN:
-      'Chat with the assistant to learn more about Barbara — experience, projects, AI, availability, or anything you want to ask.',
+      'Think with Barbara through the assistant — bring a product, AI, leadership or organizational challenge.',
   },
   {
     targetId: 'layout-lang-toggle',
@@ -68,9 +68,9 @@ const STEPS: Step[] = [
     titleES: 'Ya viste todo',
     titleEN: "You've seen it all",
     bodyES:
-      'Podés reiniciar este tour cuando quieras desde el asistente — chip "Tour del portfolio" — o tocando el botón del asistente.',
+      'Podés reiniciar este tour cuando quieras desde el asistente — chip "Tour del portfolio" — o tocando "Pensá con Barbara".',
     bodyEN:
-      'Restart this tour anytime from the assistant — chip "Tour the portfolio" — or by tapping the assistant button.',
+      'Restart this tour anytime from the assistant — chip "Tour the portfolio" — or by tapping "Think with Barbara".',
   },
 ]
 

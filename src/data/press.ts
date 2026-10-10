@@ -1,7 +1,6 @@
 import { PressItem } from './types'
 
 const press: PressItem[] = [
-  { slug: 'press-1', featured: true, year: 2026, outlet: 'Tech Daily', title: 'Leader in AI Product', date: '2026-01-10', excerpt: 'Profile on Barbara', url: '#', image: '/placeholder.png' },
   {
     slug: 'press-4',
     year: 2023,
@@ -31,9 +30,7 @@ const press: PressItem[] = [
     excerpt: 'El ajedrez como tablero para hablar de estrategia y metodología en producto: cada pieza tiene un rol, cada jugada tiene impacto y la verdadera maestría está en la intención detrás de la estrategia. Fue una jornada para abrir conversaciones incómodas, desafiar lo conocido y activar cambio cultural en tiempo real, con equipos que se animan a transformar la forma de pensar y decidir.',
     url: 'https://www.linkedin.com/posts/barbaraaceto_gratitud-productmanagement-mindset-activity-7379850261441351680-6Pdc?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAO9lWcBYTOMHR-JOYdfU2v4CZ_xUqB85qc',
     image: '/vision.png'
-  },
-  { slug: 'press-7', year: 2020, outlet: 'Industry', title: 'Thought leadership', date: '2020-09-05', excerpt: 'Op-Ed on AI adoption', url: '#', image: '/placeholder.png' },
-  { slug: 'press-8', year: 2019, outlet: 'Local Tech', title: 'Early career', date: '2019-02-11', excerpt: 'Profile piece', url: '#', image: '/placeholder.png' }
+  }
 ]
 
 export default press

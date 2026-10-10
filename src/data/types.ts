@@ -28,6 +28,7 @@ export type Note = {
   image?: string
   imagePosition?: string
   url?: string
+  deckUrl?: string
 }
 
 export type PressItem = {

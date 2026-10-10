@@ -213,7 +213,7 @@ export default function OneSheet() {
 
       {/* Action bar — always visible, hidden on print */}
       <div
-        className="one-sheet-actionbar sticky top-0 z-40 flex items-center gap-4 px-6 py-3"
+        className="one-sheet-actionbar sticky top-0 z-40 flex items-center justify-between gap-4 px-6 py-3"
         style={{ backgroundColor: 'var(--bg)', borderBottom: '1px solid var(--border-base)' }}
       >
         <Link
@@ -226,6 +226,13 @@ export default function OneSheet() {
           </svg>
           {c.backHome}
         </Link>
+        <button
+          type="button"
+          onClick={() => window.print()}
+          className="btn-primary px-5 py-2 text-sm"
+        >
+          {c.printBtn}
+        </button>
       </div>
 
       <div className="one-sheet-wrap w-full min-h-screen px-4 py-8 md:py-12" style={{ backgroundColor: 'var(--bg)' }}>

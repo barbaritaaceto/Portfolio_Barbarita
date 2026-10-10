@@ -1,0 +1,16 @@
+node_modules/
+dist/
+.git/
+.env
+.env.*
+.DS_Store
+.vite/
+coverage/
+tmp/
+*.mov
+public/*.mov
+public/*.zip
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+_no-publicado/
