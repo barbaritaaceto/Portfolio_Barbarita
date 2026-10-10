@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import projectsData from '../data/projects'
 import TimeEvolution from '../components/TimeEvolution'
 import { track } from '../lib/analytics'
@@ -116,8 +116,9 @@ const learnings: Record<string, { es: string; en: string }> = {
 }
 
 // ─── Component ────────────────────────────────────────────────────────────────
-export default function Projects() {
-  const [selectedSlug, setSelectedSlug] = useState('redbee')
+export default function Projects({ embedded = false }: { embedded?: boolean }) {
+  const [selectedSlug, setSelectedSlug] = useState(embedded ? '' : 'redbee')
+  const panelRef = useRef<HTMLDivElement>(null)
   const [showEarlyCareer, setShowEarlyCareer] = useState(false)
   const [showFormacion, setShowFormacion] = useState(false)
   const [isEnglish, setIsEnglish] = useState(() => {
@@ -138,16 +139,25 @@ export default function Projects() {
     }
   }, [])
 
-  useScrollDepth()
+  useScrollDepth(!embedded)
 
   useEffect(() => {
-    track.sectionView('proyectos')
-  }, [])
+    if (!embedded) track.sectionView('proyectos')
+  }, [embedded])
 
   useEffect(() => {
     const project = projectsData.find(p => p.slug === selectedSlug)
     if (project) track.projectCardView(project.title, companyYears[selectedSlug] ?? 0, selectedSlug)
   }, [selectedSlug])
+
+  // En el Home el detalle se abre al elegir una etapa; en pantallas angostas lo acercamos a la vista
+  useEffect(() => {
+    if (!embedded || !selectedSlug || window.innerWidth >= 1024) return
+    panelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }, [embedded, selectedSlug])
+
+  const selectSlug = (slug: string) =>
+    setSelectedSlug(prev => (embedded && prev === slug ? '' : slug))
 
   const uiText = isEnglish
     ? {
@@ -552,9 +562,50 @@ export default function Projects() {
   )
 
   // ─── Render ───────────────────────────────────────────────────────────────
+  const introBlock = (
+    <div className="mb-10 pb-8" style={{ borderBottom: '1px solid var(--border-base)' }}>
+      {/* Decorative line */}
+      <div
+        className="mb-5"
+        style={{
+          width: 36,
+          height: 2,
+          borderRadius: 2,
+          background: 'linear-gradient(90deg, var(--accent-primary) 0%, transparent 100%)',
+        }}
+      />
+      <h1
+        className="font-serif leading-[1.15] mb-4"
+        style={{
+          color: 'var(--text-primary)',
+          fontSize: 'clamp(1.65rem, 3.5vw, 2.25rem)',
+          fontWeight: 600,
+          letterSpacing: '-0.01em',
+        }}
+      >
+        {uiText.heroTitle}
+      </h1>
+      <div className="space-y-3" style={{ maxWidth: embedded ? undefined : 560 }}>
+        {uiText.heroLines.map((line, index) => (
+          <p
+            key={line}
+            className={index === 1 ? 'font-serif italic leading-relaxed' : 'text-sm leading-relaxed'}
+            style={{
+              color: index === 1 ? 'var(--accent-primary)' : 'var(--text-secondary)',
+              fontSize: index === 1 ? '1rem' : undefined,
+              opacity: index === 1 ? 0.85 : undefined,
+            }}
+          >
+            {line}
+          </p>
+        ))}
+      </div>
+    </div>
+  )
+
   return (
     <>
-      <Helmet><title>Projects — Barbara Aceto</title></Helmet>
+      {!embedded && <Helmet><title>Projects — Barbara Aceto</title></Helmet>}
 
       {/* Keyframe animation for panel */}
       <style>{`
@@ -565,31 +616,35 @@ export default function Projects() {
         .panel-enter { animation: panelFadeUp 0.28s ease both; }
       `}</style>
 
-      <div className="w-full min-h-screen" style={{ backgroundColor: 'var(--bg)' }}>
-        <div className="max-w-6xl mx-auto px-4 py-6 md:py-10">
+      <div className={embedded ? 'w-full' : 'w-full min-h-screen'} style={{ backgroundColor: 'var(--bg)' }}>
+        <div className={embedded ? 'max-w-6xl mx-auto px-4 py-4 md:py-6' : 'max-w-6xl mx-auto px-4 py-6 md:py-10'}>
 
           {/* Back */}
-          <Link
-            to="/"
-            className="inline-flex items-center text-sm mb-10 transition-colors"
-            style={{ color: 'var(--accent-primary)' }}
-          >
-            ← {uiText.backHome}
-          </Link>
+          {!embedded && (
+            <Link
+              to="/"
+              className="inline-flex items-center text-sm mb-10 transition-colors"
+              style={{ color: 'var(--accent-primary)' }}
+            >
+              ← {uiText.backHome}
+            </Link>
+          )}
 
           {/* ── MAIN: vertical timeline left + content right ─────────────── */}
-          <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 md:gap-12 items-start">
+          {embedded && introBlock}
+
+          <div className={embedded ? 'flex flex-col lg:flex-row gap-8 lg:gap-12 items-start' : 'flex flex-col sm:flex-row gap-6 sm:gap-8 md:gap-12 items-start'}>
 
             {/* ── LEFT: image + vertical timeline ──────────────────────── */}
-            <div className="flex-shrink-0 flex flex-row sm:flex-col gap-4 sm:gap-0 sm:w-[188px]">
+            <div id={embedded ? 'home-trayectoria-timeline' : undefined} className={embedded ? 'flex-shrink-0 flex flex-row gap-4 sm:gap-7 items-start lg:sticky lg:top-6' : 'flex-shrink-0 flex flex-row sm:flex-col gap-4 sm:gap-0 sm:w-[188px]'}>
 
               {/* Slider image */}
               <div className="flex-shrink-0">
-                <TimeEvolution isEnglish={isEnglish} />
+                <TimeEvolution isEnglish={isEnglish} width={embedded ? 'clamp(150px, 24vw, 270px)' : 160} />
               </div>
 
               {/* Vertical timeline — line starts from below the image */}
-              <div className="relative flex-1 min-w-0 sm:flex-none mt-0 sm:mt-3" style={{ paddingLeft: 20 }}>
+              <div className={embedded ? 'relative min-w-0 w-[150px] sm:w-[190px] mt-1' : 'relative flex-1 min-w-0 sm:flex-none mt-0 sm:mt-3'} style={{ paddingLeft: 20 }}>
                 {/* Vertical line */}
                 <div
                   className="absolute top-0 bottom-0"
@@ -604,7 +659,7 @@ export default function Projects() {
                   return (
                     <button
                       key={project.slug}
-                      onClick={() => { setSelectedSlug(project.slug); track.clickProjectCard(project.title, companyYears[project.slug] ?? 0, project.slug) }}
+                      onClick={() => { selectSlug(project.slug); track.clickProjectCard(project.title, companyYears[project.slug] ?? 0, project.slug) }}
                       className="relative w-full text-left pb-3 pt-0.5 pr-2 focus:outline-none rounded-lg transition-colors duration-200"
                       aria-pressed={isActive}
                       style={{ backgroundColor: isActive ? `${meta.accent}0D` : 'transparent' }}
@@ -681,7 +736,7 @@ export default function Projects() {
                   return (
                     <button
                       key={project.slug}
-                      onClick={() => { setSelectedSlug(project.slug); track.clickProjectCard(project.title, companyYears[project.slug] ?? 0, project.slug) }}
+                      onClick={() => { selectSlug(project.slug); track.clickProjectCard(project.title, companyYears[project.slug] ?? 0, project.slug) }}
                       className="relative w-full text-left pb-3 pt-0.5 pr-2 focus:outline-none rounded-lg transition-colors duration-200"
                       aria-pressed={isActive}
                       style={{ backgroundColor: isActive ? `${meta.accent}0D` : 'transparent' }}
@@ -811,48 +866,32 @@ export default function Projects() {
             {/* ── RIGHT: intro text + experience panel ─────────────────── */}
             <div className="flex-1 min-w-0">
 
-              {/* Intro text */}
-              <div className="mb-10 pb-8" style={{ borderBottom: '1px solid var(--border-base)' }}>
-                {/* Decorative line */}
-                <div
-                  className="mb-5"
-                  style={{
-                    width: 36,
-                    height: 2,
-                    borderRadius: 2,
-                    background: 'linear-gradient(90deg, var(--accent-primary) 0%, transparent 100%)',
-                  }}
-                />
-                <h1
-                  className="font-serif leading-[1.15] mb-4"
-                  style={{
-                    color: 'var(--text-primary)',
-                    fontSize: 'clamp(1.65rem, 3.5vw, 2.25rem)',
-                    fontWeight: 600,
-                    letterSpacing: '-0.01em',
-                  }}
-                >
-                  {uiText.heroTitle}
-                </h1>
-                <div className="space-y-3" style={{ maxWidth: 560 }}>
-                  {uiText.heroLines.map((line, index) => (
-                    <p
-                      key={line}
-                      className={index === 1 ? 'font-serif italic leading-relaxed' : 'text-sm leading-relaxed'}
-                      style={{
-                        color: index === 1 ? 'var(--accent-primary)' : 'var(--text-secondary)',
-                        fontSize: index === 1 ? '1rem' : undefined,
-                        opacity: index === 1 ? 0.85 : undefined,
-                      }}
-                    >
-                      {line}
-                    </p>
-                  ))}
-                </div>
-              </div>
+              {!embedded && introBlock}
 
               {/* Experience panel */}
-              <div key={selectedSlug} className="panel-enter">
+              {selectedSlug === '' ? (
+                <div
+                  className="rounded-2xl px-6 py-10 text-center text-sm"
+                  style={{ border: '1.5px dashed var(--border-base)', color: 'var(--text-muted)' }}
+                >
+                  {isEnglish
+                    ? 'Pick a stage on the timeline to open what I did and what I learned.'
+                    : 'Tocá una etapa de la línea de tiempo para abrir qué hice y qué aprendí.'}
+                </div>
+              ) : (
+              <div key={selectedSlug} ref={panelRef} className="panel-enter" style={{ scrollMarginTop: 16 }}>
+                {embedded && (
+                  <div className="flex justify-end mb-3">
+                    <button
+                      type="button"
+                      onClick={() => setSelectedSlug('')}
+                      className="text-xs font-semibold rounded-full px-3 py-1.5"
+                      style={{ color: 'var(--text-muted)', border: '1px solid var(--border-base)', backgroundColor: 'var(--card-bg)' }}
+                    >
+                      ✕ {isEnglish ? 'Close' : 'Cerrar'}
+                    </button>
+                  </div>
+                )}
 
                 {/* Company hero */}
                 <div
@@ -1155,6 +1194,7 @@ export default function Projects() {
                 )}
 
             </div>
+              )}
             {/* end panel-enter */}
 
             </div>

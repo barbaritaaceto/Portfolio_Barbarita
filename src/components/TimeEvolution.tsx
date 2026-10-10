@@ -3,9 +3,10 @@ import ImageComparisonSlider from './ImageComparisonSlider'
 
 interface Props {
   isEnglish: boolean
+  width?: number | string
 }
 
-export default function TimeEvolution({ isEnglish }: Props) {
+export default function TimeEvolution({ isEnglish, width = 160 }: Props) {
   const ref = useRef<HTMLDivElement>(null)
   const [visible, setVisible] = useState(false)
 
@@ -24,8 +25,8 @@ export default function TimeEvolution({ isEnglish }: Props) {
     <div
       ref={ref}
       style={{
-        width: 160,
-        maxWidth: 180,
+        width,
+        maxWidth: typeof width === 'number' ? 180 : undefined,
         opacity: visible ? 1 : 0,
         transform: visible ? 'translateY(0)' : 'translateY(12px)',
         transition: 'opacity 0.7s ease, transform 0.7s ease',

@@ -25,14 +25,14 @@ const STEPS: Step[] = [
       "Barbi is a Product & AI Leader with 10+ years leading products, teams and new ways of working. Let's explore what she has to show.",
   },
   {
-    targetId: 'home-btn-projects',
+    targetId: 'home-trayectoria-timeline',
     emoji: '🚀',
-    titleES: 'Ver proyectos',
-    titleEN: 'View Projects',
+    titleES: 'Trayectoria',
+    titleEN: 'Career path',
     bodyES:
-      'Desde acá podés explorar sus proyectos más relevantes — casos reales con contexto, decisiones y aprendizajes.',
+      'Tocá una etapa de la línea de tiempo para abrir el detalle: contexto, decisiones y aprendizajes de cada experiencia.',
     bodyEN:
-      'Explore her most relevant projects — real cases with context, decisions, and learnings.',
+      'Pick a stage on the timeline to open the details: context, decisions and learnings from each experience.',
   },
   {
     targetId: 'layout-ai-btn',

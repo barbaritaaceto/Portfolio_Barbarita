@@ -7,10 +7,11 @@ const SCROLL_DEPTHS = [25, 50, 75, 90] as const
  * Fires scroll_25 / scroll_50 / scroll_75 / scroll_90 once per page load.
  * Attach to a page component with useScrollDepth().
  */
-export function useScrollDepth() {
+export function useScrollDepth(enabled = true) {
   const fired = useRef(new Set<number>())
 
   useEffect(() => {
+    if (!enabled) return
     fired.current.clear()
 
     const onScroll = () => {
@@ -28,7 +29,7 @@ export function useScrollDepth() {
 
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+  }, [enabled])
 }
 
 /**

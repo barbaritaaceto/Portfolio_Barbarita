@@ -1,12 +1,13 @@
 import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import press from '../data/press';
 import notesData from '../data/notes';
 import HomeTour from '../components/HomeTour';
 import { useReveal } from '../hooks/useReveal';
 import { track } from '../lib/analytics'
 import { useScrollDepth } from '../hooks/useAnalytics'
+
+const Projects = lazy(() => import('./Projects'))
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -39,6 +40,12 @@ export default function Home() {
     const whyStartElement = document.getElementById('why-work-start');
     if (whyStartElement) {
       whyStartElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+  const scrollToTrayectoria = () => {
+    const trayectoriaElement = document.getElementById('trayectoria-start');
+    if (trayectoriaElement) {
+      trayectoriaElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
   const scrollToNews = () => {
@@ -77,6 +84,7 @@ export default function Home() {
         steps.forEach(s => track.workStepView(s))
       }),
       makeObserver('news-start', () => track.sectionView('noticias')),
+      makeObserver('trayectoria-start', () => track.sectionView('proyectos')),
     ].filter(Boolean) as IntersectionObserver[]
 
     return () => observers.forEach(obs => obs.disconnect())
@@ -113,6 +121,7 @@ export default function Home() {
         watchVideo: 'Watch video →',
         viewPost: 'View post →',
         scrollWhyAria: 'Scroll to Why I Build',
+        scrollTrayectoriaAria: 'Scroll to career path',
         scrollNewsAria: 'Scroll to news section',
         closeModalAria: 'Close modal',
         modalTitle: "Let's build something meaningful.",
@@ -154,6 +163,7 @@ export default function Home() {
         watchVideo: 'Ver video →',
         viewPost: 'Ver publicación →',
         scrollWhyAria: 'Ir a Por qué construyo',
+        scrollTrayectoriaAria: 'Ir a la trayectoria',
         scrollNewsAria: 'Ir a la sección de noticias',
         closeModalAria: 'Cerrar modal',
         modalTitle: 'Construyamos algo con sentido.',
@@ -376,7 +386,6 @@ export default function Home() {
           '🤖 Applied AI to create, decide and learn better',
         ],
         role: 'Product & AI Leader',
-        projectsCta: 'View Projects',
         contactCta: 'Let’s talk',
       }
     : {
@@ -389,7 +398,6 @@ export default function Home() {
           '🤖 IA aplicada para crear, decidir y aprender mejor',
         ],
         role: 'Product & AI Leader',
-        projectsCta: 'Ver proyectos',
         contactCta: '¿Hablamos?',
       };
 
@@ -574,22 +582,37 @@ export default function Home() {
                 </ol>
 
                 <p className="text-base leading-relaxed mt-10" style={{ color: 'var(--text-secondary)' }}>
-                  {homeText.whyStory.closing}{' '}
-                  <Link
-                    id="home-btn-projects"
-                    to="/projects"
-                    onClick={() => track.clickViewProjects('why_build')}
-                    className="font-semibold whitespace-nowrap"
-                    style={{ color: 'var(--accent-primary)', borderBottom: '1.5px solid rgba(74,127,121,0.4)' }}
-                  >
-                    {profileContent.projectsCta} →
-                  </Link>
+                  {homeText.whyStory.closing}
                 </p>
               </div>
             </article>
           </div>
         </section>
         </div>
+
+        <div className="order-4 w-full flex justify-center mb-4 md:mb-5 relative z-50">
+          <button
+            type="button"
+            onClick={() => { scrollToTrayectoria(); track.clickScrollToSection('proyectos') }}
+            className="w-11 h-11 rounded-full scroll-arrow flex items-center justify-center cursor-pointer"
+            style={{ backgroundColor: '#FFFFFF', border: '1px solid var(--border-base)', boxShadow: '0 2px 8px rgba(30, 42, 56, 0.08)', color: 'var(--accent-primary)' }}
+            aria-label={homeText.scrollTrayectoriaAria}
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v14m0 0l-6-6m6 6l6-6" />
+            </svg>
+          </button>
+        </div>
+
+        {/* ════════════════════════════════════ */}
+        {/* TRAYECTORIA */}
+        {/* ════════════════════════════════════ */}
+        <section id="trayectoria" className="order-5 w-full">
+          <div id="trayectoria-start" style={{ scrollMarginTop: '12px' }} />
+          <Suspense fallback={null}>
+            <Projects embedded />
+          </Suspense>
+        </section>
 
         {/* ════════════════════════════════════ */}
         {/* PENSAMIENTO */}
