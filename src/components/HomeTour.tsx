@@ -271,22 +271,72 @@ export default function HomeTour({ isEnglish }: HomeTourProps) {
     return () => window.removeEventListener('start-home-tour', onTourRequest)
   }, [])
 
-  // Scroll to element and update rect when step changes
+  // Lleva la página hasta el elemento del paso y actualiza el recuadro.
+  // El scroll suave puede quedarse corto (imágenes que cargan y mueven la página, secciones que
+  // todavía no se montaron, navegadores que lo cancelan), así que al terminar se verifica que el
+  // elemento esté centrado y, si no, se corrige con un salto directo.
   useEffect(() => {
     if (!active) return
     const target = STEPS[step]
-    if (target.targetId) {
-      const el = document.getElementById(target.targetId)
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'center' })
-        setTimeout(updateRect, 450)
-      } else {
-        setRect(null)
-      }
-    } else {
-      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
-      setRect(null)
+    let cancelled = false
+    const timers: number[] = []
+    const later = (fn: () => void, ms: number) => { timers.push(window.setTimeout(fn, ms)) }
+
+    const destinationFor = (el: HTMLElement) => {
+      const r = el.getBoundingClientRect()
+      const centered = r.top + window.scrollY - Math.max(24, (window.innerHeight - r.height) / 2)
+      const max = document.documentElement.scrollHeight - window.innerHeight
+      return Math.max(0, Math.min(centered, max))
     }
+    const isInPlace = (el: HTMLElement) => Math.abs(window.scrollY - destinationFor(el)) <= 24
+    // Los botones flotantes (guía, idioma) ya están siempre a la vista: no hace falta mover la página
+    const isFloating = (el: HTMLElement) => {
+      for (let node: HTMLElement | null = el; node; node = node.parentElement) {
+        if (window.getComputedStyle(node).position === 'fixed') return true
+      }
+      return false
+    }
+
+    if (!target.targetId) {
+      window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' })
+      setRect(null)
+      later(() => {
+        if (cancelled) return
+        const max = document.documentElement.scrollHeight - window.innerHeight
+        if (window.scrollY < max - 24) window.scrollTo({ top: max, behavior: 'auto' })
+      }, 1400)
+      return () => { cancelled = true; timers.forEach(t => window.clearTimeout(t)) }
+    }
+
+    const targetId = target.targetId
+    let attempts = 0
+    const go = () => {
+      if (cancelled) return
+      const el = document.getElementById(targetId)
+      if (!el) {
+        // La sección puede no estar montada todavía (Trayectoria carga aparte): reintentar un poco
+        attempts += 1
+        if (attempts <= 12) later(go, 250)
+        else setRect(null)
+        return
+      }
+      if (isFloating(el)) { updateRect(); return }
+      window.scrollTo({ top: destinationFor(el), behavior: 'smooth' })
+      later(updateRect, 450)
+      // Verificación: dos pasadas, porque la página puede seguir moviéndose mientras cargan imágenes
+      const settle = (pass: number) => {
+        if (cancelled) return
+        const current = document.getElementById(targetId)
+        if (!current) return
+        if (!isInPlace(current)) window.scrollTo({ top: destinationFor(current), behavior: 'auto' })
+        updateRect()
+        if (pass < 2) later(() => settle(pass + 1), 700)
+      }
+      later(() => settle(1), 1100)
+    }
+    go()
+
+    return () => { cancelled = true; timers.forEach(t => window.clearTimeout(t)) }
   }, [step, active, updateRect])
 
   // Keep rect updated on scroll and resize
