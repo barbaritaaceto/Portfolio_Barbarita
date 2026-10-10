@@ -1131,17 +1131,14 @@ export default function Home() {
                       </a>
                     </div>
                     {wideIdea.image && (
-                      <div className="md:col-span-5 relative overflow-hidden" style={{ minHeight: '240px' }}>
+                      <div className="md:col-span-5 relative" style={{ minHeight: '240px' }}>
                         <img
                           src={wideIdea.image}
-                          alt={wideIdea.title}
-                          className="absolute inset-0 w-full h-full object-cover"
-                          style={{ objectPosition: 'center 18%', filter: 'brightness(0.9) contrast(0.94) saturate(0.92)' }}
+                          alt={isEnglish
+                            ? 'Quote by Barbi Aceto: NotebookLM’s design favors a disciplined, results-oriented use. The tool does not replace professional judgment: it amplifies it.'
+                            : 'Cita de Barbi Aceto: El diseño de NotebookLM favorece un uso disciplinado y orientado a resultados. La herramienta no reemplaza el criterio profesional: lo amplifica.'}
+                          className="absolute inset-0 w-full h-full object-contain p-4 md:p-6"
                           loading="lazy"
-                        />
-                        <div
-                          className="absolute inset-0 pointer-events-none hidden md:block"
-                          style={{ background: 'linear-gradient(to right, var(--card-bg) 0%, transparent 30%)' }}
                         />
                       </div>
                     )}

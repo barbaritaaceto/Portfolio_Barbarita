@@ -9,7 +9,7 @@ const press: PressItem[] = [
     date: '2023-11-10',
     excerpt: 'Barbara Aceto, manager en redbee, reflexiona sobre el verdadero reto de las organizaciones: no la falta de información, sino la capacidad de procesarla y convertirla en conocimiento accionable con NotebookLM.',
     url: 'https://www.linkedin.com/posts/redbeestudios_redbee-ai-notebooklm-activity-7427701274923421696-gMoQ?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAO9lWcBYTOMHR-JOYdfU2v4CZ_xUqB85qc',
-    image: '/barbi en redbee.webp'
+    image: '/notebooklm-cita.webp'
   },
   {
     slug: 'press-5',
