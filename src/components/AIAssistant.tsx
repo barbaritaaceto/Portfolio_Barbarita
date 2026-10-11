@@ -292,7 +292,7 @@ export default function AIAssistant({ isEnglish, onClose }: AIAssistantProps) {
   const navigate = useNavigate()
   const location = useLocation()
 
-  // Los links pueden ser una página ("/notes") o una sección del Home ("/#trayectoria").
+  // Los links pueden ser una página ("/one-sheet") o una sección del Home ("/#trayectoria").
   const goTo = (route: string) => {
     const [path, hash] = route.split('#')
     onClose()

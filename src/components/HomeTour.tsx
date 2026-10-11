@@ -60,7 +60,7 @@ const STEPS: Step[] = [
     bodyES:
       'Tocá una etapa de la línea de tiempo para abrir el detalle: contexto, decisiones y aprendizajes de cada experiencia.',
     bodyEN:
-      'Pick a stage on the timeline to open the details: context, decisions and learnings from each experience.',
+      'Pick a stage on the timeline to open the details: context, decisions and lessons from each experience.',
   },
   {
     targetId: 'contacto',
@@ -90,7 +90,7 @@ const STEPS: Step[] = [
     bodyES:
       '¿Algo que te gustó? ¿Algo que podría mejorar? Tu opinión importa y ayuda a que el portfolio siga creciendo.',
     bodyEN:
-      'Something you liked? Something that could improve? Your opinion matters and helps the portfolio keep growing.',
+      'Something you liked? Something that could be improved? Your opinion matters and helps the portfolio keep growing.',
   },
   {
     targetId: null,

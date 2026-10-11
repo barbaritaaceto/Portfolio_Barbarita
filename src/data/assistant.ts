@@ -307,7 +307,7 @@ export const intents: AssistantIntent[] = [
     responseES: "Barbi escribe principalmente para pensar.\n\nMuchas notas empiezan con algo que vivió, algo que salió mal, una conversación o una idea que todavía no tiene resuelta. Los temas se repiten: **Producto, IA, equipos, liderazgo, Agile y aprendizaje**.\n\nEl hilo común es otro: cómo seguir construyendo cosas valiosas en un contexto que cambia cada vez más rápido.\n\nNo escribe desde tener todas las respuestas, sino desde **estar buscando mejores preguntas**.",
     responseEN: "Barbi writes mostly to think.\n\nMany notes start with something she lived, something that went wrong, a conversation or an idea she has not fully worked out. The topics recur: **Product, AI, teams, leadership, Agile and learning**.\n\nThe common thread is something else: how to keep building valuable things in a context that changes faster and faster.\n\nShe does not write from having all the answers, but from **looking for better questions**.",
     next: ["ai_product","leadership","methodology"],
-    navLinks: [{"labelES":"→ Ver Notas","labelEN":"→ See Notes","route":"/notes"}],
+    navLinks: [{"labelES":"→ Ver Ideas desde la trinchera","labelEN":"→ See Ideas From The Field","route":"/#news-start"}],
   },
   {
     id: "challenge",

@@ -3,9 +3,6 @@ import { Navigate, Routes, Route } from 'react-router-dom'
 import Layout from './routes/Layout'
 import Home from './pages/Home'
 
-const Projects    = lazy(() => import('./pages/Projects'))
-const Notes       = lazy(() => import('./pages/Notes'))
-const NoteDetail  = lazy(() => import('./pages/NoteDetail'))
 const OneSheet    = lazy(() => import('./pages/OneSheet'))
 const NotFound    = lazy(() => import('./pages/NotFound'))
 
@@ -25,14 +22,8 @@ export default function App(){
         <Route index element={<Home />} />
         {/* Páginas retiradas: su contenido vive en el Home y en el One Sheet */}
         <Route path="about" element={<Navigate to="/" replace />} />
-        <Route path="projects">
-          <Route index element={<Suspense fallback={<PageLoader />}><Projects /></Suspense>} />
-          <Route path=":slug" element={<Navigate to="/projects" replace />} />
-        </Route>
-        <Route path="notes">
-          <Route index element={<Suspense fallback={<PageLoader />}><Notes /></Suspense>} />
-          <Route path=":slug" element={<Suspense fallback={<PageLoader />}><NoteDetail /></Suspense>} />
-        </Route>
+        <Route path="projects/*" element={<Navigate to="/" replace />} />
+        <Route path="notes/*" element={<Navigate to="/" replace />} />
         <Route path="press"      element={<Navigate to="/" replace />} />
         <Route path="one-sheet"  element={<Suspense fallback={<PageLoader />}><OneSheet /></Suspense>} />
         <Route path="news-links" element={<Navigate to="/" replace />} />

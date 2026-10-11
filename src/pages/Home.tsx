@@ -13,6 +13,7 @@ const Projects = lazy(() => import('./Projects'))
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showAllIdeas, setShowAllIdeas] = useState(false);
+  const [showAllLearnings, setShowAllLearnings] = useState(false);
   const [emailCopied, setEmailCopied] = useState(false);
   const [isSummitVideoPlaying, setIsSummitVideoPlaying] = useState(false);
   const [isEnglish, setIsEnglish] = useState(() => {
@@ -118,26 +119,26 @@ export default function Home() {
           thesis: 'They change when they develop new capabilities to learn, decide and adapt.',
           after: 'That is why I care about products, but also about the teams, systems and ways of working that make them possible.',
           proofLead: 'Some things I learned along the way',
-          proofIntro: 'I have worked across different industries, teams and challenges. And from each experience I took something that is now part of how I work.',
+          proofIntro: 'I have worked across different industries, teams and challenges. From each experience I took something that is now part of how I work.',
           proof: [
             { emoji: '🔎', title: 'Small changes can create big results.', before: 'In SEO, one adjustment took a result from the second page to the top spot in just ', value: '24 hours', after: '. I learned that impact does not always depend on the size of the solution.' },
             { emoji: '🛍️', title: 'Building also means opening possibilities.', before: 'In e-commerce, we developed tools that brought digital marketing closer to sellers in Argentina, Mexico and Brazil. ', value: 'Three countries', after: ', different needs and one shared challenge: simplifying.' },
             { emoji: '🏦', title: 'Behind every product there are people.', before: 'In banking, I took part in solutions that today have an impact on ', value: 'more than 200,000 SMEs', after: '. That is where I understood that what we design on a screen has consequences in real life.' },
             { emoji: '🧱', title: 'Starting from scratch is a chance to rethink everything.', before: 'We built ', value: 'a digital bank from scratch', after: ' with a hybrid team. From the login to the APIs, the experience and every word. I learned that the product is in the details.' },
             { emoji: '❤️', title: 'Leading is not about having all the answers.', before: 'I supported teams of ', value: '15+ people', after: ', with different profiles and points of view. I learned that the best solutions appear when we make room for others to shine too.' },
-            { emoji: '🎓', title: 'Teaching is also a way of learning.', before: 'I shared experiences about product, AI and leadership with teams from ', value: '5 industries', after: '. Every session reminded me that knowledge grows when it circulates.' },
+            { emoji: '🎓', title: 'Teaching is also a way of learning.', before: 'I shared my experience in product, AI and leadership with teams from ', value: '5 industries', after: '. Every session reminded me that knowledge grows when it circulates.' },
             { emoji: '🎤', title: 'Saying ideas out loud is also building.', before: 'I took the stage at ', value: 'Agile Summit Uruguay', after: ' to talk about Agile After Agile. I learned that an idea gets better when it dares to leave your head and meet other people.' },
             { emoji: '🤖', title: 'Experimenting is the best way to keep learning.', before: 'I recently built an AI agent in ', value: 'under 40 minutes', after: '. Not because I had all the answers, but because I dared to try.' },
           ],
           proofClosingLead: 'And perhaps the most important lesson…',
           proofClosing: 'I did none of this alone. It was always with teams.',
-          proofClosingText: 'Because products are built between people. And technology is a tool to make possible things that once seemed difficult.',
+          proofClosingText: 'Because products are built by people, together. And technology is a tool that makes possible what once seemed difficult.',
           turn: 'And that is why I do not start with the solution.',
           turnEmphasis: 'I start by understanding what is changing.',
           imageAlt: 'Barbara Aceto giving a talk, sitting on the edge of the stage',
         },
         newsTitle: 'Ideas From The Field',
-        newsSubtitle: 'Reflections, experiments and learnings from building products, working with AI and supporting organizations in motion.',
+        newsSubtitle: 'Reflections, experiments and lessons from building products, working with AI and supporting organizations in motion.',
         readArticle: 'Read the article →',
         noteLabel: 'NOTE',
         readNote: 'View on LinkedIn →',
@@ -155,6 +156,8 @@ export default function Home() {
         scrollNewsAria: 'Scroll to Ideas From The Field',
         showAllIdeas: 'See all ideas',
         showFewerIdeas: 'See fewer',
+        showAllLearnings: 'See all eight lessons',
+        showFewerLearnings: 'See fewer',
         closingTitle: 'Let’s talk',
         closingText: 'An idea, an opportunity, or just a conversation about product and AI.',
         closingWrite: 'Write to me',
@@ -217,6 +220,8 @@ export default function Home() {
         scrollNewsAria: 'Ir a la sección de noticias',
         showAllIdeas: 'Ver todas las ideas',
         showFewerIdeas: 'Ver menos',
+        showAllLearnings: 'Ver los ocho aprendizajes',
+        showFewerLearnings: 'Ver menos',
         closingTitle: '¿Hablamos?',
         closingText: 'Una idea, una oportunidad o ganas de conversar sobre producto e IA.',
         closingWrite: 'Escribime',
@@ -399,7 +404,7 @@ export default function Home() {
       slug: claudeCode.slug,
       type: 'note' as const,
       label: isEnglish ? 'EXPERIMENT' : 'EXPERIMENTO',
-      title: isEnglish ? 'My Learnings Using Claude in the Last 72 Hours' : claudeCode.title,
+      title: isEnglish ? 'What I Learned Using Claude in the Last 72 Hours' : claudeCode.title,
       description: isEnglish
         ? 'A practical exploration of how AI-assisted coding changes product discovery, iteration and tool building.'
         : 'Una exploración práctica sobre cómo el desarrollo asistido por IA cambia la forma de descubrir, iterar y construir herramientas digitales.',
@@ -439,7 +444,7 @@ export default function Home() {
         summaryBullets: [
           '🚀 Strategy that becomes products with impact',
           '❤️ Teams that grow with trust and autonomy',
-          '🤖 Applied AI to create, decide and learn better',
+          '🤖 AI applied to create, decide and learn better',
         ],
         role: 'Product & AI Leader',
         contactCta: 'Let’s talk',
@@ -521,7 +526,7 @@ export default function Home() {
                         <p className="text-sm sm:text-xs md:text-sm leading-relaxed font-medium">{profileContent.summaryTitle}</p>
                         <ul className="mt-2 space-y-1.5">
                           {profileContent.summaryBullets.map((item) => (
-                            <li key={item} className="pl-5 text-[13px] sm:text-[11px] md:text-xs leading-snug md:whitespace-nowrap">{item}</li>
+                            <li key={item} className="pl-5 text-[13px] sm:text-xs md:text-xs leading-snug md:whitespace-nowrap">{item}</li>
                           ))}
                         </ul>
                       </div>
@@ -578,7 +583,7 @@ export default function Home() {
               </figure>
 
               <div className="lg:col-span-7 min-w-0 text-left">
-                <span className="text-[10px] font-semibold uppercase" style={{ color: 'var(--accent-primary)', letterSpacing: '0.14em' }}>
+                <span className="text-xs font-semibold uppercase" style={{ color: 'var(--accent-primary)', letterSpacing: '0.14em' }}>
                   {homeText.whyTitle}
                 </span>
                 <h2 id="home-why-title" className="text-3xl lg:text-4xl font-serif font-semibold leading-tight mt-2.5 mb-6" style={{ color: 'var(--text-primary)' }}>
@@ -605,8 +610,8 @@ export default function Home() {
                     {homeText.whyStory.proofIntro}
                   </p>
                   <ol className="list-none m-0 p-0 grid grid-cols-1 sm:grid-cols-2 gap-x-7 gap-y-6">
-                    {homeText.whyStory.proof.map((item) => (
-                      <li key={item.value}>
+                    {homeText.whyStory.proof.map((item, i) => (
+                      <li key={item.value} className={i >= 4 && !showAllLearnings ? 'hidden sm:block' : ''}>
                         <p className="font-serif font-semibold text-base leading-snug" style={{ color: 'var(--text-primary)' }}>
                           <span aria-hidden="true" className="mr-1.5">{item.emoji}</span>
                           {item.title}
@@ -619,6 +624,16 @@ export default function Home() {
                       </li>
                     ))}
                   </ol>
+                  <div className="sm:hidden flex justify-center mt-6">
+                    <button
+                      type="button"
+                      onClick={() => setShowAllLearnings(v => !v)}
+                      aria-expanded={showAllLearnings}
+                      className="btn-outline-accent text-sm"
+                    >
+                      {showAllLearnings ? homeText.showFewerLearnings : homeText.showAllLearnings} {showAllLearnings ? '↑' : '↓'}
+                    </button>
+                  </div>
                   <div className="mt-8 pt-7 text-center" style={{ borderTop: '1px solid rgba(74,127,121,0.2)' }}>
                     <p className="text-xs font-semibold uppercase" style={{ color: 'var(--accent-primary)', letterSpacing: '0.1em' }}>
                       {homeText.whyStory.proofClosingLead}
@@ -660,7 +675,7 @@ export default function Home() {
                           backgroundColor: i === workSteps.length - 1 ? 'var(--accent-primary)' : 'var(--card-bg)',
                         }}
                       />
-                      <span className="text-[11px] font-semibold" style={{ color: 'var(--accent-primary)', letterSpacing: '0.12em' }}>
+                      <span className="text-xs font-semibold" style={{ color: 'var(--accent-primary)', letterSpacing: '0.12em' }}>
                         {step.number} · {step.label}
                       </span>
                       <h3 className="text-lg md:text-xl font-serif font-semibold leading-snug mt-0.5 mb-1.5" style={{ color: 'var(--text-primary)' }}>
@@ -778,7 +793,7 @@ export default function Home() {
                     <div className="order-2 pt-5 flex flex-col justify-between flex-1">
                       <div>
                         <span
-                          className="inline-block text-[10px] font-semibold mb-3"
+                          className="inline-block text-xs font-semibold mb-3"
                           style={{ color: 'var(--accent-primary)', letterSpacing: '0.13em', opacity: 0.65 }}
                         >
                           {featuredIdea.label}
@@ -816,7 +831,7 @@ export default function Home() {
                 <div className="mb-7">
                   <div>
                     <p
-                      className="text-[10px] font-semibold mb-2"
+                      className="text-xs font-semibold mb-2"
                       style={{ color: 'var(--accent-primary)', letterSpacing: '0.13em', opacity: 0.72 }}
                     >
                       {homeText.summitVideoEyebrow}
@@ -956,7 +971,7 @@ export default function Home() {
                       }}
                     >
                       <span
-                        className="inline-block text-[10px] font-semibold mb-2.5"
+                        className="inline-block text-xs font-semibold mb-2.5"
                         style={{ color: 'var(--accent-primary)', letterSpacing: '0.13em', opacity: 0.65 }}
                       >
                         {link.label}
@@ -1053,7 +1068,7 @@ export default function Home() {
                     </a>
                     <div className="p-5 flex flex-col flex-1">
                       <span
-                        className="inline-block text-[10px] font-semibold mb-2.5"
+                        className="inline-block text-xs font-semibold mb-2.5"
                         style={{ color: 'var(--accent-primary)', letterSpacing: '0.13em', opacity: 0.72 }}
                       >
                         {item.label}
@@ -1105,7 +1120,7 @@ export default function Home() {
                     <div className="md:col-span-7 p-7 md:p-10 flex flex-col justify-between" style={{ minHeight: '300px' }}>
                       <div>
                         <span
-                          className="inline-block text-[10px] font-semibold mb-3"
+                          className="inline-block text-xs font-semibold mb-3"
                           style={{ color: 'var(--accent-primary)', letterSpacing: '0.13em', opacity: 0.65 }}
                         >
                           {wideIdea.label}
@@ -1202,7 +1217,7 @@ export default function Home() {
                           onClick={() => track.clickContentCard(item.title, item.type, item.url ?? '', 'noticias')}
                         >
                           <span
-                            className="inline-block text-[10px] font-semibold mb-2.5"
+                            className="inline-block text-xs font-semibold mb-2.5"
                             style={{ color: 'var(--accent-primary)', letterSpacing: '0.13em', opacity: 0.65 }}
                           >
                             {item.label}

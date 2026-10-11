@@ -543,7 +543,7 @@ Las preguntas dudosas o sin respuesta se registran en Google Analytics como even
 
 **Sugiere después:** IA y trabajo, Liderazgo, Metodología
 
-**Link:** → Ver Notas (/notes)
+**Link:** → Ver Notas (/#news-start)
 
 ### ⚡ Desafío (`challenge`)
 

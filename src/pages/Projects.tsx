@@ -58,7 +58,7 @@ const timelinePhrases: Record<string, { es: string; en: string }> = {
   'santander-argentina':                 { es: 'Reduciendo fricción en sistemas financieros complejos.',           en: 'Reducing friction in complex financial systems.' },
   'mercado-libre':                       { es: 'Aprendiendo a diseñar para millones.',                             en: 'Learning to design for millions.' },
   '123seguro':                           { es: 'Growth como mentalidad, no como puesto.',                          en: 'Growth as a mindset, not a job title.' },
-  'cognizant':                           { es: 'Escala, multicultural, decisiones bajo presión.',                  en: 'Scale, multicultural, decisions under pressure.' },
+  'cognizant':                           { es: 'Escala, multicultural, decisiones bajo presión.',                  en: 'Scale, multicultural teams, decisions under pressure.' },
   'globant':                             { es: 'Donde los datos se convirtieron en curiosidad de producto.',        en: 'Where data turned into product curiosity.' },
   'freelance-digital-designer':          { es: 'Construyendo identidades visuales desde cero.',                    en: 'Building visual identities from scratch.' },
   'x-project-administrative-assistant': { es: 'La disciplina de los procesos detallados.',                        en: 'The discipline of detailed processes.' },
@@ -71,7 +71,7 @@ const timelinePhrases: Record<string, { es: string; en: string }> = {
 const learnings: Record<string, { es: string; en: string }> = {
   'redbee': {
     es: 'La IA nos atraviesa por todos lados, y el desafío ya no es solo tecnológico: es entender cómo cambia la forma en que construimos, decidimos y colaboramos. También estoy descubriendo el enorme desafío —y la responsabilidad— de liderar equipos, acompañando a cada persona para que pueda crecer, potenciarse y convertirse en su mejor versión mientras construimos productos complejos juntos.',
-    en: 'AI is everywhere, and the challenge is no longer just technical: it is understanding how it changes the way we build, decide and collaborate. I am also discovering the enormous challenge — and responsibility — of leading teams, supporting each person so they can grow, develop and become their best version while we build complex products together.',
+    en: 'AI is everywhere, and the challenge is no longer just technical: it is understanding how it changes the way we build, decide and collaborate. I am also discovering the enormous challenge — and responsibility — of leading teams, supporting each person so they can grow, develop and become the best version of themselves while we build complex products together.',
   },
   'santander-argentina': {
     es: 'Los productos no los construyen solo las metodologías o la tecnología: los construyen las personas. Disfrutar lo que uno hace, compartir conocimiento, contagiar energía y trabajar con un propósito claro termina haciendo la diferencia. Pero para que un producto realmente crezca, también hacen falta equipos alineados, comunicación transparente, confianza y un entorno sano donde las personas puedan construir y equivocarse sin miedo. Ahí es donde aparecen los productos que realmente dejan huella.',
@@ -111,7 +111,7 @@ const learnings: Record<string, { es: string; en: string }> = {
   },
   'fulbright-database-growth-trainee': {
     es: 'Mis primeros contactos con growth y expansión de base. El outreach bien hecho tiene más de producto que de marketing.',
-    en: 'My first contacts with growth and database expansion. Good outreach has more of product than marketing in it.',
+    en: 'My first contacts with growth and database expansion. Good outreach has more product than marketing in it.',
   },
 }
 
@@ -175,7 +175,7 @@ export default function Projects({ embedded = false }: { embedded?: boolean }) {
         learningLabel: 'What I Learned',
         skillsLabel: 'Skills',
         talksLabel: 'Product Talks & Knowledge Sharing',
-        talksDesc: 'Delivered internal talks and trainings on:',
+        talksDesc: 'Delivered internal talks and training sessions on:',
         linksLabel: 'Featured Link',
         linksDesc: (title: string) => `Explore a related publication from the ${title} experience.`,
         earlyCareerLabel: 'Show early career',
@@ -649,7 +649,7 @@ export default function Projects({ embedded = false }: { embedded?: boolean }) {
               <div className={embedded ? 'relative min-w-0 w-[150px] sm:w-[190px] mt-1' : 'relative flex-1 min-w-0 sm:flex-none mt-0 sm:mt-3'} style={{ paddingLeft: 20 }}>
                 {embedded && (
                   <p
-                    className="text-[11px] font-semibold uppercase mb-3"
+                    className="text-xs font-semibold uppercase mb-3"
                     style={{ color: 'var(--accent-primary)', letterSpacing: '0.1em' }}
                   >
                     {isEnglish ? 'Pick a stage' : 'Elegí una etapa'}
@@ -686,7 +686,7 @@ export default function Projects({ embedded = false }: { embedded?: boolean }) {
                         }}
                       />
                       <span
-                        className={`block ${embedded ? 'text-[11px]' : 'text-[10px]'} leading-none mb-0.5 font-semibold`}
+                        className={`block ${embedded ? 'text-xs' : 'text-[10px]'} leading-none mb-0.5 font-semibold`}
                         style={{ color: isActive ? meta.accent : 'var(--text-muted)', opacity: isActive ? 0.75 : 0.55, letterSpacing: '0.08em' }}
                       >{project.slug === 'redbee' ? (isEnglish ? 'Present' : 'Actualidad') : year}</span>
                       <span
@@ -770,7 +770,7 @@ export default function Projects({ embedded = false }: { embedded?: boolean }) {
                         }}
                       />
                       <span
-                        className={`block ${embedded ? 'text-[11px]' : 'text-[10px]'} leading-none mb-0.5 font-semibold`}
+                        className={`block ${embedded ? 'text-xs' : 'text-[10px]'} leading-none mb-0.5 font-semibold`}
                         style={{ color: isActive ? meta.accent : 'var(--text-muted)', opacity: isActive ? 0.75 : 0.55, letterSpacing: '0.08em' }}
                       >{year}</span>
                       <span
