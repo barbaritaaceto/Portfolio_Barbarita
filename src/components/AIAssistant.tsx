@@ -106,7 +106,7 @@ const intentMeta: Record<string, { emoji: string; labelES: string; labelEN: stri
   education:      { emoji: '🎓', labelES: 'Formación',      labelEN: 'Education' },
   tools_stack:    { emoji: '🛠️', labelES: 'Herramientas',   labelEN: 'Tools' },
   location_remote:{ emoji: '📍', labelES: 'Ubicación',      labelEN: 'Location' },
-  availability: { emoji: '🤝', labelES: 'Trabajar juntos', labelEN: 'Work together' },
+  availability: { emoji: '🤝', labelES: 'Conversar con Barbi', labelEN: 'Talk with Barbi' },
 }
 
 const quickIntentByLabel: Record<string, string> = {

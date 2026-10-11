@@ -473,7 +473,7 @@ Las preguntas dudosas o sin respuesta se registran en Google Analytics como even
 >
 > Un consejo: contale primero **qué problema estás intentando resolver**. Suele ser el comienzo de una conversación mucho más interesante. 🙂
 
-**Sugiere después:** Trabajar juntos, Trayectoria, Sobre Barbi
+**Sugiere después:** Conversar con Barbi, Trayectoria, Sobre Barbi
 
 **Link:** → Ver su perfil (/one-sheet)
 
@@ -523,7 +523,7 @@ Las preguntas dudosas o sin respuesta se registran en Google Analytics como even
 >
 > No le interesa que la gente salga diciendo “qué interesante”. Prefiere que salga pensando: **“mañana voy a cambiar algo”**.
 
-**Sugiere después:** Agile después del Agile, IA y trabajo, Trabajar juntos
+**Sugiere después:** Agile después del Agile, IA y trabajo, Conversar con Barbi
 
 **Link:** → Ver Ideas desde la trinchera (/#news-start)
 
@@ -567,19 +567,17 @@ Las preguntas dudosas o sin respuesta se registran en Google Analytics como even
 
 **Botón de contacto:** sí
 
-### 🤝 Trabajar juntos (`availability`)
+### 🤝 Conversar con Barbi (`availability`)
 
 **Palabras clave (ES):** trabajar juntos, trabajar con ella, trabajar con barbi, disponible, disponibilidad, busca trabajo, open to work, contratar, contratarla, trabajo nuevo, buscando trabajo, oportunidad, oportunidades, entrevistar, …
 
 **Respuesta:**
 
-> Puede ser. 🙂
+> Barbi hoy no está buscando trabajo: está en **redbee**. 🙂
 >
-> A Barbi le interesan especialmente los proyectos donde hay que conectar varias piezas: **producto + negocio + tecnología + personas + IA**.
+> Lo que sí le gusta es conversar. Está abierta a hablar sobre **charlas, workshops y capacitaciones**, o simplemente a intercambiar ideas sobre producto, IA y equipos.
 >
-> Puede aportar desde liderazgo de producto, workshops, capacitación, diagnóstico de equipos, adopción de IA o desafíos concretos de producto y transformación.
->
-> Su consejo: mandale contexto antes que un brief perfecto. El resto se construye en la conversación.
+> Su consejo: contale qué te está dando vueltas, sin necesidad de un brief perfecto. El resto se construye en la conversación.
 
 **Sugiere después:** Metodología, Contacto, Ubicación
 
@@ -604,7 +602,7 @@ Las preguntas dudosas o sin respuesta se registran en Google Analytics como even
 >
 > Para proyectos internacionales, el trabajo remoto le resulta totalmente natural.
 
-**Sugiere después:** Trabajar juntos, Contacto, Metodología
+**Sugiere después:** Conversar con Barbi, Contacto, Metodología
 
 ### ⭐ Diferenciador (`differentiator`)
 
@@ -618,7 +616,7 @@ Las preguntas dudosas o sin respuesta se registran en Google Analytics como even
 >
 > Su lugar favorito: **cuando todavía hay bastante caos, pero ya se puede empezar a construir dirección**.
 
-**Sugiere después:** Proyectos, Cómo piensa, Trabajar juntos
+**Sugiere después:** Proyectos, Cómo piensa, Conversar con Barbi
 
 ### 📋 Menú (`help_menu`)
 
@@ -740,7 +738,7 @@ Las preguntas dudosas o sin respuesta se registran en Google Analytics como even
 >
 > Ahí descubrió algo que le encantó: convertir experiencias desordenadas en una idea que otra persona pueda llevarse y usar. Probablemente por eso hoy disfruta tanto enseñar y diseñar capacitaciones.
 
-**Sugiere después:** Agile después del Agile, Charlas, Trabajar juntos
+**Sugiere después:** Agile después del Agile, Charlas, Conversar con Barbi
 
 **Link:** → Ver Ideas desde la trinchera (/#news-start)
 
