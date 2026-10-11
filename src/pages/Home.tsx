@@ -155,7 +155,6 @@ export default function Home() {
         scrollNewsAria: 'Scroll to Ideas From The Field',
         showAllIdeas: 'See all ideas',
         showFewerIdeas: 'See fewer',
-        allNotes: 'See all notes →',
         closingTitle: 'Let’s talk',
         closingText: 'An idea, an opportunity, or just a conversation about product and AI.',
         closingWrite: 'Write to me',
@@ -218,7 +217,6 @@ export default function Home() {
         scrollNewsAria: 'Ir a la sección de noticias',
         showAllIdeas: 'Ver todas las ideas',
         showFewerIdeas: 'Ver menos',
-        allNotes: 'Ver todas las notas →',
         closingTitle: '¿Hablamos?',
         closingText: 'Una idea, una oportunidad o ganas de conversar sobre producto e IA.',
         closingWrite: 'Escribime',
@@ -1258,12 +1256,6 @@ export default function Home() {
               >
                 {showAllIdeas ? homeText.showFewerIdeas : homeText.showAllIdeas} {showAllIdeas ? '↑' : '↓'}
               </button>
-            </div>
-
-            <div className="flex justify-center mt-5">
-              <Link to="/notes" className="text-sm font-semibold" style={{ color: 'var(--accent-primary)' }}>
-                {homeText.allNotes}
-              </Link>
             </div>
 
 
