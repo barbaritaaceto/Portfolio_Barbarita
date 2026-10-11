@@ -301,3 +301,7 @@ h3{ font-size: 1.25rem; line-height: 1.4; }
     transition: none;
   }
 }
+
+/* Amplía el área de toque de links y botones chicos sin mover nada del diseño */
+.tap-target { position: relative; }
+.tap-target::after { content: ''; position: absolute; inset: -12px -8px; }

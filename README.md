@@ -14,7 +14,8 @@ React 18, TypeScript, Vite y Tailwind CSS. No tiene backend: los contenidos vive
 npm install
 npm run dev        # servidor local
 npm run typecheck  # revisión de tipos
-npm run build      # revisión de tipos + build de producción
+npm test           # pruebas del guía (preguntas típicas → respuesta esperada)
+npm run build      # revisión de tipos + pruebas + build de producción
 ```
 
 El formulario de feedback necesita tres variables de entorno en `.env.local`: `VITE_EMAILJS_SERVICE_ID`, `VITE_EMAILJS_TEMPLATE_ID` y `VITE_EMAILJS_PUBLIC_KEY`.
@@ -22,7 +23,7 @@ El formulario de feedback necesita tres variables de entorno en `.env.local`: `V
 ## Estructura
 
 - `src/pages/Home.tsx`: la página principal y sus secciones.
-- `src/pages/Projects.tsx`: la sección Trayectoria, incrustada en el Home.
+- `src/pages/Trayectoria.tsx`: la sección Trayectoria, incrustada en el Home.
 - `src/pages/OneSheet.tsx`: el CV en una hoja, imprimible como PDF.
 - `src/components/AIAssistant.tsx` y `src/data/assistant.ts`: Bocconcino, el guía del portfolio. Responde con respuestas fijas elegidas por palabras clave; no usa un modelo de IA.
 - `src/components/HomeTour.tsx`: el tour de bienvenida.
@@ -31,4 +32,4 @@ El formulario de feedback necesita tres variables de entorno en `.env.local`: `V
 
 ## Publicación
 
-Cada push a `main` publica el sitio en Vercel. El build se detiene si la revisión de tipos encuentra errores.
+Cada push a `main` publica el sitio en Vercel. El build se detiene si la revisión de tipos encuentra errores o si falla una prueba.

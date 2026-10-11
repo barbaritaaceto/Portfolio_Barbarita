@@ -8,7 +8,7 @@ import { useReveal } from '../hooks/useReveal';
 import { track } from '../lib/analytics'
 import { useScrollDepth } from '../hooks/useAnalytics'
 
-const Projects = lazy(() => import('./Projects'))
+const Trayectoria = lazy(() => import('./Trayectoria'))
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -714,7 +714,7 @@ export default function Home() {
         <section id="trayectoria" className="order-5 w-full">
           <div id="trayectoria-start" style={{ scrollMarginTop: '12px' }} />
           <Suspense fallback={null}>
-            <Projects embedded />
+            <Trayectoria />
           </Suspense>
         </section>
 
@@ -914,7 +914,7 @@ export default function Home() {
                     href={featuredIdea.deckUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-block text-sm font-medium"
+                    className="inline-block text-sm font-medium tap-target"
                     style={{ color: 'var(--accent-primary)' }}
                     onClick={() => track.clickExternalLink(isEnglish ? 'View presentation' : 'Ver presentación', featuredIdea.deckUrl ?? '', 'noticias')}
                   >
@@ -925,7 +925,7 @@ export default function Home() {
                   href={featuredIdea.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block text-sm font-medium"
+                  className="inline-block text-sm font-medium tap-target"
                   style={{ color: 'var(--accent-primary)' }}
                   onClick={() => track.clickContentCard(featuredIdea.title, featuredIdea.type, featuredIdea.url ?? '', 'noticias')}
                 >
@@ -938,7 +938,7 @@ export default function Home() {
                     href="https://www.youtube.com/watch?v=KnaG_BjSB8U&t=7350s"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-block text-sm font-medium"
+                    className="inline-block text-sm font-medium tap-target"
                     style={{ color: 'var(--accent-primary)' }}
                     onClick={() => track.clickExternalLink(homeText.summitVideoTitle, 'https://www.youtube.com/watch?v=KnaG_BjSB8U&t=7350s', 'noticias')}
                   >
@@ -986,7 +986,7 @@ export default function Home() {
                         href={link.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-block mt-4 text-xs font-medium"
+                        className="inline-block mt-4 text-xs font-medium tap-target"
                         style={{ color: 'var(--accent-primary)' }}
                         onClick={() => track.clickExternalLink(link.title, link.url, 'noticias')}
                       >
@@ -1083,7 +1083,7 @@ export default function Home() {
                         href={item.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-block mt-4 text-xs font-medium"
+                        className="inline-block mt-4 text-xs font-medium tap-target"
                         style={{ color: 'var(--accent-primary)' }}
                         onClick={() => track.clickExternalLink(item.title, item.url, 'noticias')}
                       >
@@ -1136,7 +1136,7 @@ export default function Home() {
                         href={wideIdea.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-block mt-6 text-sm font-medium"
+                        className="inline-block mt-6 text-sm font-medium tap-target"
                         style={{ color: 'var(--accent-primary)' }}
                         onClick={() => track.clickContentCard(wideIdea.title, wideIdea.type, wideIdea.url ?? '', 'noticias')}
                       >
@@ -1234,7 +1234,7 @@ export default function Home() {
                             href={item.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-block text-xs font-medium"
+                            className="inline-block text-xs font-medium tap-target"
                             style={{ color: 'var(--accent-primary)' }}
                             onClick={() => track.clickContentCard(item.title, item.type, item.url ?? '', 'noticias')}
                           >
@@ -1245,7 +1245,7 @@ export default function Home() {
                               href={item.deckUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-block text-xs font-medium"
+                              className="inline-block text-xs font-medium tap-target"
                               style={{ color: 'var(--accent-primary)' }}
                               onClick={() => track.clickExternalLink(isEnglish ? 'View presentation' : 'Ver presentación', item.deckUrl ?? '', 'noticias')}
                             >

@@ -28,7 +28,7 @@ export default function Footer() {
           className="container mx-auto px-4 flex items-center justify-center gap-3 flex-wrap"
         >
           <a
-            href="https://docs.google.com/viewer?url=https://portfolio-barbarita.vercel.app/proceso.pdf"
+            href="/proceso.pdf"
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => track.clickExternalLink('Cómo se construyó este portfolio', 'https://portfolio-barbarita.vercel.app/proceso.pdf', 'footer')}

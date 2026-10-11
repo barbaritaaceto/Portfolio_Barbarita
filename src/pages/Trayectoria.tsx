@@ -1,10 +1,7 @@
-import { Helmet } from 'react-helmet-async'
-import { Link } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
 import projectsData from '../data/projects'
 import TimeEvolution from '../components/TimeEvolution'
 import { track } from '../lib/analytics'
-import { useScrollDepth } from '../hooks/useAnalytics'
 
 // ─── Company metadata ─────────────────────────────────────────────────────────
 const companyMeta: Record<string, { emoji: string; accent: string; primary: boolean }> = {
@@ -116,8 +113,9 @@ const learnings: Record<string, { es: string; en: string }> = {
 }
 
 // ─── Component ────────────────────────────────────────────────────────────────
-export default function Projects({ embedded = false }: { embedded?: boolean }) {
-  const [selectedSlug, setSelectedSlug] = useState(embedded ? '' : 'redbee')
+// Sección Trayectoria del Home: línea de tiempo con el detalle de cada etapa.
+export default function Trayectoria() {
+  const [selectedSlug, setSelectedSlug] = useState('')
   const panelRef = useRef<HTMLDivElement>(null)
   const [showEarlyCareer, setShowEarlyCareer] = useState(false)
   const [showFormacion, setShowFormacion] = useState(false)
@@ -139,12 +137,6 @@ export default function Projects({ embedded = false }: { embedded?: boolean }) {
     }
   }, [])
 
-  useScrollDepth(!embedded)
-
-  useEffect(() => {
-    if (!embedded) track.sectionView('proyectos')
-  }, [embedded])
-
   useEffect(() => {
     const project = projectsData.find(p => p.slug === selectedSlug)
     if (project) track.projectCardView(project.title, companyYears[selectedSlug] ?? 0, selectedSlug)
@@ -152,12 +144,12 @@ export default function Projects({ embedded = false }: { embedded?: boolean }) {
 
   // En el Home el detalle se abre al elegir una etapa; en pantallas angostas lo acercamos a la vista
   useEffect(() => {
-    if (!embedded || !selectedSlug || window.innerWidth >= 1024) return
+    if (!selectedSlug || window.innerWidth >= 1024) return
     panelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }, [embedded, selectedSlug])
+  }, [selectedSlug])
 
   const selectSlug = (slug: string) =>
-    setSelectedSlug(prev => (embedded && prev === slug ? '' : slug))
+    setSelectedSlug(prev => (prev === slug ? '' : slug))
 
   const uiText = isEnglish
     ? {
@@ -561,7 +553,6 @@ export default function Projects({ embedded = false }: { embedded?: boolean }) {
   )
 
   // ─── Render ───────────────────────────────────────────────────────────────
-  const IntroHeading = embedded ? 'h2' : 'h1'
   const introBlock = (
     <div className="mb-10 pb-8" style={{ borderBottom: '1px solid var(--border-base)' }}>
       {/* Decorative line */}
@@ -574,22 +565,17 @@ export default function Projects({ embedded = false }: { embedded?: boolean }) {
           background: 'linear-gradient(90deg, var(--accent-primary) 0%, transparent 100%)',
         }}
       />
-      <IntroHeading
-        className={embedded ? 'font-serif font-semibold text-3xl md:text-4xl mb-4' : 'font-serif leading-[1.15] mb-4'}
-        style={embedded
-          ? { color: 'var(--text-primary)' }
-          : { color: 'var(--text-primary)', fontSize: 'clamp(1.65rem, 3.5vw, 2.25rem)', fontWeight: 600, letterSpacing: '-0.01em' }}
-      >
+      <h2 className="font-serif font-semibold text-3xl md:text-4xl mb-4" style={{ color: 'var(--text-primary)' }}>
         {uiText.heroTitle}
-      </IntroHeading>
-      <div className="space-y-3" style={{ maxWidth: embedded ? undefined : 560 }}>
+      </h2>
+      <div className="space-y-3" >
         {uiText.heroLines.map((line, index) => (
           <p
             key={line}
-            className={index === 1 ? 'font-serif italic leading-relaxed' : `${embedded ? 'text-base' : 'text-sm'} leading-relaxed`}
+            className={index === 1 ? 'font-serif italic leading-relaxed' : `text-base leading-relaxed`}
             style={{
               color: index === 1 ? 'var(--accent-primary)' : 'var(--text-secondary)',
-              fontSize: index === 1 ? (embedded ? '1.2rem' : '1rem') : undefined,
+              fontSize: index === 1 ? '1.2rem' : undefined,
               opacity: index === 1 ? 0.85 : undefined,
             }}
           >
@@ -602,12 +588,6 @@ export default function Projects({ embedded = false }: { embedded?: boolean }) {
 
   return (
     <>
-      {!embedded && (
-        <Helmet>
-          <title>{isEnglish ? 'Career path' : 'Trayectoria'} — Barbara Aceto</title>
-          <meta name="description" content={isEnglish ? "Barbara Aceto's career path: banking, e-commerce, insurance and AI, stage by stage, with what she did and what she learned." : 'La trayectoria de Barbara Aceto: banca, e-commerce, seguros e IA, etapa por etapa, con qué hizo y qué aprendió.'} />
-        </Helmet>
-      )}
 
       {/* Keyframe animation for panel */}
       <style>{`
@@ -618,43 +598,33 @@ export default function Projects({ embedded = false }: { embedded?: boolean }) {
         .panel-enter { animation: panelFadeUp 0.28s ease both; }
       `}</style>
 
-      <div className={embedded ? 'w-full' : 'w-full min-h-screen'} style={{ backgroundColor: 'var(--bg)' }}>
-        <div className={embedded ? 'max-w-6xl mx-auto px-4 py-4 md:py-6' : 'max-w-6xl mx-auto px-4 py-6 md:py-10'}>
+      <div className="w-full" style={{ backgroundColor: 'var(--bg)' }}>
+        <div className="max-w-6xl mx-auto px-4 py-4 md:py-6">
 
           {/* Back */}
-          {!embedded && (
-            <Link
-              to="/"
-              className="inline-flex items-center text-sm mb-10 transition-colors"
-              style={{ color: 'var(--accent-primary)' }}
-            >
-              ← {uiText.backHome}
-            </Link>
-          )}
 
           {/* ── MAIN: vertical timeline left + content right ─────────────── */}
-          {embedded && introBlock}
+          {introBlock}
 
-          <div className={embedded ? 'flex flex-col lg:flex-row gap-8 lg:gap-12 items-start' : 'flex flex-col sm:flex-row gap-6 sm:gap-8 md:gap-12 items-start'}>
+          <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
 
             {/* ── LEFT: image + vertical timeline ──────────────────────── */}
-            <div id={embedded ? 'home-trayectoria-timeline' : undefined} className={embedded ? 'flex-shrink-0 flex flex-row gap-4 sm:gap-7 items-start lg:sticky lg:top-6' : 'flex-shrink-0 flex flex-row sm:flex-col gap-4 sm:gap-0 sm:w-[188px]'}>
+            <div id="home-trayectoria-timeline" className="flex-shrink-0 flex flex-row gap-4 sm:gap-7 items-start lg:sticky lg:top-6">
 
               {/* Slider image */}
               <div className="flex-shrink-0">
-                <TimeEvolution isEnglish={isEnglish} width={embedded ? 'clamp(150px, 24vw, 270px)' : 160} />
+                <TimeEvolution isEnglish={isEnglish} width="clamp(150px, 24vw, 270px)" />
               </div>
 
               {/* Vertical timeline — line starts from below the image */}
-              <div className={embedded ? 'relative min-w-0 w-[150px] sm:w-[190px] mt-1' : 'relative flex-1 min-w-0 sm:flex-none mt-0 sm:mt-3'} style={{ paddingLeft: 20 }}>
-                {embedded && (
+              <div className="relative min-w-0 w-[150px] sm:w-[190px] mt-1" style={{ paddingLeft: 20 }}>
                   <p
                     className="text-xs font-semibold uppercase mb-3"
                     style={{ color: 'var(--accent-primary)', letterSpacing: '0.1em' }}
                   >
                     {isEnglish ? 'Pick a stage' : 'Elegí una etapa'}
                   </p>
-                )}
+                
                 {/* Vertical line */}
                 <div
                   className="absolute top-0 bottom-0"
@@ -670,7 +640,7 @@ export default function Projects({ embedded = false }: { embedded?: boolean }) {
                     <button
                       key={project.slug}
                       onClick={() => { selectSlug(project.slug); track.clickProjectCard(project.title, companyYears[project.slug] ?? 0, project.slug) }}
-                      className={`relative w-full text-left pb-3 pt-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] rounded-lg transition-colors duration-200 ${embedded ? 'pr-6' : 'pr-2'}`}
+                      className={`relative w-full text-left pb-3 pt-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] rounded-lg transition-colors duration-200 pr-6`}
                       aria-pressed={isActive}
                       style={{ backgroundColor: isActive ? `${meta.accent}0D` : 'transparent' }}
                       onMouseEnter={e => { if (!isActive) e.currentTarget.style.backgroundColor = `${meta.accent}07` }}
@@ -686,20 +656,19 @@ export default function Projects({ embedded = false }: { embedded?: boolean }) {
                         }}
                       />
                       <span
-                        className={`block ${embedded ? 'text-xs' : 'text-[10px]'} leading-none mb-0.5 font-semibold`}
+                        className={`block text-xs leading-none mb-0.5 font-semibold`}
                         style={{ color: isActive ? meta.accent : 'var(--text-muted)', opacity: isActive ? 0.75 : 0.55, letterSpacing: '0.08em' }}
                       >{project.slug === 'redbee' ? (isEnglish ? 'Present' : 'Actualidad') : year}</span>
                       <span
-                        className={`block ${embedded ? 'text-sm' : 'text-xs'} font-medium leading-snug transition-colors`}
+                        className={`block text-sm font-medium leading-snug transition-colors`}
                         style={{ color: isActive ? meta.accent : 'var(--text-primary)' }}
                       >{tValue(project.title)}</span>
-                      {embedded && (
                         <span
                           aria-hidden="true"
                           className="absolute right-2 top-1/2 -translate-y-1/2 text-sm transition-transform duration-200"
                           style={{ color: isActive ? meta.accent : 'var(--accent-primary)', opacity: isActive ? 1 : 0.55, transform: `translateY(-50%) rotate(${isActive ? 90 : 0}deg)` }}
                         >›</span>
-                      )}
+                      
                     </button>
                   )
                 })}
@@ -754,7 +723,7 @@ export default function Projects({ embedded = false }: { embedded?: boolean }) {
                     <button
                       key={project.slug}
                       onClick={() => { selectSlug(project.slug); track.clickProjectCard(project.title, companyYears[project.slug] ?? 0, project.slug) }}
-                      className={`relative w-full text-left pb-3 pt-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] rounded-lg transition-colors duration-200 ${embedded ? 'pr-6' : 'pr-2'}`}
+                      className={`relative w-full text-left pb-3 pt-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] rounded-lg transition-colors duration-200 pr-6`}
                       aria-pressed={isActive}
                       style={{ backgroundColor: isActive ? `${meta.accent}0D` : 'transparent' }}
                       onMouseEnter={e => { if (!isActive) e.currentTarget.style.backgroundColor = `${meta.accent}07` }}
@@ -770,20 +739,19 @@ export default function Projects({ embedded = false }: { embedded?: boolean }) {
                         }}
                       />
                       <span
-                        className={`block ${embedded ? 'text-xs' : 'text-[10px]'} leading-none mb-0.5 font-semibold`}
+                        className={`block text-xs leading-none mb-0.5 font-semibold`}
                         style={{ color: isActive ? meta.accent : 'var(--text-muted)', opacity: isActive ? 0.75 : 0.55, letterSpacing: '0.08em' }}
                       >{year}</span>
                       <span
-                        className={`block ${embedded ? 'text-sm' : 'text-xs'} font-medium leading-snug transition-colors`}
+                        className={`block text-sm font-medium leading-snug transition-colors`}
                         style={{ color: isActive ? meta.accent : 'var(--text-secondary)' }}
                       >{tValue(project.title)}</span>
-                      {embedded && (
                         <span
                           aria-hidden="true"
                           className="absolute right-2 top-1/2 -translate-y-1/2 text-sm transition-transform duration-200"
                           style={{ color: isActive ? meta.accent : 'var(--accent-primary)', opacity: isActive ? 1 : 0.55, transform: `translateY(-50%) rotate(${isActive ? 90 : 0}deg)` }}
                         >›</span>
-                      )}
+                      
                     </button>
                   )
                 })}
@@ -890,7 +858,6 @@ export default function Projects({ embedded = false }: { embedded?: boolean }) {
             {/* ── RIGHT: intro text + experience panel ─────────────────── */}
             <div className="flex-1 min-w-0">
 
-              {!embedded && introBlock}
 
               {/* Experience panel */}
               {selectedSlug === '' ? (
@@ -904,7 +871,6 @@ export default function Projects({ embedded = false }: { embedded?: boolean }) {
                 </div>
               ) : (
               <div key={selectedSlug} ref={panelRef} className="panel-enter" style={{ scrollMarginTop: 16 }}>
-                {embedded && (
                   <div className="flex justify-end mb-3">
                     <button
                       type="button"
@@ -915,7 +881,7 @@ export default function Projects({ embedded = false }: { embedded?: boolean }) {
                       ✕ {isEnglish ? 'Close' : 'Cerrar'}
                     </button>
                   </div>
-                )}
+                
 
                 {/* Company hero */}
                 <div

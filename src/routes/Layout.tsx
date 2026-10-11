@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { lazy, Suspense, useEffect, useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/react'
-import AIAssistant from '../components/AIAssistant'
 import Footer from '../components/Footer'
 import { track } from '../lib/analytics'
+
+// El guía (y sus 45 respuestas) se descarga recién cuando alguien lo abre
+const loadAssistant = () => import('../components/AIAssistant')
+const AIAssistant = lazy(loadAssistant)
 
 declare function gtag(...args: unknown[]): void
 
@@ -88,7 +91,7 @@ const Layout: React.FC = () => {
           <button
             type="button"
             onClick={() => setLanguage(false)}
-            className="px-3 py-1.5 text-xs font-semibold rounded-full transition-all duration-200"
+            className="tap-target px-3 py-1.5 text-xs font-semibold rounded-full transition-all duration-200"
             style={{
               backgroundColor: isEnglish ? 'transparent' : 'var(--accent-primary)',
               color: isEnglish ? 'var(--text-secondary)' : '#FFFFFF',
@@ -100,7 +103,7 @@ const Layout: React.FC = () => {
           <button
             type="button"
             onClick={() => setLanguage(true)}
-            className="px-3 py-1.5 text-xs font-semibold rounded-full transition-all duration-200"
+            className="tap-target px-3 py-1.5 text-xs font-semibold rounded-full transition-all duration-200"
             style={{
               backgroundColor: isEnglish ? 'var(--accent-primary)' : 'transparent',
               color: isEnglish ? '#FFFFFF' : 'var(--text-secondary)',
@@ -119,6 +122,9 @@ const Layout: React.FC = () => {
           type="button"
           aria-label={ariaLabel}
           onClick={() => { setIsAssistantOpen(true); track.openAIAssistant('floating_button') }}
+          onMouseEnter={() => { void loadAssistant() }}
+          onFocus={() => { void loadAssistant() }}
+          onTouchStart={() => { void loadAssistant() }}
           className="w-14 h-14 rounded-full flex items-center justify-center ai-btn-float"
           style={{
             backgroundColor: isAssistantOpen
@@ -164,10 +170,12 @@ const Layout: React.FC = () => {
 
       {/* AI Assistant dialog */}
       {isAssistantOpen && (
-        <AIAssistant
-          isEnglish={isEnglish}
-          onClose={() => { setIsAssistantOpen(false); track.closeAIAssistant() }}
-        />
+        <Suspense fallback={null}>
+          <AIAssistant
+            isEnglish={isEnglish}
+            onClose={() => { setIsAssistantOpen(false); track.closeAIAssistant() }}
+          />
+        </Suspense>
       )}
 
       <style>{`

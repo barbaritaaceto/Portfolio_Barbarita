@@ -12,6 +12,9 @@ export default function FeedbackDialog({ isOpen, onClose, isEnglish }: FeedbackD
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [feedback, setFeedback] = useState('')
+  // Anti-spam: un campo invisible que una persona nunca completa, y un tiempo mínimo antes de enviar
+  const [website, setWebsite] = useState('')
+  const [openedAt] = useState(() => Date.now())
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [submitError, setSubmitError] = useState(false)
 
@@ -56,6 +59,7 @@ export default function FeedbackDialog({ isOpen, onClose, isEnglish }: FeedbackD
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!name.trim() || !email.trim() || !feedback.trim()) return
+    if (website || Date.now() - openedAt < 2500) { setIsSubmitted(true); return }
     emailjs
       .send(
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
@@ -90,6 +94,10 @@ export default function FeedbackDialog({ isOpen, onClose, isEnglish }: FeedbackD
       >
         {!isSubmitted ? (
           <form className="mt-4 space-y-3" onSubmit={handleSubmit}>
+            <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, overflow: 'hidden' }}>
+              <label htmlFor="feedback-website">Website</label>
+              <input id="feedback-website" type="text" tabIndex={-1} autoComplete="off" value={website} onChange={e => setWebsite(e.target.value)} />
+            </div>
             <div>
               <label htmlFor="feedback-name" className="text-xs font-medium" style={{ color: 'var(--text-secondary)' }}>
                 {t.nameLabel}
