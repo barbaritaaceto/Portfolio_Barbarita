@@ -243,7 +243,7 @@ export default function OneSheet() {
     <>
       <Helmet>
         <title>{c.pageTitle} — Barbara Aceto</title>
-        <meta name="description" content={isEnglish ? "Barbara Aceto's one-page résumé: Product & AI Leader. Experience, training, education and core capabilities." : 'El CV de Barbara Aceto en una hoja: Product & AI Leader. Experiencia, capacitaciones, formación y capacidades clave.'} />
+        <meta name="description" content={isEnglish ? "Barbara Aceto's one-page professional profile: Product & AI Leader. Experience, training, education and core capabilities." : 'El perfil profesional de Barbara Aceto en una hoja: Product & AI Leader. Experiencia, capacitaciones, formación y capacidades clave.'} />
       </Helmet>
 
       {/* Action bar — always visible, hidden on print */}

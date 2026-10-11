@@ -272,7 +272,7 @@ export const intents: AssistantIntent[] = [
     responseES: "Si algo de lo que viste acá te disparó una conversación, lo mejor es escribirle directo a Barbi.\n\n**LinkedIn:** Barbara Aceto\n**Email:** aceto.barbara@gmail.com\n\nUn consejo: contale primero **qué problema estás intentando resolver**. Suele ser el comienzo de una conversación mucho más interesante. 🙂",
     responseEN: "If something you saw here sparked a conversation, the best thing is to write to Barbi directly.\n\n**LinkedIn:** Barbara Aceto\n**Email:** aceto.barbara@gmail.com\n\nA tip: tell her first **which problem you are trying to solve**. It is usually the start of a much more interesting conversation. 🙂",
     next: ["availability","experience","who_is_barbara"],
-    navLinks: [{"labelES":"→ Descargar CV","labelEN":"→ Download CV","route":"/one-sheet"}],
+    navLinks: [{"labelES":"→ Ver su perfil","labelEN":"→ See her profile","route":"/one-sheet"}],
     contact: true,
   },
   {
@@ -325,7 +325,7 @@ export const intents: AssistantIntent[] = [
     responseES: "Puede ser. 🙂\n\nA Barbi le interesan especialmente los proyectos donde hay que conectar varias piezas: **producto + negocio + tecnología + personas + IA**.\n\nPuede aportar desde liderazgo de producto, workshops, capacitación, diagnóstico de equipos, adopción de IA o desafíos concretos de producto y transformación.\n\nSu consejo: mandale contexto antes que un brief perfecto. El resto se construye en la conversación.",
     responseEN: "It could be. 🙂\n\nBarbi is especially interested in projects where several pieces need connecting: **product + business + technology + people + AI**.\n\nShe can contribute through product leadership, workshops, training, team diagnosis, AI adoption or specific product and transformation challenges.\n\nHer advice: send her context rather than a perfect brief. The rest gets built in the conversation.",
     next: ["methodology","contact_cv","location_remote"],
-    navLinks: [{"labelES":"→ Descargar CV","labelEN":"→ Download CV","route":"/one-sheet"}],
+    navLinks: [{"labelES":"→ Ver su perfil","labelEN":"→ See her profile","route":"/one-sheet"}],
     contact: true,
   },
   {

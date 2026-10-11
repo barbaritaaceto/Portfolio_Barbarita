@@ -68,9 +68,9 @@ const STEPS: Step[] = [
     titleES: '¿Hablamos?',
     titleEN: 'Let’s talk',
     bodyES:
-      'Desde acá podés escribirle a Barbi, descargar su CV o ir a su LinkedIn.',
+      'Desde acá podés escribirle a Barbi, ver su perfil o ir a su LinkedIn.',
     bodyEN:
-      'From here you can write to Barbi, download her CV or go to her LinkedIn.',
+      'From here you can write to Barbi, see her profile or go to her LinkedIn.',
   },
   {
     targetId: 'layout-ai-btn',

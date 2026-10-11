@@ -475,7 +475,7 @@ Las preguntas dudosas o sin respuesta se registran en Google Analytics como even
 
 **Sugiere después:** Trabajar juntos, Trayectoria, Sobre Barbi
 
-**Link:** → Descargar CV (/one-sheet)
+**Link:** → Ver su perfil (/one-sheet)
 
 **Botón de contacto:** sí
 
@@ -583,7 +583,7 @@ Las preguntas dudosas o sin respuesta se registran en Google Analytics como even
 
 **Sugiere después:** Metodología, Contacto, Ubicación
 
-**Link:** → Descargar CV (/one-sheet)
+**Link:** → Ver su perfil (/one-sheet)
 
 **Botón de contacto:** sí
 

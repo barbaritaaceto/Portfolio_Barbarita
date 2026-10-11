@@ -2,7 +2,7 @@
 
 Sitio personal de Barbara Aceto, Product & AI Leader: https://portfolio-barbarita.vercel.app
 
-Es una sola página que recorre quién es, sus ideas, por qué construye y su trayectoria, con un guía conversacional (Bocconcino) y un CV descargable (One Sheet). Está disponible en español e inglés.
+Es una sola página que recorre quién es, sus ideas, por qué construye y su trayectoria, con un guía conversacional (Bocconcino) y un perfil profesional descargable (One Sheet). Está disponible en español e inglés.
 
 ## Stack
 
@@ -24,7 +24,7 @@ El formulario de feedback necesita tres variables de entorno en `.env.local`: `V
 
 - `src/pages/Home.tsx`: la página principal y sus secciones.
 - `src/pages/Trayectoria.tsx`: la sección Trayectoria, incrustada en el Home.
-- `src/pages/OneSheet.tsx`: el CV en una hoja, imprimible como PDF.
+- `src/pages/OneSheet.tsx`: el perfil profesional en una hoja, imprimible como PDF.
 - `src/components/AIAssistant.tsx` y `src/data/assistant.ts`: Bocconcino, el guía del portfolio. Responde con respuestas fijas elegidas por palabras clave; no usa un modelo de IA.
 - `src/components/HomeTour.tsx`: el tour de bienvenida.
 - `docs/assistant-qas.md`: el mapa de preguntas y respuestas del guía.

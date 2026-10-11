@@ -11,7 +11,7 @@ const SECTIONS = [
   { id: 'news-start', es: 'Ideas desde la trinchera', en: 'Ideas From The Field', descEs: 'Charlas, videos y reflexiones sobre producto, IA y liderazgo.', descEn: 'Talks, videos and reflections on product, AI and leadership.' },
   { id: 'why-work-start', es: 'Por qué construyo', en: 'Why I Build', descEs: 'Mi mirada, ocho aprendizajes del camino y cómo trabajo.', descEn: 'My view, eight lessons from the journey and how I work.' },
   { id: 'trayectoria', es: 'Trayectoria', en: 'Career path', descEs: 'Cada etapa, con qué hice y qué aprendí.', descEn: 'Each stage, with what I did and what I learned.' },
-  { id: 'contacto', es: '¿Hablamos?', en: 'Let’s talk', descEs: 'Escribime, descargá el CV o seguime en LinkedIn.', descEn: 'Write to me, download the CV or follow me on LinkedIn.' },
+  { id: 'contacto', es: '¿Hablamos?', en: 'Let’s talk', descEs: 'Escribime, mirá mi perfil o seguime en LinkedIn.', descEn: 'Write to me, see my profile or follow me on LinkedIn.' },
 ]
 
 function useActiveSection() {
