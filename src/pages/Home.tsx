@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import press from '../data/press';
 import notesData from '../data/notes';
 import HomeTour from '../components/HomeTour';
+import SectionNav, { SectionIndex } from '../components/SectionNav';
 import { useReveal } from '../hooks/useReveal';
 import { track } from '../lib/analytics'
 import { useScrollDepth } from '../hooks/useAnalytics'
@@ -70,6 +71,18 @@ export default function Home() {
     if (newsStartElement) {
       newsStartElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+  };
+  // La flecha del inicio lleva al índice "En este portfolio"; en celular, donde no hay índice, va a Ideas
+  const scrollPastHero = () => {
+    const index = document.getElementById('home-section-index');
+    if (index && index.offsetParent !== null) {
+      const top = index.getBoundingClientRect().top + window.scrollY - 24;
+      window.scrollTo({ top, behavior: 'smooth' });
+      track.clickScrollToSection('indice');
+      return;
+    }
+    scrollToNews();
+    track.clickScrollToSection('noticias');
   };
 
   useScrollDepth()
@@ -153,7 +166,7 @@ export default function Home() {
         viewPost: 'View post →',
         scrollWhyAria: 'Scroll to Why I Build',
         scrollTrayectoriaAria: 'Scroll to career path',
-        scrollNewsAria: 'Scroll to Ideas From The Field',
+        scrollNewsAria: 'Continue down the page',
         showAllIdeas: 'See all ideas',
         showFewerIdeas: 'See fewer',
         showAllLearnings: 'See all eight lessons',
@@ -217,7 +230,7 @@ export default function Home() {
         viewPost: 'Ver publicación →',
         scrollWhyAria: 'Ir a Por qué construyo',
         scrollTrayectoriaAria: 'Ir a la trayectoria',
-        scrollNewsAria: 'Ir a la sección de noticias',
+        scrollNewsAria: 'Seguir bajando en la página',
         showAllIdeas: 'Ver todas las ideas',
         showFewerIdeas: 'Ver menos',
         showAllLearnings: 'Ver los ocho aprendizajes',
@@ -465,6 +478,7 @@ export default function Home() {
   return (
     <>
       <HomeTour isEnglish={isEnglish} />
+      <SectionNav isEnglish={isEnglish} />
       <Helmet>
         <title>Barbara Aceto | Product &amp; AI Leader</title>
         <meta
@@ -546,7 +560,7 @@ export default function Home() {
         <div className="w-full flex justify-center mt-2 mb-4 md:mb-5 relative z-50">
           <button
             type="button"
-            onClick={() => { scrollToNews(); track.clickScrollToSection('noticias') }}
+            onClick={scrollPastHero}
             className="w-11 h-11 rounded-full scroll-arrow flex items-center justify-center cursor-pointer"
             style={{ backgroundColor: '#FFFFFF', border: '1px solid var(--border-base)', boxShadow: '0 2px 8px rgba(30, 42, 56, 0.08)', color: 'var(--accent-primary)' }}
             aria-label={homeText.scrollNewsAria}
@@ -556,6 +570,8 @@ export default function Home() {
             </svg>
           </button>
         </div>
+
+        <SectionIndex isEnglish={isEnglish} />
 
         <div className="flex flex-col">
         {/* ════════════════════════════════════ */}

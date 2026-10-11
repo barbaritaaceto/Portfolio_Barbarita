@@ -117,7 +117,8 @@ const learnings: Record<string, { es: string; en: string }> = {
 export default function Trayectoria() {
   const [selectedSlug, setSelectedSlug] = useState('')
   const panelRef = useRef<HTMLDivElement>(null)
-  const [showEarlyCareer, setShowEarlyCareer] = useState(false)
+  const timelineRef = useRef<HTMLDivElement>(null)
+  const trackRef = useRef<HTMLDivElement>(null)
   const [showFormacion, setShowFormacion] = useState(false)
   const [isEnglish, setIsEnglish] = useState(() => {
     if (typeof window === 'undefined') return false
@@ -142,10 +143,43 @@ export default function Trayectoria() {
     if (project) track.projectCardView(project.title, companyYears[selectedSlug] ?? 0, selectedSlug)
   }, [selectedSlug])
 
-  // En el Home el detalle se abre al elegir una etapa; en pantallas angostas lo acercamos a la vista
+  // Cuando la línea no entra entera (tablet y celular), arranca mostrando la actualidad, que está a la
+  // derecha, y avisa con flechas y un degradado que hay más etapas para deslizar
+  const [canScroll, setCanScroll] = useState({ left: false, right: false })
   useEffect(() => {
-    if (!selectedSlug || window.innerWidth >= 1024) return
-    panelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    const track = trackRef.current
+    if (!track) return
+    track.scrollLeft = track.scrollWidth
+    const update = () => {
+      const max = track.scrollWidth - track.clientWidth
+      setCanScroll({ left: track.scrollLeft > 4, right: track.scrollLeft < max - 4 })
+    }
+    update()
+    track.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update)
+    return () => {
+      track.removeEventListener('scroll', update)
+      window.removeEventListener('resize', update)
+    }
+  }, [])
+
+  const slideTimeline = (direction: -1 | 1) => {
+    const track = trackRef.current
+    if (!track) return
+    const target = track.scrollLeft + direction * Math.max(220, track.clientWidth * 0.7)
+    track.scrollTo({ left: target, behavior: 'smooth' })
+    // Si el navegador no anima el desplazamiento, se llega igual con un salto
+    window.setTimeout(() => {
+      const max = track.scrollWidth - track.clientWidth
+      const wanted = Math.max(0, Math.min(target, max))
+      if (Math.abs(track.scrollLeft - wanted) > 8) track.scrollLeft = wanted
+    }, 500)
+  }
+
+  // Al elegir una etapa, la línea de tiempo sube al borde de la pantalla y el detalle queda justo debajo
+  useEffect(() => {
+    if (!selectedSlug) return
+    timelineRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }, [selectedSlug])
 
   const selectSlug = (slug: string) =>
@@ -439,13 +473,58 @@ export default function Trayectoria() {
   // ─── Education / Formación data (from LinkedIn PDF) ───────────────────────
   const formacionItems = [
     {
-      period: '2025',
+      period: '2026',
+      titleES: 'Automatizaciones con IA (make.com)',
+      titleEN: 'AI Automations (make.com)',
+      institutionES: 'Digital House',
+      institutionEN: 'Digital House',
+      tagES: 'IA aplicada',
+      tagEN: 'Applied AI',
+    },
+    {
+      period: '2026',
+      titleES: 'AI First Product Manager',
+      titleEN: 'AI First Product Manager',
+      institutionES: 'Product Hub',
+      institutionEN: 'Product Hub',
+      tagES: 'IA · Producto',
+      tagEN: 'AI · Product',
+    },
+    {
+      period: '2026',
+      titleES: 'AI para UXers',
+      titleEN: 'AI for UXers',
+      institutionES: 'Interface School',
+      institutionEN: 'Interface School',
+      tagES: 'IA · UX',
+      tagEN: 'AI · UX',
+    },
+    {
+      period: '2026',
       titleES: 'Claude Code para Product Managers',
       titleEN: 'Claude Code for Product Managers',
       institutionES: 'Certificación',
       institutionEN: 'Certification',
       tagES: 'IA aplicada',
       tagEN: 'Applied AI',
+    },
+    {
+      period: '2025',
+      titleES: 'Diseño y Desarrollo de Productos y Servicios de IA',
+      titleEN: 'Designing and Building AI Products and Services',
+      institutionES: 'MIT Professional Education',
+      institutionEN: 'MIT Professional Education',
+      tagES: 'IA · Producto',
+      tagEN: 'AI · Product',
+    },
+    {
+      period: '2025',
+      titleES: 'Inteligencia Artificial para Project Managers',
+      titleEN: 'Artificial Intelligence for Project Managers',
+      institutionES: 'Certificación',
+      institutionEN: 'Certification',
+      tagES: 'IA · Producto',
+      tagEN: 'AI · Product',
     },
     {
       period: '2024',
@@ -457,13 +536,22 @@ export default function Trayectoria() {
       tagEN: 'Leadership',
     },
     {
-      period: '2024',
-      titleES: 'Inteligencia Artificial para Project Managers',
-      titleEN: 'Artificial Intelligence for Project Managers',
-      institutionES: 'Certificación',
-      institutionEN: 'Certification',
-      tagES: 'IA · Producto',
-      tagEN: 'AI · Product',
+      period: '2022',
+      titleES: 'Certified Agile Leadership for Team Leads (CAL-T)',
+      titleEN: 'Certified Agile Leadership for Team Leads (CAL-T)',
+      institutionES: 'Scrum Alliance',
+      institutionEN: 'Scrum Alliance',
+      tagES: 'Liderazgo',
+      tagEN: 'Leadership',
+    },
+    {
+      period: '2022',
+      titleES: 'Certified Agile Leadership Essentials (CAL-E)',
+      titleEN: 'Certified Agile Leadership Essentials (CAL-E)',
+      institutionES: 'Scrum Alliance',
+      institutionEN: 'Scrum Alliance',
+      tagES: 'Liderazgo',
+      tagEN: 'Leadership',
     },
     {
       period: '2020',
@@ -553,38 +641,44 @@ export default function Trayectoria() {
   )
 
   // ─── Render ───────────────────────────────────────────────────────────────
-  const introBlock = (
-    <div className="mb-10 pb-8" style={{ borderBottom: '1px solid var(--border-base)' }}>
-      {/* Decorative line */}
-      <div
-        className="mb-5"
-        style={{
-          width: 36,
-          height: 2,
-          borderRadius: 2,
-          background: 'linear-gradient(90deg, var(--accent-primary) 0%, transparent 100%)',
-        }}
-      />
-      <h2 className="font-serif font-semibold text-3xl md:text-4xl mb-4" style={{ color: 'var(--text-primary)' }}>
-        {uiText.heroTitle}
-      </h2>
-      <div className="space-y-3" >
-        {uiText.heroLines.map((line, index) => (
-          <p
-            key={line}
-            className={index === 1 ? 'font-serif italic leading-relaxed' : `text-base leading-relaxed`}
-            style={{
-              color: index === 1 ? 'var(--accent-primary)' : 'var(--text-secondary)',
-              fontSize: index === 1 ? '1.2rem' : undefined,
-              opacity: index === 1 ? 0.85 : undefined,
-            }}
-          >
-            {line}
-          </p>
-        ))}
-      </div>
-    </div>
-  )
+  // Una etapa de la línea de tiempo horizontal
+  const stageButton = (project: (typeof projectsData)[number], primary: boolean) => {
+    const isActive = selectedSlug === project.slug
+    const meta     = companyMeta[project.slug]
+    const year     = companyYears[project.slug]
+    // La etapa actual se destaca siempre en verde, esté o no seleccionada
+    const isCurrent = project.slug === 'redbee'
+    return (
+      <button
+        key={project.slug}
+        onClick={() => { selectSlug(project.slug); track.clickProjectCard(project.title, companyYears[project.slug] ?? 0, project.slug) }}
+        className="relative flex-1 min-w-[112px] lg:min-w-0 text-left pt-7 pb-3 px-2.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] rounded-xl transition-colors duration-200"
+        aria-pressed={isActive}
+        style={{ backgroundColor: isActive ? `${meta.accent}0D` : 'transparent' }}
+        onMouseEnter={e => { if (!isActive) e.currentTarget.style.backgroundColor = `${meta.accent}07` }}
+        onMouseLeave={e => { if (!isActive) e.currentTarget.style.backgroundColor = 'transparent' }}
+      >
+        <span
+          className="absolute rounded-full transition-all duration-200"
+          style={{
+            left: isCurrent ? 9 : 10, top: isCurrent ? 1 : isActive ? 3 : 4,
+            width: isCurrent ? 15 : isActive ? 11 : 9, height: isCurrent ? 15 : isActive ? 11 : 9,
+            backgroundColor: isCurrent ? 'var(--accent-primary)' : isActive ? meta.accent : 'var(--card-bg)',
+            border: `2px solid ${isCurrent ? 'var(--accent-primary)' : isActive ? meta.accent : 'rgba(74,127,121,0.45)'}`,
+            boxShadow: isCurrent ? '0 0 0 5px rgba(74,127,121,0.18)' : isActive ? `0 0 0 4px ${meta.accent}22` : 'none',
+          }}
+        />
+        <span
+          className="block text-xs leading-none mb-1 font-semibold"
+          style={{ color: isCurrent ? 'var(--accent-primary)' : isActive ? meta.accent : 'var(--text-muted)', opacity: isCurrent ? 1 : isActive ? 0.85 : 0.7, letterSpacing: '0.08em' }}
+        >{isCurrent ? (isEnglish ? 'Present' : 'Actualidad') : year}</span>
+        <span
+          className={`block text-sm leading-snug transition-colors ${isCurrent ? 'font-semibold' : 'font-medium'}`}
+          style={{ color: isActive ? meta.accent : primary ? 'var(--text-primary)' : 'var(--text-secondary)' }}
+        >{tValue(project.title)}</span>
+      </button>
+    )
+  }
 
   return (
     <>
@@ -601,263 +695,145 @@ export default function Trayectoria() {
       <div className="w-full" style={{ backgroundColor: 'var(--bg)' }}>
         <div className="max-w-6xl mx-auto px-4 py-4 md:py-6">
 
-          {/* Back */}
-
-          {/* ── MAIN: vertical timeline left + content right ─────────────── */}
-          {introBlock}
-
-          <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
-
-            {/* ── LEFT: image + vertical timeline ──────────────────────── */}
-            <div id="home-trayectoria-timeline" className="flex-shrink-0 flex flex-row gap-4 sm:gap-7 items-start lg:sticky lg:top-6">
-
-              {/* Slider image */}
-              <div className="flex-shrink-0">
-                <TimeEvolution isEnglish={isEnglish} width="clamp(150px, 24vw, 270px)" />
-              </div>
-
-              {/* Vertical timeline — line starts from below the image */}
-              <div className="relative min-w-0 w-[150px] sm:w-[190px] mt-1" style={{ paddingLeft: 20 }}>
+          {/* ── Fila 1: la foto 1989 | hoy a la izquierda, el relato a la derecha ── */}
+          <div className="flex flex-col sm:flex-row items-center gap-6 md:gap-10 mb-8 md:mb-10">
+            <div className="flex-shrink-0">
+              <TimeEvolution isEnglish={isEnglish} width="clamp(150px, 22vw, 240px)" />
+            </div>
+            <div className="min-w-0">
+              <div
+                className="mb-5"
+                style={{
+                  width: 36,
+                  height: 2,
+                  borderRadius: 2,
+                  background: 'linear-gradient(90deg, var(--accent-primary) 0%, transparent 100%)',
+                }}
+              />
+              <h2 className="font-serif font-semibold text-3xl md:text-4xl mb-4" style={{ color: 'var(--text-primary)' }}>
+                {uiText.heroTitle}
+              </h2>
+              <div className="space-y-3">
+                {uiText.heroLines.map((line, index) => (
                   <p
-                    className="text-xs font-semibold uppercase mb-3"
-                    style={{ color: 'var(--accent-primary)', letterSpacing: '0.1em' }}
+                    key={line}
+                    className={index === 1 ? 'font-serif italic leading-relaxed' : 'text-base leading-relaxed'}
+                    style={{
+                      color: index === 1 ? 'var(--accent-primary)' : 'var(--text-secondary)',
+                      fontSize: index === 1 ? '1.2rem' : undefined,
+                      opacity: index === 1 ? 0.85 : undefined,
+                    }}
                   >
-                    {isEnglish ? 'Pick a stage' : 'Elegí una etapa'}
+                    {line}
                   </p>
-                
-                {/* Vertical line */}
-                <div
-                  className="absolute top-0 bottom-0"
-                  style={{ left: 6, width: 0.5, backgroundColor: 'var(--border-base)' }}
-                />
-
-                {/* Primary career items */}
-                {sortedPrimary.map(project => {
-                  const isActive = selectedSlug === project.slug
-                  const meta     = companyMeta[project.slug]
-                  const year     = companyYears[project.slug]
-                  return (
-                    <button
-                      key={project.slug}
-                      onClick={() => { selectSlug(project.slug); track.clickProjectCard(project.title, companyYears[project.slug] ?? 0, project.slug) }}
-                      className={`relative w-full text-left pb-3 pt-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] rounded-lg transition-colors duration-200 pr-6`}
-                      aria-pressed={isActive}
-                      style={{ backgroundColor: isActive ? `${meta.accent}0D` : 'transparent' }}
-                      onMouseEnter={e => { if (!isActive) e.currentTarget.style.backgroundColor = `${meta.accent}07` }}
-                      onMouseLeave={e => { if (!isActive) e.currentTarget.style.backgroundColor = 'transparent' }}
-                    >
-                      <span
-                        className="absolute rounded-full transition-all duration-200"
-                        style={{
-                          left: isActive ? -15 : -13, top: 7,
-                          width: isActive ? 9 : 7, height: isActive ? 9 : 7,
-                          backgroundColor: isActive ? meta.accent : 'var(--border-base)',
-                          boxShadow: isActive ? `0 0 0 3px ${meta.accent}28` : 'none',
-                        }}
-                      />
-                      <span
-                        className={`block text-xs leading-none mb-0.5 font-semibold`}
-                        style={{ color: isActive ? meta.accent : 'var(--text-muted)', opacity: isActive ? 0.75 : 0.55, letterSpacing: '0.08em' }}
-                      >{project.slug === 'redbee' ? (isEnglish ? 'Present' : 'Actualidad') : year}</span>
-                      <span
-                        className={`block text-sm font-medium leading-snug transition-colors`}
-                        style={{ color: isActive ? meta.accent : 'var(--text-primary)' }}
-                      >{tValue(project.title)}</span>
-                        <span
-                          aria-hidden="true"
-                          className="absolute right-2 top-1/2 -translate-y-1/2 text-sm transition-transform duration-200"
-                          style={{ color: isActive ? meta.accent : 'var(--accent-primary)', opacity: isActive ? 1 : 0.55, transform: `translateY(-50%) rotate(${isActive ? 90 : 0}deg)` }}
-                        >›</span>
-                      
-                    </button>
-                  )
-                })}
-
-                {/* Early-career toggle */}
-                <button
-                  onClick={() => setShowEarlyCareer(v => !v)}
-                  className="relative w-full text-left pt-1 pb-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] rounded-lg"
-                  aria-pressed={showEarlyCareer}
-                >
-                  <div className="flex items-center gap-2">
-                    {/* dot alineado con el pill */}
-                    <span
-                      className="rounded-full flex-shrink-0 transition-all duration-200"
-                      style={{
-                        width: 7, height: 7,
-                        marginLeft: -19,
-                        backgroundColor: showEarlyCareer ? 'var(--accent-primary)' : 'var(--border-base)',
-                        boxShadow: showEarlyCareer ? '0 0 0 3px rgba(74,127,121,0.18)' : 'none',
-                      }}
-                    />
-                    <span
-                      style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: 4,
-                        fontSize: 10,
-                        fontWeight: 600,
-                        letterSpacing: '0.07em',
-                        color: 'var(--accent-primary)',
-                        opacity: showEarlyCareer ? 1 : 0.6,
-                        border: '1px dashed rgba(74,127,121,0.45)',
-                        borderRadius: 20,
-                        padding: '3px 9px',
-                        transition: 'opacity 0.2s ease',
-                      }}
-                    >
-                      {showEarlyCareer ? '↑ ' : '↓ '}
-                      {showEarlyCareer
-                        ? (isEnglish ? 'hide early' : 'ocultar inicios')
-                        : (isEnglish ? 'early career' : 'inicios')}
-                    </span>
-                  </div>
-                </button>
-
-                {/* Early career items */}
-                {showEarlyCareer && sortedEarly.map(project => {
-                  const isActive = selectedSlug === project.slug
-                  const meta     = companyMeta[project.slug]
-                  const year     = companyYears[project.slug]
-                  return (
-                    <button
-                      key={project.slug}
-                      onClick={() => { selectSlug(project.slug); track.clickProjectCard(project.title, companyYears[project.slug] ?? 0, project.slug) }}
-                      className={`relative w-full text-left pb-3 pt-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] rounded-lg transition-colors duration-200 pr-6`}
-                      aria-pressed={isActive}
-                      style={{ backgroundColor: isActive ? `${meta.accent}0D` : 'transparent' }}
-                      onMouseEnter={e => { if (!isActive) e.currentTarget.style.backgroundColor = `${meta.accent}07` }}
-                      onMouseLeave={e => { if (!isActive) e.currentTarget.style.backgroundColor = 'transparent' }}
-                    >
-                      <span
-                        className="absolute rounded-full transition-all duration-200"
-                        style={{
-                          left: isActive ? -15 : -13, top: 7,
-                          width: isActive ? 9 : 7, height: isActive ? 9 : 7,
-                          backgroundColor: isActive ? meta.accent : 'var(--border-base)',
-                          boxShadow: isActive ? `0 0 0 3px ${meta.accent}28` : 'none',
-                        }}
-                      />
-                      <span
-                        className={`block text-xs leading-none mb-0.5 font-semibold`}
-                        style={{ color: isActive ? meta.accent : 'var(--text-muted)', opacity: isActive ? 0.75 : 0.55, letterSpacing: '0.08em' }}
-                      >{year}</span>
-                      <span
-                        className={`block text-sm font-medium leading-snug transition-colors`}
-                        style={{ color: isActive ? meta.accent : 'var(--text-secondary)' }}
-                      >{tValue(project.title)}</span>
-                        <span
-                          aria-hidden="true"
-                          className="absolute right-2 top-1/2 -translate-y-1/2 text-sm transition-transform duration-200"
-                          style={{ color: isActive ? meta.accent : 'var(--accent-primary)', opacity: isActive ? 1 : 0.55, transform: `translateY(-50%) rotate(${isActive ? 90 : 0}deg)` }}
-                        >›</span>
-                      
-                    </button>
-                  )
-                })}
-
-                {/* ── Formación toggle ──────────────────────────────── */}
-                <button
-                  onClick={() => setShowFormacion(v => !v)}
-                  className="relative w-full text-left pt-1 pb-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] rounded-lg"
-                  aria-pressed={showFormacion}
-                >
-                  <div className="flex items-center gap-2">
-                    {/* dot naranja alineado igual que inicios */}
-                    <span
-                      className="rounded-full flex-shrink-0 transition-all duration-200"
-                      style={{
-                        width: 7, height: 7,
-                        marginLeft: -19,
-                        backgroundColor: showFormacion ? '#C97C3A' : 'var(--border-base)',
-                        boxShadow: showFormacion ? '0 0 0 3px rgba(201,124,58,0.18)' : 'none',
-                      }}
-                    />
-                    <span
-                      style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: 4,
-                        fontSize: 10,
-                        fontWeight: 600,
-                        letterSpacing: '0.07em',
-                        color: '#C97C3A',
-                        opacity: showFormacion ? 1 : 0.6,
-                        border: '1px dashed rgba(201,124,58,0.45)',
-                        borderRadius: 20,
-                        padding: '3px 9px',
-                        transition: 'opacity 0.2s ease',
-                      }}
-                    >
-                      {showFormacion
-                        ? (isEnglish ? '− Hide education' : '− Ocultar formación')
-                        : (isEnglish ? '+ Education' : '+ Formación')}
-                    </span>
-                  </div>
-                </button>
-
-                {/* ── Formación items ────────────────────────────────── */}
-                {showFormacion && (
-                  <>
-                    {/* Dashed teal line for education section */}
-                    <div
-                      className="absolute"
-                      style={{
-                        left: 6, width: 0.5,
-                        top: 'auto',
-                        backgroundColor: 'transparent',
-                        borderLeft: '1.5px dashed #4A9B8E',
-                        opacity: 0.4,
-                        height: `${formacionItems.length * 48 + 12}px`,
-                      }}
-                    />
-                    {formacionItems.map((item, idx) => (
-                      <div
-                        key={idx}
-                        className="relative pb-3"
-                        style={{
-                          animation: `panelFadeUp 0.22s ease ${idx * 0.04}s both`,
-                        }}
-                      >
-                        <span
-                          className="absolute rounded-full"
-                          style={{
-                            left: -13, top: 5,
-                            width: 7, height: 7,
-                            backgroundColor: '#4A9B8E',
-                            opacity: 0.55,
-                          }}
-                        />
-                        <span
-                          className="block text-[10px] leading-none mb-0.5"
-                          style={{ color: '#4A9B8E', opacity: 0.7 }}
-                        >{item.period}</span>
-                        <span
-                          className="block text-xs font-medium leading-snug"
-                          style={{ color: 'var(--text-primary)' }}
-                        >
-                          {isEnglish ? item.titleEN : item.titleES}
-                        </span>
-                        <span
-                          className="block text-[10px] leading-snug"
-                          style={{ color: 'var(--text-muted)' }}
-                        >
-                          {isEnglish ? item.institutionEN : item.institutionES}
-                          {' · '}
-                          <span style={{ color: '#4A9B8E', opacity: 0.8 }}>
-                            {isEnglish ? item.tagEN : item.tagES}
-                          </span>
-                        </span>
-                      </div>
-                    ))}
-                  </>
-                )}
+                ))}
               </div>
             </div>
+          </div>
 
-            {/* ── RIGHT: intro text + experience panel ─────────────────── */}
-            <div className="flex-1 min-w-0">
+          {/* ── Fila 2: línea de tiempo horizontal ── */}
+          <div id="home-trayectoria-timeline" ref={timelineRef} className="mb-6" style={{ scrollMarginTop: 16 }}>
+            <div className="flex flex-col items-start gap-2.5 mb-4">
+              <p className="text-xs font-semibold uppercase" style={{ color: 'var(--accent-primary)', letterSpacing: '0.1em' }}>
+                {isEnglish ? 'Pick a stage' : 'Elegí una etapa'}
+              </p>
+              <button
+                onClick={() => setShowFormacion(v => !v)}
+                aria-pressed={showFormacion}
+                className="text-xs font-semibold rounded-full px-3 py-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)]"
+                style={{
+                  color: '#A8611F',
+                  border: '1px dashed rgba(201,124,58,0.5)',
+                  backgroundColor: showFormacion ? 'rgba(201,124,58,0.10)' : 'transparent',
+                }}
+              >
+                {showFormacion
+                  ? (isEnglish ? '− Hide education' : '− Ocultar formación')
+                  : (isEnglish ? '+ Education' : '+ Formación')}
+              </button>
+            </div>
 
+            {(canScroll.left || canScroll.right) && (
+              <p className="text-xs mb-2" style={{ color: 'var(--text-muted)' }}>
+                {canScroll.left
+                  ? (isEnglish ? '← Slide to see earlier stages' : '← Deslizá para ver las etapas anteriores')
+                  : (isEnglish ? 'Slide to see the latest stages →' : 'Deslizá para ver las etapas más recientes →')}
+              </p>
+            )}
+
+            <div className="relative">
+              <div ref={trackRef} className="overflow-x-auto -mx-1 px-1 pb-1">
+                <div className="relative flex gap-0.5 min-w-max lg:min-w-0">
+                  {/* La línea */}
+                  <div className="absolute left-0 right-0" aria-hidden="true" style={{ top: 8, height: 1.5, backgroundColor: 'rgba(74,127,121,0.28)' }} />
+                  {/* De izquierda a derecha: de lo más antiguo a la actualidad */}
+                  {[...sortedEarly].reverse().map(project => stageButton(project, false))}
+                  {[...sortedPrimary].reverse().map(project => stageButton(project, true))}
+                </div>
+              </div>
+
+              {/* Degradado y flecha en el borde donde quedan etapas sin ver */}
+              {canScroll.left && (
+                <>
+                  <div className="pointer-events-none absolute inset-y-0 -left-1 w-14" aria-hidden="true" style={{ background: 'linear-gradient(to right, var(--bg) 25%, transparent)' }} />
+                  <button
+                    type="button"
+                    onClick={() => slideTimeline(-1)}
+                    aria-label={isEnglish ? 'See earlier stages' : 'Ver etapas anteriores'}
+                    className="absolute -left-1 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full flex items-center justify-center text-lg"
+                    style={{ backgroundColor: '#FFFFFF', border: '1px solid var(--border-base)', boxShadow: '0 2px 8px rgba(30,42,56,0.12)', color: 'var(--accent-primary)' }}
+                  >
+                    ‹
+                  </button>
+                </>
+              )}
+              {canScroll.right && (
+                <>
+                  <div className="pointer-events-none absolute inset-y-0 -right-1 w-14" aria-hidden="true" style={{ background: 'linear-gradient(to left, var(--bg) 25%, transparent)' }} />
+                  <button
+                    type="button"
+                    onClick={() => slideTimeline(1)}
+                    aria-label={isEnglish ? 'See later stages' : 'Ver etapas más recientes'}
+                    className="absolute -right-1 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full flex items-center justify-center text-lg"
+                    style={{ backgroundColor: '#FFFFFF', border: '1px solid var(--border-base)', boxShadow: '0 2px 8px rgba(30,42,56,0.12)', color: 'var(--accent-primary)' }}
+                  >
+                    ›
+                  </button>
+                </>
+              )}
+            </div>
+
+            {/* Formación */}
+            {showFormacion && (
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 mt-5">
+                {formacionItems.map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="rounded-xl px-3 py-2.5"
+                    style={{
+                      border: '1px solid rgba(74,155,142,0.25)',
+                      backgroundColor: 'rgba(74,155,142,0.05)',
+                      animation: `panelFadeUp 0.22s ease ${idx * 0.04}s both`,
+                    }}
+                  >
+                    <span className="block text-xs leading-none mb-1 font-semibold" style={{ color: '#3B7F74' }}>{item.period}</span>
+                    <span className="block text-sm font-medium leading-snug" style={{ color: 'var(--text-primary)' }}>
+                      {isEnglish ? item.titleEN : item.titleES}
+                    </span>
+                    <span className="block text-xs leading-snug mt-0.5" style={{ color: 'var(--text-muted)' }}>
+                      {isEnglish ? item.institutionEN : item.institutionES}
+                      {' · '}
+                      {isEnglish ? item.tagEN : item.tagES}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* ── Fila 3: el detalle de la etapa elegida ── */}
+          <div>
+            <div className="min-w-0">
 
               {/* Experience panel */}
               {selectedSlug === '' ? (
@@ -1188,9 +1164,7 @@ export default function Trayectoria() {
             {/* end panel-enter */}
 
             </div>
-            {/* end right column */}
           </div>
-          {/* end flex layout */}
 
         </div>
       </div>

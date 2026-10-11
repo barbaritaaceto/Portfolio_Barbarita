@@ -86,7 +86,7 @@ const EN = {
   educationTitle: 'Education',
   education: [
     'MIT xPRO — Designing and Building AI Products and Services',
-    'Claude Code for Product Managers (2025)',
+    'Claude Code for Product Managers (2026)',
     'Leadership Agility Certified (2024)',
     'Data Analytics — Digital House (2020)',
     'BA in Public and Institutional Relations — UADE',
@@ -184,7 +184,7 @@ const ES = {
   educationTitle: 'Formación',
   education: [
     'MIT xPRO — Designing and Building AI Products and Services',
-    'Claude Code para Product Managers (2025)',
+    'Claude Code para Product Managers (2026)',
     'Leadership Agility Certified (2024)',
     'Data Analytics — Digital House (2020)',
     'Lic. en Relaciones Públicas e Institucionales — UADE',
