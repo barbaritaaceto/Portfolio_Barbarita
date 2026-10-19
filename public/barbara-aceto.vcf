@@ -1,0 +1,12 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Aceto;Barbara;;;
+FN:Barbara Aceto
+ORG:redbee
+TITLE:Manager
+TEL;TYPE=CELL:+5491162093765
+EMAIL;TYPE=INTERNET:aceto.barbara@gmail.com
+URL:https://portfolio-barbarita.vercel.app
+X-SOCIALPROFILE;TYPE=linkedin:https://www.linkedin.com/in/barbaraaceto
+NOTE:Building products between humans and algorithms. Portfolio: https://portfolio-barbarita.vercel.app · LinkedIn: https://www.linkedin.com/in/barbaraaceto
+END:VCARD

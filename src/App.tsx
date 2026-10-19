@@ -5,6 +5,7 @@ import Home from './pages/Home'
 
 const OneSheet    = lazy(() => import('./pages/OneSheet'))
 const NotFound    = lazy(() => import('./pages/NotFound'))
+const Links       = lazy(() => import('./pages/Links'))
 
 function PageLoader() {
   return (
@@ -18,6 +19,8 @@ function PageLoader() {
 export default function App(){
   return (
     <Routes>
+      {/* Tarjeta de links para la tarjeta NFC: va fuera del Layout, sin header ni footer */}
+      <Route path="hola" element={<Suspense fallback={<PageLoader />}><Links /></Suspense>} />
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
         {/* Páginas retiradas: su contenido vive en el Home y en el One Sheet */}
